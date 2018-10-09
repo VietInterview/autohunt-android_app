@@ -25,5 +25,6 @@ public class ApiConstant {
     public final static int ITEM_LIMIT_DEFAULT = 30;
 
     public final static String LOGIN = BASE_URL + "authenticate";
+    public final static String REGIST = BASE_URL + "register";
     public final static String GET_NEW_LIST_BY_PLACE = BASE_URL + "getNewListByPlace";
 }

@@ -2,7 +2,6 @@ package com.vietinterview.getbee.api.request;
 
 import com.vietinterview.getbee.api.response.loginresponse.LoginResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
-import com.loopj.android.http.RequestParams;
 
 import org.json.JSONException;
 import org.json.JSONObject;

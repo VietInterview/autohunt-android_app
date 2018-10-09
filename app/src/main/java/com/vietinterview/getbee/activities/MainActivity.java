@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.callback.OnFillBackgroundListener;
-import com.vietinterview.getbee.fragments.FirstFragment;
+import com.vietinterview.getbee.fragments.MyProfileFragment;
 import com.vietinterview.getbee.fragments.RegitsFragment;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
@@ -46,7 +46,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         });
         if (AccountManager.getUserInfoBean() != null) {
-            FragmentUtil.replaceFragment(this, new FirstFragment().newInstance("FirstFragment"), null);
+            FragmentUtil.replaceFragment(this, new MyProfileFragment().newInstance("MyProfileFragment"), null);
         } else {
             FragmentUtil.replaceFragment(MainActivity.this, new RegitsFragment(), null);
         }
@@ -79,7 +79,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            FragmentUtil.replaceFragment(this, new FirstFragment().newInstance("FirstFragment"), null);
+            FragmentUtil.replaceFragment(this, new MyProfileFragment().newInstance("MyProfileFragment"), null);
         } else if (id == R.id.nav_gallery) {
 //            FragmentUtil.replaceFragment(this, new ThirdFragment().newInstance("ThirdFragment"), null);
         } else if (id == R.id.nav_slideshow) {

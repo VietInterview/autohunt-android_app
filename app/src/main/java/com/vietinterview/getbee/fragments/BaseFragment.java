@@ -159,10 +159,6 @@ public abstract class BaseFragment extends Fragment {
         if (getArguments() != null) {
             getArgument(getArguments());
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window w = getActivity().getWindow(); // in Activity's onCreate() for instance
-            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        }
         baseActivity = (BaseActivity) getActivity();
         initView(rootView, mInflater, mContainer);
         initData();
@@ -337,6 +333,7 @@ public abstract class BaseFragment extends Fragment {
         if (isVisible) {
             if (act.getSupportActionBar() != null) {
                 Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
+                toolbar.setVisibility(View.VISIBLE);
                 toolbar.setNavigationIcon(getIconLeft());
                 toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                     @Override

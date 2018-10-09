@@ -38,7 +38,17 @@ public abstract class BaseJsonRequest<T> {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     DebugLog.jsonFormat(getAbsoluteUrl(), response);
-                    mApiObjectCallBack.onSuccess(GsonUtils.fromJson(response.toString(), getResponseClass()));
+                    mApiObjectCallBack.onSuccess(GsonUtils.fromJson(response.toString(), getResponseClass()), statusCode);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                try {
+                    DebugLog.jsonFormat(getAbsoluteUrl(), responseString);
+                    mApiObjectCallBack.onSuccess(GsonUtils.fromJson(responseString, getResponseClass()), statusCode);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -46,12 +56,13 @@ public abstract class BaseJsonRequest<T> {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
+                DebugLog.jsonFormat(getAbsoluteUrl(), errorResponse.toString());
                 mApiObjectCallBack.onFail(statusCode, throwable.getMessage());
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                DebugLog.jsonFormat(getAbsoluteUrl(), responseString.toString());
                 mApiObjectCallBack.onFail(statusCode, responseString);
             }
         };
