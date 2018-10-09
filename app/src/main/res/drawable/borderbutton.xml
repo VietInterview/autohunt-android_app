@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Created by Hiep Nguyen Nghia.
+    Copyright © 2018 Vietinterview. All rights reserved.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="10dp"
+    android:shape="rectangle">
+    <!-- you can use any color you want I used here gray color-->
+    <solid android:color="#3C3B6E" />
+    <corners android:radius="5dp" />
+</shape>
