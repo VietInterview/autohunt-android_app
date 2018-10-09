@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.vietinterview.getbee.view.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llCheck"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+
+    <com.vietinterview.getbee.view.NunitoTextView
+        android:id="@+id/item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="18sp" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/checkbox_selector"
+        android:clickable="false"
+        android:focusable="false" />
+
+</com.vietinterview.getbee.view.CheckableLinearLayout>
