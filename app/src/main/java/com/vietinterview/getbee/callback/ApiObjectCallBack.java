@@ -7,4 +7,5 @@ public interface ApiObjectCallBack<T> {
     void onSuccess(T data, int status);
 
     void onFail(int failCode, String message);
+    void onFail(int failCode,T data, String message);
 }

@@ -73,7 +73,7 @@ public class MyProfileFragment extends BaseFragment {
 
     @Override
     protected void onRestore() {
-        getEventBaseFragment().doFillBackground(mNameFragment);
+        getEventBaseFragment().doFillBackground("Thông tin cá nhân");
     }
 
     @Override

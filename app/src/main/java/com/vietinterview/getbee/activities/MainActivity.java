@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.callback.OnFillBackgroundListener;
+import com.vietinterview.getbee.fragments.LoginFragment;
 import com.vietinterview.getbee.fragments.MyProfileFragment;
 import com.vietinterview.getbee.fragments.RegitsFragment;
 import com.vietinterview.getbee.utils.FragmentUtil;
@@ -48,7 +49,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (AccountManager.getUserInfoBean() != null) {
             FragmentUtil.replaceFragment(this, new MyProfileFragment().newInstance("MyProfileFragment"), null);
         } else {
-            FragmentUtil.replaceFragment(MainActivity.this, new RegitsFragment(), null);
+            FragmentUtil.replaceFragment(MainActivity.this, new LoginFragment(), null);
         }
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);

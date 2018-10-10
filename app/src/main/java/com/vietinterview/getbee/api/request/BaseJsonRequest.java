@@ -56,8 +56,13 @@ public abstract class BaseJsonRequest<T> {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    DebugLog.jsonFormat(getAbsoluteUrl(), errorResponse);
                 DebugLog.jsonFormat(getAbsoluteUrl(), errorResponse.toString());
-                mApiObjectCallBack.onFail(statusCode, throwable.getMessage());
+                mApiObjectCallBack.onFail(statusCode,GsonUtils.fromJson(errorResponse.toString(), getResponseClass()), throwable.getMessage());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

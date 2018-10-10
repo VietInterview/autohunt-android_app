@@ -89,7 +89,7 @@ public class ChangePasswordFragment extends BaseFragment {
 
     @Override
     protected Drawable getIconLeft() {
-        return getResources().getDrawable(R.drawable.ic_back);
+        return getResources().getDrawable(R.drawable.ic_back_svg);
     }
 
     @Override

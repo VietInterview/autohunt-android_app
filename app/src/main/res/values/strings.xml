@@ -11,12 +11,13 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="hello_blank_fragment">Anh DQ</string>
 
-    <string-array name="fruit_array">
-        <item>Apple</item>
-        <item>Orange</item>
-        <item>Banana</item>
-        <item>Lime</item>
-        <item>Pear</item>
-        <item>Coconut</item>
+    <string-array name="jobs_array">
+        <item>An toàn lao đông</item>
+        <item>Bác sĩ</item>
+        <item>Bán hàng</item>
+        <item>Bán hàng kỹ thuật </item>
+        <item>Bán sỉ/Bán lẻ</item>
+        <item>Bảo hiểm</item>
+        <item>Bảo trì/Sửa chữa</item>
     </string-array>
 </resources>

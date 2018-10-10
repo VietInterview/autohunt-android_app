@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.LoginRequest;
@@ -23,6 +26,7 @@ import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.view.NunitoBoldTextView;
+import com.vietinterview.getbee.view.NunitoEditText;
 import com.vietinterview.getbee.view.NunitoTextView;
 
 import org.json.JSONException;
@@ -35,13 +39,25 @@ import butterknife.OnClick;
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 public class RegitsFragment extends BaseFragment {
+    @BindView(R.id.edtName)
+    NunitoEditText edtName;
+    @BindView(R.id.edtJob)
+    NunitoEditText edtJob;
+    @BindView(R.id.edtAdd)
+    NunitoEditText edtAdd;
     @BindView(R.id.edtEmail)
     EditText edtEmail;
     @BindView(R.id.edtPhone)
     EditText edtPhone;
     @BindView(R.id.tvGoLogin)
     NunitoBoldTextView tvGoLogin;
-    LoginRequest loginRequest;
+    @BindView(R.id.icRightName)
+    ImageView icRightName;
+    @BindView(R.id.icRightEmail)
+    ImageView icRightEmail;
+    @BindView(R.id.icRightPhone)
+    ImageView icRightPhone;
+    RegistRequest registRequest;
     private Dialog mNotifydialog;
 
     @Override
@@ -52,11 +68,57 @@ public class RegitsFragment extends BaseFragment {
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbarVisible(false);
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            Window w = getActivity().getWindow(); // in Activity's onCreate() for instance
-//            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-//        }
+        icRightEmail.setVisibility(View.GONE);
+        icRightName.setVisibility(View.GONE);
+        icRightPhone.setVisibility(View.GONE);
+        edtEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                icRightEmail.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        edtName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                icRightName.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        edtPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                icRightPhone.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     @Override
@@ -74,72 +136,75 @@ public class RegitsFragment extends BaseFragment {
         FragmentUtil.replaceFragment(getActivity(), new LoginFragment(), null);
     }
 
-    @OnClick(R.id.btnLogin)
-    public void onLoginClick() {
-        try {
-            callLogin();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void callLogin() throws JSONException {
-        showCoverNetworkLoading();
-        loginRequest = new LoginRequest("admin", "admin");
-        loginRequest.callRequest(getActivity(), new ApiObjectCallBack<LoginResponse>() {
-
-            @Override
-            public void onSuccess(LoginResponse data, int status) {
-                UserInfoBean userInfoBean = new UserInfoBean();
-                userInfoBean.email = edtEmail.getText().toString().trim();
-                userInfoBean.access_token = data.getApiToken();
-//                AccountManager.setUserInfoBean(userInfoBean);
-                FragmentUtil.replaceFragment(getActivity(), new MyProfileFragment().newInstance("MyProfileFragment"), null);
-            }
-
-            @Override
-            public void onFail(int failCode, String message) {
-                hideCoverNetworkLoading();
-                DialogUtil.showDialog(getActivity(), "Thông báo", message);
-            }
-        });
-    }
-
-    RegistRequest registRequest;
-
     @OnClick(R.id.btnSignup)
     public void onSignupClick() {
-//        mNotifydialog = new Dialog(getActivity());
-//        mNotifydialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        mNotifydialog.setContentView(R.layout.dialog_noti);
-//        mNotifydialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//        mNotifydialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-//        NunitoTextView nunitoTextView = (NunitoTextView) mNotifydialog.findViewById(R.id.tvContent);
-//        nunitoTextView.setText("Bạn đã đăng ký tài khoản Cộng tác viên. Chúng tôi sẽ gửi thông tin email và mật khẩu qua hòm thư mà bạn đã đăng ký");
-//        Button btnOK = (Button) mNotifydialog.findViewById(R.id.btnOK);
-//        btnOK.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-//        mNotifydialog.show();
-        showCoverNetworkLoading();
-        registRequest = new RegistRequest("tesst1@gmail.com", "0989421150");
-        registRequest.callRequest(getActivity(), new ApiObjectCallBack<RegistResponse>() {
-            @Override
-            public void onSuccess(RegistResponse data, int status) {
-                hideCoverNetworkLoading();
-                DebugLog.showLogCat(status + "");
-            }
+        if (edtEmail.getText().toString().trim().equalsIgnoreCase("")) {
+            icRightEmail.setVisibility(View.VISIBLE);
+            edtEmail.setText("");
+            edtEmail.setHint("Xin hãy nhập địa chỉ Email");
+            edtEmail.setHintTextColor(Color.RED);
+        } else if (edtName.getText().toString().trim().equalsIgnoreCase("")) {
+            icRightName.setVisibility(View.VISIBLE);
+            edtName.setText("");
+            edtName.setHint("Xin hãy nhập họ và tên");
+            edtName.setHintTextColor(Color.RED);
+        } else if (edtPhone.getText().toString().trim().equalsIgnoreCase("")) {
+            icRightPhone.setVisibility(View.VISIBLE);
+            edtPhone.setText("");
+            edtPhone.setHint("Xin hãy nhập số điện thoại");
+            edtPhone.setHintTextColor(Color.RED);
+        } else {
+            showCoverNetworkLoading();
+            registRequest = new RegistRequest(edtEmail.getText().toString().trim(), edtPhone.getText().toString().trim(), edtName.getText().toString().trim(), edtJob.getText().toString().trim(), edtAdd.getText().toString().trim());
+            registRequest.callRequest(getActivity(), new ApiObjectCallBack<RegistResponse>() {
+                @Override
+                public void onSuccess(RegistResponse data, int status) {
+                    hideCoverNetworkLoading();
+                    mNotifydialog = new Dialog(getActivity());
+                    mNotifydialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    mNotifydialog.setContentView(R.layout.dialog_noti);
+                    mNotifydialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    mNotifydialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                    NunitoTextView nunitoTextView = (NunitoTextView) mNotifydialog.findViewById(R.id.tvContent);
+                    nunitoTextView.setText("Bạn đã đăng ký tài khoản Cộng tác viên. Chúng tôi sẽ gửi thông tin email và mật khẩu qua hòm thư mà bạn đã đăng ký");
+                    Button btnOK = (Button) mNotifydialog.findViewById(R.id.btnOK);
+                    btnOK.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            FragmentUtil.replaceFragment(getActivity(), new LoginFragment(), null);
+                            mNotifydialog.dismiss();
+                        }
+                    });
+                    mNotifydialog.show();
+                }
 
-            @Override
-            public void onFail(int failCode, String message) {
-                hideCoverNetworkLoading();
-                DebugLog.showLogCat(message + "");
-            }
-        });
+                @Override
+                public void onFail(int failCode, String message) {
+                    hideCoverNetworkLoading();
+                }
 
+                @Override
+                public void onFail(int failCode, RegistResponse data, String message) {
+                    hideCoverNetworkLoading();
+                    mNotifydialog = new Dialog(getActivity());
+                    mNotifydialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    mNotifydialog.setContentView(R.layout.dialog_noti);
+                    mNotifydialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    mNotifydialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                    NunitoTextView nunitoTextView = (NunitoTextView) mNotifydialog.findViewById(R.id.tvContent);
+                    if (data.getErrorKey().equalsIgnoreCase("userexists"))
+                        nunitoTextView.setText("Địa chỉ email đã tồn tại");
+                    Button btnOK = (Button) mNotifydialog.findViewById(R.id.btnOK);
+                    btnOK.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mNotifydialog.dismiss();
+                        }
+                    });
+                    mNotifydialog.show();
+                }
+            });
+        }
     }
 
     @Override

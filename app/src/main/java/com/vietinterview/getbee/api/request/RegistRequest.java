@@ -13,10 +13,16 @@ import org.json.JSONObject;
 public class RegistRequest extends BaseJsonRequest<RegistResponse> {
     private String mEmail;
     private String mPhone;
+    private String mName;
+    private String mCarrer;
+    private String mAddress;
 
-    public RegistRequest(String email, String phone) {
+    public RegistRequest(String email, String phone, String name, String carrer,String address) {
         this.mEmail = email;
         this.mPhone = phone;
+        this.mName=name;
+        this.mCarrer=carrer;
+        this.mAddress=address;
     }
 
     @Override
@@ -27,10 +33,10 @@ public class RegistRequest extends BaseJsonRequest<RegistResponse> {
     @Override
     protected JSONObject putJsonParams() throws JSONException {
         JSONObject jsonParams = new JSONObject();
-        jsonParams.put("address", "string");
-        jsonParams.put("career", "string");
+        jsonParams.put("address", mAddress);
+        jsonParams.put("career", mCarrer);
         jsonParams.put("email", mEmail);
-        jsonParams.put("fullName", "string");
+        jsonParams.put("fullName", mName);
         jsonParams.put("phone", mPhone);
         return jsonParams;
     }

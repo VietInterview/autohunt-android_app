@@ -2,6 +2,7 @@ package com.vietinterview.getbee.fragments;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.CustomAdapter;
+import com.vietinterview.getbee.utils.FragmentUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +41,9 @@ public class JobsFragment extends BaseFragment {
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         getEventBaseFragment().doFillBackground("Ngành Nghề");
+        setCustomToolbar(true);
         setHasOptionsMenu(true);
-        String[] fruit = getResources().getStringArray(R.array.fruit_array);
+        String[] fruit = getResources().getStringArray(R.array.jobs_array);
         CustomAdapter adapter = new CustomAdapter(getActivity(), fruit);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -97,30 +100,38 @@ public class JobsFragment extends BaseFragment {
 
     }
 
-    private Menu menu;
+    private Menu mMenu;
+    private MenuItem mMenuItem;
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_jobs, menu);
-        MenuItem menuItem = menu.findItem(R.id.choose);
+        this.mMenu = menu;
+        inflater.inflate(R.menu.menu_jobs, mMenu);
+        MenuItem menuItem = mMenu.findItem(R.id.choose);
+        mMenuItem = menuItem;
         if (menuItem != null) {
-            String title = menuItem.getTitle().toString();
-            TextView button_menu = (TextView) menuItem.getActionView();
+            TextView textView = (TextView) menuItem.getActionView();
             if (getSelectedItems().size() > 0)
-                button_menu.setText("Chọn (" + getSelectedItems().size() + ")");
-            else button_menu.setText("Chọn");
-            button_menu.setPadding(0, 0, 16, 0);
-            button_menu.setTextSize(18);
-            button_menu.setTextColor(Color.BLACK);
+                textView.setText("Chọn (" + getSelectedItems().size() + ")");
+            else textView.setText("Chọn");
+            textView.setPadding(0, 0, 16, 0);
+            textView.setTextSize(18);
+            textView.setTextColor(Color.BLACK);
             Typeface font = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "fonts/Nunito-Bold.ttf");
-            button_menu.setTypeface(font);
+            textView.setTypeface(font);
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getActivity(), "Choose", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
-        this.menu = menu;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        item = mMenuItem;
         int id = item.getItemId();
         if (id == R.id.choose) {
             Toast.makeText(getActivity(), "Choose", Toast.LENGTH_SHORT).show();
@@ -131,19 +142,32 @@ public class JobsFragment extends BaseFragment {
 
 
     private void updateMenuTitles() {
-        MenuItem menuItem = menu.findItem(R.id.choose);
+        MenuItem menuItem = mMenu.findItem(R.id.choose);
         if (menuItem != null) {
-            String title = menuItem.getTitle().toString();
-            TextView button_menu = (TextView) menuItem.getActionView();
+            TextView textView = (TextView) menuItem.getActionView();
             if (getSelectedItems().size() > 0)
-                button_menu.setText("Chọn (" + getSelectedItems().size() + ")");
-            else button_menu.setText("Chọn");
-            button_menu.setTextSize(18);
-            button_menu.setTextColor(Color.BLACK);
-            button_menu.setPadding(0, 0, 16, 0);
+                textView.setText("Chọn (" + getSelectedItems().size() + ")");
+            else textView.setText("Chọn");
+            textView.setTextSize(18);
+            textView.setTextColor(Color.BLACK);
+            textView.setPadding(0, 0, 16, 0);
             Typeface font = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "fonts/Nunito-Bold.ttf");
-            button_menu.setTypeface(font);
+            textView.setTypeface(font);
         }
-        menuItem.setTitle("Chọn (" + getSelectedItems().size() + ")");
+    }
+
+    @Override
+    protected void processCustomToolbar() {
+        FragmentUtil.popBackStack(this);
+    }
+
+    @Override
+    protected void processOnBackPress() {
+        FragmentUtil.popBackStack(this);
+    }
+
+    @Override
+    protected Drawable getIconLeft() {
+        return getResources().getDrawable(R.drawable.ic_back_svg);
     }
 }

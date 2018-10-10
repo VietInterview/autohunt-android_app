@@ -72,16 +72,24 @@
                     android:layout_height="match_parent"
                     android:background="@android:color/darker_gray" />
 
-                <com.vietinterview.getbee.view.NunitoEditText
+                <com.vietinterview.getbee.view.ClearableRegularEditText
                     android:id="@+id/edtName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="7"
+                    android:layout_weight="6"
                     android:background="@null"
                     android:hint="Họ và tên"
                     android:padding="10dp"
                     android:textColor="@color/black" />
+
+                <ImageView
+                    android:id="@+id/icRightName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="0.5"
+                    android:src="@drawable/ic_tickok"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
@@ -104,11 +112,10 @@
                     android:layout_height="match_parent"
                     android:background="@android:color/darker_gray" />
 
-                <com.vietinterview.getbee.view.NunitoEditText
+                <com.vietinterview.getbee.view.ClearableRegularEditText
                     android:id="@+id/edtEmail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:layout_weight="6"
                     android:background="@null"
                     android:hint="Email"
@@ -121,7 +128,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="0.5"
-                    android:src="@drawable/ic_tickok" />
+                    android:src="@drawable/ic_tickok"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
@@ -145,11 +153,10 @@
                     android:layout_height="match_parent"
                     android:background="@android:color/darker_gray" />
 
-                <com.vietinterview.getbee.view.NunitoEditText
+                <com.vietinterview.getbee.view.ClearableRegularEditText
                     android:id="@+id/edtPhone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:layout_weight="6"
                     android:background="@null"
                     android:hint="Điện thoại"
@@ -162,10 +169,11 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="0.5"
-                    android:src="@drawable/ic_note" />
+                    android:src="@drawable/ic_note"
+                    android:visibility="gone" />
             </LinearLayout>
 
-            <com.vietinterview.getbee.view.NunitoEditText
+            <com.vietinterview.getbee.view.ClearableRegularEditText
                 android:id="@+id/edtJob"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -175,7 +183,7 @@
                 android:padding="10dp"
                 android:textColor="@color/black" />
 
-            <com.vietinterview.getbee.view.NunitoEditText
+            <com.vietinterview.getbee.view.ClearableRegularEditText
                 android:id="@+id/edtAdd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
