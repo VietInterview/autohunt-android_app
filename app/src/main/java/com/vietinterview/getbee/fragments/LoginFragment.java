@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
@@ -45,6 +46,18 @@ public class LoginFragment extends BaseFragment {
     ImageView icRightEmail;
     @BindView(R.id.icRightPass)
     ImageView icRightPass;
+    @BindView(R.id.llPass)
+    LinearLayout llPass;
+    @BindView(R.id.llUserName)
+    LinearLayout llUserName;
+    @BindView(R.id.linePass)
+    View linePass;
+    @BindView(R.id.lineUserName)
+    View lineUserName;
+    @BindView(R.id.imgUser)
+    ImageView imgUser;
+    @BindView(R.id.imgPass)
+    ImageView imgPass;
 
     @Override
     protected int getLayoutId() {
@@ -71,14 +84,34 @@ public class LoginFragment extends BaseFragment {
 
             }
         });
+        edtEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    llUserName.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackgroundfocus));
+                    lineUserName.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
+                    imgUser.setImageDrawable(getResources().getDrawable(R.drawable.ic_user));
+                } else {
+                    llUserName.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackground));
+                    lineUserName.setBackgroundColor(getResources().getColor(R.color.gray_not_focus));
+                    imgUser.setImageDrawable(getResources().getDrawable(R.drawable.ic_user_notfocus));
+                }
+            }
+        });
         edtPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
+                    llPass.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackgroundfocus));
+                    linePass.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
+                    imgPass.setImageDrawable(getResources().getDrawable(R.drawable.ic_pass));
                     DebugLog.showLogCat("onFocusChange");
                     edtPass.setTextColor(Color.BLACK);
                     edtPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 } else {
+                    llPass.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackground));
+                    linePass.setBackgroundColor(getResources().getColor(R.color.gray_not_focus));
+                    imgPass.setImageDrawable(getResources().getDrawable(R.drawable.ic_pass_notfocus));
                     DebugLog.showLogCat("onFocusChange False");
                 }
             }
@@ -142,11 +175,11 @@ public class LoginFragment extends BaseFragment {
     @OnClick(R.id.btnLogin)
     public void onbtnLoginClick() {
         if (edtEmail.getText().toString().equalsIgnoreCase("")) {
-            edtEmail.setText("Xin hãy nhập tên đăng nhập");
-            edtEmail.setTextColor(Color.RED);
+            edtEmail.setText("");
+            edtEmail.setHint("Xin hãy nhập tên đăng nhập");
+            edtEmail.setHintTextColor(Color.RED);
             icRightEmail.setVisibility(View.VISIBLE);
         } else if (edtPass.getText().toString().equalsIgnoreCase("")) {
-//            edtPass.setInputType(InputType.TYPE_CLASS_TEXT);
             edtPass.setHint("Xin hãy nhập mật khẩu");
             edtPass.setHintTextColor(Color.RED);
             icRightPass.setVisibility(View.VISIBLE);

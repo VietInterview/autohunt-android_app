@@ -67,6 +67,7 @@
             android:padding="10dp">
 
             <LinearLayout
+                android:id="@+id/llUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -75,16 +76,18 @@
 
 
                 <ImageView
+                    android:id="@+id/imgUser"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="0.5"
-                    android:src="@drawable/ic_user" />
+                    android:src="@drawable/ic_user_notfocus" />
 
                 <View
+                    android:id="@+id/lineUserName"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@android:color/darker_gray" />
+                    android:background="@color/gray_not_focus" />
 
                 <com.vietinterview.getbee.view.ClearableRegularEditText
                     android:id="@+id/edtEmail"
@@ -107,6 +110,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -115,16 +119,18 @@
 
 
                 <ImageView
+                    android:id="@+id/imgPass"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="0.5"
-                    android:src="@drawable/ic_pass" />
+                    android:src="@drawable/ic_pass_notfocus" />
 
                 <View
+                    android:id="@+id/linePass"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@android:color/darker_gray" />
+                    android:background="@color/gray_not_focus" />
 
                 <com.vietinterview.getbee.view.ClearableRegularEditText
                     android:id="@+id/edtPass"

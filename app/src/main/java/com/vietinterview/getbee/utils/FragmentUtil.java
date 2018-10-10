@@ -34,7 +34,9 @@ public class FragmentUtil {
         }
 
         FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
+        if (isPushInsteadOfReplace) {
+            fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+        }
         fragmentTransaction.replace(R.id.container, fragment, tag);
         if (isPushInsteadOfReplace) {
             fragmentTransaction.addToBackStack(null);

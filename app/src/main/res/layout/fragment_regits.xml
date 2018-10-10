@@ -13,8 +13,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:paddingTop="40dp">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,6 +52,7 @@
             android:padding="10dp">
 
             <LinearLayout
+                android:id="@+id/llName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -61,16 +61,18 @@
 
 
                 <ImageView
+                    android:id="@+id/imgName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="0.5"
-                    android:src="@drawable/ic_user" />
+                    android:src="@drawable/ic_user_notfocus" />
 
                 <View
+                    android:id="@+id/lineName"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@android:color/darker_gray" />
+                    android:background="@color/gray_not_focus" />
 
                 <com.vietinterview.getbee.view.ClearableRegularEditText
                     android:id="@+id/edtName"
@@ -93,6 +95,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -101,16 +104,18 @@
 
 
                 <ImageView
+                    android:id="@+id/imgMail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="0.5"
-                    android:src="@drawable/ic_mail" />
+                    android:src="@drawable/ic_mail_notfocus" />
 
                 <View
+                    android:id="@+id/lineEmail"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@android:color/darker_gray" />
+                    android:background="@color/gray_not_focus" />
 
                 <com.vietinterview.getbee.view.ClearableRegularEditText
                     android:id="@+id/edtEmail"
@@ -133,6 +138,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llSDT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -142,16 +148,18 @@
 
 
                 <ImageView
+                    android:id="@+id/imgSDT"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="0.5"
-                    android:src="@drawable/ic_phone" />
+                    android:src="@drawable/ic_phone_notfocus" />
 
                 <View
+                    android:id="@+id/lineSDT"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@android:color/darker_gray" />
+                    android:background="@color/gray_not_focus" />
 
                 <com.vietinterview.getbee.view.ClearableRegularEditText
                     android:id="@+id/edtPhone"

@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 
 import com.vietinterview.getbee.callback.OnFillBackgroundListener;
+import com.vietinterview.getbee.callback.OnShowLogoListener;
 
 /**
  * Created by V4-OS01 on 14/10/2016.
@@ -12,6 +13,7 @@ import com.vietinterview.getbee.callback.OnFillBackgroundListener;
 
 public class Event implements Parcelable {
     private OnFillBackgroundListener mOnEventListener;
+    private OnShowLogoListener onShowLogoListener;
 
     protected Event(Parcel in) {
     }
@@ -36,9 +38,19 @@ public class Event implements Parcelable {
         mOnEventListener = listener;
     }
 
+    public void setOnShowLogoListener(OnShowLogoListener onShowLogoListener) {
+        this.onShowLogoListener = onShowLogoListener;
+    }
+
     public void doFillBackground(String nameTable) {
         if (mOnEventListener != null) {
             mOnEventListener.onFillBackground(nameTable);
+        }
+    }
+
+    public void showLogo(boolean isShowLogo) {
+        if (this.onShowLogoListener != null) {
+            this.onShowLogoListener.onShowLogo(isShowLogo);
         }
     }
 

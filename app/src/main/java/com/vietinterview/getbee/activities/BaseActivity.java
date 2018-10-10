@@ -3,11 +3,13 @@ package com.vietinterview.getbee.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 
 import com.akexorcist.localizationactivity.LocalizationActivity;
 import com.vietinterview.getbee.R;
@@ -51,6 +53,10 @@ public abstract class BaseActivity extends LocalizationActivity {
         initView();
         initDialogApi();
         initData();
+        Window window = this.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.yellow));
     }
 
     public Event getEventBaseActivity() {

@@ -7,7 +7,7 @@
     <color name="browse">#F7F7F9</color>
     <color name="transparent">#80ffffff</color>
     <color name="yellow">#f7ab1c</color>
-    <color name="yellow_highlight">#f7b741</color>
+    <color name="yellow_highlight">#FFD215</color>
     <color name="year">#999999</color>
     <color name="title">#222222</color>
     <color name="red">#ed3b3b</color>
@@ -31,4 +31,6 @@
     <color name="bordercolor">#d7d7d7</color>
     <color name="iconcolor">#5799fe</color>
     <color name="background_color_menu">#ebebeb</color>
+    <color name="gray_not_focus">#D2D2E1</color>
+    <color name="background_icon_not_focus">#B1B1BA</color>
 </resources>

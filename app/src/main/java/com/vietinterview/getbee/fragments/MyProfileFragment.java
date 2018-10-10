@@ -47,13 +47,6 @@ public class MyProfileFragment extends BaseFragment {
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbar(true);
         setCustomToolbarVisible(true);
-//        btnFrgSec.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(baseActivity, "First", Toast.LENGTH_SHORT).show();
-//                FragmentUtil.pushFragment(baseActivity, new ChangePasswordFragment().newInstance("ChangePasswordFragment"), null);
-//            }
-//        });
         setHasOptionsMenu(true);
     }
 
@@ -94,7 +87,7 @@ public class MyProfileFragment extends BaseFragment {
 
     @OnClick(R.id.rlChooseJob)
     public void onChooseJobClick() {
-        FragmentUtil.pushFragment(getActivity(), new JobsFragment(), null);
+        FragmentUtil.pushFragment(getActivity(), new CarrerFragment(), null);
     }
 
     @Override
