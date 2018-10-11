@@ -130,24 +130,6 @@ public class MyProfileFragment extends BaseFragment {
         loadMenuLeft();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case 1: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    SmsManager smsManager = SmsManager.getDefault();
-                    smsManager.sendTextMessage("01682253221", null, "Test", null, null);
-                    Toast.makeText(getActivity(), "SMS sent.",
-                            Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getActivity(),
-                            "SMS faild, please try again.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-            }
-        }
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
