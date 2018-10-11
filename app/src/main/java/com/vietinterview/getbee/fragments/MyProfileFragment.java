@@ -95,8 +95,6 @@ public class MyProfileFragment extends BaseFragment {
 
     @Override
     protected void onSaveState(Bundle bundle) {
-//        bundle.putString("nameFragment", "Test");
-//        mNameFragment = bundle.getString("nameFragment");
     }
 
     @Override
