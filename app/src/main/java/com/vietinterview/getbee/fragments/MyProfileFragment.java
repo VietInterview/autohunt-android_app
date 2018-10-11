@@ -15,10 +15,9 @@ import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.BaseJsonRequest;
-import com.vietinterview.getbee.api.request.GetNewListByPlace;
 import com.vietinterview.getbee.api.request.LoginRequest;
 import com.vietinterview.getbee.utils.FragmentUtil;
-import com.vietinterview.getbee.view.TouchDetectableScrollView;
+import com.vietinterview.getbee.customview.TouchDetectableScrollView;
 
 import java.util.ArrayList;
 
@@ -33,7 +32,6 @@ public class MyProfileFragment extends BaseFragment {
     FloatingActionButton fab;
     String mNameFragment;
     LoginRequest loginRequest;
-    GetNewListByPlace getNewListByPlace;
 
     public static MyProfileFragment newInstance(String nameFragment) {
         MyProfileFragment fm = new MyProfileFragment();
@@ -56,14 +54,12 @@ public class MyProfileFragment extends BaseFragment {
         scrollView.setMyScrollChangeListener(new TouchDetectableScrollView.OnMyScrollChangeListener() {
             @Override
             public void onScrollUp() {
-//                fab.hide();
-
+                fab.show();
             }
 
             @Override
             public void onScrollDown() {
-//                fab.show();
-
+                fab.hide();
             }
         });
     }
@@ -80,6 +76,11 @@ public class MyProfileFragment extends BaseFragment {
     @OnClick(R.id.imgChangePass)
     public void onChangePassClick() {
         FragmentUtil.pushFragment(getActivity(), new ChangePasswordFragment(), null);
+    }
+
+    @OnClick(R.id.fab)
+    public void onFabClick() {
+
     }
 
     @Override

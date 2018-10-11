@@ -39,7 +39,7 @@
                     android:layout_weight="2"
                     android:orientation="vertical">
 
-                    <com.vietinterview.getbee.view.NunitoBoldTextView
+                    <com.vietinterview.getbee.customview.NunitoBoldTextView
                         android:id="@+id/tvjobTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textSize="18sp" />
 
-                    <com.vietinterview.getbee.view.NunitoTextView
+                    <com.vietinterview.getbee.customview.NunitoTextView
                         android:id="@+id/tvCompanyName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.vietinterview.getbee.view.NunitoTextView
+                    <com.vietinterview.getbee.customview.NunitoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -91,7 +91,7 @@
                         android:textColor="#505059"
                         android:textSize="16sp" />
 
-                    <com.vietinterview.getbee.view.NunitoTextView
+                    <com.vietinterview.getbee.customview.NunitoTextView
                         android:id="@+id/tvCarrer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.vietinterview.getbee.view.NunitoTextView
+                    <com.vietinterview.getbee.customview.NunitoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -115,7 +115,7 @@
                         android:textColor="#505059"
                         android:textSize="16sp" />
 
-                    <com.vietinterview.getbee.view.NunitoTextView
+                    <com.vietinterview.getbee.customview.NunitoTextView
                         android:id="@+id/tvListCity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -131,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.vietinterview.getbee.view.NunitoTextView
+                    <com.vietinterview.getbee.customview.NunitoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -139,7 +139,7 @@
                         android:textColor="#505059"
                         android:textSize="16sp" />
 
-                    <com.vietinterview.getbee.view.NunitoTextView
+                    <com.vietinterview.getbee.customview.NunitoTextView
                         android:id="@+id/tvExpireDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.vietinterview.getbee.view.NunitoTextView
+                    <com.vietinterview.getbee.customview.NunitoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -163,7 +163,7 @@
                         android:textColor="#505059"
                         android:textSize="16sp" />
 
-                    <com.vietinterview.getbee.view.NunitoBoldTextView
+                    <com.vietinterview.getbee.customview.NunitoBoldTextView
                         android:id="@+id/tvFee"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

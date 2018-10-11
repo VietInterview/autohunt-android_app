@@ -7,18 +7,18 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
-        android:name="com.vietinterview.getbee.GetBeeApplication"
+        android:name=".GetBeeApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.vietinterview.getbee.activities.MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name="com.vietinterview.getbee.activities.SplashActivity"
+            android:name=".activities.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>

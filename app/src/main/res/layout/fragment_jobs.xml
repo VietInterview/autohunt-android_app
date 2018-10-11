@@ -9,7 +9,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.vietinterview.getbee.view.NunitoEditText
+    <com.vietinterview.getbee.customview.NunitoEditText
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:drawableRight="@drawable/ic_search_vector"
@@ -18,7 +18,7 @@
         android:padding="@dimen/activity_vertical_margin"
         android:textSize="18sp" />
 
-    <com.vietinterview.getbee.view.NunitoTextView
+    <com.vietinterview.getbee.customview.NunitoTextView
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:gravity="center|left"

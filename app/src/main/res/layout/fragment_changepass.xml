@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="89dp">
 
-        <com.vietinterview.getbee.view.NunitoTextView
+        <com.vietinterview.getbee.customview.NunitoTextView
             android:id="@+id/tvTitleOldPass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
             android:textColor="#B1B1BA"
             android:textSize="16sp" />
 
-        <com.vietinterview.getbee.view.NunitoTextView
+        <com.vietinterview.getbee.customview.NunitoTextView
             android:id="@+id/tvOldPass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="89dp">
 
-        <com.vietinterview.getbee.view.NunitoTextView
+        <com.vietinterview.getbee.customview.NunitoTextView
             android:id="@+id/tvTitleNewPass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
             android:textColor="#B1B1BA"
             android:textSize="16sp" />
 
-        <com.vietinterview.getbee.view.NunitoTextView
+        <com.vietinterview.getbee.customview.NunitoTextView
             android:id="@+id/tvNewPass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
         android:layout_width="match_parent"
         android:layout_height="89dp">
 
-        <com.vietinterview.getbee.view.NunitoTextView
+        <com.vietinterview.getbee.customview.NunitoTextView
             android:id="@+id/tvTitleRetype"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
             android:textColor="#B1B1BA"
             android:textSize="16sp" />
 
-        <com.vietinterview.getbee.view.NunitoTextView
+        <com.vietinterview.getbee.customview.NunitoTextView
             android:id="@+id/tvRetype"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

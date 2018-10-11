@@ -47,7 +47,7 @@
                         android:background="@color/white"
                         android:orientation="vertical">
 
-                        <com.vietinterview.getbee.view.NunitoTextView
+                        <com.vietinterview.getbee.customview.NunitoTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -58,7 +58,7 @@
                             android:textColor="#505059"
                             android:textSize="18sp" />
 
-                        <com.vietinterview.getbee.view.NunitoBoldTextView
+                        <com.vietinterview.getbee.customview.NunitoBoldTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -67,7 +67,7 @@
                             android:textColor="@color/black"
                             android:textSize="18sp" />
 
-                        <com.vietinterview.getbee.view.NunitoRegularButton
+                        <com.vietinterview.getbee.customview.NunitoRegularButton
                             android:layout_width="86dp"
                             android:layout_height="25dp"
                             android:layout_gravity="center"
@@ -122,7 +122,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <com.vietinterview.getbee.view.NunitoBoldButton
+            <com.vietinterview.getbee.customview.NunitoBoldButton
                 android:layout_width="149dp"
                 android:layout_height="40dp"
                 android:layout_margin="8dp"
@@ -133,7 +133,7 @@
                 android:text="Lưu công việc"
                 android:textColor="#B1B1BA" />
 
-            <com.vietinterview.getbee.view.NunitoBoldButton
+            <com.vietinterview.getbee.customview.NunitoBoldButton
                 android:layout_width="149dp"
                 android:layout_height="40dp"
                 android:layout_margin="8dp"

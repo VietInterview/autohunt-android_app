@@ -14,7 +14,7 @@
         android:orientation="horizontal"
         android:weightSum="3">
 
-        <com.vietinterview.getbee.view.NunitoBoldTextView
+        <com.vietinterview.getbee.customview.NunitoBoldTextView
             android:id="@+id/tvTransfer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
             android:visibility="gone" />
     </LinearLayout>
 
-    <com.vietinterview.getbee.view.NunitoTextView
+    <com.vietinterview.getbee.customview.NunitoTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -70,7 +70,7 @@
         android:orientation="horizontal"
         android:weightSum="2">
 
-        <com.vietinterview.getbee.view.NunitoBoldButton
+        <com.vietinterview.getbee.customview.NunitoBoldButton
             android:id="@+id/btnOK"
             android:layout_width="141dp"
             android:layout_height="40dp"

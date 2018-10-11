@@ -25,31 +25,17 @@
         app:itemTextColor="@color/white"
         app:menu="@menu/activity_main2_drawer">
 
-        <LinearLayout
+        <com.vietinterview.getbee.customview.NunitoTextView
+            android:id="@+id/tvLogout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_gravity="bottom"
-            android:clickable="true"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/activity_vertical_margin">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_logout" />
-
-
-            <com.vietinterview.getbee.view.NunitoTextView
-                android:id="@+id/tvLogout"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_gravity="left"
-                android:gravity="center|left"
-                android:paddingLeft="@dimen/activity_vertical_margin"
-                android:text="Đăng xuất"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-        </LinearLayout>
+            android:drawableLeft="@drawable/ic_logout"
+            android:drawablePadding="32dp"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/activity_vertical_margin"
+            android:text="Đăng xuất"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
     </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

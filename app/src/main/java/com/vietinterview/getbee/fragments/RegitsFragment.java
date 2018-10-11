@@ -17,25 +17,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.api.request.LoginRequest;
 import com.vietinterview.getbee.api.request.RegistRequest;
 import com.vietinterview.getbee.api.response.RegistResponse;
-import com.vietinterview.getbee.api.response.loginresponse.LoginResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
-import com.vietinterview.getbee.model.UserInfoBean;
-import com.vietinterview.getbee.utils.DebugLog;
-import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.StringUtils;
-import com.vietinterview.getbee.view.NunitoBoldTextView;
-import com.vietinterview.getbee.view.NunitoEditText;
-import com.vietinterview.getbee.view.NunitoTextView;
-
-import org.json.JSONException;
+import com.vietinterview.getbee.customview.NunitoBoldTextView;
+import com.vietinterview.getbee.customview.NunitoEditText;
+import com.vietinterview.getbee.customview.NunitoTextView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.OnFocusChange;
 
 /**
  * Created by nguyennghiahiep on 10/5/18.

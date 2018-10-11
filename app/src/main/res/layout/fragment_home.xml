@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F7FAFF">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
+        android:id="@+id/llOn"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#F7FAFF"
@@ -22,7 +22,7 @@
             android:paddingRight="@dimen/activity_vertical_margin"
             android:visibility="gone">
 
-            <com.vietinterview.getbee.view.ClearableRegularEditText
+            <com.vietinterview.getbee.customview.ClearableRegularEditText
                 android:id="@+id/edtJobTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                 android:paddingLeft="@dimen/activity_vertical_margin"
                 android:paddingRight="@dimen/activity_vertical_margin">
 
-                <com.vietinterview.getbee.view.NunitoTextView
+                <com.vietinterview.getbee.customview.NunitoTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -70,7 +70,7 @@
                     android:background="@android:color/transparent"
                     android:hint="Ngành Nghề" />
 
-                <com.vietinterview.getbee.view.NunitoTextView
+                <com.vietinterview.getbee.customview.NunitoTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -102,7 +102,7 @@
                 android:paddingLeft="@dimen/activity_vertical_margin"
                 android:paddingRight="@dimen/activity_vertical_margin">
 
-                <com.vietinterview.getbee.view.NunitoTextView
+                <com.vietinterview.getbee.customview.NunitoTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -110,7 +110,7 @@
                     android:background="@android:color/transparent"
                     android:hint="Địa điểm" />
 
-                <com.vietinterview.getbee.view.NunitoTextView
+                <com.vietinterview.getbee.customview.NunitoTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -142,7 +142,7 @@
                 android:paddingLeft="@dimen/activity_vertical_margin"
                 android:paddingRight="@dimen/activity_vertical_margin">
 
-                <com.vietinterview.getbee.view.NunitoTextView
+                <com.vietinterview.getbee.customview.NunitoTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -150,7 +150,7 @@
                     android:background="@android:color/transparent"
                     android:hint="Ngày đăng tuyển" />
 
-                <com.vietinterview.getbee.view.NunitoTextView
+                <com.vietinterview.getbee.customview.NunitoTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -174,26 +174,33 @@
                 android:background="@color/gray_not_focus" />
         </LinearLayout>
 
-        <com.vietinterview.getbee.view.NunitoTextView
+        <com.vietinterview.getbee.customview.NunitoTextView
             android:id="@+id/titleHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="@dimen/activity_vertical_margin" />
 
-        <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/my_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:scrollbars="vertical" />
         </android.support.v4.widget.SwipeRefreshLayout>
 
     </LinearLayout>
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center|bottom"-->
+    <!--android:background="@color/accent"-->
+    <!--android:gravity="center">-->
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -201,11 +208,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
+        android:layout_gravity="center|bottom"
         android:layout_marginBottom="-4dp"
         android:src="@drawable/ic_addcv_float"
         app:backgroundTint="#00FFFFFF"
-        app:borderWidth="0dp"
+        app:borderWidth="10dp"
+        app:fabCustomSize="65dp"
         app:fabSize="normal"
         app:layout_behavior="com.ic_background_add_cv.valdioveliu.floatingactionbuttonproject.Scrolling_Floating_Action_Button.FAB_Float_on_Scroll"
-        app:maxImageSize="55dp" />
-</RelativeLayout>
+        app:maxImageSize="65dp" />
+    <!--</LinearLayout>-->
+</FrameLayout>

@@ -11,41 +11,15 @@
             android:id="@+id/nav_job"
             android:icon="@drawable/ic_vali"
             android:title="Công việc của tôi"
-            app:actionViewClass="com.vietinterview.getbee.view.CircularTextView" />
+            app:actionViewClass="com.vietinterview.getbee.customview.CircularTextView" />
         <item
             android:id="@+id/nav_cv"
-            app:actionViewClass="com.vietinterview.getbee.view.CircularTextView"
+            app:actionViewClass="com.vietinterview.getbee.customview.CircularTextView"
             android:icon="@drawable/ic_heart"
             android:title="CV của tôi" />
         <item
             android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_user_notfocus"
+            android:icon="@drawable/ic_user_menuleft"
             android:title="Thông tin cá nhân" />
-        <item
-            android:id="@+id/footer_spacer_1"
-            android:checkable="false"
-            android:enabled="false"
-            android:orderInCategory="200"
-            android:title="" />
-        <item
-            android:id="@+id/footer_spacer_2"
-            android:checkable="false"
-            android:enabled="false"
-            android:orderInCategory="200"
-            android:title="" />
     </group>
-
-    <!--<item android:title="Communicate">-->
-        <!--<menu_detail_job>-->
-            <!--<item-->
-                <!--android:id="@+id/nav_share"-->
-                <!--android:icon="@drawable/ic_menu_share"-->
-                <!--android:title="Share" />-->
-            <!--<item-->
-                <!--android:id="@+id/nav_send"-->
-                <!--android:icon="@drawable/ic_menu_send"-->
-                <!--android:title="Send" />-->
-        <!--</menu_detail_job>-->
-    <!--</item>-->
-
 </menu>

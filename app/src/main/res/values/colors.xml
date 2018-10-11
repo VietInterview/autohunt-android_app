@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#FFD215</color>
+    <color name="colorPrimaryDark">#FFD215</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#ffffff</color>
     <color name="browse">#F7F7F9</color>
@@ -18,8 +18,8 @@
     <color name="candidate_recommended">#FFE35900</color>
     <color name="candidate_other">#ff808080</color>
     <color name="candidate_background">#bbffffff</color>
-    <color name="primary">#2196F3</color>
-    <color name="primary_dark">#1976D2</color>
+    <color name="primary">#FFD215</color>
+    <color name="primary_dark">#FFD215</color>
     <color name="primary_light">#BBDEFB</color>
     <color name="accent">#4CAF50</color>
     <color name="primary_text">#212121</color>

@@ -4,7 +4,6 @@ import android.provider.Settings;
 import android.text.TextUtils;
 
 import com.vietinterview.getbee.model.UserInfoBean;
-import com.vietinterview.getbee.utils.NetworkUtils;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
 import com.google.gson.Gson;
 
@@ -69,7 +68,6 @@ public class AccountManager {
     }
 
     public static void logout() {
-        NetworkUtils.getInstance(GetBeeApplication.getInstance()).cancelAllRequest();
         accessToken = null;
         userInfoBean = null;
         SharedPrefUtils.removeKey(KEY_ACCESS_TOKEN);

@@ -2,7 +2,6 @@ package com.vietinterview.getbee.fragments;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -30,12 +29,11 @@ import com.vietinterview.getbee.adapter.JobsAdapter;
 import com.vietinterview.getbee.api.request.GetSearchJobsRequest;
 import com.vietinterview.getbee.api.response.jobsresponse.JobList;
 import com.vietinterview.getbee.api.response.jobsresponse.JobsResponse;
-import com.vietinterview.getbee.api.volley.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
-import com.vietinterview.getbee.model.MyJob;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
-import com.vietinterview.getbee.view.ClearableRegularEditText;
+import com.vietinterview.getbee.customview.ClearableRegularEditText;
 
 import java.util.ArrayList;
 
@@ -74,6 +72,14 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private GetSearchJobsRequest getSearchJobsRequest;
     int mPage = 0;
 
+    public static HomeFragment newInstance(String nameFragment) {
+        HomeFragment fm = new HomeFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("nameFragment", nameFragment);
+        fm.setArguments(bundle);
+        return fm;
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_home;
@@ -83,6 +89,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbar(true);
         setHasOptionsMenu(true);
+        setCustomToolbarVisible(true);
         myOnClickListener = new MyOnClickListener(getActivity());
         recyclerView = (RecyclerView) root.findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -164,13 +171,24 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         getSearchJob("4", "", "", mPage);
     }
 
+    @OnClick(R.id.fab)
+    public void onFabClick() {
+    }
+
     public void getSearchJob(String careerId, String cityId, String jobtile, final int page) {
         if (page == 0)
             showCoverNetworkLoading();
         getSearchJobsRequest = new GetSearchJobsRequest(careerId, cityId, "10", jobtile, page);
         getSearchJobsRequest.callRequest(new ApiObjectCallBack<JobsResponse>() {
+
             @Override
-            public void onSuccess(final JobsResponse data) {
+            public void onFail(int failCode, JobsResponse data, String message) {
+                mSwipeRefreshLayout.setRefreshing(false);
+                hideCoverNetworkLoading();
+            }
+
+            @Override
+            public void onSuccess(JobsResponse data, int status) {
                 jobsListServer.clear();
                 jobsListServer.addAll(data.getJobList());
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -191,6 +209,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 mSwipeRefreshLayout.setRefreshing(false);
                 hideCoverNetworkLoading();
             }
+
         });
     }
 
@@ -272,7 +291,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onLoadMore() {
-        if (jobsListServer.size() <= 10) {
+        if (jobsListServer.size() > 0) {
             mPage++;
             DebugLog.showLogCat(mPage + " MyPage");
             getSearchJob("4", "", "", mPage);

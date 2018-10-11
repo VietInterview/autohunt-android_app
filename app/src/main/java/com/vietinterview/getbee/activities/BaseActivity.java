@@ -13,7 +13,6 @@ import android.view.WindowManager;
 
 import com.akexorcist.localizationactivity.LocalizationActivity;
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.api.volley.event.ApiEvent;
 import com.vietinterview.getbee.model.Event;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
@@ -82,18 +81,18 @@ public abstract class BaseActivity extends LocalizationActivity {
     }
 
     @SuppressWarnings("unused")
-    public void onEventMainThread(ApiEvent event) {
-        switch (event.apiEventType) {
-            case SHOW_API_ERROR_DIALOG:
-                showApiDialog(dialogErrorAPI);
-                break;
-            case SHOW_API_TIMEOUT_DIALOG:
-                showApiDialog(dialogTimeOutAPI);
-                break;
-            case SHOW_API_NO_CONNECTION_DIALOG:
-                showApiDialog(dialogNoConnection);
-                break;
-        }
+    public void onEventMainThread(String event) {
+//        switch (event.apiEventType) {
+//            case SHOW_API_ERROR_DIALOG:
+//                showApiDialog(dialogErrorAPI);
+//                break;
+//            case SHOW_API_TIMEOUT_DIALOG:
+//                showApiDialog(dialogTimeOutAPI);
+//                break;
+//            case SHOW_API_NO_CONNECTION_DIALOG:
+//                showApiDialog(dialogNoConnection);
+//                break;
+//        }
     }
 
     private void showApiDialog(AlertDialog alertDialog) {

@@ -4,7 +4,7 @@ package com.vietinterview.getbee.utils;
 import android.content.Context;
 
 import com.vietinterview.getbee.GetBeeApplication;
-import com.vietinterview.getbee.constant.AppConstant;
+import com.vietinterview.getbee.constant.ApiConstant;
 
 
 public class SharedPrefUtils {
@@ -23,11 +23,11 @@ public class SharedPrefUtils {
     }
 
     public static void saveAccessToken(String token) {
-        SharedPrefUtils.putString(AppConstant.ACCESS_TOKEN, token);
+        SharedPrefUtils.putString(ApiConstant.ACCESS_TOKEN, token);
     }
 
     public static String getAccessToken() {
-        return SharedPrefUtils.getString(AppConstant.ACCESS_TOKEN, "");
+        return SharedPrefUtils.getString(ApiConstant.ACCESS_TOKEN, "");
     }
 
     private void putStringOrReplace(String key, String value) {

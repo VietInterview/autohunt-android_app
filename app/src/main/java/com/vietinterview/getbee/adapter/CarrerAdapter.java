@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.view.CheckableLinearLayout;
+import com.vietinterview.getbee.customview.CheckableLinearLayout;
 
 public class CarrerAdapter extends BaseAdapter {
     private String[] data;

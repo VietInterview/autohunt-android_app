@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
@@ -23,9 +22,8 @@ import com.vietinterview.getbee.api.request.LoginRequest;
 import com.vietinterview.getbee.api.response.loginresponse.LoginResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.model.UserInfoBean;
-import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
-import com.vietinterview.getbee.view.NunitoEditText;
+import com.vietinterview.getbee.customview.NunitoEditText;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -105,14 +103,12 @@ public class LoginFragment extends BaseFragment {
                     llPass.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackgroundfocus));
                     linePass.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
                     imgPass.setImageDrawable(getResources().getDrawable(R.drawable.ic_pass));
-                    DebugLog.showLogCat("onFocusChange");
                     edtPass.setTextColor(Color.BLACK);
                     edtPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 } else {
                     llPass.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackground));
                     linePass.setBackgroundColor(getResources().getColor(R.color.gray_not_focus));
                     imgPass.setImageDrawable(getResources().getDrawable(R.drawable.ic_pass_notfocus));
-                    DebugLog.showLogCat("onFocusChange False");
                 }
             }
         });
@@ -195,8 +191,7 @@ public class LoginFragment extends BaseFragment {
                         userInfoBean.email = edtEmail.getText().toString().trim();
                         userInfoBean.access_token = data.getApiToken();
                         AccountManager.setUserInfoBean(userInfoBean);
-                        DebugLog.showLogCat(status + "");
-                        FragmentUtil.replaceFragment(getActivity(), new MyProfileFragment().newInstance("MyProfileFragment"), null);
+                        FragmentUtil.replaceFragment(getActivity(), new HomeFragment().newInstance(""), null);
                     }
                 }
 

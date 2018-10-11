@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,8 +15,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,11 +23,9 @@ import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.activities.BaseActivity;
 import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.api.request.BaseJsonRequest;
-import com.vietinterview.getbee.api.request.BaseRequest;
 import com.vietinterview.getbee.model.Event;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.KeyboardUtil;
-import com.vietinterview.getbee.utils.NetworkUtils;
 import com.vietinterview.getbee.utils.UiUtil;
 
 import java.util.ArrayList;
@@ -220,7 +215,6 @@ public abstract class BaseFragment extends Fragment {
         saveStateToArguments();
         KeyboardUtil.hideSoftKeyboard(getActivity());
         if (isCancelRequestOnDestroyView()) {
-            NetworkUtils.getInstance(GetBeeApplication.getInstance()).cancelNormalRequest();
             isLoading = isLoadingMore();
         }
     }

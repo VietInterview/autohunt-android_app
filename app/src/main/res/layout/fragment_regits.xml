@@ -22,7 +22,7 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <com.vietinterview.getbee.view.NunitoBoldTextView
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -32,7 +32,7 @@
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
-            <com.vietinterview.getbee.view.NunitoTextView
+            <com.vietinterview.getbee.customview.NunitoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -74,7 +74,7 @@
                     android:layout_height="match_parent"
                     android:background="@color/gray_not_focus" />
 
-                <com.vietinterview.getbee.view.ClearableRegularEditText
+                <com.vietinterview.getbee.customview.ClearableRegularEditText
                     android:id="@+id/edtName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
                     android:layout_height="match_parent"
                     android:background="@color/gray_not_focus" />
 
-                <com.vietinterview.getbee.view.ClearableRegularEditText
+                <com.vietinterview.getbee.customview.ClearableRegularEditText
                     android:id="@+id/edtEmail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -161,7 +161,7 @@
                     android:layout_height="match_parent"
                     android:background="@color/gray_not_focus" />
 
-                <com.vietinterview.getbee.view.ClearableRegularEditText
+                <com.vietinterview.getbee.customview.ClearableRegularEditText
                     android:id="@+id/edtPhone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -181,7 +181,7 @@
                     android:visibility="gone" />
             </LinearLayout>
 
-            <com.vietinterview.getbee.view.ClearableRegularEditText
+            <com.vietinterview.getbee.customview.ClearableRegularEditText
                 android:id="@+id/edtJob"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -191,7 +191,7 @@
                 android:padding="10dp"
                 android:textColor="@color/black" />
 
-            <com.vietinterview.getbee.view.ClearableRegularEditText
+            <com.vietinterview.getbee.customview.ClearableRegularEditText
                 android:id="@+id/edtAdd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -207,7 +207,7 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <com.vietinterview.getbee.view.NunitoTextView
+                <com.vietinterview.getbee.customview.NunitoTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -218,7 +218,7 @@
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
-                <com.vietinterview.getbee.view.NunitoBoldTextView
+                <com.vietinterview.getbee.customview.NunitoBoldTextView
                     android:id="@+id/tvGoLogin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -241,7 +241,7 @@
                 android:visibility="gone" />
         </LinearLayout>
 
-        <com.vietinterview.getbee.view.NunitoBoldButton
+        <com.vietinterview.getbee.customview.NunitoBoldButton
             android:id="@+id/btnSignup"
             android:layout_width="match_parent"
             android:layout_height="50dp"

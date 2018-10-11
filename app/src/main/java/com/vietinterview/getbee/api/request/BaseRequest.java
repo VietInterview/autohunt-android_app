@@ -1,12 +1,12 @@
 package com.vietinterview.getbee.api.request;
 
-import com.vietinterview.getbee.api.volley.callback.ApiObjectCallBack;
-import com.vietinterview.getbee.constant.ApiConstant;
-import com.vietinterview.getbee.utils.DebugLog;
-import com.vietinterview.getbee.utils.GsonUtils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.constant.ApiConstant;
+import com.vietinterview.getbee.utils.DebugLog;
+import com.vietinterview.getbee.utils.GsonUtils;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -24,14 +24,15 @@ public abstract class BaseRequest<T> {
         client.setTimeout(ApiConstant.REQUEST_TIMEOUT);
         client.setConnectTimeout(ApiConstant.REQUEST_TIMEOUT);
         client.setResponseTimeout(ApiConstant.REQUEST_TIMEOUT);
-        if (getAccessToken() != null)
+        if (getAccessToken() != null) {
             client.addHeader("Authorization", "Bearer " + getAccessToken());
+        }
         mApiObjectCallBack = tApiObjectCallBack;
         mJsonHttpResponseHandler = new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 DebugLog.jsonFormat("response", response);
-                mApiObjectCallBack.onSuccess(GsonUtils.fromJson(response.toString(), getResponseClass()));
+                mApiObjectCallBack.onSuccess(GsonUtils.fromJson(response.toString(), getResponseClass()), statusCode);
             }
 
             @Override

@@ -30,8 +30,8 @@ import com.vietinterview.getbee.fragments.HomeFragment;
 import com.vietinterview.getbee.fragments.LoginFragment;
 import com.vietinterview.getbee.fragments.MyProfileFragment;
 import com.vietinterview.getbee.utils.FragmentUtil;
-import com.vietinterview.getbee.view.CircularTextView;
-import com.vietinterview.getbee.view.CustomTypefaceSpan;
+import com.vietinterview.getbee.customview.CircularTextView;
+import com.vietinterview.getbee.customview.CustomTypefaceSpan;
 
 import butterknife.BindView;
 
@@ -196,7 +196,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_home) {
-            FragmentUtil.replaceFragment(this, new HomeFragment(), null);
+            FragmentUtil.replaceFragment(this, new HomeFragment().newInstance(""), null);
         } else if (id == R.id.nav_job) {
 //            FragmentUtil.replaceFragment(this, new DetailJobFragment().newInstance("DetailJobFragment"), null);
         } else if (id == R.id.nav_cv) {

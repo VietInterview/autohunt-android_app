@@ -16,7 +16,7 @@
             android:paddingLeft="@dimen/activity_vertical_margin"
             android:paddingRight="@dimen/activity_vertical_margin">
 
-            <com.vietinterview.getbee.view.NunitoTextView
+            <com.vietinterview.getbee.customview.NunitoTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -26,7 +26,7 @@
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
-            <com.vietinterview.getbee.view.NunitoBoldTextView
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -51,7 +51,7 @@
             android:paddingLeft="@dimen/activity_vertical_margin"
             android:paddingRight="@dimen/activity_vertical_margin">
 
-            <com.vietinterview.getbee.view.NunitoTextView
+            <com.vietinterview.getbee.customview.NunitoTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -61,7 +61,7 @@
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
-            <com.vietinterview.getbee.view.NunitoBoldTextView
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -86,7 +86,7 @@
             android:paddingLeft="@dimen/activity_vertical_margin"
             android:paddingRight="@dimen/activity_vertical_margin">
 
-            <com.vietinterview.getbee.view.NunitoTextView
+            <com.vietinterview.getbee.customview.NunitoTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -96,7 +96,7 @@
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
-            <com.vietinterview.getbee.view.NunitoBoldTextView
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -121,7 +121,7 @@
             android:paddingLeft="@dimen/activity_vertical_margin"
             android:paddingRight="@dimen/activity_vertical_margin">
 
-            <com.vietinterview.getbee.view.NunitoTextView
+            <com.vietinterview.getbee.customview.NunitoTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -131,7 +131,7 @@
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
-            <com.vietinterview.getbee.view.NunitoBoldTextView
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -156,7 +156,7 @@
             android:paddingLeft="@dimen/activity_vertical_margin"
             android:paddingRight="@dimen/activity_vertical_margin">
 
-            <com.vietinterview.getbee.view.NunitoTextView
+            <com.vietinterview.getbee.customview.NunitoTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -166,7 +166,7 @@
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
-            <com.vietinterview.getbee.view.NunitoBoldTextView
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -191,7 +191,7 @@
             android:paddingLeft="@dimen/activity_vertical_margin"
             android:paddingRight="@dimen/activity_vertical_margin">
 
-            <com.vietinterview.getbee.view.NunitoTextView
+            <com.vietinterview.getbee.customview.NunitoTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -201,7 +201,7 @@
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
-            <com.vietinterview.getbee.view.NunitoBoldTextView
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -226,7 +226,7 @@
             android:paddingLeft="@dimen/activity_vertical_margin"
             android:paddingRight="@dimen/activity_vertical_margin">
 
-            <com.vietinterview.getbee.view.NunitoTextView
+            <com.vietinterview.getbee.customview.NunitoTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -236,7 +236,7 @@
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
-            <com.vietinterview.getbee.view.NunitoBoldTextView
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -261,7 +261,7 @@
             android:paddingLeft="@dimen/activity_vertical_margin"
             android:paddingRight="@dimen/activity_vertical_margin">
 
-            <com.vietinterview.getbee.view.NunitoTextView
+            <com.vietinterview.getbee.customview.NunitoTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -271,7 +271,7 @@
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
-            <com.vietinterview.getbee.view.NunitoBoldTextView
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -296,7 +296,7 @@
             android:paddingLeft="@dimen/activity_vertical_margin"
             android:paddingRight="@dimen/activity_vertical_margin">
 
-            <com.vietinterview.getbee.view.NunitoTextView
+            <com.vietinterview.getbee.customview.NunitoTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -306,7 +306,7 @@
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
-            <com.vietinterview.getbee.view.NunitoBoldTextView
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -331,7 +331,7 @@
             android:paddingLeft="@dimen/activity_vertical_margin"
             android:paddingRight="@dimen/activity_vertical_margin">
 
-            <com.vietinterview.getbee.view.NunitoTextView
+            <com.vietinterview.getbee.customview.NunitoTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -341,7 +341,7 @@
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
-            <com.vietinterview.getbee.view.NunitoBoldTextView
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -366,7 +366,7 @@
             android:paddingLeft="@dimen/activity_vertical_margin"
             android:paddingRight="@dimen/activity_vertical_margin">
 
-            <com.vietinterview.getbee.view.NunitoBoldTextView
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -390,7 +390,7 @@
             android:paddingLeft="@dimen/activity_vertical_margin"
             android:paddingRight="@dimen/activity_vertical_margin">
 
-            <com.vietinterview.getbee.view.NunitoTextView
+            <com.vietinterview.getbee.customview.NunitoTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
