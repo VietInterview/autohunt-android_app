@@ -40,7 +40,7 @@
                     android:orientation="vertical">
 
                     <com.vietinterview.getbee.view.NunitoBoldTextView
-                        android:id="@+id/textViewName"
+                        android:id="@+id/tvjobTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
@@ -49,11 +49,11 @@
                         android:textSize="18sp" />
 
                     <com.vietinterview.getbee.view.NunitoTextView
-                        android:id="@+id/textViewVersion"
+                        android:id="@+id/tvCompanyName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
                         android:text="Cannon Việt Nam"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textSize="16sp" />
@@ -66,8 +66,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
                     android:layout_marginTop="10dp"
-                    android:layout_weight="0.5"
-                    android:src="@drawable/ic_heart_job"
+                    android:layout_weight="0.3"
+                    android:src="@drawable/ic_save"
                     android:tag="image_tag" />
             </LinearLayout>
 
@@ -92,6 +92,7 @@
                         android:textSize="16sp" />
 
                     <com.vietinterview.getbee.view.NunitoTextView
+                        android:id="@+id/tvCarrer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -115,6 +116,7 @@
                         android:textSize="16sp" />
 
                     <com.vietinterview.getbee.view.NunitoTextView
+                        android:id="@+id/tvListCity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -138,6 +140,7 @@
                         android:textSize="16sp" />
 
                     <com.vietinterview.getbee.view.NunitoTextView
+                        android:id="@+id/tvExpireDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -161,6 +164,7 @@
                         android:textSize="16sp" />
 
                     <com.vietinterview.getbee.view.NunitoBoldTextView
+                        android:id="@+id/tvFee"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

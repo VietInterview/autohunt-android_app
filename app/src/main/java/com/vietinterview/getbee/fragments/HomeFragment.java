@@ -1,12 +1,17 @@
 package com.vietinterview.getbee.fragments;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,15 +19,23 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.JobsAdapter;
-import com.vietinterview.getbee.model.JobModel;
+import com.vietinterview.getbee.api.request.GetSearchJobsRequest;
+import com.vietinterview.getbee.api.response.jobsresponse.JobList;
+import com.vietinterview.getbee.api.response.jobsresponse.JobsResponse;
+import com.vietinterview.getbee.api.volley.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.model.MyJob;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.view.ClearableRegularEditText;
 
 import java.util.ArrayList;
 
@@ -33,7 +46,7 @@ import butterknife.OnClick;
  * Created by nguyennghiahiep on 10/5/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
     @BindView(R.id.llSearch)
     LinearLayout llSearch;
     @BindView(R.id.llCondition)
@@ -42,14 +55,24 @@ public class HomeFragment extends BaseFragment {
     ImageView imgFilter;
     @BindView(R.id.llDatePub)
     LinearLayout llDatePub;
+    @BindView(R.id.titleHeader)
+    TextView titleHeader;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+    @BindView(R.id.edtJobTitle)
+    ClearableRegularEditText edtJobTitle;
+    @BindView(R.id.swipe_container)
+    SwipeRefreshLayout mSwipeRefreshLayout;
     private boolean visibleSearch = false;
     private boolean visibleCondition = false;
-    private static RecyclerView.Adapter adapter;
+    public JobsAdapter adapter;
     public static View.OnClickListener myOnClickListener;
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
-    private static ArrayList<JobModel> data;
-    private static ArrayList<Integer> removedItems;
+    private ArrayList<JobList> jobsList = new ArrayList<>();
+    private ArrayList<JobList> jobsListServer = new ArrayList<>();
+    private GetSearchJobsRequest getSearchJobsRequest;
+    int mPage = 0;
 
     @Override
     protected int getLayoutId() {
@@ -67,21 +90,68 @@ public class HomeFragment extends BaseFragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
-        data = new ArrayList<JobModel>();
-        for (int i = 0; i < MyJob.nameArray.length; i++) {
-            data.add(new JobModel(
-                    MyJob.nameArray[i],
-                    MyJob.versionArray[i],
-                    MyJob.id_[i],
-                    MyJob.drawableArray[i]
-            ));
-        }
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0) {
+                    titleHeader.setVisibility(View.GONE);
+                    fab.hide();
+                } else {
+                    titleHeader.setVisibility(View.VISIBLE);
+                    fab.show();
+                }
+            }
 
-        removedItems = new ArrayList<Integer>();
-        this.registerForContextMenu(llDatePub);
-        adapter = new JobsAdapter(data, this);
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
+                    // Do something
+                } else if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                    // Do something
+                } else {
+                    // Do something
+                }
+            }
+        });
+        adapter = new JobsAdapter(recyclerView, jobsList, HomeFragment.this, getActivity());
         recyclerView.setAdapter(adapter);
+        this.registerForContextMenu(llDatePub);
+        edtJobTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                mPage = 0;
+                getSearchJob("4", "", charSequence.toString(), mPage);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        // SwipeRefreshLayout
+        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_dark,
+                android.R.color.holo_blue_dark);
+
+        adapter.setOnLoadMoreListener(HomeFragment.this);
+    }
+
+    @Override
+    public void onRefresh() {
+        mPage = 0;
+        getSearchJob("4", "", "", mPage);
     }
 
     @Override
@@ -91,7 +161,37 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        getSearchJob("4", "", "", mPage);
+    }
 
+    public void getSearchJob(String careerId, String cityId, String jobtile, final int page) {
+        if (page == 0)
+            showCoverNetworkLoading();
+        getSearchJobsRequest = new GetSearchJobsRequest(careerId, cityId, "10", jobtile, page);
+        getSearchJobsRequest.callRequest(new ApiObjectCallBack<JobsResponse>() {
+            @Override
+            public void onSuccess(final JobsResponse data) {
+                jobsListServer.clear();
+                jobsListServer.addAll(data.getJobList());
+                mSwipeRefreshLayout.setRefreshing(false);
+                hideCoverNetworkLoading();
+                if (page == 0) jobsList.clear();
+                else {
+                    jobsList.remove(jobsList.size() - 1);
+                    adapter.notifyItemRemoved(jobsList.size());
+                }
+                jobsList.addAll(data.getJobList());
+                titleHeader.setText(data.getTotal() + " công việc được tìm thấy");
+                adapter.notifyDataSetChanged();
+                adapter.setLoaded();
+            }
+
+            @Override
+            public void onFail(int failCode, String message) {
+                mSwipeRefreshLayout.setRefreshing(false);
+                hideCoverNetworkLoading();
+            }
+        });
     }
 
     @OnClick(R.id.llCarrer)
@@ -170,16 +270,29 @@ public class HomeFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onLoadMore() {
+        if (jobsListServer.size() <= 10) {
+            mPage++;
+            DebugLog.showLogCat(mPage + " MyPage");
+            getSearchJob("4", "", "", mPage);
+            adapter.setOnLoadMoreListener(HomeFragment.this);
+        } else {
+            Toast.makeText(getActivity(), "Loading data completed", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private static class MyOnClickListener implements View.OnClickListener {
 
-        private final Context context;
+        private final FragmentActivity fragmentActivity;
 
-        private MyOnClickListener(Context context) {
-            this.context = context;
+        private MyOnClickListener(FragmentActivity fragmentActivity) {
+            this.fragmentActivity = fragmentActivity;
         }
 
         @Override
         public void onClick(View v) {
+            FragmentUtil.pushFragment(fragmentActivity, new DetailJobFragment(), null);
         }
     }
 
@@ -205,7 +318,6 @@ public class HomeFragment extends BaseFragment {
                 llSearch.setVisibility(View.VISIBLE);
                 menu.getItem(0).setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_saveok));
             }
-            Toast.makeText(getActivity(), "Save", Toast.LENGTH_SHORT).show();
             return true;
         }
         return super.onOptionsItemSelected(item);

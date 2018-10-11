@@ -3,6 +3,7 @@ package com.vietinterview.getbee.fragments;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,15 +18,19 @@ import com.vietinterview.getbee.api.request.BaseJsonRequest;
 import com.vietinterview.getbee.api.request.GetNewListByPlace;
 import com.vietinterview.getbee.api.request.LoginRequest;
 import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.view.TouchDetectableScrollView;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 
 public class MyProfileFragment extends BaseFragment {
-    //    @BindView(R.id.btnFrgSec)
-//    Button btnFrgSec;
+    @BindView(R.id.scrollView)
+    TouchDetectableScrollView scrollView;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
     String mNameFragment;
     LoginRequest loginRequest;
     GetNewListByPlace getNewListByPlace;
@@ -48,6 +53,19 @@ public class MyProfileFragment extends BaseFragment {
         setCustomToolbar(true);
         setCustomToolbarVisible(true);
         setHasOptionsMenu(true);
+        scrollView.setMyScrollChangeListener(new TouchDetectableScrollView.OnMyScrollChangeListener() {
+            @Override
+            public void onScrollUp() {
+//                fab.hide();
+
+            }
+
+            @Override
+            public void onScrollDown() {
+//                fab.show();
+
+            }
+        });
     }
 
     @Override

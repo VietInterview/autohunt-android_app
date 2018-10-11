@@ -14,8 +14,8 @@ public class ApiConstant {
     public static final int REQUEST_TIMEOUT = 10;
 
     //Server KH
-    public final static String REAL_URL = "http://54.176.149.102:8081/api/";
-    public final static String DEV_URL = "http://54.176.149.102:8081/api/";
+    public final static String REAL_URL = "http://54.176.149.102:8081/";
+    public final static String DEV_URL = "http://54.176.149.102:8081/";
 
     public final static String BASE_URL = IS_DEBUG_BUILD_TYPE ? DEV_URL : REAL_URL;
     public final static String BASE_NAME_AUTHORIZE = "";
@@ -24,7 +24,8 @@ public class ApiConstant {
     public final static int GET = 0;
     public final static int ITEM_LIMIT_DEFAULT = 30;
 
-    public final static String LOGIN = BASE_URL + "authenticate";
-    public final static String REGIST = BASE_URL + "register";
+    public final static String LOGIN = BASE_URL + "api/authenticate";
+    public final static String REGIST = BASE_URL + "api/register";
+    public final static String GET_SEARCH_JOBS = BASE_URL + "svccollaborator/api/jobs/searchJob";
     public final static String GET_NEW_LIST_BY_PLACE = BASE_URL + "getNewListByPlace";
 }

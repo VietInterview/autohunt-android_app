@@ -133,7 +133,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         tvLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Do footer action
+                AccountManager.logout();
+                FragmentUtil.replaceFragment(MainActivity.this, new LoginFragment(), null);
+                drawer.closeDrawer(GravityCompat.START);
             }
         });
     }
@@ -196,7 +198,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (id == R.id.nav_home) {
             FragmentUtil.replaceFragment(this, new HomeFragment(), null);
         } else if (id == R.id.nav_job) {
-//            FragmentUtil.replaceFragment(this, new ThirdFragment().newInstance("ThirdFragment"), null);
+//            FragmentUtil.replaceFragment(this, new DetailJobFragment().newInstance("DetailJobFragment"), null);
         } else if (id == R.id.nav_cv) {
 //            DebugLog.showLogCat("nav_slideshow");
         } else if (id == R.id.nav_profile) {

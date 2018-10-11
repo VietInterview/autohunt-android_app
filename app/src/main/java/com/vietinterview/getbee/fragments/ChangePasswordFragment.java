@@ -79,7 +79,7 @@ public class ChangePasswordFragment extends BaseFragment {
 //    @OnClick(R.id.btnFrgThird)
 //    void onClickFrgThird() {
 //        FragmentUtil.popEntireFragmentBackStack(ChangePasswordFragment.this);
-//        FragmentUtil.pushFragment(getActivity(), new ThirdFragment(), null);
+//        FragmentUtil.pushFragment(getActivity(), new DetailJobFragment(), null);
 //    }
 
     @Override

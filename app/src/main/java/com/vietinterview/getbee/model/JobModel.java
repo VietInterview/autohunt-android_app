@@ -2,8 +2,6 @@ package com.vietinterview.getbee.model;
 
 
 public class JobModel {
-
-
     String name;
     String version;
     int id_;

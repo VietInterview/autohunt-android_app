@@ -184,15 +184,15 @@ public class ListUserFragment extends BaseFragment implements ListUserView, View
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.menu_detail_job, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_reload:
-                presenter.getData(false); // Not use cache
-                break;
+//            case R.id.action_reload:
+//                presenter.getData(false); // Not use cache
+//                break;
         }
         return super.onOptionsItemSelected(item);
     }
