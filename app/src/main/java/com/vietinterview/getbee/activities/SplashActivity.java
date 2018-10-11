@@ -64,7 +64,6 @@ public class SplashActivity extends BaseActivity {
             }
         });
 
-        // start animation fade in
         mLogoImageView.startAnimation(fadeInAnimation);
     }
 
