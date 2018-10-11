@@ -129,17 +129,14 @@ public class DetailJobFragment extends BaseFragment {
     private void setupTabIcons() {
         TextView tabOne = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
         tabOne.setText("Thông tin");
-//        tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_dm01, 0, 0);
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
         tabTwo.setText("Thống kê");
-//        tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_dm02, 0, 0);
         tabLayout.getTabAt(1).setCustomView(tabTwo);
 
         TextView tabThree = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
         tabThree.setText("CV đã nộp");
-//        tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_dm03, 0, 0);
         tabLayout.getTabAt(2).setCustomView(tabThree);
     }
 
