@@ -198,9 +198,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (id == R.id.nav_home) {
             FragmentUtil.replaceFragment(this, new HomeFragment().newInstance(""), null);
         } else if (id == R.id.nav_job) {
-//            FragmentUtil.replaceFragment(this, new DetailJobFragment().newInstance("DetailJobFragment"), null);
         } else if (id == R.id.nav_cv) {
-//            DebugLog.showLogCat("nav_slideshow");
         } else if (id == R.id.nav_profile) {
             FragmentUtil.replaceFragment(this, new MyProfileFragment().newInstance("MyProfileFragment"), null);
         }
