@@ -60,11 +60,8 @@ public class DetailJobFragment extends BaseFragment {
             @Override
             public void onPageSelected(int position) {
                 if (position == 0) {
-//                    getEventBaseFragment().doFillBackground("Option");
                 } else if (position == 1) {
-//                    getEventBaseFragment().doFillBackground("Check");
                 } else if (position == 2) {
-//                    getEventBaseFragment().doFillBackground("History");
                 }
             }
 
