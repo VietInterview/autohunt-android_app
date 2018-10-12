@@ -6,6 +6,9 @@ import com.vietinterview.getbee.constant.ApiConstant;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
+import java.util.List;
+
 /**
  * Created by hiepn on 22/04/2017.
  */
@@ -22,6 +25,16 @@ public class LoginRequest extends BaseJsonRequest<LoginResponse> {
     @Override
     public Class<LoginResponse> getResponseClass() {
         return LoginResponse.class;
+    }
+
+    @Override
+    public List<LoginResponse> getListResponseClass() {
+        return null;
+    }
+
+    @Override
+    public Type getType() {
+        return null;
     }
 
     @Override

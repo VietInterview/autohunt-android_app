@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
@@ -18,12 +19,16 @@ import android.widget.LinearLayout;
 
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.api.request.LoginRequest;
 import com.vietinterview.getbee.api.response.loginresponse.LoginResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.model.UserInfoBean;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.customview.NunitoEditText;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -132,6 +137,9 @@ public class LoginFragment extends BaseFragment {
 
             }
         });
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        }
     }
 
     @Override
@@ -183,20 +191,22 @@ public class LoginFragment extends BaseFragment {
             showCoverNetworkLoading();
             loginRequest = new LoginRequest(edtEmail.getText().toString().trim(), edtPass.getText().toString().trim());
             loginRequest.callRequest(getActivity(), new ApiObjectCallBack<LoginResponse>() {
-
                 @Override
-                public void onSuccess(LoginResponse data, int status) {
+                public void onSuccess(LoginResponse data, List<LoginResponse> loginResponses, int status) {
                     if (status == 200) {
                         UserInfoBean userInfoBean = new UserInfoBean();
                         userInfoBean.email = edtEmail.getText().toString().trim();
                         userInfoBean.access_token = data.getApiToken();
                         AccountManager.setUserInfoBean(userInfoBean);
+                        if (getActivity() instanceof MainActivity) {
+                            ((MainActivity) getActivity()).drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                        }
                         FragmentUtil.replaceFragment(getActivity(), new HomeFragment().newInstance(""), null);
                     }
                 }
 
                 @Override
-                public void onFail(int failCode, String message) {
+                public void onFail(int failCode, LoginResponse data, String message) {
                     hideCoverNetworkLoading();
                     mNotifydialog = new Dialog(getActivity());
                     mNotifydialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -212,11 +222,6 @@ public class LoginFragment extends BaseFragment {
                         }
                     });
                     mNotifydialog.show();
-                }
-
-                @Override
-                public void onFail(int failCode, LoginResponse data, String message) {
-
                 }
             });
         }

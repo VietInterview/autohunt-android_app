@@ -1,9 +1,11 @@
 package com.vietinterview.getbee.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.Reader;
 import java.lang.reflect.Type;
+import java.util.List;
 
 //import org.eclipse.egit.github.core.event.Event;
 
@@ -76,7 +78,13 @@ public abstract class GsonUtils {
     public static final <V> V fromJson(String json, Class<V> type) {
         return GSON.fromJson(json, type);
     }
-
+    public static <T> List<T> toList(String json, Class<T> clazz) {
+        if (null == json) {
+            return null;
+        }
+        Gson gson = new Gson();
+        return gson.fromJson(json, new TypeToken<T>(){}.getType());
+    }
     /**
      * Convert string to given type
      *

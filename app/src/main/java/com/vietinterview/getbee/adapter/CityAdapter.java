@@ -8,29 +8,29 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.api.response.CareerResponse;
+import com.vietinterview.getbee.api.response.CityResponse;
 import com.vietinterview.getbee.customview.CheckableLinearLayout;
 
 import java.util.List;
 
-public class CarrerAdapter extends BaseAdapter {
+public class CityAdapter extends BaseAdapter {
 //    private String[] data;
     private LayoutInflater inflater;
-    List<CareerResponse> mCareerResponses;
+    List<CityResponse> cityResponses;
 
-    public CarrerAdapter(Context context, List<CareerResponse> careerResponses) {
-        mCareerResponses = careerResponses;
+    public CityAdapter(Context context, List<CityResponse> cityResponses) {
+        this.cityResponses = cityResponses;
         inflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
-        return mCareerResponses.size();
+        return cityResponses.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return mCareerResponses.get(i);
+        return cityResponses.get(i);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class CarrerAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder viewHolder;
-        final CareerResponse careerResponse = mCareerResponses.get(i);
+        final CityResponse cityResponse = cityResponses.get(i);
 
         if (view == null) {
             view = inflater.inflate(R.layout.list_item, viewGroup, false);
@@ -59,7 +59,7 @@ public class CarrerAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        viewHolder.name.setText(careerResponse.getName());
+        viewHolder.name.setText(cityResponse.getName());
 
         return view;
     }

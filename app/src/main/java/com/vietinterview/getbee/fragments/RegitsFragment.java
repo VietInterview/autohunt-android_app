@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.api.request.RegistRequest;
 import com.vietinterview.getbee.api.response.RegistResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
@@ -25,6 +27,9 @@ import com.vietinterview.getbee.utils.StringUtils;
 import com.vietinterview.getbee.customview.NunitoBoldTextView;
 import com.vietinterview.getbee.customview.NunitoEditText;
 import com.vietinterview.getbee.customview.NunitoTextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -201,6 +206,9 @@ public class RegitsFragment extends BaseFragment {
 
             }
         });
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        }
     }
 
     @Override
@@ -240,8 +248,9 @@ public class RegitsFragment extends BaseFragment {
                 showCoverNetworkLoading();
                 registRequest = new RegistRequest(edtEmail.getText().toString().trim(), edtPhone.getText().toString().trim(), edtName.getText().toString().trim(), edtJob.getText().toString().trim(), edtAdd.getText().toString().trim());
                 registRequest.callRequest(getActivity(), new ApiObjectCallBack<RegistResponse>() {
+
                     @Override
-                    public void onSuccess(RegistResponse data, int status) {
+                    public void onSuccess(RegistResponse data, List<RegistResponse> registResponses, int status) {
                         hideCoverNetworkLoading();
                         mNotifydialog = new Dialog(getActivity());
                         mNotifydialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -259,11 +268,6 @@ public class RegitsFragment extends BaseFragment {
                             }
                         });
                         mNotifydialog.show();
-                    }
-
-                    @Override
-                    public void onFail(int failCode, String message) {
-                        hideCoverNetworkLoading();
                     }
 
                     @Override

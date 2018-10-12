@@ -5,6 +5,9 @@ import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.api.response.jobsresponse.JobsResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
 
+import java.lang.reflect.Type;
+import java.util.List;
+
 /**
  * Created by hiepnguyennghia on 10/11/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
@@ -27,6 +30,16 @@ public class GetSearchJobsRequest extends BaseRequest<JobsResponse> {
     @Override
     public Class<JobsResponse> getResponseClass() {
         return JobsResponse.class;
+    }
+
+    @Override
+    public List<JobsResponse> getListResponseClass() {
+        return null;
+    }
+
+    @Override
+    public Type getType() {
+        return null;
     }
 
     @Override

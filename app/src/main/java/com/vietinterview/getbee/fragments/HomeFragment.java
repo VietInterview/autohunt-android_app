@@ -31,11 +31,11 @@ import com.vietinterview.getbee.api.response.jobsresponse.JobList;
 import com.vietinterview.getbee.api.response.jobsresponse.JobsResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
-import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.customview.ClearableRegularEditText;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -51,8 +51,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     LinearLayout llCondition;
     @BindView(R.id.imgFilter)
     ImageView imgFilter;
-    @BindView(R.id.llDatePub)
-    LinearLayout llDatePub;
+    //    @BindView(R.id.llDatePub)
+//    LinearLayout llDatePub;
     @BindView(R.id.titleHeader)
     TextView titleHeader;
     @BindView(R.id.fab)
@@ -126,7 +126,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         });
         adapter = new JobsAdapter(recyclerView, jobsList, HomeFragment.this, getActivity());
         recyclerView.setAdapter(adapter);
-        this.registerForContextMenu(llDatePub);
+//        this.registerForContextMenu(llDatePub);
         edtJobTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -144,8 +144,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
             }
         });
-        // SwipeRefreshLayout
-        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
                 android.R.color.holo_green_dark,
@@ -176,8 +174,9 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     public void getSearchJob(String careerId, String cityId, String jobtile, final int page) {
-        if (page == 0)
+        if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
             showCoverNetworkLoading();
+
         getSearchJobsRequest = new GetSearchJobsRequest(careerId, cityId, "10", jobtile, page);
         getSearchJobsRequest.callRequest(new ApiObjectCallBack<JobsResponse>() {
 
@@ -188,7 +187,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             }
 
             @Override
-            public void onSuccess(JobsResponse data, int status) {
+            public void onSuccess(JobsResponse data, List<JobsResponse> jobsResponses, int status) {
                 jobsListServer.clear();
                 jobsListServer.addAll(data.getJobList());
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -204,25 +203,23 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 adapter.setLoaded();
             }
 
-            @Override
-            public void onFail(int failCode, String message) {
-                mSwipeRefreshLayout.setRefreshing(false);
-                hideCoverNetworkLoading();
-            }
-
         });
     }
 
     @OnClick(R.id.llCarrer)
     public void onllCarrerClick() {
-        FragmentUtil.pushFragment(getActivity(), new CarrerFragment(), null);
+        FragmentUtil.pushFragment(getActivity(), new CarrerOrCityFragment().newInstance(false), null);
     }
 
-    @OnClick(R.id.llDatePub)
-    public void onPubDateClick() {
-        this.registerForContextMenu(llDatePub);
-        getActivity().openContextMenu(llDatePub);
+    @OnClick(R.id.llAdd)
+    public void onllAddClick() {
+        FragmentUtil.pushFragment(getActivity(), new CarrerOrCityFragment().newInstance(true), null);
     }
+//    @OnClick(R.id.llDatePub)
+//    public void onPubDateClick() {
+//        this.registerForContextMenu(llDatePub);
+//        getActivity().openContextMenu(llDatePub);
+//    }
 
     @OnClick(R.id.imgFilter)
     public void onimgFilter() {
@@ -293,7 +290,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     public void onLoadMore() {
         if (jobsListServer.size() > 0) {
             mPage++;
-            DebugLog.showLogCat(mPage + " MyPage");
             getSearchJob("4", "", "", mPage);
             adapter.setOnLoadMoreListener(HomeFragment.this);
         } else {
@@ -331,10 +327,12 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             if (visibleSearch) {
                 visibleSearch = false;
                 llSearch.setVisibility(View.GONE);
+                llCondition.setVisibility(View.GONE);
                 menu.getItem(0).setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_search_black));
             } else {
                 visibleSearch = true;
                 llSearch.setVisibility(View.VISIBLE);
+                llCondition.setVisibility(View.VISIBLE);
                 menu.getItem(0).setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_saveok));
             }
             return true;

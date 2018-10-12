@@ -6,6 +6,9 @@ import com.vietinterview.getbee.constant.ApiConstant;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
+import java.util.List;
+
 /**
  * Created by hiepnguyennghia on 10/9/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
@@ -28,6 +31,16 @@ public class RegistRequest extends BaseJsonRequest<RegistResponse> {
     @Override
     public Class<RegistResponse> getResponseClass() {
         return RegistResponse.class;
+    }
+
+    @Override
+    public List<RegistResponse> getListResponseClass() {
+        return null;
+    }
+
+    @Override
+    public Type getType() {
+        return null;
     }
 
     @Override

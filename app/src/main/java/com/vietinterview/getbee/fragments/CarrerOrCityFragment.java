@@ -18,6 +18,13 @@ import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.CarrerAdapter;
+import com.vietinterview.getbee.adapter.CityAdapter;
+import com.vietinterview.getbee.api.request.GetListCareerRequest;
+import com.vietinterview.getbee.api.request.GetListCityRequest;
+import com.vietinterview.getbee.api.response.CareerResponse;
+import com.vietinterview.getbee.api.response.CityResponse;
+import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
 import java.util.ArrayList;
@@ -29,55 +36,97 @@ import butterknife.BindView;
  * Created by hiepnguyennghia on 10/9/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class CarrerFragment extends BaseFragment {
+public class CarrerOrCityFragment extends BaseFragment {
     @BindView(R.id.list)
     public ListView listView;
+    GetListCareerRequest getListCareerRequest;
+    GetListCityRequest getListCityRequest;
+    CarrerAdapter carrerAdapter;
+    CityAdapter cityAdapter;
+    private Menu mMenu;
+    private MenuItem mMenuItem;
+    boolean mIsCity;
+
+    public static CarrerOrCityFragment newInstance(boolean isCity) {
+        CarrerOrCityFragment fm = new CarrerOrCityFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isCity", isCity);
+        fm.setArguments(bundle);
+        return fm;
+    }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_jobs;
+        return R.layout.fragment_carrers_cities;
     }
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-        getEventBaseFragment().doFillBackground("Ngành Nghề");
+        getEventBaseFragment().doFillBackground(!mIsCity ? "Ngành Nghề" : "Thành Phố");
         setCustomToolbar(true);
         setHasOptionsMenu(true);
-        String[] fruit = getResources().getStringArray(R.array.jobs_array);
-        CarrerAdapter adapter = new CarrerAdapter(getActivity(), fruit);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 updateMenuTitles();
             }
         });
-        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        listView.setAdapter(adapter);
     }
 
     @Override
     protected void getArgument(Bundle bundle) {
-
+        mIsCity = bundle.getBoolean("isCity");
     }
 
     @Override
     protected void initData() {
-
+        if (mIsCity) {
+            getListCity();
+            listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        } else {
+            listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+            getListCarrer();
+        }
     }
 
-    private List<String> getSelectedItems() {
-        List<String> result = new ArrayList<>();
+    public void getListCarrer() {
+        showCoverNetworkLoading();
+        getListCareerRequest = new GetListCareerRequest();
+        getListCareerRequest.callRequest(new ApiObjectCallBack<CareerResponse>() {
+
+            @Override
+            public void onSuccess(CareerResponse data, List<CareerResponse> listCareerResponses, int status) {
+                hideCoverNetworkLoading();
+                carrerAdapter = new CarrerAdapter(getActivity(), listCareerResponses);
+                listView.setAdapter(carrerAdapter);
+            }
+
+            @Override
+            public void onFail(int failCode, CareerResponse data, String message) {
+                hideCoverNetworkLoading();
+            }
+        });
+    }
+
+    private List<CareerResponse> getSelectedItemsCarrer() {
+        List<CareerResponse> result = new ArrayList<>();
         SparseBooleanArray checkedItems = listView.getCheckedItemPositions();
 
         for (int i = 0; i < listView.getCount(); ++i) {
             if (checkedItems.size() > 0) {
                 if (checkedItems.valueAt(i)) {
-                    result.add((String) listView.getItemAtPosition(checkedItems.keyAt(i)));
+                    result.add((CareerResponse) listView.getItemAtPosition(checkedItems.keyAt(i)));
                 }
             }
         }
 
         return result;
+    }
+
+    private CityResponse getSelectedItemsCity() {
+        SparseBooleanArray checkedItems = listView.getCheckedItemPositions();
+        CityResponse cityResponse = (CityResponse) listView.getItemAtPosition(checkedItems.keyAt(0));
+        return cityResponse;
     }
 
     @Override
@@ -100,9 +149,6 @@ public class CarrerFragment extends BaseFragment {
 
     }
 
-    private Menu mMenu;
-    private MenuItem mMenuItem;
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -112,9 +158,13 @@ public class CarrerFragment extends BaseFragment {
         mMenuItem = menuItem;
         if (menuItem != null) {
             TextView textView = (TextView) menuItem.getActionView();
-            if (getSelectedItems().size() > 0)
-                textView.setText("Chọn (" + getSelectedItems().size() + ")");
-            else textView.setText("Chọn");
+            if (mIsCity) {
+                textView.setText("Chọn");
+            } else {
+                if (getSelectedItemsCarrer().size() > 0)
+                    textView.setText("Chọn (" + getSelectedItemsCarrer().size() + ")");
+                else textView.setText("Chọn");
+            }
             textView.setPadding(0, 0, 16, 0);
             textView.setTextSize(18);
             textView.setTextColor(Color.BLACK);
@@ -140,14 +190,36 @@ public class CarrerFragment extends BaseFragment {
         return super.onOptionsItemSelected(item);
     }
 
+    public void getListCity() {
+        showCoverNetworkLoading();
+        getListCityRequest = new GetListCityRequest();
+        getListCityRequest.callRequest(new ApiObjectCallBack<CityResponse>() {
+            @Override
+            public void onSuccess(CityResponse data, List<CityResponse> tArrayList, int status) {
+                hideCoverNetworkLoading();
+                cityAdapter = new CityAdapter(getActivity(), tArrayList);
+                listView.setAdapter(cityAdapter);
+            }
+
+            @Override
+            public void onFail(int failCode, CityResponse data, String message) {
+                hideCoverNetworkLoading();
+            }
+        });
+    }
 
     private void updateMenuTitles() {
         MenuItem menuItem = mMenu.findItem(R.id.choose);
         if (menuItem != null) {
             TextView textView = (TextView) menuItem.getActionView();
-            if (getSelectedItems().size() > 0)
-                textView.setText("Chọn (" + getSelectedItems().size() + ")");
-            else textView.setText("Chọn");
+            if (mIsCity) {
+                textView.setText("Chọn");
+                DebugLog.showLogCat(getSelectedItemsCity() + "");
+            } else {
+                if (getSelectedItemsCarrer().size() > 0)
+                    textView.setText("Chọn (" + getSelectedItemsCarrer().size() + ")");
+                else textView.setText("Chọn");
+            }
             textView.setTextSize(18);
             textView.setTextColor(Color.BLACK);
             textView.setPadding(0, 0, 16, 0);

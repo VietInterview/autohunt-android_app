@@ -1,10 +1,8 @@
 package com.vietinterview.getbee.fragments;
 
-import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -104,7 +102,7 @@ public class MyProfileFragment extends BaseFragment {
 
     @OnClick(R.id.rlChooseJob)
     public void onChooseJobClick() {
-        FragmentUtil.pushFragment(getActivity(), new CarrerFragment(), null);
+        FragmentUtil.pushFragment(getActivity(), new CarrerOrCityFragment().newInstance(false), null);
     }
 
     @Override

@@ -84,6 +84,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         });
         if (AccountManager.getUserInfoBean() != null) {
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             FragmentUtil.replaceFragment(this, new HomeFragment(), null);
         } else {
             FragmentUtil.replaceFragment(MainActivity.this, new LoginFragment(), null);
@@ -134,6 +135,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onClick(View v) {
                 AccountManager.logout();
+                drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 FragmentUtil.replaceFragment(MainActivity.this, new LoginFragment(), null);
                 drawer.closeDrawer(GravityCompat.START);
             }
