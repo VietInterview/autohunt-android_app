@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -25,6 +26,7 @@ import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.api.request.BaseJsonRequest;
 import com.vietinterview.getbee.model.Event;
 import com.vietinterview.getbee.utils.DebugLog;
+import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.KeyboardUtil;
 import com.vietinterview.getbee.utils.UiUtil;
 
@@ -58,7 +60,7 @@ public abstract class BaseFragment extends Fragment {
 
     @BindView(R.id.common_layout)
     LinearLayout linearLayoutEmpty;
-
+    public static View.OnClickListener myOnClickListener;
     @BindView(R.id.common_txt_empty)
     TextView tvEmpty;
     LayoutInflater mInflater;
@@ -122,6 +124,7 @@ public abstract class BaseFragment extends Fragment {
     private View createRootView(LayoutInflater inflater, ViewGroup container) {
         mInflater = inflater;
         mContainer = container;
+        myOnClickListener = new MyOnClickListener(getActivity());
         if (isSkipGenerateBaseLayout()) {
             rootView = inflater.inflate(getLayoutId(), container, false);
             ButterKnife.bind(rootView);
@@ -171,6 +174,19 @@ public abstract class BaseFragment extends Fragment {
         return baseActivity.getEventBaseActivity();
     }
 
+    private static class MyOnClickListener implements View.OnClickListener {
+
+        private final FragmentActivity fragmentActivity;
+
+        private MyOnClickListener(FragmentActivity fragmentActivity) {
+            this.fragmentActivity = fragmentActivity;
+        }
+
+        @Override
+        public void onClick(View v) {
+            FragmentUtil.pushFragment(fragmentActivity, new DetailJobFragment(), null);
+        }
+    }
 
     public void showProgressDialog(boolean cancleable) {
         if (progressDlg != null && progressDlg.isShowing()) {

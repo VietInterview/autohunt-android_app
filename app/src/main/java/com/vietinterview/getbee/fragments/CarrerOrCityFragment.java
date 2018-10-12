@@ -24,6 +24,7 @@ import com.vietinterview.getbee.api.request.GetListCityRequest;
 import com.vietinterview.getbee.api.response.CareerResponse;
 import com.vietinterview.getbee.api.response.CityResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.customview.NunitoTextView;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
@@ -39,6 +40,8 @@ import butterknife.BindView;
 public class CarrerOrCityFragment extends BaseFragment {
     @BindView(R.id.list)
     public ListView listView;
+    @BindView(R.id.tvHeader)
+    NunitoTextView tvHeader;
     GetListCareerRequest getListCareerRequest;
     GetListCityRequest getListCityRequest;
     CarrerAdapter carrerAdapter;
@@ -63,6 +66,7 @@ public class CarrerOrCityFragment extends BaseFragment {
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         getEventBaseFragment().doFillBackground(!mIsCity ? "Ngành Nghề" : "Thành Phố");
+        tvHeader.setText(mIsCity ? "Tất cả thành phố" : "Tất cả ngành nghề");
         setCustomToolbar(true);
         setHasOptionsMenu(true);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -174,6 +178,7 @@ public class CarrerOrCityFragment extends BaseFragment {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(getActivity(), "Choose", Toast.LENGTH_SHORT).show();
+                    FragmentUtil.popBackStack(CarrerOrCityFragment.this);
                 }
             });
         }

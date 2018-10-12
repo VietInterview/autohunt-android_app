@@ -33,4 +33,5 @@
     <color name="background_color_menu">#ebebeb</color>
     <color name="gray_not_focus">#D2D2E1</color>
     <color name="background_icon_not_focus">#B1B1BA</color>
+    <color name="underline_tablyaout">#3C3B6E</color>
 </resources>

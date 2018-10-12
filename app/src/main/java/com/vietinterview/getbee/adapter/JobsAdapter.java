@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.jobsresponse.JobList;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
+import com.vietinterview.getbee.fragments.BaseFragment;
 import com.vietinterview.getbee.fragments.HomeFragment;
 import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.StringUtils;
@@ -24,7 +25,7 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
     private ArrayList<JobList> dataSet;
-    HomeFragment mHomeFragment;
+    BaseFragment mHomeFragment;
     private int visibleThreshold = 5;
     private int lastVisibleItem, totalItemCount;
     private OnLoadMoreListener onLoadMoreListener;
@@ -39,7 +40,8 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView tvListCity;
         TextView tvExpireDate;
         TextView tvFee;
-        ImageView imageViewIcon;
+        ImageView imgBussiness;
+        ImageView imgStatus;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -49,11 +51,12 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             this.tvListCity = (TextView) itemView.findViewById(R.id.tvListCity);
             this.tvExpireDate = (TextView) itemView.findViewById(R.id.tvExpireDate);
             this.tvFee = (TextView) itemView.findViewById(R.id.tvFee);
-            this.imageViewIcon = (ImageView) itemView.findViewById(R.id.imageView);
+            this.imgBussiness = (ImageView) itemView.findViewById(R.id.imgBussiness);
+            this.imgStatus = (ImageView) itemView.findViewById(R.id.imgStatus);
         }
     }
 
-    public JobsAdapter(RecyclerView recyclerView, ArrayList<JobList> data, HomeFragment homeFragment, FragmentActivity activity) {
+    public JobsAdapter(RecyclerView recyclerView, ArrayList<JobList> data, BaseFragment homeFragment, FragmentActivity activity) {
         this.dataSet = data;
         this.mHomeFragment = homeFragment;
         this.mActivity = activity;
@@ -105,15 +108,12 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int listPosition) {
         if (holder instanceof MyViewHolder) {
             MyViewHolder myViewHolder = (MyViewHolder) holder;
-//            if (dataSet.get(listPosition) != null) {
-                myViewHolder.tvjobTitle.setText(StringUtils.nullStrToEmpty(dataSet.get(listPosition).getJobTitle()));
-                myViewHolder.tvCompanyName.setText("Cannon Viêt Nam");
-                myViewHolder.tvCarrer.setText("IT, Phần mềm");
-                myViewHolder.tvListCity.setText("Hà Nội");
-                myViewHolder.tvExpireDate.setText(DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(dataSet.get(listPosition).getExpireDate()) + ""));
-                myViewHolder.tvFee.setText(dataSet.get(listPosition).getFee() + "");
-//        imageView.setImageResource(dataSet.get(listPosition).getImage());
-//            }
+            myViewHolder.tvjobTitle.setText(StringUtils.nullStrToEmpty(dataSet.get(listPosition).getJobTitle()));
+            myViewHolder.tvCompanyName.setText("Cannon Viêt Nam");
+            myViewHolder.tvCarrer.setText("IT, Phần mềm");
+            myViewHolder.tvListCity.setText("Hà Nội");
+            myViewHolder.tvExpireDate.setText(DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(dataSet.get(listPosition).getExpireDate()) + ""));
+            myViewHolder.tvFee.setText(dataSet.get(listPosition).getFee() + "");
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.progressBar.setIndeterminate(true);

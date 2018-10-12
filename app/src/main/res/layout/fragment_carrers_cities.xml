@@ -19,6 +19,7 @@
         android:textSize="18sp" />
 
     <com.vietinterview.getbee.customview.NunitoTextView
+        android:id="@+id/tvHeader"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:gravity="center|left"

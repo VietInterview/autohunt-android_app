@@ -1,10 +1,8 @@
 package com.vietinterview.getbee.fragments;
 
-import android.app.Dialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,11 +15,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.utils.FragmentUtil;
@@ -29,28 +24,35 @@ import com.vietinterview.getbee.utils.FragmentUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by hiepn on 23/03/2017.
- */
+import butterknife.BindView;
+import butterknife.OnClick;
 
-public class DetailJobFragment extends BaseFragment {
+/**
+ * Created by hiepnguyennghia on 10/12/18.
+ * Copyright © 2018 Vietinterview. All rights reserved.
+ */
+public class MyJobFragment extends BaseFragment {
+    @BindView(R.id.llCondition)
+    LinearLayout llCondition;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private Dialog mNotifydialog;
+    private Menu menu;
+    private boolean visibleFilter = false;
+    private boolean visibleCondition = false;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_detail_job;
+        return R.layout.fragment_myjob;
     }
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-        getEventBaseFragment().doFillBackground("Chi tiết công viêc");
+        getEventBaseFragment().doFillBackground("Công việc của tôi");
         setCustomToolbar(true);
         setHasOptionsMenu(true);
         viewPager = (ViewPager) root.findViewById(R.id.viewpager);
         tabLayout = (TabLayout) root.findViewById(R.id.tabs);
-        tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.transparent));
+        tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.underline_tablyaout));
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -61,7 +63,6 @@ public class DetailJobFragment extends BaseFragment {
             public void onPageSelected(int position) {
                 if (position == 0) {
                 } else if (position == 1) {
-                } else if (position == 2) {
                 }
             }
 
@@ -70,15 +71,6 @@ public class DetailJobFragment extends BaseFragment {
 
             }
         });
-    }
-
-    @Override
-    protected void getArgument(Bundle bundle) {
-
-    }
-
-    @Override
-    protected void initData() {
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
@@ -104,44 +96,29 @@ public class DetailJobFragment extends BaseFragment {
     }
 
     @Override
-    protected void onRestore() {
+    protected void getArgument(Bundle bundle) {
 
     }
 
     @Override
-    protected void initialize() {
-
-    }
-
-    @Override
-    protected void onSaveState(Bundle bundle) {
-
-    }
-
-    @Override
-    protected void onRestoreState(Bundle bundle) {
+    protected void initData() {
 
     }
 
     private void setupTabIcons() {
         TextView tabOne = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabOne.setText("Thông tin");
+        tabOne.setText("Công việc đã lưu");
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabTwo.setText("Thống kê");
+        tabTwo.setText("Công việc đã nộp");
         tabLayout.getTabAt(1).setCustomView(tabTwo);
-
-        TextView tabThree = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabThree.setText("CV đã nộp");
-        tabLayout.getTabAt(2).setCustomView(tabThree);
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFrag(new InfoFragment(), "Thông tin");
-        adapter.addFrag(new StatisticalFragment(), "Thống kê");
-        adapter.addFrag(new CVSentFragment(), "CV đã nộp");
+        adapter.addFrag(new JobsSavedFragment(), "Công việc đã lưu");
+        adapter.addFrag(new JobsApplyedFragment(), "Công việc đã nộp");
         viewPager.setCurrentItem(0);
         viewPager.setAdapter(adapter);
     }
@@ -152,6 +129,11 @@ public class DetailJobFragment extends BaseFragment {
 
         public ViewPagerAdapter(FragmentManager manager) {
             super(manager);
+        }
+
+        @Override
+        public Parcelable saveState() {
+            return null;
         }
 
         @Override
@@ -174,49 +156,71 @@ public class DetailJobFragment extends BaseFragment {
             return mFragmentTitleList.get(position);
         }
     }
+    @OnClick(R.id.llCarrer)
+    public void onllCarrerClick() {
+        FragmentUtil.pushFragment(getActivity(), new CarrerOrCityFragment().newInstance(false), null);
+    }
 
+    @OnClick(R.id.llAdd)
+    public void onllAddClick() {
+        FragmentUtil.pushFragment(getActivity(), new CarrerOrCityFragment().newInstance(true), null);
+    }
     @Override
-    protected void processCustomToolbar() {
-        FragmentUtil.popBackStack(this);
+    protected void onRestore() {
+
     }
 
     @Override
-    protected void processOnBackPress() {
-        FragmentUtil.popBackStack(this);
+    protected void initialize() {
+
     }
 
     @Override
-    protected Drawable getIconLeft() {
-        return getResources().getDrawable(R.drawable.ic_back_svg);
+    protected void onSaveState(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void onRestoreState(Bundle bundle) {
+
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_detail_job, menu);
+        inflater.inflate(R.menu.menu_myjob, menu);
+        this.menu = menu;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.share) {
-
-            mNotifydialog = new Dialog(getActivity());
-            mNotifydialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            mNotifydialog.setContentView(R.layout.dialog_share);
-            mNotifydialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            mNotifydialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
-            Button btnOK = (Button) mNotifydialog.findViewById(R.id.btnOK);
-            btnOK.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mNotifydialog.dismiss();
-                }
-            });
-            mNotifydialog.show();
+        if (id == R.id.filter) {
+            if (visibleFilter) {
+                visibleFilter = false;
+                llCondition.setVisibility(View.GONE);
+                menu.getItem(0).setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_filter_black));
+            } else {
+                visibleFilter = true;
+                llCondition.setVisibility(View.VISIBLE);
+                menu.getItem(0).setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_saveok));
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void processOnBackPress() {
+    }
+
+    @Override
+    protected Drawable getIconLeft() {
+        return getResources().getDrawable(R.drawable.ic_menu);
+    }
+
+    @Override
+    protected void processCustomToolbar() {
+        loadMenuLeft();
     }
 }

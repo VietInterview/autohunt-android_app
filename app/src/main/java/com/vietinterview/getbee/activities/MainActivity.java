@@ -28,6 +28,8 @@ import com.vietinterview.getbee.callback.OnFillBackgroundListener;
 import com.vietinterview.getbee.callback.OnShowLogoListener;
 import com.vietinterview.getbee.fragments.HomeFragment;
 import com.vietinterview.getbee.fragments.LoginFragment;
+import com.vietinterview.getbee.fragments.MyCVFragment;
+import com.vietinterview.getbee.fragments.MyJobFragment;
 import com.vietinterview.getbee.fragments.MyProfileFragment;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.customview.CircularTextView;
@@ -200,7 +202,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (id == R.id.nav_home) {
             FragmentUtil.replaceFragment(this, new HomeFragment().newInstance(""), null);
         } else if (id == R.id.nav_job) {
+            FragmentUtil.replaceFragment(this, new MyJobFragment(), null);
         } else if (id == R.id.nav_cv) {
+            FragmentUtil.replaceFragment(this, new MyCVFragment(), null);
         } else if (id == R.id.nav_profile) {
             FragmentUtil.replaceFragment(this, new MyProfileFragment().newInstance("MyProfileFragment"), null);
         }
