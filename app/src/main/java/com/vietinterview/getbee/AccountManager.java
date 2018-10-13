@@ -76,7 +76,7 @@ public class AccountManager {
 
     public static String getUDID() {
         if (UDID == null) {
-            //Test git 3
+            //Test git 4
             UDID = Settings.Secure.getString(GetBeeApplication.getInstance().getContentResolver(),
                     Settings.Secure.ANDROID_ID);
         }
