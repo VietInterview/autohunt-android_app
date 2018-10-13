@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Created by Hiep Nguyen Nghia.
+    Copyright © 2018 Vietinterview. All rights reserved.
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="#ffffff"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_vertical_margin">
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="5 CV đã được nộp"
+                android:textColor="#B1B1BA"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_not_focus" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="89dp">
+
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvTitlePass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:padding="@dimen/activity_vertical_margin"
+                android:text="Mật khẩu"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvPass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:padding="@dimen/activity_vertical_margin"
+                android:text="Ngày nộp: 04/10/2018"
+                android:textColor="#191830"
+                android:textSize="16sp" />
+
+            <com.vietinterview.getbee.customview.NunitoRegularButton
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="@dimen/activity_vertical_margin"
+                android:background="@color/red"
+                android:text="Chờ duyệt"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_not_focus" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="89dp">
+
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:padding="@dimen/activity_vertical_margin"
+                android:text="Mật khẩu"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:padding="@dimen/activity_vertical_margin"
+                android:text="Ngày nộp: 04/10/2018"
+                android:textColor="#191830"
+                android:textSize="16sp" />
+
+            <com.vietinterview.getbee.customview.NunitoRegularButton
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="@dimen/activity_vertical_margin"
+                android:background="@color/red"
+                android:text="Chờ duyệt"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_not_focus" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="89dp">
+
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:padding="@dimen/activity_vertical_margin"
+                android:text="Mật khẩu"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:padding="@dimen/activity_vertical_margin"
+                android:text="Ngày nộp: 04/10/2018"
+                android:textColor="#191830"
+                android:textSize="16sp" />
+
+            <com.vietinterview.getbee.customview.NunitoRegularButton
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="@dimen/activity_vertical_margin"
+                android:background="@color/red"
+                android:text="Chờ duyệt"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_not_focus" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="89dp">
+
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:padding="@dimen/activity_vertical_margin"
+                android:text="Mật khẩu"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:padding="@dimen/activity_vertical_margin"
+                android:text="Ngày nộp: 04/10/2018"
+                android:textColor="#191830"
+                android:textSize="16sp" />
+
+            <com.vietinterview.getbee.customview.NunitoRegularButton
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="@dimen/activity_vertical_margin"
+                android:background="@color/red"
+                android:text="Chờ duyệt"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_not_focus" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="89dp">
+
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:padding="@dimen/activity_vertical_margin"
+                android:text="Mật khẩu"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:padding="@dimen/activity_vertical_margin"
+                android:text="Ngày nộp: 04/10/2018"
+                android:textColor="#191830"
+                android:textSize="16sp" />
+
+            <com.vietinterview.getbee.customview.NunitoRegularButton
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="@dimen/activity_vertical_margin"
+                android:background="@color/red"
+                android:text="Chờ duyệt"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_not_focus" />
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">GetBee</string>
+    <string name="action_settings">Settings</string>
+    <string name="dialog_btn_close">Close</string>
+    <string name="apierror">API error</string>
+    <string name="pleaseinputdata">Please input data</string>
+    <string name="dialog_error_api">Đã xảy ra lỗi. Vui lòng thử lại từ thời gian sau đó.</string>
+    <string name="dialog_error_timeout">センターへの接続が失敗しました。\nしばらく経ってからもう1度お試しください。</string>
+    <string name="dialog_error_no_connection">ネットワークに接続できません。もう一度ご確認ください。</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="hello_blank_fragment">Anh DQ</string>
+
+    <string-array name="jobs_array">
+        <item>An toàn lao đông</item>
+        <item>Bác sĩ</item>
+        <item>Bán hàng</item>
+        <item>Bán hàng kỹ thuật </item>
+        <item>Bán sỉ/Bán lẻ</item>
+        <item>Bảo hiểm</item>
+        <item>Bảo trì/Sửa chữa</item>
+    </string-array>
+</resources>

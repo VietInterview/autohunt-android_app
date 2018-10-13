@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EDF1F8"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="#EDF1F8"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/llFooter"
+            android:layout_marginBottom="@dimen/activity_vertical_margin">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#EDF1F8"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rlHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/activity_vertical_margin"
+                    android:paddingRight="@dimen/activity_vertical_margin">
+
+                    <ImageView
+                        android:id="@+id/imgHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/timeline" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="135dp"
+                        android:layout_below="@+id/imgHeader"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <com.vietinterview.getbee.customview.NunitoTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="30dp"
+                            android:drawableRight="@drawable/ic_arrow_right"
+                            android:drawablePadding="10dp"
+                            android:text="Cannon Vietnam"
+                            android:textColor="#505059"
+                            android:textSize="18sp" />
+
+                        <com.vietinterview.getbee.customview.NunitoBoldTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="5dp"
+                            android:text="Nhân viên hành chính"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <com.vietinterview.getbee.customview.NunitoRegularButton
+                            android:layout_width="86dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center"
+                            android:background="#54CE4E"
+                            android:text="Đang tuyển"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        card_view:cardBackgroundColor="@android:color/white">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/cannon" />
+                    </android.support.v7.widget.CardView>
+                </RelativeLayout>
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlHeader"
+                    android:layout_marginLeft="@dimen/activity_vertical_margin"
+                    android:layout_marginRight="@dimen/activity_vertical_margin"
+                    app:tabGravity="fill"
+                    app:tabMode="fixed" />
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="1100dp"
+                    android:layout_below="@+id/tabs"
+                    android:paddingLeft="@dimen/activity_vertical_margin"
+                    android:paddingRight="@dimen/activity_vertical_margin"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            </RelativeLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/llFooter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.vietinterview.getbee.customview.NunitoBoldButton
+                android:layout_width="149dp"
+                android:layout_height="40dp"
+                android:layout_margin="8dp"
+                android:background="@color/transparent"
+                android:drawableLeft="@drawable/ic_heart_job"
+                android:drawablePadding="-16dp"
+                android:paddingLeft="16dp"
+                android:text="Lưu công việc"
+                android:textColor="#B1B1BA" />
+
+            <com.vietinterview.getbee.customview.NunitoBoldButton
+                android:layout_width="149dp"
+                android:layout_height="40dp"
+                android:layout_margin="8dp"
+                android:background="@color/yellow_highlight"
+                android:drawableLeft="@drawable/ic_addcv"
+                android:drawablePadding="-32dp"
+                android:paddingLeft="32dp"
+                android:text="Nộp CV" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
