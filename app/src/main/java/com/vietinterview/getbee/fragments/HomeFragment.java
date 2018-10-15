@@ -195,15 +195,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         getSearchJobsRequest.callRequest(new ApiObjectCallBack<JobsResponse>() {
 
             @Override
-            public void onFail(int failCode, JobsResponse data, String message) {
-                if (mSwipeRefreshLayout != null)
-                    mSwipeRefreshLayout.setRefreshing(false);
-                hideCoverNetworkLoading();
-                DialogUtil.showDialog(getActivity(), "Thông báo", message);
-            }
-
-            @Override
-            public void onSuccess(JobsResponse data, List<JobsResponse> jobsResponses, int status) {
+            public void onSuccess(JobsResponse data, List<JobsResponse> dataArrayList, int status, String message) {
                 jobsListServer.clear();
                 jobsListServer.addAll(data.getJobList());
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -219,6 +211,13 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 adapter.setLoaded();
             }
 
+            @Override
+            public void onFail(int failCode, JobsResponse data, List<JobsResponse> dataArrayList, String message) {
+                if (mSwipeRefreshLayout != null)
+                    mSwipeRefreshLayout.setRefreshing(false);
+                hideCoverNetworkLoading();
+                DialogUtil.showDialog(getActivity(), "Thông báo", message);
+            }
         });
     }
 

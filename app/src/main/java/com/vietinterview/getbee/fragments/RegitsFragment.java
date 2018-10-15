@@ -252,48 +252,57 @@ public class RegitsFragment extends BaseFragment {
                 registRequest.callRequest(getActivity(), new ApiObjectCallBack<RegistResponse>() {
 
                     @Override
-                    public void onSuccess(RegistResponse data, List<RegistResponse> registResponses, int status) {
+                    public void onSuccess(RegistResponse data, List<RegistResponse> dataArrayList, int status, String message) {
                         hideCoverNetworkLoading();
-                        mNotifydialog = new Dialog(getActivity());
-                        mNotifydialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                        mNotifydialog.setContentView(R.layout.dialog_noti);
-                        mNotifydialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        mNotifydialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                        NunitoTextView nunitoTextView = (NunitoTextView) mNotifydialog.findViewById(R.id.tvContent);
-                        nunitoTextView.setText("Bạn đã đăng ký tài khoản Cộng tác viên. Chúng tôi sẽ gửi thông tin email và mật khẩu qua hòm thư mà bạn đã đăng ký");
-                        Button btnOK = (Button) mNotifydialog.findViewById(R.id.btnOK);
-                        btnOK.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                FragmentUtil.replaceFragment(getActivity(), new LoginFragment(), null);
-                                mNotifydialog.dismiss();
-                            }
-                        });
-                        mNotifydialog.show();
-                    }
-
-                    @Override
-                    public void onFail(int failCode, RegistResponse data, String message) {
-                        hideCoverNetworkLoading();
-                        if (data != null) {
+                        if (status == 201) {
                             mNotifydialog = new Dialog(getActivity());
                             mNotifydialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                             mNotifydialog.setContentView(R.layout.dialog_noti);
                             mNotifydialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                             mNotifydialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                             NunitoTextView nunitoTextView = (NunitoTextView) mNotifydialog.findViewById(R.id.tvContent);
-                            if (data.getErrorKey().equalsIgnoreCase("userexists"))
-                                nunitoTextView.setText("Địa chỉ email đã tồn tại");
+                            nunitoTextView.setText("Bạn đã đăng ký tài khoản Cộng tác viên. Chúng tôi sẽ gửi thông tin email và mật khẩu qua hòm thư mà bạn đã đăng ký");
                             Button btnOK = (Button) mNotifydialog.findViewById(R.id.btnOK);
                             btnOK.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+                                    FragmentUtil.replaceFragment(getActivity(), new LoginFragment(), null);
                                     mNotifydialog.dismiss();
                                 }
                             });
                             mNotifydialog.show();
                         } else {
-                            DialogUtil.showDialog(getActivity(), "Thông báo", message);
+                            if (data != null)
+                                DialogUtil.showDialog(getActivity(), "Thông báo", data.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onFail(int failCode, RegistResponse data, List<RegistResponse> dataArrayList, String message) {
+                        hideCoverNetworkLoading();
+                        if (data != null) {
+                            if (data.getErrorKey().equalsIgnoreCase("userexists"))
+                                DialogUtil.showDialog(getActivity(), "Thông báo", "Địa chỉ email đã tồn tại");
+                        } else {
+                            if (failCode == 201) {
+                                mNotifydialog = new Dialog(getActivity());
+                                mNotifydialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                mNotifydialog.setContentView(R.layout.dialog_noti);
+                                mNotifydialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                mNotifydialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                                NunitoTextView nunitoTextView = (NunitoTextView) mNotifydialog.findViewById(R.id.tvContent);
+                                nunitoTextView.setText("Bạn đã đăng ký tài khoản Cộng tác viên. Chúng tôi sẽ gửi thông tin email và mật khẩu qua hòm thư mà bạn đã đăng ký");
+                                Button btnOK = (Button) mNotifydialog.findViewById(R.id.btnOK);
+                                btnOK.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        FragmentUtil.replaceFragment(getActivity(), new LoginFragment(), null);
+                                        mNotifydialog.dismiss();
+                                    }
+                                });
+                                mNotifydialog.show();
+                            } else
+                                DialogUtil.showDialog(getActivity(), "Thông báo", message);
                         }
                     }
                 });

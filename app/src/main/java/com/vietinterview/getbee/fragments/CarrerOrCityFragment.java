@@ -99,14 +99,14 @@ public class CarrerOrCityFragment extends BaseFragment {
         getListCareerRequest.callRequest(new ApiObjectCallBack<CareerResponse>() {
 
             @Override
-            public void onSuccess(CareerResponse data, List<CareerResponse> listCareerResponses, int status) {
+            public void onSuccess(CareerResponse data, List<CareerResponse> dataArrayList, int status, String message) {
                 hideCoverNetworkLoading();
-                carrerAdapter = new CarrerAdapter(getActivity(), listCareerResponses);
+                carrerAdapter = new CarrerAdapter(getActivity(), dataArrayList);
                 listView.setAdapter(carrerAdapter);
             }
 
             @Override
-            public void onFail(int failCode, CareerResponse data, String message) {
+            public void onFail(int failCode, CareerResponse data, List<CareerResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
             }
         });
@@ -200,14 +200,14 @@ public class CarrerOrCityFragment extends BaseFragment {
         getListCityRequest = new GetListCityRequest();
         getListCityRequest.callRequest(new ApiObjectCallBack<CityResponse>() {
             @Override
-            public void onSuccess(CityResponse data, List<CityResponse> tArrayList, int status) {
+            public void onSuccess(CityResponse data, List<CityResponse> dataArrayList, int status, String message) {
                 hideCoverNetworkLoading();
-                cityAdapter = new CityAdapter(getActivity(), tArrayList);
+                cityAdapter = new CityAdapter(getActivity(), dataArrayList);
                 listView.setAdapter(cityAdapter);
             }
 
             @Override
-            public void onFail(int failCode, CityResponse data, String message) {
+            public void onFail(int failCode, CityResponse data, List<CityResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
             }
         });

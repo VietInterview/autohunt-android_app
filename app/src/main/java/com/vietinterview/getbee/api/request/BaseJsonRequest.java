@@ -2,8 +2,6 @@ package com.vietinterview.getbee.api.request;
 
 import android.content.Context;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.MySSLSocketFactory;
@@ -20,7 +18,6 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,7 +42,7 @@ public abstract class BaseJsonRequest<T> {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     DebugLog.jsonFormat(getAbsoluteUrl(), response);
-                    mApiObjectCallBack.onSuccess(GsonUtils.fromJson(response.toString(), getResponseClass()), null, statusCode);
+                    mApiObjectCallBack.onSuccess(GsonUtils.fromJson(response.toString(), getResponseClass()), null, statusCode, "");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -54,39 +51,41 @@ public abstract class BaseJsonRequest<T> {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 DebugLog.jsonFormat(getAbsoluteUrl(), response);
-                Gson gson = new Gson();
                 tList = getListResponseClass();
-                tList = gson.fromJson(response.toString(), getType());
-                mApiObjectCallBack.onSuccess(null, tList, statusCode);
+                tList = GsonUtils.fromJson(response.toString(), getType());
+                mApiObjectCallBack.onSuccess(null, tList, statusCode, "");
 
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                try {
-                    DebugLog.jsonFormat(getAbsoluteUrl(), responseString);
-                    mApiObjectCallBack.onSuccess(GsonUtils.fromJson(responseString, getResponseClass()), null, statusCode);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                DebugLog.showLogCat(responseString);
+                mApiObjectCallBack.onSuccess(null, null, statusCode, responseString);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 try {
                     DebugLog.jsonFormat(getAbsoluteUrl(), errorResponse);
-//                    if (errorResponse != null)
-                    mApiObjectCallBack.onFail(statusCode, GsonUtils.fromJson(errorResponse.toString(), getResponseClass()), throwable.getMessage());
-//                    else mApiObjectCallBack.onFail(statusCode, null, throwable.toString());
+                    mApiObjectCallBack.onFail(statusCode, GsonUtils.fromJson(errorResponse.toString(), getResponseClass()), null, throwable.getMessage());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
 
             @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                DebugLog.jsonFormat(getAbsoluteUrl(), errorResponse);
+//                Gson gson = new Gson();
+                tList = getListResponseClass();
+                tList = GsonUtils.fromJson(errorResponse.toString(), getType());
+                mApiObjectCallBack.onFail(statusCode, null, tList, throwable.toString());
+            }
+
+            @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                DebugLog.showLogCat(responseString + " - " + statusCode);
-                mApiObjectCallBack.onFail(statusCode, null, responseString.toString());
+                DebugLog.showLogCat(throwable.toString() + " - " + statusCode);
+                mApiObjectCallBack.onFail(statusCode, null, null, responseString.toString());
             }
         };
         StringEntity entity = null;

@@ -1,7 +1,5 @@
 package com.vietinterview.getbee.api.request;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -15,7 +13,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,29 +38,41 @@ public abstract class BaseRequest<T> {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 DebugLog.jsonFormat("response", response);
-                mApiObjectCallBack.onSuccess(GsonUtils.fromJson(response.toString(), getResponseClass()), null, statusCode);
+                mApiObjectCallBack.onSuccess(GsonUtils.fromJson(response.toString(), getResponseClass()), null, statusCode, "");
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 DebugLog.jsonFormat("response", response);
-                Gson gson = new Gson();
                 tList = getListResponseClass();
-                tList = gson.fromJson(response.toString(), getType());
-                mApiObjectCallBack.onSuccess(null, tList, statusCode);
+                tList = GsonUtils.fromJson(response.toString(), getType());
+                mApiObjectCallBack.onSuccess(null, tList, statusCode, "");
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                DebugLog.showLogCat(responseString);
+                mApiObjectCallBack.onSuccess(null, null, statusCode, responseString);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                DebugLog.jsonFormat("response", errorResponse);
+                tList = getListResponseClass();
+                tList = GsonUtils.fromJson(errorResponse.toString(), getType());
+                mApiObjectCallBack.onFail(statusCode, null, tList, throwable.getMessage());
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-//                super.onFailure(statusCode, headers, throwable, errorResponse);
                 DebugLog.showLogCat(throwable.getMessage());
-                mApiObjectCallBack.onFail(statusCode, GsonUtils.fromJson(errorResponse.toString(), getResponseClass()), throwable.getMessage());
+                mApiObjectCallBack.onFail(statusCode, GsonUtils.fromJson(errorResponse.toString(), getResponseClass()), null, throwable.getMessage());
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 DebugLog.showLogCat(responseString);
-                mApiObjectCallBack.onFail(statusCode, null, responseString);
+                mApiObjectCallBack.onFail(statusCode, null, null, responseString);
             }
         };
         DebugLog.showLogCat(getAbsoluteUrl() + "\n" + putParams() + "\n " + getAccessToken());

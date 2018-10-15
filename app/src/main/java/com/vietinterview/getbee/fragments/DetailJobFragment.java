@@ -149,7 +149,7 @@ public class DetailJobFragment extends BaseFragment {
         saveUnsaveJobRequest = new SaveUnsaveJobRequest(mJobList.getId(), collStatus);
         saveUnsaveJobRequest.callRequest(getActivity(), new ApiObjectCallBack<AddRemoveJobResponse>() {
             @Override
-            public void onSuccess(AddRemoveJobResponse data, List<AddRemoveJobResponse> tArrayList, int status) {
+            public void onSuccess(AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, int status, String message) {
                 hideCoverNetworkLoading();
                 if (status == 200) {
                     mJobList.setCollStatus(data.getStatus());
@@ -168,7 +168,7 @@ public class DetailJobFragment extends BaseFragment {
             }
 
             @Override
-            public void onFail(int failCode, AddRemoveJobResponse data, String message) {
+            public void onFail(int failCode, AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
             }
         });
