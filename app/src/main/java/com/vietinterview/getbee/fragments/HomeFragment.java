@@ -38,6 +38,7 @@ import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.callback.OnRefreshHomeListener;
 import com.vietinterview.getbee.callback.RecyclerTouchListener;
 import com.vietinterview.getbee.utils.DebugLog;
+import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.customview.ClearableRegularEditText;
 
@@ -195,8 +196,10 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
             @Override
             public void onFail(int failCode, JobsResponse data, String message) {
-                mSwipeRefreshLayout.setRefreshing(false);
+                if (mSwipeRefreshLayout != null)
+                    mSwipeRefreshLayout.setRefreshing(false);
                 hideCoverNetworkLoading();
+                DialogUtil.showDialog(getActivity(), "Thông báo", message);
             }
 
             @Override

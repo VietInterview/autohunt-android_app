@@ -22,6 +22,8 @@ import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.api.request.RegistRequest;
 import com.vietinterview.getbee.api.response.RegistResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.utils.DebugLog;
+import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.StringUtils;
 import com.vietinterview.getbee.customview.NunitoBoldTextView;
@@ -273,22 +275,26 @@ public class RegitsFragment extends BaseFragment {
                     @Override
                     public void onFail(int failCode, RegistResponse data, String message) {
                         hideCoverNetworkLoading();
-                        mNotifydialog = new Dialog(getActivity());
-                        mNotifydialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                        mNotifydialog.setContentView(R.layout.dialog_noti);
-                        mNotifydialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        mNotifydialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                        NunitoTextView nunitoTextView = (NunitoTextView) mNotifydialog.findViewById(R.id.tvContent);
-                        if (data.getErrorKey().equalsIgnoreCase("userexists"))
-                            nunitoTextView.setText("Địa chỉ email đã tồn tại");
-                        Button btnOK = (Button) mNotifydialog.findViewById(R.id.btnOK);
-                        btnOK.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                mNotifydialog.dismiss();
-                            }
-                        });
-                        mNotifydialog.show();
+                        if (data != null) {
+                            mNotifydialog = new Dialog(getActivity());
+                            mNotifydialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            mNotifydialog.setContentView(R.layout.dialog_noti);
+                            mNotifydialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                            mNotifydialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                            NunitoTextView nunitoTextView = (NunitoTextView) mNotifydialog.findViewById(R.id.tvContent);
+                            if (data.getErrorKey().equalsIgnoreCase("userexists"))
+                                nunitoTextView.setText("Địa chỉ email đã tồn tại");
+                            Button btnOK = (Button) mNotifydialog.findViewById(R.id.btnOK);
+                            btnOK.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mNotifydialog.dismiss();
+                                }
+                            });
+                            mNotifydialog.show();
+                        } else {
+                            DialogUtil.showDialog(getActivity(), "Thông báo", message);
+                        }
                     }
                 });
             } else {

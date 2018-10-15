@@ -21,6 +21,7 @@ import com.vietinterview.getbee.api.response.jobsresponse.JobList;
 import com.vietinterview.getbee.api.response.jobsresponse.JobsResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
+import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
 import java.util.ArrayList;
@@ -170,8 +171,10 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
 
             @Override
             public void onFail(int failCode, JobsResponse data, String message) {
-                mSwipeRefreshLayout.setRefreshing(false);
+                if (mSwipeRefreshLayout != null)
+                    mSwipeRefreshLayout.setRefreshing(false);
                 hideCoverNetworkLoading();
+                DialogUtil.showDialog(getActivity(), "Thông báo", message);
             }
 
             @Override

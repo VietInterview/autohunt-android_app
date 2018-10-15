@@ -74,10 +74,10 @@ public abstract class BaseJsonRequest<T> {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 try {
-                    DebugLog.jsonFormat(getAbsoluteUrl(), throwable.toString());
-                    if (errorResponse != null)
-                        mApiObjectCallBack.onFail(statusCode, GsonUtils.fromJson(errorResponse.toString(), getResponseClass()), throwable.getMessage());
-                    else mApiObjectCallBack.onFail(statusCode, null, throwable.toString());
+                    DebugLog.jsonFormat(getAbsoluteUrl(), errorResponse);
+//                    if (errorResponse != null)
+                    mApiObjectCallBack.onFail(statusCode, GsonUtils.fromJson(errorResponse.toString(), getResponseClass()), throwable.getMessage());
+//                    else mApiObjectCallBack.onFail(statusCode, null, throwable.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -85,8 +85,8 @@ public abstract class BaseJsonRequest<T> {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                DebugLog.jsonFormat(getAbsoluteUrl(), throwable.toString());
-                mApiObjectCallBack.onFail(statusCode, null, throwable.toString());
+                DebugLog.showLogCat(responseString + " - " + statusCode);
+                mApiObjectCallBack.onFail(statusCode, null, responseString.toString());
             }
         };
         StringEntity entity = null;
