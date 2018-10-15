@@ -1,5 +1,7 @@
 package com.vietinterview.getbee.fragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -27,10 +29,15 @@ import android.widget.Toast;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.JobsAdapter;
 import com.vietinterview.getbee.api.request.GetSearchJobsRequest;
+import com.vietinterview.getbee.api.request.SaveUnsaveJobRequest;
+import com.vietinterview.getbee.api.response.AddRemoveJobResponse;
 import com.vietinterview.getbee.api.response.jobsresponse.JobList;
 import com.vietinterview.getbee.api.response.jobsresponse.JobsResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
+import com.vietinterview.getbee.callback.OnRefreshHomeListener;
+import com.vietinterview.getbee.callback.RecyclerTouchListener;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.customview.ClearableRegularEditText;
 
@@ -64,7 +71,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private boolean visibleSearch = false;
     private boolean visibleCondition = false;
     public JobsAdapter adapter;
-    public static View.OnClickListener myOnClickListener;
+    //    public static View.OnClickListener myOnClickListener;
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
     private ArrayList<JobList> jobsList = new ArrayList<>();
@@ -90,10 +97,16 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         setCustomToolbar(true);
         setHasOptionsMenu(true);
         setCustomToolbarVisible(true);
+        getEventBaseFragment().setOnRefreshHomeListener(new OnRefreshHomeListener() {
+            @Override
+            public void onRefresh() {
+                mPage = 0;
+                getSearchJob("4", "", "", mPage);
+            }
+        });
         myOnClickListener = new MyOnClickListener(getActivity());
         recyclerView = (RecyclerView) root.findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
-
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -307,7 +320,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
         @Override
         public void onClick(View v) {
-            FragmentUtil.pushFragment(fragmentActivity, new DetailJobFragment(), null);
+            DebugLog.showLogCat(v.getVerticalScrollbarPosition() + "");
         }
     }
 

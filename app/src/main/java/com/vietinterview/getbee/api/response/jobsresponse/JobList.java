@@ -1,10 +1,13 @@
 
 package com.vietinterview.getbee.api.response.jobsresponse;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class JobList {
+public class JobList implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -83,7 +86,107 @@ public class JobList {
     private Object updateBy;
     @SerializedName("collStatus")
     @Expose
-    private Object collStatus;
+    private Integer collStatus;
+
+    protected JobList(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            customerId = null;
+        } else {
+            customerId = in.readInt();
+        }
+        jobTitle = in.readString();
+        if (in.readByte() == 0) {
+            careerId = null;
+        } else {
+            careerId = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            jobLevel = null;
+        } else {
+            jobLevel = in.readInt();
+        }
+        lstCityId = in.readString();
+        if (in.readByte() == 0) {
+            quantity = null;
+        } else {
+            quantity = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            fromSalary = null;
+        } else {
+            fromSalary = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            toSalary = null;
+        } else {
+            toSalary = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            currency = null;
+        } else {
+            currency = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            fee = null;
+        } else {
+            fee = in.readInt();
+        }
+        jobDescription = in.readString();
+        submitDate = in.readString();
+        expireDate = in.readString();
+        if (in.readByte() == 0) {
+            status = null;
+        } else {
+            status = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            isHotjob = null;
+        } else {
+            isHotjob = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            countCv = null;
+        } else {
+            countCv = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            countColl = null;
+        } else {
+            countColl = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            countInterview = null;
+        } else {
+            countInterview = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            countOffer = null;
+        } else {
+            countOffer = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            countGotoWork = null;
+        } else {
+            countGotoWork = in.readInt();
+        }
+    }
+
+    public static final Creator<JobList> CREATOR = new Creator<JobList>() {
+        @Override
+        public JobList createFromParcel(Parcel in) {
+            return new JobList(in);
+        }
+
+        @Override
+        public JobList[] newArray(int size) {
+            return new JobList[size];
+        }
+    };
 
     public Integer getId() {
         return id;
@@ -285,12 +388,121 @@ public class JobList {
         this.updateBy = updateBy;
     }
 
-    public Object getCollStatus() {
+    public Integer getCollStatus() {
         return collStatus;
     }
 
-    public void setCollStatus(Object collStatus) {
+    public void setCollStatus(Integer collStatus) {
         this.collStatus = collStatus;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        if (id == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(id);
+        }
+        if (customerId == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(customerId);
+        }
+        parcel.writeString(jobTitle);
+        if (careerId == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(careerId);
+        }
+        if (jobLevel == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(jobLevel);
+        }
+        parcel.writeString(lstCityId);
+        if (quantity == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(quantity);
+        }
+        if (fromSalary == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(fromSalary);
+        }
+        if (toSalary == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(toSalary);
+        }
+        if (currency == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(currency);
+        }
+        if (fee == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(fee);
+        }
+        parcel.writeString(jobDescription);
+        parcel.writeString(submitDate);
+        parcel.writeString(expireDate);
+        if (status == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(status);
+        }
+        if (isHotjob == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(isHotjob);
+        }
+        if (countCv == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(countCv);
+        }
+        if (countColl == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(countColl);
+        }
+        if (countInterview == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(countInterview);
+        }
+        if (countOffer == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(countOffer);
+        }
+        if (countGotoWork == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(countGotoWork);
+        }
+    }
 }

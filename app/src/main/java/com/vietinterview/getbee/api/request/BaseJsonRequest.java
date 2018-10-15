@@ -100,6 +100,10 @@ public abstract class BaseJsonRequest<T> {
         }
         client.setSSLSocketFactory(MySSLSocketFactory.getFixedSocketFactory());
         client.addHeader("Content-Type", "application/json");
+        client.setResponseTimeout(ApiConstant.REQUEST_TIMEOUT);
+        if (getAccessToken() != null) {
+            client.addHeader("Authorization", "Bearer " + getAccessToken());
+        }
         client.post(mContext, getAbsoluteUrl(), entity, "application/json", mJsonHttpResponseHandler);
     }
 

@@ -123,11 +123,12 @@
             android:orientation="horizontal">
 
             <com.vietinterview.getbee.customview.NunitoBoldButton
+                android:id="@+id/saveUnsaveJob"
                 android:layout_width="149dp"
                 android:layout_height="40dp"
                 android:layout_margin="8dp"
-                android:background="@color/transparent"
-                android:drawableLeft="@drawable/ic_heart_job"
+                android:background="@drawable/border_radius_save_button"
+                android:drawableLeft="@drawable/ic_save"
                 android:drawablePadding="-16dp"
                 android:paddingLeft="16dp"
                 android:text="Lưu công việc"

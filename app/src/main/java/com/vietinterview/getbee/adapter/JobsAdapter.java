@@ -1,6 +1,8 @@
 package com.vietinterview.getbee.adapter;
 
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,14 +13,21 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.api.request.GetSearchJobsRequest;
+import com.vietinterview.getbee.api.request.SaveUnsaveJobRequest;
+import com.vietinterview.getbee.api.response.AddRemoveJobResponse;
 import com.vietinterview.getbee.api.response.jobsresponse.JobList;
+import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.fragments.BaseFragment;
+import com.vietinterview.getbee.fragments.DetailJobFragment;
 import com.vietinterview.getbee.fragments.HomeFragment;
 import com.vietinterview.getbee.utils.DateUtil;
+import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.StringUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -31,6 +40,7 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private OnLoadMoreListener onLoadMoreListener;
     private boolean isLoading;
     FragmentActivity mActivity;
+    private SaveUnsaveJobRequest saveUnsaveJobRequest;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -42,6 +52,7 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView tvFee;
         ImageView imgBussiness;
         ImageView imgStatus;
+        CardView card_view;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -53,6 +64,7 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             this.tvFee = (TextView) itemView.findViewById(R.id.tvFee);
             this.imgBussiness = (ImageView) itemView.findViewById(R.id.imgBussiness);
             this.imgStatus = (ImageView) itemView.findViewById(R.id.imgStatus);
+            this.card_view = (CardView) itemView.findViewById(R.id.card_view);
         }
     }
 
@@ -92,7 +104,7 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (viewType == VIEW_TYPE_ITEM) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.jobs_item, parent, false);
 
-            view.setOnClickListener(mHomeFragment.myOnClickListener);
+//            view.setOnClickListener(mHomeFragment.myOnClickListener);
 
             MyViewHolder myViewHolder = new MyViewHolder(view);
             return myViewHolder;
@@ -105,15 +117,58 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int listPosition) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int listPosition) {
         if (holder instanceof MyViewHolder) {
-            MyViewHolder myViewHolder = (MyViewHolder) holder;
+            final MyViewHolder myViewHolder = (MyViewHolder) holder;
             myViewHolder.tvjobTitle.setText(StringUtils.nullStrToEmpty(dataSet.get(listPosition).getJobTitle()));
             myViewHolder.tvCompanyName.setText("Cannon Viêt Nam");
             myViewHolder.tvCarrer.setText("IT, Phần mềm");
             myViewHolder.tvListCity.setText("Hà Nội");
             myViewHolder.tvExpireDate.setText(DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(dataSet.get(listPosition).getExpireDate()) + ""));
             myViewHolder.tvFee.setText(dataSet.get(listPosition).getFee() + "");
+            myViewHolder.card_view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentUtil.pushFragment(mActivity, new DetailJobFragment().newInstance(dataSet.get(listPosition)), null);
+                }
+            });
+            if (dataSet.get(listPosition).getCollStatus() != null) {
+                Integer collStatus = dataSet.get(listPosition).getCollStatus();
+                if (collStatus == null || collStatus == 0) {
+                    myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_save));
+                } else {
+                    myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_saved));
+                }
+            } else {
+                myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_save));
+            }
+            myViewHolder.imgStatus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mHomeFragment.showProgressDialog(false);
+                    Integer collStatus = dataSet.get(listPosition).getCollStatus() == null ? 1 : (Integer) dataSet.get(listPosition).getCollStatus() == 0 ? 1 : 0;
+                    saveUnsaveJobRequest = new SaveUnsaveJobRequest(dataSet.get(listPosition).getId(), collStatus);
+                    saveUnsaveJobRequest.callRequest(mActivity, new ApiObjectCallBack<AddRemoveJobResponse>() {
+                        @Override
+                        public void onSuccess(AddRemoveJobResponse data, List<AddRemoveJobResponse> tArrayList, int status) {
+                            mHomeFragment.closeProgressDialog();
+                            if (status == 200) {
+                                mHomeFragment.getEventBaseFragment().refreshHome();
+                                if (data.getStatus() == 0) {
+                                    myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_save));
+                                } else if (data.getStatus() == 1) {
+                                    myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_saved));
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFail(int failCode, AddRemoveJobResponse data, String message) {
+                            mHomeFragment.closeProgressDialog();
+                        }
+                    });
+                }
+            });
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.progressBar.setIndeterminate(true);

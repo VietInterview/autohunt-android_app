@@ -184,7 +184,8 @@ public abstract class BaseFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            FragmentUtil.pushFragment(fragmentActivity, new DetailJobFragment(), null);
+//            DebugLog.showLogCat(v.getVerticalScrollbarPosition() + "");
+//            FragmentUtil.pushFragment(fragmentActivity, new DetailJobFragment(), null);
         }
     }
 

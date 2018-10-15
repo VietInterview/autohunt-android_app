@@ -24,19 +24,39 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.api.request.SaveUnsaveJobRequest;
+import com.vietinterview.getbee.api.response.AddRemoveJobResponse;
+import com.vietinterview.getbee.api.response.jobsresponse.JobList;
+import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by hiepn on 23/03/2017.
  */
 
 public class DetailJobFragment extends BaseFragment {
+    @BindView(R.id.saveUnsaveJob)
+    Button saveUnsaveJob;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Dialog mNotifydialog;
+    private JobList mJobList;
+    private SaveUnsaveJobRequest saveUnsaveJobRequest;
+
+    public static DetailJobFragment newInstance(JobList jobList) {
+        DetailJobFragment fm = new DetailJobFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("jobList", jobList);
+        fm.setArguments(bundle);
+        return fm;
+    }
 
     @Override
     protected int getLayoutId() {
@@ -74,7 +94,7 @@ public class DetailJobFragment extends BaseFragment {
 
     @Override
     protected void getArgument(Bundle bundle) {
-
+        mJobList = bundle.getParcelable("jobList");
     }
 
     @Override
@@ -99,6 +119,57 @@ public class DetailJobFragment extends BaseFragment {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+        });
+        if (mJobList.getCollStatus() != null) {
+            Integer collStatus =  mJobList.getCollStatus();
+            if (collStatus == 0) {
+                Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
+                img.setBounds(0, 0, 40, 50);
+                saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+                saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
+            } else {
+                Drawable img = getContext().getResources().getDrawable(R.drawable.ic_saved);
+                img.setBounds(0, 0, 40, 50);
+                saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+                saveUnsaveJob.setTextColor(getResources().getColor(R.color.red));
+            }
+        } else {
+            Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
+            img.setBounds(0, 0, 40, 50);
+            saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+            saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
+        }
+    }
+
+    @OnClick(R.id.saveUnsaveJob)
+    public void onSaveUnsaveJobClick() {
+        showCoverNetworkLoading();
+        int collStatus = mJobList.getCollStatus() == null ? 1 : (int) mJobList.getCollStatus() != 0 ? 0 : 1;
+        saveUnsaveJobRequest = new SaveUnsaveJobRequest(mJobList.getId(), collStatus);
+        saveUnsaveJobRequest.callRequest(getActivity(), new ApiObjectCallBack<AddRemoveJobResponse>() {
+            @Override
+            public void onSuccess(AddRemoveJobResponse data, List<AddRemoveJobResponse> tArrayList, int status) {
+                hideCoverNetworkLoading();
+                if (status == 200) {
+                    mJobList.setCollStatus(data.getStatus());
+                    if (data.getStatus() == 0) {
+                        Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
+                        img.setBounds(0, 0, 40, 50);
+                        saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+                        saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
+                    } else if (data.getStatus() == 1) {
+                        Drawable img = getContext().getResources().getDrawable(R.drawable.ic_saved);
+                        img.setBounds(0, 0, 40, 50);
+                        saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+                        saveUnsaveJob.setTextColor(getResources().getColor(R.color.red));
+                    }
+                }
+            }
+
+            @Override
+            public void onFail(int failCode, AddRemoveJobResponse data, String message) {
+                hideCoverNetworkLoading();
             }
         });
     }

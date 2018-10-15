@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 
 import com.vietinterview.getbee.callback.OnFillBackgroundListener;
+import com.vietinterview.getbee.callback.OnRefreshHomeListener;
 import com.vietinterview.getbee.callback.OnShowLogoListener;
 
 /**
@@ -14,6 +15,7 @@ import com.vietinterview.getbee.callback.OnShowLogoListener;
 public class Event implements Parcelable {
     private OnFillBackgroundListener mOnEventListener;
     private OnShowLogoListener onShowLogoListener;
+    private OnRefreshHomeListener onRefreshHomeListener;
 
     protected Event(Parcel in) {
     }
@@ -42,6 +44,10 @@ public class Event implements Parcelable {
         this.onShowLogoListener = onShowLogoListener;
     }
 
+    public void setOnRefreshHomeListener(OnRefreshHomeListener onRefreshHomeListener) {
+        this.onRefreshHomeListener = onRefreshHomeListener;
+    }
+
     public void doFillBackground(String nameTable) {
         if (mOnEventListener != null) {
             mOnEventListener.onFillBackground(nameTable);
@@ -51,6 +57,12 @@ public class Event implements Parcelable {
     public void showLogo(boolean isShowLogo) {
         if (this.onShowLogoListener != null) {
             this.onShowLogoListener.onShowLogo(isShowLogo);
+        }
+    }
+
+    public void refreshHome() {
+        if (this.onRefreshHomeListener != null) {
+            this.onRefreshHomeListener.onRefresh();
         }
     }
 
