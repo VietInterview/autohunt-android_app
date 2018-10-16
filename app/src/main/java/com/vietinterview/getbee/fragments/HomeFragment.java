@@ -2,6 +2,7 @@ package com.vietinterview.getbee.fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -37,6 +38,7 @@ import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.callback.OnRefreshHomeListener;
 import com.vietinterview.getbee.callback.RecyclerTouchListener;
+import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
@@ -47,6 +49,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by nguyennghiahiep on 10/5/18.
@@ -59,6 +63,10 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     LinearLayout llCondition;
     @BindView(R.id.imgFilter)
     ImageView imgFilter;
+    @BindView(R.id.tvCarrerName)
+    TextView tvCarrerName;
+    @BindView(R.id.tvCityName)
+    TextView tvCityName;
     //    @BindView(R.id.llDatePub)
 //    LinearLayout llDatePub;
     @BindView(R.id.titleHeader)
@@ -79,6 +87,11 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private ArrayList<JobList> jobsListServer = new ArrayList<>();
     private GetSearchJobsRequest getSearchJobsRequest;
     int mPage = 0;
+    private String mCarrerId = "5";
+    private String mCarrerName = "IT, Phần mềm";
+    private String mCityId = "1";
+    private String mCityName = "Hà Nội";
+    private String strSearch = "";
 
     public static HomeFragment newInstance(String nameFragment) {
         HomeFragment fm = new HomeFragment();
@@ -102,7 +115,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             @Override
             public void onRefresh() {
                 mPage = 0;
-                getSearchJob("4", "", "", mPage);
+                getSearchJob(mCarrerId, mCityId, strSearch, mPage);
             }
         });
         myOnClickListener = new MyOnClickListener(getActivity());
@@ -124,23 +137,12 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                     fab.show();
                 }
             }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-
-                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
-                    // Do something
-                } else if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
-                    // Do something
-                } else {
-                    // Do something
-                }
-            }
         });
         adapter = new JobsAdapter(recyclerView, jobsList, HomeFragment.this, getActivity());
         recyclerView.setAdapter(adapter);
 //        this.registerForContextMenu(llDatePub);
+        tvCityName.setText(mCityName);
+        tvCarrerName.setText(mCarrerName);
         edtJobTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -150,7 +152,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 mPage = 0;
-                getSearchJob("4", "", charSequence.toString(), mPage);
+                strSearch = charSequence.toString();
+                getSearchJob(mCarrerId, mCityId, charSequence.toString(), mPage);
             }
 
             @Override
@@ -170,7 +173,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @Override
     public void onRefresh() {
         mPage = 0;
-        getSearchJob("4", "", "", mPage);
+        getSearchJob(mCarrerId, mCityId, strSearch, mPage);
     }
 
     @Override
@@ -180,7 +183,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     protected void initData() {
-        getSearchJob("4", "", "", mPage);
+        if (!visibleSearch)
+            getSearchJob(mCarrerId, mCityId, strSearch, mPage);
     }
 
     @OnClick(R.id.fab)
@@ -223,18 +227,39 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @OnClick(R.id.llCarrer)
     public void onllCarrerClick() {
-        FragmentUtil.pushFragment(getActivity(), new CarrerOrCityFragment().newInstance(false), null);
+        mIsCity = false;
+        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(false), null);
     }
 
     @OnClick(R.id.llAdd)
     public void onllAddClick() {
-        FragmentUtil.pushFragment(getActivity(), new CarrerOrCityFragment().newInstance(true), null);
+        mIsCity = true;
+        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(true), null);
     }
-//    @OnClick(R.id.llDatePub)
+
+    //    @OnClick(R.id.llDatePub)
 //    public void onPubDateClick() {
 //        this.registerForContextMenu(llDatePub);
 //        getActivity().openContextMenu(llDatePub);
 //    }
+    private boolean mIsCity = false;
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == AppConstant.FRAGMENT_CODE) {
+                if (mIsCity) {
+                    mCityId = String.valueOf(data.getIntExtra("cityId", 0));
+                    mCityName = data.getStringExtra("cityName");
+                    tvCityName.setText(mCityName);
+                } else {
+                    mCarrerId = String.valueOf(data.getIntExtra("carrerId", 0));
+                    mCarrerName = data.getStringExtra("carrerName");
+                    tvCarrerName.setText(mCarrerName);
+                }
+            }
+        }
+    }
 
     @OnClick(R.id.imgFilter)
     public void onimgFilter() {
@@ -249,7 +274,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     final int CONTEXT_MENU_VIEW = 1;
     final int CONTEXT_MENU_EDIT = 2;
-    final int CONTEXT_MENU_ARCHIVE = 3;
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
@@ -261,18 +285,12 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        // TODO Auto-generated method stub
         switch (item.getItemId()) {
             case CONTEXT_MENU_VIEW: {
 
             }
             break;
             case CONTEXT_MENU_EDIT: {
-                // Edit Action
-
-            }
-            break;
-            case CONTEXT_MENU_ARCHIVE: {
 
             }
             break;
@@ -282,33 +300,44 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     @Override
-    protected void onRestore() {
-
-    }
-
-    @Override
     protected void initialize() {
         getEventBaseFragment().showLogo(true);
+        if (visibleSearch) {
+            llSearch.setVisibility(View.VISIBLE);
+        } else {
+            llSearch.setVisibility(View.GONE);
+        }
+        if (visibleCondition) {
+            llCondition.setVisibility(View.VISIBLE);
+        } else {
+            llCondition.setVisibility(View.GONE);
+        }
     }
 
     @Override
     protected void onSaveState(Bundle bundle) {
-
+        bundle.putBoolean(AppConstant.VISIBLE_SEARCH, visibleSearch);
+        bundle.putBoolean(AppConstant.VISIBLE_CONDITION, visibleCondition);
     }
 
     @Override
     protected void onRestoreState(Bundle bundle) {
+        visibleCondition = bundle.getBoolean(AppConstant.VISIBLE_CONDITION);
+        visibleSearch = bundle.getBoolean(AppConstant.VISIBLE_SEARCH);
+    }
 
+
+    @Override
+    protected void onRestore() {
+        DebugLog.showLogCat("onRestore");
     }
 
     @Override
     public void onLoadMore() {
         if (jobsListServer.size() > 0) {
             mPage++;
-            getSearchJob("4", "", "", mPage);
+            getSearchJob(mCarrerId, mCityId, strSearch, mPage);
             adapter.setOnLoadMoreListener(HomeFragment.this);
-        } else {
-            Toast.makeText(getActivity(), "Loading data completed", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -341,11 +370,13 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         if (id == R.id.search) {
             if (visibleSearch) {
                 visibleSearch = false;
+                visibleCondition = false;
                 llSearch.setVisibility(View.GONE);
                 llCondition.setVisibility(View.GONE);
                 menu.getItem(0).setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_search_black));
             } else {
                 visibleSearch = true;
+                visibleCondition = true;
                 llSearch.setVisibility(View.VISIBLE);
                 llCondition.setVisibility(View.VISIBLE);
                 menu.getItem(0).setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_saveok));

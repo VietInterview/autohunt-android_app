@@ -129,7 +129,7 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             myViewHolder.card_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentUtil.pushFragment(mActivity, new DetailJobFragment().newInstance(dataSet.get(listPosition)), null);
+                    FragmentUtil.pushFragment(mActivity, mHomeFragment, new DetailJobFragment().newInstance(dataSet.get(listPosition)), null);
                 }
             });
             if (dataSet.get(listPosition).getCollStatus() != null) {

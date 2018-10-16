@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.constant.AppConstant;
 
 
 /**
@@ -16,28 +17,29 @@ import com.vietinterview.getbee.R;
  */
 public class FragmentUtil {
 
-    public static void pushFragment(FragmentActivity activity, @NonNull Fragment fragment, @Nullable Bundle data) {
-        showFragment(activity, fragment, true, data, null);
+    public static void pushFragment(FragmentActivity activity, Fragment fragmentSource, @NonNull Fragment fragmentDestination, @Nullable Bundle data) {
+        showFragment(activity, fragmentSource, fragmentDestination, true, data, null);
     }
 
-    public static void replaceFragment(FragmentActivity activity, @NonNull Fragment fragment, @Nullable Bundle data) {
-        showFragment(activity, fragment, false, data, null);
+    public static void replaceFragment(FragmentActivity activity, @NonNull Fragment fragmentDestination, @Nullable Bundle data) {
+        showFragment(activity, null, fragmentDestination, false, data, null);
     }
 
-    public static void showFragment(FragmentActivity activity, @NonNull Fragment fragment, boolean isPushInsteadOfReplace, @Nullable Bundle data, @Nullable String tag) {
+    public static void showFragment(FragmentActivity activity, Fragment fragmentSource, @NonNull Fragment fragmentDestination, boolean isPushInsteadOfReplace, @Nullable Bundle data, @Nullable String tag) {
         if (activity == null) {
             return;
         }
 
         if (data != null) {
-            fragment.setArguments(data);
+            fragmentDestination.setArguments(data);
         }
-
+        if (fragmentSource != null)
+            fragmentDestination.setTargetFragment(fragmentSource, AppConstant.FRAGMENT_CODE);
         FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
         if (isPushInsteadOfReplace) {
             fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
         }
-        fragmentTransaction.replace(R.id.container, fragment, tag);
+        fragmentTransaction.replace(R.id.container, fragmentDestination, tag);
         if (isPushInsteadOfReplace) {
             fragmentTransaction.addToBackStack(null);
         }

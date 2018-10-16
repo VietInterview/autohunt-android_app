@@ -1,5 +1,6 @@
 package com.vietinterview.getbee.fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -32,6 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by hiepnguyennghia on 10/9/18.
@@ -88,7 +91,7 @@ public class CarrerOrCityFragment extends BaseFragment {
             getListCity();
             listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         } else {
-            listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+            listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
             getListCarrer();
         }
     }
@@ -112,19 +115,10 @@ public class CarrerOrCityFragment extends BaseFragment {
         });
     }
 
-    private List<CareerResponse> getSelectedItemsCarrer() {
-        List<CareerResponse> result = new ArrayList<>();
+    private CareerResponse getSelectedItemsCarrer() {
         SparseBooleanArray checkedItems = listView.getCheckedItemPositions();
-
-        for (int i = 0; i < listView.getCount(); ++i) {
-            if (checkedItems.size() > 0) {
-                if (checkedItems.valueAt(i)) {
-                    result.add((CareerResponse) listView.getItemAtPosition(checkedItems.keyAt(i)));
-                }
-            }
-        }
-
-        return result;
+        CareerResponse careerResponse = (CareerResponse) listView.getItemAtPosition(checkedItems.keyAt(0));
+        return careerResponse;
     }
 
     private CityResponse getSelectedItemsCity() {
@@ -162,13 +156,7 @@ public class CarrerOrCityFragment extends BaseFragment {
         mMenuItem = menuItem;
         if (menuItem != null) {
             TextView textView = (TextView) menuItem.getActionView();
-            if (mIsCity) {
-                textView.setText("Chọn");
-            } else {
-                if (getSelectedItemsCarrer().size() > 0)
-                    textView.setText("Chọn (" + getSelectedItemsCarrer().size() + ")");
-                else textView.setText("Chọn");
-            }
+            textView.setText("Chọn");
             textView.setPadding(0, 0, 16, 0);
             textView.setTextSize(18);
             textView.setTextColor(Color.BLACK);
@@ -177,7 +165,15 @@ public class CarrerOrCityFragment extends BaseFragment {
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getActivity(), "Choose", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getActivity(), CarrerOrCityFragment.class);
+                    if (mIsCity) {
+                        intent.putExtra("cityId", getSelectedItemsCity().getId());
+                        intent.putExtra("cityName", getSelectedItemsCity().getName());
+                    } else {
+                        intent.putExtra("carrerId", getSelectedItemsCarrer().getId());
+                        intent.putExtra("carrerName", getSelectedItemsCarrer().getName());
+                    }
+                    getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
                     FragmentUtil.popBackStack(CarrerOrCityFragment.this);
                 }
             });
@@ -217,14 +213,7 @@ public class CarrerOrCityFragment extends BaseFragment {
         MenuItem menuItem = mMenu.findItem(R.id.choose);
         if (menuItem != null) {
             TextView textView = (TextView) menuItem.getActionView();
-            if (mIsCity) {
-                textView.setText("Chọn");
-                DebugLog.showLogCat(getSelectedItemsCity() + "");
-            } else {
-                if (getSelectedItemsCarrer().size() > 0)
-                    textView.setText("Chọn (" + getSelectedItemsCarrer().size() + ")");
-                else textView.setText("Chọn");
-            }
+            textView.setText("Chọn");
             textView.setTextSize(18);
             textView.setTextColor(Color.BLACK);
             textView.setPadding(0, 0, 16, 0);

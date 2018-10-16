@@ -65,18 +65,20 @@ public abstract class BaseJsonRequest<T> {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                try {
-                    DebugLog.jsonFormat(getAbsoluteUrl(), errorResponse);
-                    mApiObjectCallBack.onFail(statusCode, GsonUtils.fromJson(errorResponse.toString(), getResponseClass()), null, throwable.getMessage());
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                DebugLog.showLogCat(statusCode + "");
+                if (errorResponse != null) {
+                    try {
+                        DebugLog.jsonFormat(getAbsoluteUrl(), errorResponse);
+                        mApiObjectCallBack.onFail(statusCode, GsonUtils.fromJson(errorResponse.toString(), getResponseClass()), null, throwable.getMessage());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 DebugLog.jsonFormat(getAbsoluteUrl(), errorResponse);
-//                Gson gson = new Gson();
                 tList = getListResponseClass();
                 tList = GsonUtils.fromJson(errorResponse.toString(), getType());
                 mApiObjectCallBack.onFail(statusCode, null, tList, throwable.toString());

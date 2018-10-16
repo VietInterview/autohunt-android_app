@@ -37,8 +37,8 @@ import javax.xml.transform.stream.StreamResult;
 
 /**
  * @author Mustafa Ferhan Akman
- *         <p/>
- *         Create a simple and more understandable Android logs.
+ * <p/>
+ * Create a simple and more understandable Android logs.
  * @date 21.06.2012
  */
 
@@ -118,35 +118,39 @@ public class DebugLog {
     }
 
     public static void jsonFormat(String tag, Object source) {
-        StackTraceElement[] stackTraceElement = Thread.currentThread().getStackTrace();
-        int currentIndex = -1;
-        for (int i = 0; i < stackTraceElement.length; i++) {
-            if (stackTraceElement[i].getMethodName().compareTo("jsonFormat") == 0) {
-                currentIndex = i + 1;
-                break;
+        if (source != null) {
+            StackTraceElement[] stackTraceElement = Thread.currentThread().getStackTrace();
+            int currentIndex = -1;
+            for (int i = 0; i < stackTraceElement.length; i++) {
+                if (stackTraceElement[i].getMethodName().compareTo("jsonFormat") == 0) {
+                    currentIndex = i + 1;
+                    break;
+                }
             }
-        }
-        String fullClassName = stackTraceElement[currentIndex].getClassName();
-        String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
-        String methodName = stackTraceElement[currentIndex].getMethodName();
-        String lineNumber = String.valueOf(stackTraceElement[currentIndex].getLineNumber());
-        if (isDebuggable()) {
-            Object o = getJsonObjFromStr(source);
-            if (o != null) {
-                try {
-                    if (o instanceof JSONObject) {
-                        format(tag, ((JSONObject) o).toString(2) + "\nat " + fullClassName + "." + methodName + "(" + className + ".java:" + lineNumber + ")");
-                    } else if (o instanceof JSONArray) {
-                        format(tag, ((JSONArray) o).toString(2));
-                    } else {
+            String fullClassName = stackTraceElement[currentIndex].getClassName();
+            String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
+            String methodName = stackTraceElement[currentIndex].getMethodName();
+            String lineNumber = String.valueOf(stackTraceElement[currentIndex].getLineNumber());
+            if (isDebuggable()) {
+                Object o = getJsonObjFromStr(source);
+                if (o != null) {
+                    try {
+                        if (o instanceof JSONObject) {
+                            format(tag, ((JSONObject) o).toString(2) + "\nat " + fullClassName + "." + methodName + "(" + className + ".java:" + lineNumber + ")");
+                        } else if (o instanceof JSONArray) {
+                            format(tag, ((JSONArray) o).toString(2));
+                        } else {
+                            format(tag, source);
+                        }
+                    } catch (JSONException e) {
                         format(tag, source);
                     }
-                } catch (JSONException e) {
+                } else {
                     format(tag, source);
                 }
-            } else {
-                format(tag, source);
             }
+        } else {
+            showLogCat("Null Json");
         }
     }
 
@@ -165,19 +169,23 @@ public class DebugLog {
     }
 
     public static void showLogCat(String tag) {
-        StackTraceElement[] stackTraceElement = Thread.currentThread().getStackTrace();
-        int currentIndex = -1;
-        for (int i = 0; i < stackTraceElement.length; i++) {
-            if (stackTraceElement[i].getMethodName().compareTo("showLogCat") == 0) {
-                currentIndex = i + 1;
-                break;
+        if (tag != null) {
+            StackTraceElement[] stackTraceElement = Thread.currentThread().getStackTrace();
+            int currentIndex = -1;
+            for (int i = 0; i < stackTraceElement.length; i++) {
+                if (stackTraceElement[i].getMethodName().compareTo("showLogCat") == 0) {
+                    currentIndex = i + 1;
+                    break;
+                }
             }
+            String fullClassName = stackTraceElement[currentIndex].getClassName();
+            String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
+            String methodName = stackTraceElement[currentIndex].getMethodName();
+            String lineNumber = String.valueOf(stackTraceElement[currentIndex].getLineNumber());
+            Log.e(methodName, tag + "\nat " + fullClassName + "." + methodName + "(" + className + ".java:" + lineNumber + ")");
+        } else {
+            showLogCat("Null tag");
         }
-        String fullClassName = stackTraceElement[currentIndex].getClassName();
-        String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
-        String methodName = stackTraceElement[currentIndex].getMethodName();
-        String lineNumber = String.valueOf(stackTraceElement[currentIndex].getLineNumber());
-        Log.e(methodName, tag + "\nat " + fullClassName + "." + methodName + "(" + className + ".java:" + lineNumber + ")");
     }
 
     public static void i(String message) {

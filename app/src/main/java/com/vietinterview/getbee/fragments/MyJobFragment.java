@@ -156,15 +156,17 @@ public class MyJobFragment extends BaseFragment {
             return mFragmentTitleList.get(position);
         }
     }
+
     @OnClick(R.id.llCarrer)
     public void onllCarrerClick() {
-        FragmentUtil.pushFragment(getActivity(), new CarrerOrCityFragment().newInstance(false), null);
+        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(false), null);
     }
 
     @OnClick(R.id.llAdd)
     public void onllAddClick() {
-        FragmentUtil.pushFragment(getActivity(), new CarrerOrCityFragment().newInstance(true), null);
+        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(true), null);
     }
+
     @Override
     protected void onRestore() {
 

@@ -37,16 +37,24 @@ public abstract class BaseRequest<T> {
         mJsonHttpResponseHandler = new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                DebugLog.jsonFormat("response", response);
-                mApiObjectCallBack.onSuccess(GsonUtils.fromJson(response.toString(), getResponseClass()), null, statusCode, "");
+                if (response != null) {
+                    DebugLog.jsonFormat("response", response);
+                    mApiObjectCallBack.onSuccess(GsonUtils.fromJson(response.toString(), getResponseClass()), null, statusCode, "");
+                } else {
+                    DebugLog.showLogCat(statusCode + "");
+                }
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                DebugLog.jsonFormat("response", response);
-                tList = getListResponseClass();
-                tList = GsonUtils.fromJson(response.toString(), getType());
-                mApiObjectCallBack.onSuccess(null, tList, statusCode, "");
+                if (response != null) {
+                    DebugLog.jsonFormat("response", response);
+                    tList = getListResponseClass();
+                    tList = GsonUtils.fromJson(response.toString(), getType());
+                    mApiObjectCallBack.onSuccess(null, tList, statusCode, "");
+                } else {
+                    DebugLog.showLogCat(statusCode + "");
+                }
             }
 
             @Override
@@ -57,16 +65,24 @@ public abstract class BaseRequest<T> {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                DebugLog.jsonFormat("response", errorResponse);
-                tList = getListResponseClass();
-                tList = GsonUtils.fromJson(errorResponse.toString(), getType());
-                mApiObjectCallBack.onFail(statusCode, null, tList, throwable.getMessage());
+                if (errorResponse != null) {
+                    DebugLog.jsonFormat("response", errorResponse);
+                    tList = getListResponseClass();
+                    tList = GsonUtils.fromJson(errorResponse.toString(), getType());
+                    mApiObjectCallBack.onFail(statusCode, null, tList, throwable.getMessage());
+                } else {
+                    DebugLog.showLogCat(statusCode + "");
+                }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                DebugLog.showLogCat(throwable.getMessage());
-                mApiObjectCallBack.onFail(statusCode, GsonUtils.fromJson(errorResponse.toString(), getResponseClass()), null, throwable.getMessage());
+                DebugLog.showLogCat(statusCode + " " + throwable.getMessage());
+                if (errorResponse != null)
+                    mApiObjectCallBack.onFail(statusCode, GsonUtils.fromJson(errorResponse.toString(), getResponseClass()), null, throwable.getMessage());
+                else {
+                    DebugLog.showLogCat(statusCode + "");
+                }
             }
 
             @Override

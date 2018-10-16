@@ -158,7 +158,7 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
 
         @Override
         public void onClick(View v) {
-            FragmentUtil.pushFragment(fragmentActivity, new DetailJobFragment(), null);
+//            FragmentUtil.pushFragment(fragmentActivity, new DetailJobFragment(), null);
         }
     }
 

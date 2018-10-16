@@ -73,7 +73,7 @@ public class MyProfileFragment extends BaseFragment {
 
     @OnClick(R.id.imgChangePass)
     public void onChangePassClick() {
-        FragmentUtil.pushFragment(getActivity(), new ChangePasswordFragment(), null);
+        FragmentUtil.pushFragment(getActivity(), MyProfileFragment.this, new ChangePasswordFragment(), null);
     }
 
     @OnClick(R.id.fab)
@@ -102,7 +102,7 @@ public class MyProfileFragment extends BaseFragment {
 
     @OnClick(R.id.rlChooseJob)
     public void onChooseJobClick() {
-        FragmentUtil.pushFragment(getActivity(), new CarrerOrCityFragment().newInstance(false), null);
+        FragmentUtil.pushFragment(getActivity(),MyProfileFragment.this, new CarrerOrCityFragment().newInstance(false), null);
     }
 
     @Override

@@ -244,13 +244,13 @@ public abstract class BaseFragment extends Fragment {
 
     abstract protected void initData();
 
-    protected abstract void onRestore();
-
     protected abstract void initialize();
 
     protected abstract void onSaveState(Bundle bundle);
 
     protected abstract void onRestoreState(Bundle bundle);
+
+    protected abstract void onRestore();
 
     @Override
     public void onSaveInstanceState(Bundle bundle) {
