@@ -45,4 +45,5 @@ dependencies {
     implementation 'com.loopj.android:android-async-http:1.4.8'
     implementation 'com.akexorcist:localizationactivity:1.1.2'
     implementation 'org.droidparts:droidparts:2.9.7'
+    implementation 'com.github.baoyachi:StepView:1.9'
 }

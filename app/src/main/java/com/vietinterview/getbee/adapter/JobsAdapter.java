@@ -121,11 +121,11 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (holder instanceof MyViewHolder) {
             final MyViewHolder myViewHolder = (MyViewHolder) holder;
             myViewHolder.tvjobTitle.setText(StringUtils.nullStrToEmpty(dataSet.get(listPosition).getJobTitle()));
-            myViewHolder.tvCompanyName.setText("Cannon Viêt Nam");
-            myViewHolder.tvCarrer.setText("IT, Phần mềm");
-            myViewHolder.tvListCity.setText("Hà Nội");
+            myViewHolder.tvCompanyName.setText(dataSet.get(listPosition).getCompanyName());
+            myViewHolder.tvCarrer.setText(dataSet.get(listPosition).getCareerName());
+            myViewHolder.tvListCity.setText(dataSet.get(listPosition).getListcityName());
             myViewHolder.tvExpireDate.setText(DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(dataSet.get(listPosition).getExpireDate()) + ""));
-            myViewHolder.tvFee.setText(dataSet.get(listPosition).getFee() + "");
+            myViewHolder.tvFee.setText(dataSet.get(listPosition).getFee() + " USD");
             myViewHolder.card_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

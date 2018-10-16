@@ -24,9 +24,9 @@ public class JobList implements Parcelable {
     @SerializedName("jobLevel")
     @Expose
     private Integer jobLevel;
-    @SerializedName("lstCityId")
+    @SerializedName("listcityName")
     @Expose
-    private String lstCityId;
+    private String listcityName;
     @SerializedName("quantity")
     @Expose
     private Integer quantity;
@@ -87,6 +87,12 @@ public class JobList implements Parcelable {
     @SerializedName("collStatus")
     @Expose
     private Integer collStatus;
+    @SerializedName("companyName")
+    @Expose
+    private String companyName;
+    @SerializedName("careerName")
+    @Expose
+    private String careerName;
 
     protected JobList(Parcel in) {
         if (in.readByte() == 0) {
@@ -110,7 +116,7 @@ public class JobList implements Parcelable {
         } else {
             jobLevel = in.readInt();
         }
-        lstCityId = in.readString();
+        listcityName = in.readString();
         if (in.readByte() == 0) {
             quantity = null;
         } else {
@@ -174,6 +180,13 @@ public class JobList implements Parcelable {
         } else {
             countGotoWork = in.readInt();
         }
+        if (in.readByte() == 0) {
+            collStatus = null;
+        } else {
+            collStatus = in.readInt();
+        }
+        companyName = in.readString();
+        careerName = in.readString();
     }
 
     public static final Creator<JobList> CREATOR = new Creator<JobList>() {
@@ -228,12 +241,12 @@ public class JobList implements Parcelable {
         this.jobLevel = jobLevel;
     }
 
-    public String getLstCityId() {
-        return lstCityId;
+    public String getListcityName() {
+        return listcityName;
     }
 
-    public void setLstCityId(String lstCityId) {
-        this.lstCityId = lstCityId;
+    public void setListcityName(String listcityName) {
+        this.listcityName = listcityName;
     }
 
     public Integer getQuantity() {
@@ -396,6 +409,22 @@ public class JobList implements Parcelable {
         this.collStatus = collStatus;
     }
 
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getCareerName() {
+        return careerName;
+    }
+
+    public void setCareerName(String careerName) {
+        this.careerName = careerName;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -428,7 +457,7 @@ public class JobList implements Parcelable {
             parcel.writeByte((byte) 1);
             parcel.writeInt(jobLevel);
         }
-        parcel.writeString(lstCityId);
+        parcel.writeString(listcityName);
         if (quantity == null) {
             parcel.writeByte((byte) 0);
         } else {
@@ -504,5 +533,13 @@ public class JobList implements Parcelable {
             parcel.writeByte((byte) 1);
             parcel.writeInt(countGotoWork);
         }
+        if (collStatus == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(collStatus);
+        }
+        parcel.writeString(companyName);
+        parcel.writeString(careerName);
     }
 }
