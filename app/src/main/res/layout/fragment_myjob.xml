@@ -10,8 +10,7 @@
     android:layout_height="match_parent"
     android:background="#F7FAFF">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -59,13 +58,13 @@
                 android:hint="Ngành Nghề" />
 
             <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvCarrerName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginRight="@dimen/activity_vertical_margin"
                 android:layout_weight="1"
-                android:gravity="right|center"
-                android:text="IT, Phần mềm" />
+                android:gravity="right|center" />
 
             <ImageView
                 android:layout_width="0dp"
@@ -99,13 +98,13 @@
                 android:hint="Địa điểm" />
 
             <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvCityName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginRight="@dimen/activity_vertical_margin"
                 android:layout_weight="1"
-                android:gravity="right|center"
-                android:text="Hà Nội" />
+                android:gravity="right|center" />
 
             <ImageView
                 android:layout_width="0dp"

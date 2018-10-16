@@ -24,6 +24,8 @@ public class ApiConstant {
     public final static String LOGIN = BASE_URL + "api/authenticate";
     public final static String REGIST = BASE_URL + "api/register";
     public final static String GET_SEARCH_JOBS = BASE_URL + "svccollaborator/api/jobs/searchJob";
+    public final static String GET_SAVED_SEARCH_JOBS = BASE_URL + "svccollaborator/api/jobs/searchMySaveJobs";
+    public final static String GET_APPLYED_SEARCH_JOBS = BASE_URL + "svccollaborator/api/jobs/searchJobsApplyCv";
     public final static String GET_LIST_CARRER = BASE_URL + "svccollaborator/api/mstCareer";
     public final static String GET_LIST_CITY = BASE_URL + "svccollaborator/api/mstCity";
     public final static String SAVE_UNSAVE_JOB = BASE_URL + "svccollaborator/api/jobs/addRemoveMyJob";

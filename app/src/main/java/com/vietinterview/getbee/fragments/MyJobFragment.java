@@ -1,5 +1,6 @@
 package com.vietinterview.getbee.fragments;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -19,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by hiepnguyennghia on 10/12/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
@@ -34,11 +38,19 @@ import butterknife.OnClick;
 public class MyJobFragment extends BaseFragment {
     @BindView(R.id.llCondition)
     LinearLayout llCondition;
+    @BindView(R.id.tvCarrerName)
+    TextView tvCarrerName;
+    @BindView(R.id.tvCityName)
+    TextView tvCityName;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Menu menu;
     private boolean visibleFilter = false;
-    private boolean visibleCondition = false;
+    private boolean mIsCity = false;
+    private String mCarrerId = "4";
+    private String mCarrerName = "IT, Phần mềm";
+    private String mCityId = "1";
+    private String mCityName = "Hà Nội";
 
     @Override
     protected int getLayoutId() {
@@ -50,6 +62,8 @@ public class MyJobFragment extends BaseFragment {
         getEventBaseFragment().doFillBackground("Công việc của tôi");
         setCustomToolbar(true);
         setHasOptionsMenu(true);
+        tvCityName.setText(mCityName);
+        tvCarrerName.setText(mCarrerName);
         viewPager = (ViewPager) root.findViewById(R.id.viewpager);
         tabLayout = (TabLayout) root.findViewById(R.id.tabs);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.underline_tablyaout));
@@ -117,8 +131,8 @@ public class MyJobFragment extends BaseFragment {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFrag(new JobsSavedFragment(), "Công việc đã lưu");
-        adapter.addFrag(new JobsApplyedFragment(), "Công việc đã nộp");
+        adapter.addFrag(new JobsSavedFragment().newInstance(mCityId, mCarrerId), "Công việc đã lưu");
+        adapter.addFrag(new JobsApplyedFragment().newInstance(mCityId, mCarrerId), "Công việc đã nộp");
         viewPager.setCurrentItem(0);
         viewPager.setAdapter(adapter);
     }
@@ -159,12 +173,33 @@ public class MyJobFragment extends BaseFragment {
 
     @OnClick(R.id.llCarrer)
     public void onllCarrerClick() {
+        mIsCity = false;
+        visibleFilter = false;
         FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(false), null);
     }
 
     @OnClick(R.id.llAdd)
     public void onllAddClick() {
+        mIsCity = true;
+        visibleFilter = false;
         FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(true), null);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == AppConstant.FRAGMENT_CODE) {
+                if (mIsCity) {
+                    mCityId = String.valueOf(data.getIntExtra("cityId", 0));
+                    mCityName = data.getStringExtra("cityName");
+                    tvCityName.setText(mCityName);
+                } else {
+                    mCarrerId = String.valueOf(data.getIntExtra("carrerId", 0));
+                    mCarrerName = data.getStringExtra("carrerName");
+                    tvCarrerName.setText(mCarrerName);
+                }
+            }
+        }
     }
 
     @Override
@@ -174,17 +209,21 @@ public class MyJobFragment extends BaseFragment {
 
     @Override
     protected void initialize() {
-
+//        if (visibleFilter) {
+//            llCondition.setVisibility(View.VISIBLE);
+//        } else {
+//            llCondition.setVisibility(View.GONE);
+//        }
     }
 
     @Override
     protected void onSaveState(Bundle bundle) {
-
+        bundle.putBoolean(AppConstant.VISIBLE_FILTER, visibleFilter);
     }
 
     @Override
     protected void onRestoreState(Bundle bundle) {
-
+        visibleFilter = bundle.getBoolean(AppConstant.VISIBLE_FILTER);
     }
 
     @Override

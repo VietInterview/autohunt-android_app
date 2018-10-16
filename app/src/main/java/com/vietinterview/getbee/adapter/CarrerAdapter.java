@@ -11,26 +11,28 @@ import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.CareerResponse;
 import com.vietinterview.getbee.customview.CheckableLinearLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CarrerAdapter extends BaseAdapter {
-//    private String[] data;
     private LayoutInflater inflater;
     List<CareerResponse> mCareerResponses;
+    List<CareerResponse> mCareerResponsesFilter;
 
     public CarrerAdapter(Context context, List<CareerResponse> careerResponses) {
         mCareerResponses = careerResponses;
+        mCareerResponsesFilter = careerResponses;
         inflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
-        return mCareerResponses.size();
+        return mCareerResponsesFilter.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return mCareerResponses.get(i);
+        return mCareerResponsesFilter.get(i);
     }
 
     @Override
@@ -41,7 +43,7 @@ public class CarrerAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder viewHolder;
-        final CareerResponse careerResponse = mCareerResponses.get(i);
+        final CareerResponse careerResponse = mCareerResponsesFilter.get(i);
 
         if (view == null) {
             view = inflater.inflate(R.layout.list_item, viewGroup, false);
@@ -67,5 +69,11 @@ public class CarrerAdapter extends BaseAdapter {
     private class ViewHolder {
         TextView name;
         CheckableLinearLayout checkableLinearLayout;
+    }
+
+    public void setFilter(List<CareerResponse> careerResponses) {
+        mCareerResponsesFilter = new ArrayList<>();
+        mCareerResponsesFilter.addAll(careerResponses);
+        notifyDataSetChanged();
     }
 }

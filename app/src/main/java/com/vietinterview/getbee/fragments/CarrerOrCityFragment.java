@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,6 +27,7 @@ import com.vietinterview.getbee.api.request.GetListCityRequest;
 import com.vietinterview.getbee.api.response.CareerResponse;
 import com.vietinterview.getbee.api.response.CityResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.customview.NunitoEditText;
 import com.vietinterview.getbee.customview.NunitoTextView;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
@@ -45,6 +48,8 @@ public class CarrerOrCityFragment extends BaseFragment {
     public ListView listView;
     @BindView(R.id.tvHeader)
     NunitoTextView tvHeader;
+    @BindView(R.id.edtSearchJob)
+    NunitoEditText edtSearchJob;
     GetListCareerRequest getListCareerRequest;
     GetListCityRequest getListCityRequest;
     CarrerAdapter carrerAdapter;
@@ -52,6 +57,10 @@ public class CarrerOrCityFragment extends BaseFragment {
     private Menu mMenu;
     private MenuItem mMenuItem;
     boolean mIsCity;
+    List<CareerResponse> careerResponses;
+    List<CityResponse> cityResponses;
+    List<CareerResponse> careerResponsesFilter;
+    List<CityResponse> cityResponsesFilter;
 
     public static CarrerOrCityFragment newInstance(boolean isCity) {
         CarrerOrCityFragment fm = new CarrerOrCityFragment();
@@ -78,6 +87,64 @@ public class CarrerOrCityFragment extends BaseFragment {
                 updateMenuTitles();
             }
         });
+        edtSearchJob.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (mIsCity) {
+                    if (cityResponses != null) {
+                        cityResponsesFilter = filterCity(cityResponses, charSequence.toString().trim());
+                        if (cityResponsesFilter.size() == 0) {
+                            listView.setVisibility(View.GONE);
+                        } else {
+                            listView.setVisibility(View.VISIBLE);
+                        }
+                        cityAdapter.setFilter(cityResponsesFilter);
+                    }
+                } else {
+                    if (careerResponses != null) {
+                        careerResponsesFilter = filter(careerResponses, charSequence.toString().trim());
+                        if (careerResponsesFilter.size() == 0) {
+                            listView.setVisibility(View.GONE);
+                        } else {
+                            listView.setVisibility(View.VISIBLE);
+                        }
+                        carrerAdapter.setFilter(careerResponsesFilter);
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    private List<CareerResponse> filter(List<CareerResponse> careerResponses, String query) {
+        final List<CareerResponse> careerResponses1 = new ArrayList<>();
+        for (CareerResponse careerResponse : careerResponses) {
+            final String name = careerResponse.getName().toLowerCase();
+            if (name.contains(query.toLowerCase())) {
+                careerResponses1.add(careerResponse);
+            }
+        }
+        return careerResponses1;
+    }
+
+    private List<CityResponse> filterCity(List<CityResponse> cityResponses, String query) {
+        final List<CityResponse> cityResponses1 = new ArrayList<>();
+        for (CityResponse cityResponse : cityResponses) {
+            final String name = cityResponse.getName().toLowerCase();
+            if (name.contains(query.toLowerCase())) {
+                cityResponses1.add(cityResponse);
+            }
+        }
+        return cityResponses1;
     }
 
     @Override
@@ -104,6 +171,7 @@ public class CarrerOrCityFragment extends BaseFragment {
             @Override
             public void onSuccess(CareerResponse data, List<CareerResponse> dataArrayList, int status, String message) {
                 hideCoverNetworkLoading();
+                careerResponses = dataArrayList;
                 carrerAdapter = new CarrerAdapter(getActivity(), dataArrayList);
                 listView.setAdapter(carrerAdapter);
             }
@@ -198,6 +266,7 @@ public class CarrerOrCityFragment extends BaseFragment {
             @Override
             public void onSuccess(CityResponse data, List<CityResponse> dataArrayList, int status, String message) {
                 hideCoverNetworkLoading();
+                cityResponses = dataArrayList;
                 cityAdapter = new CityAdapter(getActivity(), dataArrayList);
                 listView.setAdapter(cityAdapter);
             }

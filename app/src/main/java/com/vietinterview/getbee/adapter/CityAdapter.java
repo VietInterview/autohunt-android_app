@@ -11,26 +11,28 @@ import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.CityResponse;
 import com.vietinterview.getbee.customview.CheckableLinearLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CityAdapter extends BaseAdapter {
-//    private String[] data;
     private LayoutInflater inflater;
     List<CityResponse> cityResponses;
+    List<CityResponse> cityResponsesFilter;
 
     public CityAdapter(Context context, List<CityResponse> cityResponses) {
         this.cityResponses = cityResponses;
+        cityResponsesFilter=cityResponses;
         inflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
-        return cityResponses.size();
+        return cityResponsesFilter.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return cityResponses.get(i);
+        return cityResponsesFilter.get(i);
     }
 
     @Override
@@ -41,7 +43,7 @@ public class CityAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder viewHolder;
-        final CityResponse cityResponse = cityResponses.get(i);
+        final CityResponse cityResponse = cityResponsesFilter.get(i);
 
         if (view == null) {
             view = inflater.inflate(R.layout.list_item, viewGroup, false);
@@ -67,5 +69,10 @@ public class CityAdapter extends BaseAdapter {
     private class ViewHolder {
         TextView name;
         CheckableLinearLayout checkableLinearLayout;
+    }
+    public void setFilter(List<CityResponse> cityResponses) {
+        cityResponsesFilter = new ArrayList<>();
+        cityResponsesFilter.addAll(cityResponses);
+        notifyDataSetChanged();
     }
 }

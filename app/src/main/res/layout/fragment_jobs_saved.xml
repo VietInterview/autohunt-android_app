@@ -16,8 +16,7 @@
         android:layout_height="wrap_content"
         android:background="#F7FAFF"
         android:gravity="center"
-        android:padding="@dimen/activity_vertical_margin"
-        android:text="35 công việc đã được lưu" />
+        android:padding="@dimen/activity_vertical_margin"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_container"
@@ -25,7 +24,7 @@
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/my_recycler_view"
+            android:id="@+id/rcvSavedJob"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="vertical" />

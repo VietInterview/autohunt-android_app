@@ -1,7 +1,6 @@
 package com.vietinterview.getbee.fragments;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,19 +9,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.JobsAdapter;
-import com.vietinterview.getbee.api.request.GetSearchJobsRequest;
+import com.vietinterview.getbee.api.request.GetSavedSearchJobsRequest;
 import com.vietinterview.getbee.api.response.jobsresponse.JobList;
 import com.vietinterview.getbee.api.response.jobsresponse.JobsResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.utils.DialogUtil;
-import com.vietinterview.getbee.utils.FragmentUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,15 +36,27 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
     public JobsAdapter adapter;
     @BindView(R.id.titleHeader)
     TextView titleHeader;
+    @BindView(R.id.rcvSavedJob)
+    RecyclerView rcvSavedJob;
     public static View.OnClickListener myOnClickListener;
     private RecyclerView.LayoutManager layoutManager;
-    private static RecyclerView recyclerView;
     private ArrayList<JobList> jobsList = new ArrayList<>();
     private ArrayList<JobList> jobsListServer = new ArrayList<>();
-    private GetSearchJobsRequest getSearchJobsRequest;
+    private GetSavedSearchJobsRequest getSavedSearchJobsRequest;
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout mSwipeRefreshLayout;
     int mPage = 0;
+    private String mCarrerId = "4";
+    private String mCityId = "1";
+
+    public static JobsSavedFragment newInstance(String cityId, String carrerId) {
+        JobsSavedFragment fm = new JobsSavedFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("cityId", cityId);
+        bundle.putString("carrerId", carrerId);
+        fm.setArguments(bundle);
+        return fm;
+    }
 
     @Override
     protected int getLayoutId() {
@@ -57,17 +66,16 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         myOnClickListener = new JobsSavedFragment.MyOnClickListener(getActivity());
-        recyclerView = (RecyclerView) root.findViewById(R.id.my_recycler_view);
-        recyclerView.setHasFixedSize(true);
+        rcvSavedJob.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        rcvSavedJob.setLayoutManager(layoutManager);
+        rcvSavedJob.setItemAnimator(new DefaultItemAnimator());
+        rcvSavedJob.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
+            public void onScrolled(RecyclerView rcvSavedJob, int dx, int dy) {
+                super.onScrolled(rcvSavedJob, dx, dy);
                 if (dy > 0) {
                     titleHeader.setVisibility(View.GONE);
 //                    fab.hide();
@@ -76,22 +84,9 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
 //                    fab.show();
                 }
             }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-
-                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
-                    // Do something
-                } else if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
-                    // Do something
-                } else {
-                    // Do something
-                }
-            }
         });
-        adapter = new JobsAdapter(recyclerView, jobsList, this, getActivity());
-        recyclerView.setAdapter(adapter);
+        adapter = new JobsAdapter(rcvSavedJob, jobsList, this, getActivity());
+        rcvSavedJob.setAdapter(adapter);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
                 android.R.color.holo_green_dark,
@@ -103,12 +98,13 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
 
     @Override
     protected void getArgument(Bundle bundle) {
-
+        mCityId = bundle.getString("cityId");
+        mCarrerId = bundle.getString("carrerId");
     }
 
     @Override
     protected void initData() {
-        getSearchJob("4", "", "", mPage);
+        getSavedSearchJob(mCarrerId, mCityId, "", mPage);
     }
 
     @Override
@@ -134,17 +130,15 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
     @Override
     public void onRefresh() {
         mPage = 0;
-        getSearchJob("4", "", "", mPage);
+        getSavedSearchJob(mCarrerId, mCityId, "", mPage);
     }
 
     @Override
     public void onLoadMore() {
-        if (jobsListServer.size() > 0) {
+        if (jobsListServer.size() >= 10) {
             mPage++;
-            getSearchJob("4", "", "", mPage);
+            getSavedSearchJob(mCarrerId, mCityId, "", mPage);
             adapter.setOnLoadMoreListener(JobsSavedFragment.this);
-        } else {
-            Toast.makeText(getActivity(), "Loading data completed", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -162,12 +156,12 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
         }
     }
 
-    public void getSearchJob(String careerId, String cityId, String jobtile, final int page) {
+    public void getSavedSearchJob(String careerId, String cityId, String jobtile, final int page) {
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
             showCoverNetworkLoading();
 
-        getSearchJobsRequest = new GetSearchJobsRequest(careerId, cityId, "10", jobtile, page);
-        getSearchJobsRequest.callRequest(new ApiObjectCallBack<JobsResponse>() {
+        getSavedSearchJobsRequest = new GetSavedSearchJobsRequest(careerId, cityId, "10", jobtile, page);
+        getSavedSearchJobsRequest.callRequest(new ApiObjectCallBack<JobsResponse>() {
 
             @Override
             public void onSuccess(JobsResponse data, List<JobsResponse> dataArrayList, int status, String message) {
@@ -177,7 +171,7 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
                 hideCoverNetworkLoading();
                 if (page == 0) jobsList.clear();
                 else {
-                    jobsList.remove(jobsList.size() - 1);
+//                    jobsList.remove(jobsList.size() - 1);
                     adapter.notifyItemRemoved(jobsList.size());
                 }
                 jobsList.addAll(data.getJobList());

@@ -1,7 +1,5 @@
 package com.vietinterview.getbee.fragments;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -21,23 +19,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.JobsAdapter;
 import com.vietinterview.getbee.api.request.GetSearchJobsRequest;
-import com.vietinterview.getbee.api.request.SaveUnsaveJobRequest;
-import com.vietinterview.getbee.api.response.AddRemoveJobResponse;
 import com.vietinterview.getbee.api.response.jobsresponse.JobList;
 import com.vietinterview.getbee.api.response.jobsresponse.JobsResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.callback.OnRefreshHomeListener;
-import com.vietinterview.getbee.callback.RecyclerTouchListener;
 import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
@@ -87,7 +80,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private ArrayList<JobList> jobsListServer = new ArrayList<>();
     private GetSearchJobsRequest getSearchJobsRequest;
     int mPage = 0;
-    private String mCarrerId = "5";
+    private boolean mIsCity = false;
+    private String mCarrerId = "4";
     private String mCarrerName = "IT, Phần mềm";
     private String mCityId = "1";
     private String mCityName = "Hà Nội";
@@ -206,7 +200,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 hideCoverNetworkLoading();
                 if (page == 0) jobsList.clear();
                 else {
-                    jobsList.remove(jobsList.size() - 1);
+//                    jobsList.remove(jobsList.size() - 1);
                     adapter.notifyItemRemoved(jobsList.size());
                 }
                 jobsList.addAll(data.getJobList());
@@ -242,7 +236,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 //        this.registerForContextMenu(llDatePub);
 //        getActivity().openContextMenu(llDatePub);
 //    }
-    private boolean mIsCity = false;
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -266,9 +259,11 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         if (visibleCondition) {
             visibleCondition = false;
             llCondition.setVisibility(View.GONE);
+            imgFilter.setImageDrawable(getResources().getDrawable(R.drawable.ic_filter));
         } else {
             visibleCondition = true;
             llCondition.setVisibility(View.VISIBLE);
+            imgFilter.setImageDrawable(getResources().getDrawable(R.drawable.ic_filter_black));
         }
     }
 
@@ -334,7 +329,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onLoadMore() {
-        if (jobsListServer.size() > 0) {
+        if (jobsListServer.size() >= 10) {
             mPage++;
             getSearchJob(mCarrerId, mCityId, strSearch, mPage);
             adapter.setOnLoadMoreListener(HomeFragment.this);
@@ -356,17 +351,21 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     private Menu menu;
+    MenuItem mItem;
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_second, menu);
+        if (visibleSearch)
+            inflater.inflate(R.menu.menu_home_saved, menu);
+        else inflater.inflate(R.menu.menu_home_search, menu);
         this.menu = menu;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+        mItem = item;
+        int id = mItem.getItemId();
         if (id == R.id.search) {
             if (visibleSearch) {
                 visibleSearch = false;
