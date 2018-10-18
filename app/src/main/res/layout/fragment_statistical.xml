@@ -56,6 +56,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvcountCv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -91,6 +92,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvcountInterview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -126,6 +128,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvcountOffer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -135,6 +138,7 @@
                 android:textColor="@color/black"
                 android:textSize="16sp" />
         </LinearLayout>
+
 
         <View
             android:layout_width="fill_parent"
@@ -154,47 +158,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:text="Ứng viên trúng tuyển"
-                android:textColor="#505059"
-                android:textSize="16sp" />
-
-            <com.vietinterview.getbee.customview.NunitoBoldTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="right|center"
-                android:text="13"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/gray_not_focus" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/activity_vertical_margin"
-            android:paddingRight="@dimen/activity_vertical_margin">
-
-            <com.vietinterview.getbee.customview.NunitoTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="2"
+                android:layout_weight="3"
                 android:background="@android:color/transparent"
                 android:text="Số ứng viên được nhận vào làm"
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvcountGotoWork"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -210,6 +181,7 @@
             android:layout_height="1dp"
             android:layout_alignParentBottom="true"
             android:background="@color/gray_not_focus" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -253,6 +225,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvmyCountCv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -288,6 +261,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvmyCountInviteInterview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -323,6 +297,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvmyCountInterview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -358,6 +333,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvmyCountOffer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -386,13 +362,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:background="@android:color/transparent"
                 android:text="Số ứng viên được nhận vào làm"
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvmyCountGotoWork"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

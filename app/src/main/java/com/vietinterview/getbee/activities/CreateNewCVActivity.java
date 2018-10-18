@@ -67,9 +67,7 @@ public class CreateNewCVActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        // first ask your fragments to handle back-pressed event
         if (!BackFragmentHelper.fireOnBackPressedEvent(this)) {
-            // lets do the default back action if fragments don't consume it
             super.onBackPressed();
         }
     }

@@ -29,4 +29,5 @@ public class ApiConstant {
     public final static String GET_LIST_CARRER = BASE_URL + "svccollaborator/api/mstCareer";
     public final static String GET_LIST_CITY = BASE_URL + "svccollaborator/api/mstCity";
     public final static String SAVE_UNSAVE_JOB = BASE_URL + "svccollaborator/api/jobs/addRemoveMyJob";
+    public final static String GET_DETAIL_JOB = BASE_URL + "svccollaborator/api/jobs/getJobDetail";
 }

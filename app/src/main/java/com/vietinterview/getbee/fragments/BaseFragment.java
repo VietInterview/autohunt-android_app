@@ -382,7 +382,7 @@ public abstract class BaseFragment extends Fragment {
                             if (getFragmentManager().getBackStackEntryCount() > 0) {
                                 processCustomToolbar();
                             } else {
-//                                loadMenuLeft();
+                                loadMenuLeft();
                             }
                         }
                     });

@@ -42,45 +42,57 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="135dp"
+                        android:layout_height="wrap_content"
                         android:layout_below="@+id/imgHeader"
                         android:background="@color/white"
                         android:orientation="vertical">
 
                         <com.vietinterview.getbee.customview.NunitoTextView
+                            android:id="@+id/tvcompanyName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="30dp"
                             android:drawableRight="@drawable/ic_arrow_right"
                             android:drawablePadding="10dp"
-                            android:text="Cannon Vietnam"
                             android:textColor="#505059"
                             android:textSize="18sp" />
 
                         <com.vietinterview.getbee.customview.NunitoBoldTextView
+                            android:id="@+id/tvjobTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_margin="5dp"
-                            android:text="Nhân viên hành chính"
+                            android:gravity="center"
                             android:textColor="@color/black"
                             android:textSize="18sp" />
 
-                        <com.vietinterview.getbee.customview.NunitoRegularButton
-                            android:layout_width="86dp"
-                            android:layout_height="25dp"
+                        <LinearLayout
+                            android:id="@+id/llStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:background="#54CE4E"
-                            android:text="Đang tuyển"
-                            android:textColor="@color/white"
-                            android:textSize="12sp" />
+                            android:layout_marginBottom="16dp"
+                            android:background="@color/step_complete"
+                            android:orientation="vertical">
+
+                            <com.vietinterview.getbee.customview.NunitoTextView
+                                android:id="@+id/tvstatus"
+                                android:layout_width="150dp"
+                                android:layout_height="25dp"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+                        </LinearLayout>
                     </LinearLayout>
 
                     <android.support.v7.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="100dp"
                         card_view:cardBackgroundColor="@android:color/white">
 
                         <ImageView

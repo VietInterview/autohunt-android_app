@@ -9,7 +9,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,15 +19,17 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.api.request.GetDetailJobRequest;
 import com.vietinterview.getbee.api.request.SaveUnsaveJobRequest;
 import com.vietinterview.getbee.api.response.AddRemoveJobResponse;
+import com.vietinterview.getbee.api.response.detailjobresponse.DetailJobResponse;
 import com.vietinterview.getbee.api.response.jobsresponse.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
-import com.vietinterview.getbee.utils.DebugLog;
+import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
 import java.util.ArrayList;
@@ -44,11 +45,21 @@ import butterknife.OnClick;
 public class DetailJobFragment extends BaseFragment {
     @BindView(R.id.saveUnsaveJob)
     Button saveUnsaveJob;
+    @BindView(R.id.tvcompanyName)
+    TextView tvcompanyName;
+    @BindView(R.id.tvjobTitle)
+    TextView tvjobTitle;
+    @BindView(R.id.tvstatus)
+    TextView tvstatus;
+    @BindView(R.id.llStatus)
+    LinearLayout llStatus;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Dialog mNotifydialog;
     private JobList mJobList;
     private SaveUnsaveJobRequest saveUnsaveJobRequest;
+    private GetDetailJobRequest getDetailJobRequest;
+    private DetailJobResponse detailJobResponse;
 
     public static DetailJobFragment newInstance(JobList jobList) {
         DetailJobFragment fm = new DetailJobFragment();
@@ -99,30 +110,8 @@ public class DetailJobFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        setupViewPager(viewPager);
-        tabLayout.setupWithViewPager(viewPager);
-        setupTabIcons();
-        TabLayout.Tab tab = tabLayout.getTabAt(0);
-        ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
-        tab.select();
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.background_icon_not_focus));
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
         if (mJobList.getCollStatus() != null) {
-            Integer collStatus =  mJobList.getCollStatus();
+            Integer collStatus = mJobList.getCollStatus();
             if (collStatus == 0) {
                 Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
                 img.setBounds(0, 0, 40, 50);
@@ -140,6 +129,56 @@ public class DetailJobFragment extends BaseFragment {
             saveUnsaveJob.setCompoundDrawables(img, null, null, null);
             saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
         }
+        getDetailJob(mJobList.getId());
+    }
+
+    public void getDetailJob(int jobId) {
+        showCoverNetworkLoading();
+        getDetailJobRequest = new GetDetailJobRequest(jobId);
+        getDetailJobRequest.callRequest(new ApiObjectCallBack<DetailJobResponse>() {
+            @Override
+            public void onSuccess(DetailJobResponse data, List<DetailJobResponse> dataArrayList, int status, String message) {
+                hideCoverNetworkLoading();
+                detailJobResponse = data;
+                tvcompanyName.setText(data.getCompanyName());
+                tvjobTitle.setText(data.getJobTitle());
+                if (data.getStatus() == 1) {
+                    tvstatus.setText("Đang tuyển");
+                    llStatus.setBackgroundColor(getResources().getColor(R.color.step_complete));
+                } else {
+                    tvstatus.setText("Đã đóng");
+                    llStatus.setBackgroundColor(getResources().getColor(R.color.background_icon_not_focus));
+                }
+                setupViewPager(viewPager);
+                tabLayout.setupWithViewPager(viewPager);
+                setupTabIcons();
+                TabLayout.Tab tab = tabLayout.getTabAt(0);
+                ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
+                tab.select();
+                tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                    @Override
+                    public void onTabSelected(TabLayout.Tab tab) {
+                        ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
+                    }
+
+                    @Override
+                    public void onTabUnselected(TabLayout.Tab tab) {
+                        ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.background_icon_not_focus));
+                    }
+
+                    @Override
+                    public void onTabReselected(TabLayout.Tab tab) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onFail(int failCode, DetailJobResponse data, List<DetailJobResponse> dataArrayList, String message) {
+                hideCoverNetworkLoading();
+                DialogUtil.showDialog(getActivity(), "Thông báo", message);
+            }
+        });
     }
 
     @OnClick(R.id.saveUnsaveJob)
@@ -210,9 +249,9 @@ public class DetailJobFragment extends BaseFragment {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFrag(new InfoFragment(), "Thông tin");
-        adapter.addFrag(new StatisticalFragment(), "Thống kê");
-        adapter.addFrag(new CVSentFragment(), "CV đã nộp");
+        adapter.addFrag(new InfoFragment().newInstance(detailJobResponse), "Thông tin");
+        adapter.addFrag(new StatisticalFragment().newInstance(detailJobResponse), "Thống kê");
+        adapter.addFrag(new CVSentFragment().newInstance(detailJobResponse), "CV đã nộp");
         viewPager.setCurrentItem(0);
         viewPager.setAdapter(adapter);
     }

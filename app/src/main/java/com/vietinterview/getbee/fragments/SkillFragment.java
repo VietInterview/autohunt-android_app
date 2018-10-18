@@ -1,31 +1,25 @@
 package com.vietinterview.getbee.fragments;
 
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.vietinterview.getbee.R;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-
 /**
- * Created by hiepnguyennghia on 10/17/18.
+ * Created by hiepnguyennghia on 10/18/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class InfoCreateCVFragment extends BaseFragment {
-    @BindView(R.id.edtFullName)
-    TextInputEditText edtFullName;
-
+public class SkillFragment extends BaseFragment {
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_info_create_cv;
+        return R.layout.fragment_skill;
     }
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
+
     }
 
     @Override
@@ -36,12 +30,6 @@ public class InfoCreateCVFragment extends BaseFragment {
     @Override
     protected void initData() {
 
-    }
-
-
-    @OnClick(R.id.btnNext)
-    public void onClickNext() {
-        getEventBaseFragment().changeStepExp(1);
     }
 
     @Override

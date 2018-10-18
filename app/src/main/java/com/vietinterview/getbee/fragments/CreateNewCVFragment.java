@@ -5,16 +5,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.badoualy.stepperindicator.StepperIndicator;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ViewPagerAdapter;
+import com.vietinterview.getbee.callback.OnChangeStepExpListener;
 import com.vietinterview.getbee.customview.NonSwipeableViewPager;
-import com.vietinterview.getbee.utils.DebugLog;
 
 import net.skoumal.fragmentback.BackFragment;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by hiepnguyennghia on 10/17/18.
@@ -38,14 +40,21 @@ public class CreateNewCVFragment extends BaseFragment implements BackFragment {
         setMenuVisibility(true);
         getEventBaseFragment().doFillBackground("Tạo CV mới");
         setupViewPager(mViewPager);
+        getEventBaseFragment().setOnChangeStepExpListener(new OnChangeStepExpListener() {
+            @Override
+            public void onChangeStepExp(int step) {
+                mStep = step;
+                mViewPager.setCurrentItem(mStep, true);
+            }
+        });
     }
 
     private void setupViewPager(final NonSwipeableViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         adapter.addFrag(new InfoCreateCVFragment(), "Thông tin");
-        adapter.addFrag(new StatisticalFragment(), "Thống kê");
-        adapter.addFrag(new CVSentFragment(), "CV đã nộp");
-        adapter.addFrag(new MyCVFragment(), "CV của tôi");
+        adapter.addFrag(new ExperienceFragment(), "Kinh nghiệm");
+        adapter.addFrag(new LevelFragment(), "Trình độ");
+        adapter.addFrag(new SkillFragment(), "CV của tôi");
         assert viewPager != null;
         viewPager.setAdapter(adapter);
         stepper_indicator.setViewPager(viewPager, false);
@@ -106,7 +115,6 @@ public class CreateNewCVFragment extends BaseFragment implements BackFragment {
 
     @Override
     public boolean onBackPressed() {
-        DebugLog.showLogCat("onBackPressed");
         if (mStep > 0) {
             mStep = mStep - 1;
             mViewPager.setCurrentItem(mStep);

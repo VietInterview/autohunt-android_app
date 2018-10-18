@@ -99,13 +99,8 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-
         if (viewType == VIEW_TYPE_ITEM) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.jobs_item, parent, false);
-
-//            view.setOnClickListener(mHomeFragment.myOnClickListener);
-
             MyViewHolder myViewHolder = new MyViewHolder(view);
             return myViewHolder;
         } else if (viewType == VIEW_TYPE_LOADING) {

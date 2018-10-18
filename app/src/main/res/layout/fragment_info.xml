@@ -27,6 +27,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvCarrer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -62,6 +63,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvjobLevel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -97,6 +99,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvlistcityName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -132,6 +135,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvsubmitDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -167,6 +171,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvexpireDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -202,6 +207,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvstatus"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -237,6 +243,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvSalaryFromTo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -272,6 +279,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvRewardCTV"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -307,6 +315,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvquantity"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -342,6 +351,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvcountCv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -391,6 +401,7 @@
             android:paddingRight="@dimen/activity_vertical_margin">
 
             <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvjobDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -400,24 +411,6 @@
                 android:maxLines="5"
                 android:minLines="2"
                 android:singleLine="false"
-                android:text="Tốt nghiệp Cao đẳng/ Đại học chính quy các chuyên ngành : Ngoại ngữ, Kinh tế, Kế toán, Tài chính, Quản trị kinh doanh hoặc các chuyên ngành tương đương.
-Hệ Đại Học :
-Làm việc tại:
-- Phòng Dự án cải tiến hành chính (GAIP)
-- Phòng Quản lý cảm biến hình ảnh (CISM)
-- Phòng Quản lý bộ phận sản xuất số 1 (MMD)
-- Phòng Môi trường ( ENV)
-- Phòng An toàn sản xuất ( IS)
-- Phòng Giải pháp đổi mới sản xuất ( CIMS)
-- Phòng Quản lý sản xuất số 2 ( PDC2)
-- Phòng Mua hang ( CEP)
-- Phòng Quản lý điều phối ( PUC)
-- Phòng Chiến lược mua hàng (PUS)
-- Phòng Quản lý chi phí ( CMG)
-Hệ Cao Đẳng
-Làm việc tại :
-- Phòng Quản lý điều phối (PUC)
-- Phòng Quản lý bộ phận sản xuất số 1 ( MMD)"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
         </LinearLayout>

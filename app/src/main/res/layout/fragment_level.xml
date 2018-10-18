@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Created by Hiep Nguyen Nghia.
+    Copyright © 2018 Vietinterview. All rights reserved.
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/llFooter">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:nestedScrollingEnabled="true"
+            android:orientation="vertical">
+
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#ECF0F7"
+                android:gravity="center|left"
+                android:paddingLeft="16dp"
+                android:text="Trình độ và bằng cấp"
+                android:textColor="#191830"
+                android:textSize="18sp" />
+
+            <ExpandableListView
+                android:id="@+id/exLvLevel"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_above="@+id/add"
+                android:nestedScrollingEnabled="true"
+                android:visibility="visible" />
+
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/addLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="16dp"
+                android:drawableLeft="@drawable/ic_plus_creat_cv"
+                android:drawablePadding="8dp"
+                android:text="Thêm kinh nghiệm"
+                android:textSize="18sp" />
+
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#ECF0F7"
+                android:gravity="center|left"
+                android:paddingLeft="16dp"
+                android:text="Ngoại Ngữ"
+                android:textColor="#191830"
+                android:textSize="18sp" />
+
+            <ExpandableListView
+                android:id="@+id/exLvLanguage"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_above="@+id/add"
+                android:nestedScrollingEnabled="true"
+                android:visibility="visible" />
+
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/addLanguage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="16dp"
+                android:drawableLeft="@drawable/ic_plus_creat_cv"
+                android:drawablePadding="8dp"
+                android:text="Thêm kinh nghiệm"
+                android:textSize="18sp" />
+
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#ECF0F7"
+                android:gravity="center|left"
+                android:paddingLeft="16dp"
+                android:text="Trình độ tin học"
+                android:textColor="#191830"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="82dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:padding="4dp">
+
+                    <com.vietinterview.getbee.customview.NunitoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:text="MS Word"
+                        android:textSize="16sp" />
+
+                    <com.vietinterview.getbee.customview.NunitoBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentBottom="true"
+                        android:text="Khá"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_arrow_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="8dp"
+                    android:background="@color/gray_not_focus" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/llFooter"
+        android:layout_width="321dp"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/borderbutton"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.vietinterview.getbee.customview.NunitoBoldButton
+            android:id="@+id/btnNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:text="TIẾP THEO"
+            android:textColor="@color/white" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_arrow_right" />
+    </LinearLayout>
+</RelativeLayout>

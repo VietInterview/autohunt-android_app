@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 
+import com.vietinterview.getbee.callback.OnChangeStepExpListener;
 import com.vietinterview.getbee.callback.OnFillBackgroundListener;
 import com.vietinterview.getbee.callback.OnRefreshHomeListener;
 import com.vietinterview.getbee.callback.OnShowLogoListener;
@@ -16,6 +17,7 @@ public class Event implements Parcelable {
     private OnFillBackgroundListener mOnEventListener;
     private OnShowLogoListener onShowLogoListener;
     private OnRefreshHomeListener onRefreshHomeListener;
+    private OnChangeStepExpListener onChangeStepExpListener;
 
     protected Event(Parcel in) {
     }
@@ -48,6 +50,10 @@ public class Event implements Parcelable {
         this.onRefreshHomeListener = onRefreshHomeListener;
     }
 
+    public void setOnChangeStepExpListener(OnChangeStepExpListener onChangeStepExpListener) {
+        this.onChangeStepExpListener = onChangeStepExpListener;
+    }
+
     public void doFillBackground(String nameTable) {
         if (mOnEventListener != null) {
             mOnEventListener.onFillBackground(nameTable);
@@ -63,6 +69,12 @@ public class Event implements Parcelable {
     public void refreshHome() {
         if (this.onRefreshHomeListener != null) {
             this.onRefreshHomeListener.onRefresh();
+        }
+    }
+
+    public void changeStepExp(int step) {
+        if (this.onChangeStepExpListener != null) {
+            this.onChangeStepExpListener.onChangeStepExp(step);
         }
     }
 
