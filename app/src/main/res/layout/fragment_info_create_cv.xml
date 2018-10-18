@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Created by Hiep Nguyen Nghia.
+    Copyright © 2018 Vietinterview. All rights reserved.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:src="@drawable/ic_cover_create_cv" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_upload_ava" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="10dp"
+            android:text="Tải ảnh đại diện"
+            android:textColor="#B1B1BA" />
+    </FrameLayout>
+
+    <com.rafakob.floatingedittext.FloatingEditText
+        android:id="@+id/fedtName"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/yellow_highlight"
+        android:inputType="textCapWords|textEmailAddress"
+        android:maxLength="100"
+        android:maxLines="2"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:hintAnimationEnabled="true"
+        app:hintTextAppearance="@style/HintTextAppearance" />
+
+    <com.rafakob.floatingedittext.FloatingEditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/yellow_highlight"
+        android:hint="Họ và tên *"
+        android:inputType="textCapWords|textEmailAddress"
+        android:maxLength="100"
+        android:maxLines="2"
+        android:textAllCaps="true"
+        android:textColor="@color/yellow_highlight"
+        android:textSize="16sp"
+        app:backgroundTint="@color/yellow_highlight"
+        app:hintAnimationEnabled="true"
+        app:hintTextAppearance="@style/HintTextAppearance" />
+</LinearLayout>

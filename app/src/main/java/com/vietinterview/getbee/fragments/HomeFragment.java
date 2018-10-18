@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.activities.CreateNewCVActivity;
 import com.vietinterview.getbee.adapter.JobsAdapter;
 import com.vietinterview.getbee.api.request.GetSearchJobsRequest;
 import com.vietinterview.getbee.api.response.jobsresponse.JobList;
@@ -32,10 +33,10 @@ import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.callback.OnRefreshHomeListener;
 import com.vietinterview.getbee.constant.AppConstant;
+import com.vietinterview.getbee.customview.ClearableRegularEditText;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
-import com.vietinterview.getbee.customview.ClearableRegularEditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -183,6 +184,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @OnClick(R.id.fab)
     public void onFabClick() {
+        startActivity(new Intent(getActivity(), CreateNewCVActivity.class));
+//        FragmentUtil.pushFragment(getActivity(), this, new CreateNewCVFragment(), null);
     }
 
     public void getSearchJob(String careerId, String cityId, String jobtile, final int page) {

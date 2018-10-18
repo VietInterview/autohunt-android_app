@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.vietinterview.getbee.GetBeeApplication;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.activities.BaseActivity;
+import com.vietinterview.getbee.activities.CreateNewCVActivity;
 import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.api.request.BaseJsonRequest;
 import com.vietinterview.getbee.model.Event;
@@ -29,6 +30,8 @@ import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.KeyboardUtil;
 import com.vietinterview.getbee.utils.UiUtil;
+
+import net.skoumal.fragmentback.BackFragment;
 
 import java.util.ArrayList;
 
@@ -66,7 +69,7 @@ public abstract class BaseFragment extends Fragment {
     LayoutInflater mInflater;
     ViewGroup mContainer;
     MainActivity act;
-    private boolean isCustomToolbar = false;
+    CreateNewCVActivity createNewCVActivity;
 
     protected boolean isLoading = false;
 
@@ -314,53 +317,105 @@ public abstract class BaseFragment extends Fragment {
     protected void processOnBackPress() {
     }
 
+
     protected void customToolbar(boolean isCustom) {
-        act = (MainActivity) getActivity();
-        if (isCustom) {
-            if (act.getSupportActionBar() != null) {
-                Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
-                toolbar.setNavigationIcon(getIconLeft());
-                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (getFragmentManager().getBackStackEntryCount() > 0) {
-                            processCustomToolbar();
-                        } else {
-                            loadMenuLeft();
+        if (getActivity() instanceof MainActivity) {
+            act = (MainActivity) getActivity();
+            if (isCustom) {
+                if (act.getSupportActionBar() != null) {
+                    Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
+                    toolbar.setNavigationIcon(getIconLeft());
+                    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (getFragmentManager().getBackStackEntryCount() > 0) {
+                                processCustomToolbar();
+                            } else {
+                                loadMenuLeft();
+                            }
                         }
-                    }
-                });
+                    });
+                }
+            } else {
+                if (act.getSupportActionBar() != null) {
+                    Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
+                    toolbar.setNavigationIcon(null);
+                }
             }
         } else {
-            if (act.getSupportActionBar() != null) {
-                Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
-                toolbar.setNavigationIcon(null);
+            createNewCVActivity = (CreateNewCVActivity) getActivity();
+            if (isCustom) {
+                if (createNewCVActivity.getSupportActionBar() != null) {
+                    Toolbar toolbar = (Toolbar) createNewCVActivity.findViewById(R.id.toolbar);
+                    toolbar.setNavigationIcon(getIconLeft());
+                    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+//                            if (getFragmentManager().getBackStackEntryCount() > 0) {
+                            processCustomToolbar();
+//                            } else {
+//                                loadMenuLeft();
+//                            }
+                        }
+                    });
+                }
+            } else {
+                if (createNewCVActivity.getSupportActionBar() != null) {
+                    Toolbar toolbar = (Toolbar) createNewCVActivity.findViewById(R.id.toolbar);
+                    toolbar.setNavigationIcon(null);
+                }
             }
         }
     }
 
     protected void showhidetoolbar(boolean isVisible) {
-        act = (MainActivity) getActivity();
-        if (isVisible) {
-            if (act.getSupportActionBar() != null) {
-                Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
-                toolbar.setVisibility(View.VISIBLE);
-                toolbar.setNavigationIcon(getIconLeft());
-                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (getFragmentManager().getBackStackEntryCount() > 0) {
-                            processCustomToolbar();
-                        } else {
-                            loadMenuLeft();
+        if (getActivity() instanceof MainActivity) {
+            act = (MainActivity) getActivity();
+            if (isVisible) {
+                if (act.getSupportActionBar() != null) {
+                    Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
+                    toolbar.setVisibility(View.VISIBLE);
+                    toolbar.setNavigationIcon(getIconLeft());
+                    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (getFragmentManager().getBackStackEntryCount() > 0) {
+                                processCustomToolbar();
+                            } else {
+//                                loadMenuLeft();
+                            }
                         }
-                    }
-                });
+                    });
+                }
+            } else {
+                if (act.getSupportActionBar() != null) {
+                    Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
+                    toolbar.setVisibility(View.GONE);
+                }
             }
         } else {
-            if (act.getSupportActionBar() != null) {
-                Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
-                toolbar.setVisibility(View.GONE);
+            createNewCVActivity = (CreateNewCVActivity) getActivity();
+            if (isVisible) {
+                if (createNewCVActivity.getSupportActionBar() != null) {
+                    Toolbar toolbar = (Toolbar) createNewCVActivity.findViewById(R.id.toolbar);
+                    toolbar.setVisibility(View.VISIBLE);
+                    toolbar.setNavigationIcon(getIconLeft());
+                    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+//                            if (getFragmentManager().getBackStackEntryCount() > 0) {
+                            processCustomToolbar();
+//                            } else {
+//                                loadMenuLeft();
+//                            }
+                        }
+                    });
+                }
+            } else {
+                if (createNewCVActivity.getSupportActionBar() != null) {
+                    Toolbar toolbar = (Toolbar) createNewCVActivity.findViewById(R.id.toolbar);
+                    toolbar.setVisibility(View.GONE);
+                }
             }
         }
     }

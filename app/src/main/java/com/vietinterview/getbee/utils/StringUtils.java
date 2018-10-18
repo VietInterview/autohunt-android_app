@@ -5,7 +5,9 @@ package com.vietinterview.getbee.utils;
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 
+import android.text.Spannable;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.Patterns;
 
 import java.io.UnsupportedEncodingException;
@@ -265,7 +267,16 @@ public class StringUtils {
         }
         return new String(source);
     }
-
+    public static void setColorForPath(Spannable spannable, String[] paths, int color) {
+        for (int i = 0; i < paths.length; i++) {
+            int indexOfPath = spannable.toString().indexOf(paths[i]);
+            if (indexOfPath == -1) {
+                return;
+            }
+            spannable.setSpan(new ForegroundColorSpan(color), indexOfPath,
+                    indexOfPath + paths[i].length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+    }
     /**
      * transform full width char to half width char
      *

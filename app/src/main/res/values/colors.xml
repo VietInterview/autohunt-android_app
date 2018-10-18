@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#FFD215</color>
     <color name="colorPrimaryDark">#FFD215</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#FFD215</color>
     <color name="white">#ffffff</color>
     <color name="browse">#F7F7F9</color>
     <color name="transparent">#80ffffff</color>
@@ -34,4 +34,6 @@
     <color name="gray_not_focus">#D2D2E1</color>
     <color name="background_icon_not_focus">#B1B1BA</color>
     <color name="underline_tablyaout">#3C3B6E</color>
+    <color name="step_complete">#54CE4E</color>
+    <color name="step_uncomplete">#B1B1BA</color>
 </resources>

@@ -35,6 +35,8 @@ import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.customview.CircularTextView;
 import com.vietinterview.getbee.customview.CustomTypefaceSpan;
 
+import net.skoumal.fragmentback.BackFragmentHelper;
+
 import butterknife.BindView;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -188,7 +190,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() {// first ask your fragments to handle back-pressed event
+        if (!BackFragmentHelper.fireOnBackPressedEvent(this)) {
+            // lets do the default back action if fragments don't consume it
+            super.onBackPressed();
+        }
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -213,4 +219,5 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

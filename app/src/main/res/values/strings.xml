@@ -10,7 +10,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="hello_blank_fragment">Anh DQ</string>
-
+    <string name="fck">f<sub><small>ck</small></sub> [mpa]</string>
+    <string name="some_string">meters<sup>2</sup></string>
     <string-array name="jobs_array">
         <item>An toàn lao đông</item>
         <item>Bác sĩ</item>
@@ -19,5 +20,11 @@
         <item>Bán sỉ/Bán lẻ</item>
         <item>Bảo hiểm</item>
         <item>Bảo trì/Sửa chữa</item>
+    </string-array>
+    <string-array name="stepLabels">
+        <item>Thông tin</item>
+        <item>Kinh nghiệm</item>
+        <item>Trình độ</item>
+        <item>Kỹ năng</item>
     </string-array>
 </resources>
