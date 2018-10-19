@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.detailjobresponse.DetailJobResponse;
 import com.vietinterview.getbee.customview.FlowLayout;
+import com.vietinterview.getbee.customview.NunitoTextView;
 import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.LayoutUtils;
 
@@ -46,43 +46,44 @@ public class CVSentFragment extends BaseFragment {
             tvCount.setText(detailJobResponse.getLstJobApply().size() + " CV đã được nộp");
             mFlowLayout.removeAllViews();
             for (int i = 0; i < detailJobResponse.getLstJobApply().size(); i++) {
-                LinearLayout linearLayout = (LinearLayout) LayoutUtils.inflate(mFlowLayout, R.layout.stamp_order_item_view, false);
+                LinearLayout linearLayout = (LinearLayout) LayoutUtils.inflate(mFlowLayout, R.layout.cv_sent_item_view, false);
                 final int mPosition = i;
                 TextView tvName = (TextView) linearLayout.findViewById(R.id.tvName);
                 TextView tvDate = (TextView) linearLayout.findViewById(R.id.tvDate);
-                Button btnStatus = (Button) linearLayout.findViewById(R.id.tvStatus);
+                NunitoTextView btnStatus = (NunitoTextView) linearLayout.findViewById(R.id.tvStatus);
+                LinearLayout llStatus = (LinearLayout) linearLayout.findViewById(R.id.llStatus);
                 tvName.setText(detailJobResponse.getLstJobApply().get(i).getFullName());
                 tvDate.setText(DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(detailJobResponse.getLstJobApply().get(i).getCreatedDate()) + ""));
                 if (detailJobResponse.getLstJobApply().get(i).getStatus() == 1) {
                     btnStatus.setText("Chưa gửi");
-                    btnStatus.setBackgroundColor(getResources().getColor(R.color.background_icon_not_focus));
+                    llStatus.setBackgroundColor(getResources().getColor(R.color.background_icon_not_focus));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 2) {
                     btnStatus.setText("Chờ duyệt");
-                    btnStatus.setBackgroundColor(getResources().getColor(R.color.red));
+                    llStatus.setBackgroundColor(getResources().getColor(R.color.red));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 3) {
                     btnStatus.setText("Đã phê duyệt");
-                    btnStatus.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
+                    llStatus.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 4) {
                     btnStatus.setText("Đã xem");
-                    btnStatus.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
+                    llStatus.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 5) {
                     btnStatus.setText("Từ chối");
-                    btnStatus.setBackgroundColor(getResources().getColor(R.color.background_icon_not_focus));
+                    llStatus.setBackgroundColor(getResources().getColor(R.color.background_icon_not_focus));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 6) {
                     btnStatus.setText("Mời phỏng vấn");
-                    btnStatus.setBackgroundColor(getResources().getColor(R.color.red));
+                    llStatus.setBackgroundColor(getResources().getColor(R.color.red));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 7) {
                     btnStatus.setText("Đã phỏng vấn");
-                    btnStatus.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
+                    llStatus.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 8) {
                     btnStatus.setText("Đã offer");
-                    btnStatus.setBackgroundColor(getResources().getColor(R.color.green));
+                    llStatus.setBackgroundColor(getResources().getColor(R.color.green));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 9) {
                     btnStatus.setText("Đã nhận việc");
-                    btnStatus.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
+                    llStatus.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
                 } else {
                     btnStatus.setText("Đã submit");
-                    btnStatus.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
+                    llStatus.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
                 }
                 mFlowLayout.addView(linearLayout);
             }

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/viewPager"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:overScrollMode="never">
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/primaryContentCardView"
+        android:layout_width="match_parent"
+        android:layout_height="104dp"
+        android:background="@color/yellow_highlight">
+
+        <com.vietinterview.getbee.customview.NunitoBoldTextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|left"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Lê Thị Khuyên"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <com.vietinterview.getbee.customview.NunitoTextView
+            android:id="@+id/tvCarrer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|left"
+            android:layout_marginLeft="16dp"
+            android:gravity="center"
+            android:text="IT, Phần mềm"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <com.vietinterview.getbee.customview.NunitoTextView
+            android:id="@+id/tvJob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|left"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:text="02 Nhân viên kinh doanh …."
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:id="@+id/llStatus"
+            android:layout_width="90dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center|right"
+            android:layout_marginRight="16dp"
+            android:background="@color/yellow_highlight"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Đã gửi"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+        android:id="@+id/secondaryContentFrameLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center|right"
+        android:orientation="horizontal">
+
+        <com.vietinterview.getbee.customview.NunitoRegularButton
+            android:id="@+id/btn2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:background="@color/underline_tablyaout"
+            android:drawableTop="@drawable/ask"
+            android:drawablePadding="-30dp"
+            android:paddingTop="20dp"
+            android:text="Sửa"
+            android:textColor="@color/white" />
+
+        <com.vietinterview.getbee.customview.NunitoRegularButton
+            android:id="@+id/btn3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:background="@color/red"
+            android:drawableTop="@drawable/ask"
+            android:drawablePadding="-30dp"
+            android:paddingTop="20dp"
+            android:text="Xóa"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+</android.support.v4.view.ViewPager>

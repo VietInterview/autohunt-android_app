@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Created by Hiep Nguyen Nghia.
+    Copyright © 2018 Vietinterview. All rights reserved.
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/more"
+        android:icon="@drawable/ic_option_menu"
+        android:title="More Options"
+        app:actionLayout="@layout/moreover"
+        app:showAsAction="always">
+
+        <menu></menu>
+    </item>
+</menu>

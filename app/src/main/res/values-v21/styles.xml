@@ -5,9 +5,11 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-
+        <item name="android:itemBackground">@color/white</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:actionMenuTextColor">@color/black</item>
     </style>
+
     <style name="HintTextAppearance">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">#FFD215</item>

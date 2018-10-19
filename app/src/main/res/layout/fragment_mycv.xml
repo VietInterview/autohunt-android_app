@@ -11,6 +11,13 @@
 
     <com.vietinterview.getbee.customview.NunitoTextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="MyCV" />
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="25 công việc được tìm thấy" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
 </LinearLayout>
