@@ -1,46 +1,52 @@
 package com.vietinterview.getbee.fragments;
 
-import android.app.Activity;
-import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.adapter.MyCVAdapter;
-import com.vietinterview.getbee.model.DropDownItems;
+import com.vietinterview.getbee.adapter.ViewPagerAdapter;
+import com.vietinterview.getbee.constant.AppConstant;
+import com.vietinterview.getbee.utils.FragmentUtil;
 
-import java.util.ArrayList;
+import butterknife.BindView;
+import butterknife.OnClick;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
- * Created by hiepnguyennghia on 10/12/18.
+ * Created by hiepnguyennghia on 10/22/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 public class MyCVFragment extends BaseFragment {
-    private ArrayList<String> titles = new ArrayList<>();
-    private MyCVAdapter adapter;
-    private RecyclerView recyclerView;
-    PopupWindow popupWindow;
-    private ArrayList<DropDownItems> items = new ArrayList<DropDownItems>();
+    @BindView(R.id.llCondition)
+    LinearLayout llCondition;
+    @BindView(R.id.tvCarrerName)
+    TextView tvCarrerName;
+    @BindView(R.id.tvCityName)
+    TextView tvCityName;
+    @BindView(R.id.llStatus)
+    LinearLayout llStatus;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private Menu menu;
+    private boolean visibleFilter = false;
+    private boolean mIsCity = false;
+    private String mCarrerId = "4";
+    private String mCarrerName = "IT, Phần mềm";
+    private String mCityId = "1";
+    private String mCityName = "Hà Nội";
 
     @Override
     protected int getLayoutId() {
@@ -49,26 +55,54 @@ public class MyCVFragment extends BaseFragment {
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
+        getEventBaseFragment().doFillBackground("CV của tôi");
         setCustomToolbar(true);
         setHasOptionsMenu(true);
-        setCustomToolbarVisible(true);
-        getEventBaseFragment().doFillBackground("CV của tôi");
-        recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        titles.add("Jon Snow");
-        titles.add("Arya Stark");
-        titles.add("Daenerys Targaryen");
-        titles.add("Tyrion Lannister");
-        titles.add("Bran Stark");
-        adapter = new MyCVAdapter(titles);
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-        setHasOptionsMenu(true);
+        viewPager = (ViewPager) root.findViewById(R.id.viewpager);
+        tabLayout = (TabLayout) root.findViewById(R.id.tabs);
+        tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.underline_tablyaout));
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        items.add(new DropDownItems("Settings", 0, false));
-        items.add(new DropDownItems("Likes", 10, true));
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0) {
+                    llStatus.setVisibility(View.GONE);
+                } else if (position == 1) {
+                    llStatus.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        setupViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
+        setupTabIcons();
+        TabLayout.Tab tab = tabLayout.getTabAt(0);
+        ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
+        tab.select();
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.background_icon_not_focus));
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     @Override
@@ -81,9 +115,53 @@ public class MyCVFragment extends BaseFragment {
 
     }
 
-    @Override
-    protected void onRestore() {
+    private void setupTabIcons() {
+        TextView tabOne = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
+        tabOne.setText("CV đã lưu");
+        tabLayout.getTabAt(0).setCustomView(tabOne);
 
+        TextView tabTwo = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
+        tabTwo.setText("CV đã nộp");
+        tabLayout.getTabAt(1).setCustomView(tabTwo);
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+        adapter.addFrag(new MyCVSavedFragment(), "CV đã lưu");
+        adapter.addFrag(new MyCVApplyedFragment(), "CV đã nộp");
+        viewPager.setCurrentItem(0);
+        viewPager.setAdapter(adapter);
+    }
+
+    @OnClick(R.id.llCarrer)
+    public void onllCarrerClick() {
+        mIsCity = false;
+        visibleFilter = false;
+        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(false), null);
+    }
+
+    @OnClick(R.id.llAdd)
+    public void onllAddClick() {
+        mIsCity = true;
+        visibleFilter = false;
+        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(true), null);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == AppConstant.FRAGMENT_CODE) {
+                if (mIsCity) {
+                    mCityId = String.valueOf(data.getIntExtra("cityId", 0));
+                    mCityName = data.getStringExtra("cityName");
+                    tvCityName.setText(mCityName);
+                } else {
+                    mCarrerId = String.valueOf(data.getIntExtra("carrerId", 0));
+                    mCarrerName = data.getStringExtra("carrerName");
+                    tvCarrerName.setText(mCarrerName);
+                }
+            }
+        }
     }
 
     @Override
@@ -93,12 +171,42 @@ public class MyCVFragment extends BaseFragment {
 
     @Override
     protected void onSaveState(Bundle bundle) {
-
+        bundle.putBoolean(AppConstant.VISIBLE_FILTER, visibleFilter);
     }
 
     @Override
     protected void onRestoreState(Bundle bundle) {
+        visibleFilter = bundle.getBoolean(AppConstant.VISIBLE_FILTER);
+    }
 
+    @Override
+    protected void onRestore() {
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_myjob, menu);
+        this.menu = menu;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.filter) {
+            if (visibleFilter) {
+                visibleFilter = false;
+                llCondition.setVisibility(View.GONE);
+                menu.getItem(0).setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_filter_black));
+            } else {
+                visibleFilter = true;
+                llCondition.setVisibility(View.VISIBLE);
+                menu.getItem(0).setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_close));
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -113,118 +221,5 @@ public class MyCVFragment extends BaseFragment {
     @Override
     protected void processCustomToolbar() {
         loadMenuLeft();
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_my_cv, menu);
-
-        ImageButton item1 = (ImageButton) menu.findItem(R.id.more).getActionView().findViewById(R.id.dropDowmImageBtn);
-        item1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPopUpWindow(v);
-            }
-        });
-
-        return;
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void showPopUpWindow(View v) {
-
-        DropDownAdapter adapter = new DropDownAdapter(v.getContext(), items);
-
-        popupWindow = new PopupWindow(getActivity());
-        int[] colors = {0, 0xFFFF0000, 0}; // red for the example
-        ListView listViewSort = new ListView(getActivity());
-        listViewSort.setDivider(new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors));
-        listViewSort.setDividerHeight(1);
-        listViewSort.setAdapter(adapter);
-        listViewSort.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        popupWindow.setFocusable(true);
-        popupWindow.setWidth(500);
-        popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-        popupWindow.setContentView(listViewSort);
-
-        popupWindow.showAsDropDown(v, 0, 0);
-    }
-
-    public class DropDownAdapter extends BaseAdapter {
-
-        Context context;
-        ArrayList<DropDownItems> items;
-
-        public DropDownAdapter(Context context, ArrayList<DropDownItems> items) {
-            this.context = context;
-            this.items = items;
-        }
-
-        @Override
-        public int getCount() {
-            return items.size();
-        }
-
-        @Override
-        public DropDownItems getItem(int position) {
-            return items.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            DropDownItems item = getItem(position);
-
-            if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.list_item_option, null);
-            }
-
-            final TextView itemText = (TextView) convertView.findViewById(R.id.item_name);
-//            final Button itemImage = (Button) convertView.findViewById(R.id.dropDownItemImage);
-//            final CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.chkState);
-            itemText.setText(item.getTxt());
-            itemText.setTag(item.getTxt());
-//            itemImage.setText(String.valueOf(item.getValue()));
-//            itemImage.setTag(item.getTxt());
-
-//            if (!item.getShowValue()) {
-//                itemImage.setVisibility(View.GONE);
-//            } else {
-//                itemImage.setVisibility(View.VISIBLE);
-//            }
-
-//            itemText.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Toast.makeText(v.getContext(), "Clicked " + itemText.getTag(), Toast.LENGTH_LONG).show();
-//
-//                    if (popupWindow != null && popupWindow.isShowing()) {
-//                        popupWindow.dismiss();
-//                        popupWindow = null;
-//                    }
-//
-//                }
-//            });
-
-            return convertView;
-        }
     }
 }

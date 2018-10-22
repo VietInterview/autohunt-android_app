@@ -78,8 +78,13 @@ public class LoginFragment extends BaseFragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                edtEmail.setTextColor(Color.BLACK);
-                icRightEmail.setVisibility(View.GONE);
+                if (charSequence.toString().equalsIgnoreCase("")) {
+                    edtEmail.setHint("Xin hãy nhập Email");
+                    icRightEmail.setVisibility(View.VISIBLE);
+                } else {
+                    edtEmail.setTextColor(Color.BLACK);
+                    icRightEmail.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -180,7 +185,7 @@ public class LoginFragment extends BaseFragment {
     public void onbtnLoginClick() {
         if (edtEmail.getText().toString().equalsIgnoreCase("")) {
             edtEmail.setText("");
-            edtEmail.setHint("Xin hãy nhập tên đăng nhập");
+            edtEmail.setHint("Xin hãy nhập email");
             edtEmail.setHintTextColor(Color.RED);
             icRightEmail.setVisibility(View.VISIBLE);
         } else if (edtPass.getText().toString().equalsIgnoreCase("")) {
@@ -195,12 +200,13 @@ public class LoginFragment extends BaseFragment {
                 public void onSuccess(LoginResponse data, List<LoginResponse> dataArrayList, int status, String message) {
                     if (status == 200) {
                         UserInfoBean userInfoBean = new UserInfoBean();
-                        userInfoBean.email = edtEmail.getText().toString().trim();
+                        userInfoBean.nickname = edtEmail.getText().toString().trim();
                         userInfoBean.access_token = data.getApiToken();
                         AccountManager.setUserInfoBean(userInfoBean);
                         if (getActivity() instanceof MainActivity) {
                             ((MainActivity) getActivity()).drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                         }
+                        getAct().navigationView.setCheckedItem(R.id.nav_home);
                         FragmentUtil.replaceFragment(getActivity(), new HomeFragment().newInstance(""), null);
                     }
                 }

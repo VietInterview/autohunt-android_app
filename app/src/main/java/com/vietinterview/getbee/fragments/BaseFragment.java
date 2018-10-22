@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -25,6 +26,7 @@ import com.vietinterview.getbee.activities.BaseActivity;
 import com.vietinterview.getbee.activities.CreateNewCVActivity;
 import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.api.request.BaseJsonRequest;
+import com.vietinterview.getbee.callback.DetectSwipeGestureListener;
 import com.vietinterview.getbee.model.Event;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
@@ -70,6 +72,7 @@ public abstract class BaseFragment extends Fragment {
     ViewGroup mContainer;
     MainActivity act;
     CreateNewCVActivity createNewCVActivity;
+    private GestureDetectorCompat gestureDetectorCompat = null;
 
     protected boolean isLoading = false;
 
@@ -160,9 +163,30 @@ public abstract class BaseFragment extends Fragment {
         if (getArguments() != null) {
             getArgument(getArguments());
         }
+        // Create a common gesture listener object.
+        DetectSwipeGestureListener gestureListener = new DetectSwipeGestureListener();
+
+        // Set activity in the listener.
+        gestureListener.setBaseFragment(this);
+
+        // Create the gesture detector with the gesture listener.
+        gestureDetectorCompat = new GestureDetectorCompat(getActivity(), gestureListener);
+        view.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                gestureDetectorCompat.onTouchEvent(event);
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    //do something
+                }
+                return true;
+            }
+        });
         baseActivity = (BaseActivity) getActivity();
         initView(rootView, mInflater, mContainer);
         initData();
+    }
+
+    public GestureDetectorCompat getGestureDetectorCompat() {
+        return gestureDetectorCompat;
     }
 
     public void setCustomToolbar(boolean isCustom) {
@@ -175,6 +199,10 @@ public abstract class BaseFragment extends Fragment {
 
     public Event getEventBaseFragment() {
         return baseActivity.getEventBaseActivity();
+    }
+
+    public MainActivity getAct() {
+        return act;
     }
 
     private static class MyOnClickListener implements View.OnClickListener {
@@ -317,6 +345,13 @@ public abstract class BaseFragment extends Fragment {
     protected void processOnBackPress() {
     }
 
+//    public void swipeToRight() {
+//        if (getFragmentManager().getBackStackEntryCount() > 0) {
+//            FragmentUtil.popBackStack(this);
+//        } else {
+//            loadMenuLeft();
+//        }
+//    }
 
     protected void customToolbar(boolean isCustom) {
         if (getActivity() instanceof MainActivity) {
@@ -467,12 +502,12 @@ public abstract class BaseFragment extends Fragment {
         subject.setVisibility(subject == target ? View.VISIBLE : View.GONE);
     }
 
-    protected void showCoverNetworkLoading() {
+    public void showCoverNetworkLoading() {
         UiUtil.showView(coverNetworkLoading);
         isLoading = true;
     }
 
-    protected void hideCoverNetworkLoading() {
+    public void hideCoverNetworkLoading() {
         UiUtil.hideView(coverNetworkLoading, true);
         isLoading = false;
     }

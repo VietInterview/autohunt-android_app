@@ -26,14 +26,14 @@ import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.callback.OnFillBackgroundListener;
 import com.vietinterview.getbee.callback.OnShowLogoListener;
+import com.vietinterview.getbee.customview.CircularTextView;
+import com.vietinterview.getbee.customview.CustomTypefaceSpan;
 import com.vietinterview.getbee.fragments.HomeFragment;
 import com.vietinterview.getbee.fragments.LoginFragment;
 import com.vietinterview.getbee.fragments.MyCVFragment;
 import com.vietinterview.getbee.fragments.MyJobFragment;
 import com.vietinterview.getbee.fragments.MyProfileFragment;
 import com.vietinterview.getbee.utils.FragmentUtil;
-import com.vietinterview.getbee.customview.CircularTextView;
-import com.vietinterview.getbee.customview.CustomTypefaceSpan;
 
 import net.skoumal.fragmentback.BackFragmentHelper;
 
@@ -89,6 +89,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         });
         if (AccountManager.getUserInfoBean() != null) {
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            navigationView.setCheckedItem(R.id.nav_home);
             FragmentUtil.replaceFragment(this, new HomeFragment(), null);
         } else {
             FragmentUtil.replaceFragment(MainActivity.this, new LoginFragment(), null);

@@ -26,8 +26,8 @@ import butterknife.OnClick;
 public class MyProfileFragment extends BaseFragment {
     @BindView(R.id.scrollView)
     TouchDetectableScrollView scrollView;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
+//    @BindView(R.id.fab)
+//    FloatingActionButton fab;
     String mNameFragment;
     LoginRequest loginRequest;
 
@@ -52,12 +52,12 @@ public class MyProfileFragment extends BaseFragment {
         scrollView.setMyScrollChangeListener(new TouchDetectableScrollView.OnMyScrollChangeListener() {
             @Override
             public void onScrollUp() {
-                fab.show();
+//                fab.show();
             }
 
             @Override
             public void onScrollDown() {
-                fab.hide();
+//                fab.hide();
             }
         });
     }
@@ -74,11 +74,6 @@ public class MyProfileFragment extends BaseFragment {
     @OnClick(R.id.imgChangePass)
     public void onChangePassClick() {
         FragmentUtil.pushFragment(getActivity(), MyProfileFragment.this, new ChangePasswordFragment(), null);
-    }
-
-    @OnClick(R.id.fab)
-    public void onFabClick() {
-
     }
 
     @Override

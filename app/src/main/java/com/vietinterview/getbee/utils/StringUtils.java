@@ -12,6 +12,8 @@ import android.util.Patterns;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -103,7 +105,7 @@ public class StringUtils {
      * @return
      */
     public static String nullStrToEmpty(Object str) {
-        return (str == null ? "" : (str instanceof String ? (String)str : str.toString()));
+        return (str == null ? "" : (str instanceof String ? (String) str : str.toString()));
     }
 
     /**
@@ -194,10 +196,10 @@ public class StringUtils {
      *
      * @param href
      * @return <ul>
-     *         <li>if href is null, return ""</li>
-     *         <li>if not match regx, return source</li>
-     *         <li>return the last string that match regx</li>
-     *         </ul>
+     * <li>if href is null, return ""</li>
+     * <li>if not match regx, return source</li>
+     * <li>return the last string that match regx</li>
+     * </ul>
      */
     public static String getHrefInnerHtml(String href) {
         if (isEmpty(href)) {
@@ -260,13 +262,14 @@ public class StringUtils {
                 // } else if (source[i] == 12290) {
                 // source[i] = '.';
             } else if (source[i] >= 65281 && source[i] <= 65374) {
-                source[i] = (char)(source[i] - 65248);
+                source[i] = (char) (source[i] - 65248);
             } else {
                 source[i] = source[i];
             }
         }
         return new String(source);
     }
+
     public static void setColorForPath(Spannable spannable, String[] paths, int color) {
         for (int i = 0; i < paths.length; i++) {
             int indexOfPath = spannable.toString().indexOf(paths[i]);
@@ -277,6 +280,7 @@ public class StringUtils {
                     indexOfPath + paths[i].length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
     }
+
     /**
      * transform full width char to half width char
      *
@@ -298,19 +302,28 @@ public class StringUtils {
         char[] source = s.toCharArray();
         for (int i = 0; i < source.length; i++) {
             if (source[i] == ' ') {
-                source[i] = (char)12288;
+                source[i] = (char) 12288;
                 // } else if (source[i] == '.') {
                 // source[i] = (char)12290;
             } else if (source[i] >= 33 && source[i] <= 126) {
-                source[i] = (char)(source[i] + 65248);
+                source[i] = (char) (source[i] + 65248);
             } else {
                 source[i] = source[i];
             }
         }
         return new String(source);
     }
+
     public static boolean isValidEmail(CharSequence target) {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
+    }
+
+    public static String filterCurrencyString(long number) {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator(',');
+        DecimalFormat decimalFormat = new DecimalFormat("#,###", symbols);
+        String prezzo = decimalFormat.format(number);
+        return prezzo;
     }
 }
 

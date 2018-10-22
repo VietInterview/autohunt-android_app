@@ -14,12 +14,14 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
@@ -53,6 +55,8 @@ public class DetailJobFragment extends BaseFragment {
     TextView tvstatus;
     @BindView(R.id.llStatus)
     LinearLayout llStatus;
+    @BindView(R.id.rlHeader)
+    RelativeLayout rlHeader;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Dialog mNotifydialog;
@@ -76,6 +80,15 @@ public class DetailJobFragment extends BaseFragment {
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
+        rlHeader.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                getGestureDetectorCompat().onTouchEvent(event);
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    //do something
+                }
+                return true;
+            }
+        });
         getEventBaseFragment().doFillBackground("Chi tiết công viêc");
         setCustomToolbar(true);
         setHasOptionsMenu(true);

@@ -1,5 +1,6 @@
 package com.vietinterview.getbee.adapter;
 
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -22,6 +23,11 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         return mFragmentList.get(position);
+    }
+
+    @Override
+    public Parcelable saveState() {
+        return null;
     }
 
     @Override

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.JobsAdapter;
+import com.vietinterview.getbee.adapter.MyJobsAdapter;
 import com.vietinterview.getbee.api.request.GetSavedSearchJobsRequest;
 import com.vietinterview.getbee.api.response.jobsresponse.JobList;
 import com.vietinterview.getbee.api.response.jobsresponse.JobsResponse;
@@ -33,7 +34,7 @@ import butterknife.BindView;
 public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
     //    @BindView(R.id.fab)
 //    FloatingActionButton fab;
-    public JobsAdapter adapter;
+    public MyJobsAdapter adapter;
     @BindView(R.id.titleHeader)
     TextView titleHeader;
     @BindView(R.id.rcvSavedJob)
@@ -85,7 +86,7 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
                 }
             }
         });
-        adapter = new JobsAdapter(rcvSavedJob, jobsList, this, getActivity());
+        adapter = new MyJobsAdapter(rcvSavedJob, jobsList, this, getActivity(), true);
         rcvSavedJob.setAdapter(adapter);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
@@ -175,7 +176,7 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
                     adapter.notifyItemRemoved(jobsList.size());
                 }
                 jobsList.addAll(data.getJobList());
-                titleHeader.setText(data.getTotal() + " công việc được tìm thấy");
+                titleHeader.setText(data.getTotal() + " công việc được lưu");
                 adapter.notifyDataSetChanged();
                 adapter.setLoaded();
             }

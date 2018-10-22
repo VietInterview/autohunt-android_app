@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 
 import com.akexorcist.localizationactivity.LocalizationActivity;
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.callback.DetectSwipeGestureListener;
 import com.vietinterview.getbee.model.Event;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
@@ -37,6 +39,16 @@ public abstract class BaseActivity extends LocalizationActivity {
     BaseActivity baseActivity;
     boolean isUnregistEventBus = false;
     private Event eventBaseActivity;
+    private GestureDetectorCompat gestureDetectorCompat = null;
+    DetectSwipeGestureListener gestureListener = null;
+
+    public DetectSwipeGestureListener getGestureListener() {
+        return gestureListener;
+    }
+
+    public void setGestureListener(DetectSwipeGestureListener gestureListener) {
+        this.gestureListener = gestureListener;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,10 +73,30 @@ public abstract class BaseActivity extends LocalizationActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.yellow));
+        // Create a common gesture listener object.
+        gestureListener = new DetectSwipeGestureListener();
+
+        // Set activity in the listener.
+        gestureListener.setActivity(this);
+
+        // Create the gesture detector with the gesture listener.
+        gestureDetectorCompat = new GestureDetectorCompat(this, gestureListener);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        // Pass activity on touch event to the gesture detector.
+        gestureDetectorCompat.onTouchEvent(event);
+        // Return true to tell android OS that event has been consumed, do not pass it to other event listeners.
+        return true;
     }
 
     public Event getEventBaseActivity() {
         return eventBaseActivity;
+    }
+
+    public GestureDetectorCompat getGestureDetectorCompat() {
+        return gestureDetectorCompat;
     }
 
     private void initDialogApi() {
@@ -168,38 +200,38 @@ public abstract class BaseActivity extends LocalizationActivity {
         }
     }
 
-//    @Override
-//    public boolean dispatchTouchEvent(MotionEvent ev) {
-//        View v = getCurrentFocus();
-//        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-//            if (v instanceof EditText) {
-//                Rect outRect = new Rect();
-//                v.getGlobalVisibleRect(outRect);
-//                if (!outRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
-//                    v.clearFocus();
-//                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-//                }
-//            }
-//        }
-//        if (v != null && (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) &&
-//                v instanceof EditText &&
-//                !v.getClass().getName().startsWith("android.webkit.")) {
-//            int scrcoords[] = new int[2];
-//            v.getLocationOnScreen(scrcoords);
-//            float x = ev.getRawX() + v.getLeft() - scrcoords[0];
-//            float y = ev.getRawY() + v.getTop() - scrcoords[1];
-//
-//            if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom())
-//                hideKeyboard(this);
-//        }
-//        return super.dispatchTouchEvent(ev);
-//    }
-//
-//    public static void hideKeyboard(Activity activity) {
-//        if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
-//            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-//            imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
-//        }
-//    }
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View v = getCurrentFocus();
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        if (v != null && (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) &&
+                v instanceof EditText &&
+                !v.getClass().getName().startsWith("android.webkit.")) {
+            int scrcoords[] = new int[2];
+            v.getLocationOnScreen(scrcoords);
+            float x = ev.getRawX() + v.getLeft() - scrcoords[0];
+            float y = ev.getRawY() + v.getTop() - scrcoords[1];
+
+            if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom())
+                hideKeyboard(this);
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
+        }
+    }
 }

@@ -129,6 +129,7 @@
         android:layout_marginBottom="-4dp"
         android:background="#00FFFFFF"
         android:src="@drawable/ic_addcv_float"
+        android:visibility="gone"
         app:backgroundTint="#00FFFFFF"
         app:fabCustomSize="50dp"
         app:fabSize="normal"

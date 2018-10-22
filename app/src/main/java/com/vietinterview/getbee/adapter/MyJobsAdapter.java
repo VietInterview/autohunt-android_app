@@ -1,6 +1,5 @@
 package com.vietinterview.getbee.adapter;
 
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.api.request.GetSearchJobsRequest;
 import com.vietinterview.getbee.api.request.SaveUnsaveJobRequest;
 import com.vietinterview.getbee.api.response.AddRemoveJobResponse;
 import com.vietinterview.getbee.api.response.jobsresponse.JobList;
@@ -22,59 +20,33 @@ import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.fragments.BaseFragment;
 import com.vietinterview.getbee.fragments.DetailJobFragment;
-import com.vietinterview.getbee.fragments.HomeFragment;
 import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.StringUtils;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MyJobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
     private ArrayList<JobList> dataSet;
-    BaseFragment mHomeFragment;
+    private BaseFragment mHomeFragment;
     private int visibleThreshold = 5;
     private int lastVisibleItem, totalItemCount;
     private OnLoadMoreListener onLoadMoreListener;
     private boolean isLoading;
-    FragmentActivity mActivity;
+    private FragmentActivity mActivity;
     private SaveUnsaveJobRequest saveUnsaveJobRequest;
+    private boolean mIsJobSaved;
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tvjobTitle;
-        TextView tvCompanyName;
-        TextView tvCarrer;
-        TextView tvListCity;
-        TextView tvExpireDate;
-        TextView tvFee;
-        ImageView imgBussiness;
-        ImageView imgStatus;
-        CardView card_view;
-
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            this.tvjobTitle = (TextView) itemView.findViewById(R.id.tvjobTitle);
-            this.tvCompanyName = (TextView) itemView.findViewById(R.id.tvCompanyName);
-            this.tvCarrer = (TextView) itemView.findViewById(R.id.tvCarrer);
-            this.tvListCity = (TextView) itemView.findViewById(R.id.tvListCity);
-            this.tvExpireDate = (TextView) itemView.findViewById(R.id.tvExpireDate);
-            this.tvFee = (TextView) itemView.findViewById(R.id.tvFee);
-            this.imgBussiness = (ImageView) itemView.findViewById(R.id.imgBussiness);
-            this.imgStatus = (ImageView) itemView.findViewById(R.id.imgStatus);
-            this.card_view = (CardView) itemView.findViewById(R.id.card_view);
-        }
-    }
-
-    public JobsAdapter(RecyclerView recyclerView, ArrayList<JobList> data, BaseFragment homeFragment, FragmentActivity activity) {
+    public MyJobsAdapter(RecyclerView recyclerView, ArrayList<JobList> data, BaseFragment homeFragment, FragmentActivity activity, boolean isJobSaved) {
         this.dataSet = data;
         this.mHomeFragment = homeFragment;
         this.mActivity = activity;
+        this.mIsJobSaved = isJobSaved;
         final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -130,6 +102,11 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     FragmentUtil.pushFragment(mActivity, mHomeFragment, new DetailJobFragment().newInstance(dataSet.get(listPosition)), null);
                 }
             });
+            if (mIsJobSaved)
+                myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_saved));
+            else
+                myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_tickok));
+
             if (dataSet.get(listPosition).getCollStatus() != null) {
                 Integer collStatus = dataSet.get(listPosition).getCollStatus();
                 if (collStatus == null || collStatus == 0) {
@@ -140,35 +117,37 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             } else {
                 myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_save));
             }
-            myViewHolder.imgStatus.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mHomeFragment.showCoverNetworkLoading();
-                    Integer collStatus = dataSet.get(listPosition).getCollStatus() == null ? 1 : (Integer) dataSet.get(listPosition).getCollStatus() == 0 ? 1 : 0;
-                    saveUnsaveJobRequest = new SaveUnsaveJobRequest(dataSet.get(listPosition).getId(), collStatus);
-                    saveUnsaveJobRequest.callRequest(mActivity, new ApiObjectCallBack<AddRemoveJobResponse>() {
-                        @Override
-                        public void onSuccess(AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, int status, String message) {
-                            mHomeFragment.hideCoverNetworkLoading();
-                            if (status == 200) {
-                                mHomeFragment.getEventBaseFragment().refreshHome();
-                                if (data.getStatus() == 0) {
-                                    Toast.makeText(mHomeFragment.getActivity(), "Hủy lưu", Toast.LENGTH_SHORT).show();
-                                    myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_save));
-                                } else if (data.getStatus() == 1) {
-                                    Toast.makeText(mHomeFragment.getActivity(), "Đã lưu", Toast.LENGTH_SHORT).show();
-                                    myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_saved));
+            if (mIsJobSaved) {
+                myViewHolder.imgStatus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mHomeFragment.showCoverNetworkLoading();
+                        Integer collStatus = dataSet.get(listPosition).getCollStatus() == null ? 1 : (Integer) dataSet.get(listPosition).getCollStatus() == 0 ? 1 : 0;
+                        saveUnsaveJobRequest = new SaveUnsaveJobRequest(dataSet.get(listPosition).getId(), collStatus);
+                        saveUnsaveJobRequest.callRequest(mActivity, new ApiObjectCallBack<AddRemoveJobResponse>() {
+                            @Override
+                            public void onSuccess(AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, int status, String message) {
+                                mHomeFragment.hideCoverNetworkLoading();
+                                if (status == 200) {
+                                    mHomeFragment.getEventBaseFragment().refreshHome();
+                                    if (data.getStatus() == 0) {
+                                        Toast.makeText(mHomeFragment.getActivity(), "Hủy lưu", Toast.LENGTH_SHORT).show();
+                                        myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_save));
+                                    } else if (data.getStatus() == 1) {
+                                        Toast.makeText(mHomeFragment.getActivity(), "Đã lưu", Toast.LENGTH_SHORT).show();
+                                        myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_saved));
+                                    }
                                 }
                             }
-                        }
 
-                        @Override
-                        public void onFail(int failCode, AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, String message) {
-                            mHomeFragment.hideCoverNetworkLoading();
-                        }
-                    });
-                }
-            });
+                            @Override
+                            public void onFail(int failCode, AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, String message) {
+                                mHomeFragment.hideCoverNetworkLoading();
+                            }
+                        });
+                    }
+                });
+            }
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.progressBar.setIndeterminate(true);
@@ -187,5 +166,31 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemCount() {
         return dataSet.size();
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView tvjobTitle;
+        TextView tvCompanyName;
+        TextView tvCarrer;
+        TextView tvListCity;
+        TextView tvExpireDate;
+        TextView tvFee;
+        ImageView imgBussiness;
+        ImageView imgStatus;
+        CardView card_view;
+
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            this.tvjobTitle = (TextView) itemView.findViewById(R.id.tvjobTitle);
+            this.tvCompanyName = (TextView) itemView.findViewById(R.id.tvCompanyName);
+            this.tvCarrer = (TextView) itemView.findViewById(R.id.tvCarrer);
+            this.tvListCity = (TextView) itemView.findViewById(R.id.tvListCity);
+            this.tvExpireDate = (TextView) itemView.findViewById(R.id.tvExpireDate);
+            this.tvFee = (TextView) itemView.findViewById(R.id.tvFee);
+            this.imgBussiness = (ImageView) itemView.findViewById(R.id.imgBussiness);
+            this.imgStatus = (ImageView) itemView.findViewById(R.id.imgStatus);
+            this.card_view = (CardView) itemView.findViewById(R.id.card_view);
+        }
     }
 }

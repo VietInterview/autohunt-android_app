@@ -232,7 +232,7 @@ public class RegitsFragment extends BaseFragment {
     public void onSignupClick() {
         if (edtEmail.getText().toString().trim().equalsIgnoreCase("")) {
             edtEmail.setText("");
-            edtEmail.setHint("Xin hãy nhập địa chỉ Email");
+            edtEmail.setHint("Email không hợp lệ");
             edtEmail.setHintTextColor(Color.RED);
             icRightEmail.setVisibility(View.VISIBLE);
         } else if (edtName.getText().toString().trim().equalsIgnoreCase("")) {
@@ -282,7 +282,7 @@ public class RegitsFragment extends BaseFragment {
                         hideCoverNetworkLoading();
                         if (data != null) {
                             if (data.getErrorKey().equalsIgnoreCase("userexists"))
-                                DialogUtil.showDialog(getActivity(), "Thông báo", "Địa chỉ email đã tồn tại");
+                                DialogUtil.showDialog(getActivity(), "Thông báo", "Email không hơp lệ");
                         } else {
                             if (failCode == 201) {
                                 mNotifydialog = new Dialog(getActivity());

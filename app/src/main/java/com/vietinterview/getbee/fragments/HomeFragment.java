@@ -19,6 +19,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -65,6 +69,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 //    LinearLayout llDatePub;
     @BindView(R.id.titleHeader)
     TextView titleHeader;
+    @BindView(R.id.llHeader)
+    LinearLayout llHeader;
     @BindView(R.id.fab)
     FloatingActionButton fab;
     @BindView(R.id.edtJobTitle)
@@ -125,11 +131,19 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0) {
-                    titleHeader.setVisibility(View.GONE);
-                    fab.hide();
+//                    llHeader.setVisibility(View.GONE);
+//                    fab.hide();
+//                    llHeader.animate().translationY(llHeader.getHeight())
+//                            .setInterpolator(new AccelerateInterpolator(2)).start();
+//                    llHeader.animate().translationY(-llHeader.getHeight())
+//                            .setInterpolator(new AccelerateInterpolator(1));
                 } else {
-                    titleHeader.setVisibility(View.VISIBLE);
-                    fab.show();
+//                    llHeader.setVisibility(View.VISIBLE);
+//                    fab.show();
+//                    llHeader.animate().translationY(0).setInterpolator(new
+//                            DecelerateInterpolator(2)).start();
+//                    llHeader.animate().translationY(0).setInterpolator
+//                            (new DecelerateInterpolator(1)).start();
                 }
             }
         });
@@ -328,6 +342,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @Override
     protected void onRestore() {
         DebugLog.showLogCat("onRestore");
+        getEventBaseFragment().showLogo(true);
     }
 
     @Override
@@ -378,10 +393,11 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 menu.getItem(0).setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_search_black));
             } else {
                 visibleSearch = true;
-                visibleCondition = true;
+                visibleCondition = false;
                 llSearch.setVisibility(View.VISIBLE);
-                llCondition.setVisibility(View.VISIBLE);
-                menu.getItem(0).setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_saveok));
+                llCondition.setVisibility(View.GONE);
+                imgFilter.setImageDrawable(getResources().getDrawable(R.drawable.ic_filter));
+                menu.getItem(0).setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_close));
             }
             return true;
         }

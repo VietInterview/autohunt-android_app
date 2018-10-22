@@ -314,17 +314,17 @@
         </LinearLayout>
     </com.vietinterview.getbee.customview.TouchDetectableScrollView>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="-4dp"
-        android:src="@drawable/ic_addcv_float"
-        app:backgroundTint="#00FFFFFF"
-        app:borderWidth="0dp"
-        app:fabSize="normal"
-        app:layout_behavior="com.ic_background_add_cv.valdioveliu.floatingactionbuttonproject.Scrolling_Floating_Action_Button.FAB_Float_on_Scroll"
-        app:maxImageSize="55dp" />
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/fab"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:layout_marginBottom="-4dp"-->
+        <!--android:src="@drawable/ic_addcv_float"-->
+        <!--app:backgroundTint="#00FFFFFF"-->
+        <!--app:borderWidth="0dp"-->
+        <!--app:fabSize="normal"-->
+        <!--app:layout_behavior="com.ic_background_add_cv.valdioveliu.floatingactionbuttonproject.Scrolling_Floating_Action_Button.FAB_Float_on_Scroll"-->
+        <!--app:maxImageSize="55dp" />-->
 </RelativeLayout>

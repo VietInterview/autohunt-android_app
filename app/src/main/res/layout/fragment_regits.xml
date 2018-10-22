@@ -45,7 +45,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/shape"
             android:elevation="10dp"
             android:orientation="vertical"
@@ -55,7 +58,10 @@
                 android:id="@+id/llName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
                 android:background="@drawable/edittextbackground"
                 android:gravity="center_vertical">
 
@@ -82,6 +88,7 @@
                     android:background="@null"
                     android:hint="Họ và tên"
                     android:padding="10dp"
+                    android:singleLine="true"
                     android:textColor="@color/black" />
 
                 <ImageView
@@ -90,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="0.5"
-                    android:src="@drawable/ic_tickok"
+                    android:src="@drawable/ic_note"
                     android:visibility="gone" />
             </LinearLayout>
 
@@ -98,7 +105,7 @@
                 android:id="@+id/llEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="8dp"
                 android:background="@drawable/edittextbackground"
                 android:gravity="center_vertical">
 
@@ -125,6 +132,7 @@
                     android:background="@null"
                     android:hint="Email"
                     android:padding="10dp"
+                    android:singleLine="true"
                     android:textColor="@color/black" />
 
                 <ImageView
@@ -141,7 +149,7 @@
                 android:id="@+id/llSDT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="8dp"
                 android:background="@drawable/edittextbackground"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -168,7 +176,9 @@
                     android:layout_weight="6"
                     android:background="@null"
                     android:hint="Điện thoại"
+                    android:inputType="phone"
                     android:padding="10dp"
+                    android:singleLine="true"
                     android:textColor="@color/black" />
 
                 <ImageView
@@ -185,20 +195,22 @@
                 android:id="@+id/edtJob"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="8dp"
                 android:background="@drawable/edittextbackground"
                 android:hint="Nghề nghiệp"
                 android:padding="10dp"
+                android:singleLine="true"
                 android:textColor="@color/black" />
 
             <com.vietinterview.getbee.customview.ClearableRegularEditText
                 android:id="@+id/edtAdd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="8dp"
                 android:background="@drawable/edittextbackground"
                 android:hint="Địa chỉ"
                 android:padding="10dp"
+                android:singleLine="true"
                 android:textColor="@color/black" />
 
             <LinearLayout
@@ -246,8 +258,9 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="bottom|center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
             android:background="@drawable/borderbutton"
             android:fontFamily=""
             android:text="ĐĂNG KÝ"

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.JobsAdapter;
+import com.vietinterview.getbee.adapter.MyJobsAdapter;
 import com.vietinterview.getbee.api.request.GetApplyedSearchJobsRequest;
 import com.vietinterview.getbee.api.response.jobsresponse.JobList;
 import com.vietinterview.getbee.api.response.jobsresponse.JobsResponse;
@@ -32,16 +33,16 @@ import butterknife.BindView;
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
-//    @BindView(R.id.fab)
+    //    @BindView(R.id.fab)
 //    FloatingActionButton fab;
     @BindView(R.id.titleHeader)
     TextView titleHeader;
     @BindView(R.id.rcvApplyedJob)
     RecyclerView rcvApplyedJob;
-    public JobsAdapter adapter;
+    public MyJobsAdapter adapter;
     public static View.OnClickListener myOnClickListener;
     private RecyclerView.LayoutManager layoutManager;
-//    private static RecyclerView rcvApplyedJob;
+    //    private static RecyclerView rcvApplyedJob;
     private ArrayList<JobList> jobsList = new ArrayList<>();
     private ArrayList<JobList> jobsListServer = new ArrayList<>();
     private GetApplyedSearchJobsRequest getApplyedSearchJobsRequest;
@@ -59,6 +60,7 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
         fm.setArguments(bundle);
         return fm;
     }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_jobs_applyed;
@@ -99,7 +101,7 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
                 }
             }
         });
-        adapter = new JobsAdapter(rcvApplyedJob, jobsList, this, getActivity());
+        adapter = new MyJobsAdapter(rcvApplyedJob, jobsList, this, getActivity(), false);
         rcvApplyedJob.setAdapter(adapter);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
@@ -166,7 +168,7 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
                     adapter.notifyItemRemoved(jobsList.size());
                 }
                 jobsList.addAll(data.getJobList());
-                titleHeader.setText(data.getTotal() + " công việc được tìm thấy");
+                titleHeader.setText(data.getTotal() + " công việc được nộp");
                 adapter.notifyDataSetChanged();
                 adapter.setLoaded();
             }

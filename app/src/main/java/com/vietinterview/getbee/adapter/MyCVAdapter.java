@@ -1,8 +1,10 @@
 package com.vietinterview.getbee.adapter;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -30,6 +32,7 @@ public class MyCVAdapter extends RecyclerView.Adapter<MyCVAdapter.ViewHolder> {
 
     private ArrayList<String> titles;
     private List<SwipedState> mItemSwipedStates;
+    private Context mContext;
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -41,8 +44,9 @@ public class MyCVAdapter extends RecyclerView.Adapter<MyCVAdapter.ViewHolder> {
         }
     }
 
-    public MyCVAdapter(ArrayList<String> titles) {
+    public MyCVAdapter(Context context, ArrayList<String> titles) {
         this.titles = titles;
+        this.mContext = context;
         mItemSwipedStates = new ArrayList<>();
         for (int i = 0; i < titles.size(); i++) {
             mItemSwipedStates.add(i, SwipedState.SHOWING_PRIMARY_CONTENT);
@@ -69,7 +73,11 @@ public class MyCVAdapter extends RecyclerView.Adapter<MyCVAdapter.ViewHolder> {
         ((TextView) holder.mView.findViewById(R.id.tvName)).setText(titles.get(position));
         Log.i("MyAdapter", "PagePosition " + position + " set to " + mItemSwipedStates.get(position).ordinal());
         ((ViewPager) holder.mView).setCurrentItem(mItemSwipedStates.get(position).ordinal());
-
+        if (position % 2 == 0) {
+            ((CardView) holder.mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.row_not_white));
+        } else {
+            ((CardView) holder.mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.white));
+        }
         ((ViewPager) holder.mView).setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             int previousPagePosition = 0;
 
