@@ -120,6 +120,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1100dp"
                     android:layout_below="@+id/tabs"
+                    android:nestedScrollingEnabled="true"
                     android:paddingLeft="@dimen/activity_vertical_margin"
                     android:paddingRight="@dimen/activity_vertical_margin"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
@@ -148,6 +149,7 @@
                 android:textColor="#B1B1BA" />
 
             <com.vietinterview.getbee.customview.NunitoBoldButton
+                android:id="@+id/btnApplyCV"
                 android:layout_width="149dp"
                 android:layout_height="40dp"
                 android:layout_margin="8dp"

@@ -14,8 +14,8 @@ public class ApiConstant {
     public static final int REQUEST_TIMEOUT = 10;
 
     //Server KH
-    public final static String REAL_URL = "http://54.176.149.102:8081/";
-    public final static String DEV_URL = "http://54.176.149.102:8081/";
+    public final static String REAL_URL = "https://api.dev.getbee.vn/";
+    public final static String DEV_URL = "https://api.dev.getbee.vn/";
     public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
     public final static String BASE_URL = IS_DEBUG_BUILD_TYPE ? DEV_URL : REAL_URL;
     public final static int POST = 1;

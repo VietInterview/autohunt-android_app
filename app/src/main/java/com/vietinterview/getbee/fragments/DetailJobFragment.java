@@ -25,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.adapter.ViewPagerAdapter;
 import com.vietinterview.getbee.api.request.GetDetailJobRequest;
 import com.vietinterview.getbee.api.request.SaveUnsaveJobRequest;
 import com.vietinterview.getbee.api.response.AddRemoveJobResponse;
@@ -91,7 +92,7 @@ public class DetailJobFragment extends BaseFragment {
         });
         getEventBaseFragment().doFillBackground("Chi tiết công viêc");
         setCustomToolbar(true);
-        setHasOptionsMenu(true);
+//        setHasOptionsMenu(true);
         viewPager = (ViewPager) root.findViewById(R.id.viewpager);
         tabLayout = (TabLayout) root.findViewById(R.id.tabs);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.transparent));
@@ -165,9 +166,6 @@ public class DetailJobFragment extends BaseFragment {
                 setupViewPager(viewPager);
                 tabLayout.setupWithViewPager(viewPager);
                 setupTabIcons();
-                TabLayout.Tab tab = tabLayout.getTabAt(0);
-                ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
-                tab.select();
                 tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                     @Override
                     public void onTabSelected(TabLayout.Tab tab) {
@@ -226,6 +224,12 @@ public class DetailJobFragment extends BaseFragment {
         });
     }
 
+
+    @OnClick(R.id.btnApplyCV)
+    public void onApplyCVClick() {
+        FragmentUtil.pushFragment(getActivity(), this, new ChoiceCVFragment().newInstance(mJobList), null);
+    }
+
     @Override
     protected void onRestore() {
 
@@ -249,14 +253,17 @@ public class DetailJobFragment extends BaseFragment {
     private void setupTabIcons() {
         TextView tabOne = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
         tabOne.setText("Thông tin");
+        tabOne.setTextColor(getResources().getColor(R.color.black));
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
         tabTwo.setText("Thống kê");
+        tabTwo.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
         tabLayout.getTabAt(1).setCustomView(tabTwo);
 
         TextView tabThree = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
         tabThree.setText("CV đã nộp");
+        tabThree.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
         tabLayout.getTabAt(2).setCustomView(tabThree);
     }
 
@@ -266,36 +273,8 @@ public class DetailJobFragment extends BaseFragment {
         adapter.addFrag(new StatisticalFragment().newInstance(detailJobResponse), "Thống kê");
         adapter.addFrag(new CVSentFragment().newInstance(detailJobResponse), "CV đã nộp");
         viewPager.setCurrentItem(0);
+        viewPager.setOffscreenPageLimit(0);
         viewPager.setAdapter(adapter);
-    }
-
-    class ViewPagerAdapter extends FragmentStatePagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFrag(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
     }
 
     @Override

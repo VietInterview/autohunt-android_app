@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.vietinterview.getbee.customview.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llCheck"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="16dp"
+        android:layout_weight="3"
+        android:orientation="vertical">
+
+        <com.vietinterview.getbee.customview.NunitoBoldTextView
+            android:id="@+id/item_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left|top"
+            android:text="Hello"
+            android:textColor="#191830"
+            android:textSize="18sp" />
+
+        <com.vietinterview.getbee.customview.NunitoTextView
+            android:id="@+id/item_carrer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left|top"
+            android:text="Hello"
+            android:textColor="#505059"
+            android:textSize="16sp" />
+
+        <com.vietinterview.getbee.customview.NunitoTextView
+            android:id="@+id/item_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left|top"
+            android:text="Hello"
+            android:textColor="#B1B1BA"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+
+    <com.vietinterview.getbee.customview.NunitoRegularButton
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_weight="1"
+        android:background="@drawable/borderbutton"
+        android:text="Chưa gửi"
+        android:textColor="@color/white" />
+</com.vietinterview.getbee.customview.CheckableLinearLayout>

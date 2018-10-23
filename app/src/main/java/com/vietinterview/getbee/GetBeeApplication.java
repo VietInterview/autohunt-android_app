@@ -2,6 +2,7 @@ package com.vietinterview.getbee;
 
 import android.app.Application;
 
+import com.bumptech.glide.request.target.ViewTarget;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
 
 
@@ -24,6 +25,7 @@ public class GetBeeApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        ViewTarget.setTagId(R.id.glide_tag);
         sharedPreferences = new SharedPrefUtils(getApplicationContext());
     }
 

@@ -27,7 +27,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     public void initView() {
         mLogoImageView = (ImageView) findViewById(R.id.splashscreen);
-        Glide.with(this).load(R.drawable.splash_pic).centerCrop().into(mLogoImageView);
+        Glide.with(this).load(R.drawable.splash_pic).into(mLogoImageView);
         showFadeIn();
     }
 

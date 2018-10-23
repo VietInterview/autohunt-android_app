@@ -7,34 +7,33 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.adapter.ExExpListViewAdapter;
+import com.vietinterview.getbee.adapter.ExLvListViewAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.OnClick;
-
 /**
- * Created by hiepnguyennghia on 10/18/18.
+ * Created by hiepnguyennghia on 10/23/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class ExperienceFragment extends BaseFragment {
-    private ExpandableListView expandableListView;
-    private ExExpListViewAdapter exExpListViewAdapter;
+public class LevelDetailCVFragment extends BaseFragment {
+    private ExLvListViewAdapter exStepLvListViewAdapter;
+    private ExpandableListView exLvLevel;
     private List<String> listDataGroup;
     private int lastExpandedPosition = -1;
     private HashMap<String, List<String>> listDataChild;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_experience;
+        return R.layout.fragment_level_detail_cv;
     }
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-        expandableListView = root.findViewById(R.id.expandableListView);
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+        exLvLevel = root.findViewById(R.id.exLvLevel);
+        exLvLevel.setIndicatorBounds(exLvLevel.getRight() + 900, exLvLevel.getWidth());
+        exLvLevel.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
@@ -42,28 +41,20 @@ public class ExperienceFragment extends BaseFragment {
                 return false;
             }
         });
-        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+        exLvLevel.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
             @Override
             public void onGroupExpand(int groupPosition) {
                 if (lastExpandedPosition != -1 && groupPosition != lastExpandedPosition) {
-                    expandableListView.collapseGroup(lastExpandedPosition);
+                    exLvLevel.collapseGroup(lastExpandedPosition);
                 }
                 lastExpandedPosition = groupPosition;
             }
         });
-        expandableListView.setIndicatorBounds(expandableListView.getRight() + 900, expandableListView.getWidth());
-        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-
-            }
-        });
         listDataGroup = new ArrayList<>();
         listDataChild = new HashMap<>();
-        exExpListViewAdapter = new ExExpListViewAdapter(getActivity(), listDataGroup, listDataChild);
-        expandableListView.setAdapter(exExpListViewAdapter);
+        exStepLvListViewAdapter = new ExLvListViewAdapter(getActivity(), listDataGroup, listDataChild);
+        exLvLevel.setAdapter(exStepLvListViewAdapter);
         listDataGroup.add(getString(R.string.text_alcohol));
         listDataGroup.add(getString(R.string.text_coffee));
         listDataGroup.add(getString(R.string.text_pasta));
@@ -93,7 +84,7 @@ public class ExperienceFragment extends BaseFragment {
         listDataChild.put(listDataGroup.get(1), coffeeList);
         listDataChild.put(listDataGroup.get(2), pastaList);
         listDataChild.put(listDataGroup.get(3), coldDrinkList);
-        exExpListViewAdapter.notifyDataSetChanged();
+        exStepLvListViewAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -104,11 +95,6 @@ public class ExperienceFragment extends BaseFragment {
     @Override
     protected void initData() {
 
-    }
-
-    @OnClick(R.id.btnNext)
-    public void onNextClick() {
-        getEventBaseFragment().changeStepExp(2);
     }
 
     @Override

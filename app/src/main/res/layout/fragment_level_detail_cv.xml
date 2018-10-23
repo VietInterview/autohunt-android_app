@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Created by Hiep Nguyen Nghia.
+    Copyright © 2018 Vietinterview. All rights reserved.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ExpandableListView
+        android:id="@+id/exLvLevel"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_above="@+id/add"
+        android:nestedScrollingEnabled="true"
+        android:visibility="visible" />
+</LinearLayout>

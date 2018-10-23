@@ -13,13 +13,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.OnClick;
-
 /**
- * Created by hiepnguyennghia on 10/18/18.
+ * Created by hiepnguyennghia on 10/23/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class ExperienceFragment extends BaseFragment {
+public class ExpDetailCVFragment extends BaseFragment {
     private ExpandableListView expandableListView;
     private ExExpListViewAdapter exExpListViewAdapter;
     private List<String> listDataGroup;
@@ -28,7 +26,7 @@ public class ExperienceFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_experience;
+        return R.layout.fragment_exp_detail_cv;
     }
 
     @Override
@@ -104,11 +102,6 @@ public class ExperienceFragment extends BaseFragment {
     @Override
     protected void initData() {
 
-    }
-
-    @OnClick(R.id.btnNext)
-    public void onNextClick() {
-        getEventBaseFragment().changeStepExp(2);
     }
 
     @Override

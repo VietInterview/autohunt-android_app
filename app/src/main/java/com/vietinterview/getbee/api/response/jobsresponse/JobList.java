@@ -93,6 +93,9 @@ public class JobList implements Parcelable {
     @SerializedName("careerName")
     @Expose
     private String careerName;
+    @SerializedName("companyImg")
+    @Expose
+    private String companyImg;
 
     protected JobList(Parcel in) {
         if (in.readByte() == 0) {
@@ -200,6 +203,14 @@ public class JobList implements Parcelable {
             return new JobList[size];
         }
     };
+
+    public String getCompanyImg() {
+        return companyImg;
+    }
+
+    public void setCompanyImg(String companyImg) {
+        this.companyImg = companyImg;
+    }
 
     public Integer getId() {
         return id;

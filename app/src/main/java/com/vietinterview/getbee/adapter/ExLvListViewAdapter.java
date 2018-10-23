@@ -13,12 +13,12 @@ import com.vietinterview.getbee.R;
 import java.util.HashMap;
 import java.util.List;
 
-public class ExStepLvListViewAdapter extends BaseExpandableListAdapter {
+public class ExLvListViewAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<String> listDataGroup;
     private HashMap<String, List<String>> listDataChild;
 
-    public ExStepLvListViewAdapter(Context context, List<String> listDataGroup, HashMap<String, List<String>> listChildData) {
+    public ExLvListViewAdapter(Context context, List<String> listDataGroup, HashMap<String, List<String>> listChildData) {
         this.context = context;
         this.listDataGroup = listDataGroup;
         this.listDataChild = listChildData;

@@ -13,12 +13,12 @@ import com.vietinterview.getbee.R;
 import java.util.HashMap;
 import java.util.List;
 
-public class ExStepLanListViewAdapter extends BaseExpandableListAdapter {
+public class ExLanListViewAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<String> listDataGroup;
     private HashMap<String, List<String>> listDataChild;
 
-    public ExStepLanListViewAdapter(Context context, List<String> listDataGroup, HashMap<String, List<String>> listChildData) {
+    public ExLanListViewAdapter(Context context, List<String> listDataGroup, HashMap<String, List<String>> listChildData) {
         this.context = context;
         this.listDataGroup = listDataGroup;
         this.listDataChild = listChildData;
@@ -71,7 +71,7 @@ public class ExStepLanListViewAdapter extends BaseExpandableListAdapter {
         String headerTitle = (String) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.list_lv_row_group, null);
+            convertView = layoutInflater.inflate(R.layout.list_lan_row_group, null);
         }
         TextView tvJob = convertView.findViewById(R.id.tvJob);
         tvJob.setTypeface(null, Typeface.BOLD);

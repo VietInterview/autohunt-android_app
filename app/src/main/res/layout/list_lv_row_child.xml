@@ -16,44 +16,30 @@
         android:textSize="17dp"
         android:visibility="gone" />
 
-    <android.support.design.widget.TextInputLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="82dp"
         android:layout_marginHorizontal="16dp"
-        android:orientation="horizontal"
-        app:hintAnimationEnabled="true"
-        app:hintTextAppearance="@style/HintTextAppearance">
+        android:padding="4dp">
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/edtCompany"
-            android:layout_width="match_parent"
+        <com.vietinterview.getbee.customview.NunitoTextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Tên Bằng cấp/Chứng chỉ *"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="Tên bằng cấp/chứng chỉ"
+            android:textColor="#505059"
+            android:textSize="18sp" />
 
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:hintAnimationEnabled="true"
-            app:hintTextAppearance="@style/HintTextAppearance" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:orientation="horizontal"
-        app:hintAnimationEnabled="true"
-        app:hintTextAppearance="@style/HintTextAppearance">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/edtFullName"
-            android:layout_width="match_parent"
+        <com.vietinterview.getbee.customview.NunitoBoldTextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Chuyên ngành *"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:hintAnimationEnabled="true"
-            app:hintTextAppearance="@style/HintTextAppearance" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:text="Kỹ thuật viên CNTT"
+            android:textColor="#B1B1BA"
+            android:textSize="18sp" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -66,31 +52,19 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:text="Thời gian *"
-            android:textSize="16sp" />
+            android:text="Trường/đơn vị đào tạo"
+            android:textColor="#505059"
+            android:textSize="18sp" />
 
         <com.vietinterview.getbee.customview.NunitoBoldTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
-            android:text="09/2018 - 10/10/2018"
-            android:textSize="20sp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:src="@drawable/ic_arrow_right" />
+            android:text="Nhân viên thiết kế"
+            android:textColor="#B1B1BA"
+            android:textSize="18sp" />
     </RelativeLayout>
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="8dp"
-        android:background="@color/gray_not_focus" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -103,29 +77,67 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:text="Loại tốt nghiệp *"
-            android:textSize="16sp" />
+            android:text="Thời gian"
+            android:textColor="#505059"
+            android:textSize="18sp" />
 
         <com.vietinterview.getbee.customview.NunitoBoldTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
-            android:text="Chọn loại tốt nghiệp"
-            android:textSize="20sp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:src="@drawable/ic_arrow_right" />
+            android:text="09/2014 - 10/2015"
+            android:textColor="#B1B1BA"
+            android:textSize="18sp" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="8dp"
-        android:background="@color/gray_not_focus" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="82dp"
+        android:layout_marginHorizontal="16dp"
+        android:padding="4dp">
+
+        <com.vietinterview.getbee.customview.NunitoTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="Chuyên nghành"
+            android:textColor="#505059"
+            android:textSize="18sp" />
+
+        <com.vietinterview.getbee.customview.NunitoBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:text="Đồ họa đa truyền thông"
+            android:textColor="#B1B1BA"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="82dp"
+        android:layout_marginHorizontal="16dp"
+        android:padding="4dp">
+
+        <com.vietinterview.getbee.customview.NunitoTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="Loại tốt nghiệp"
+            android:textColor="#505059"
+            android:textSize="18sp" />
+
+        <com.vietinterview.getbee.customview.NunitoBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:text="Khá"
+            android:textColor="#B1B1BA"
+            android:textSize="18sp" />
+    </RelativeLayout>
 </LinearLayout>

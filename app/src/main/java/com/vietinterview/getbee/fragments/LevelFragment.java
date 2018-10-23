@@ -7,9 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.adapter.ExStepExListViewAdapter;
-import com.vietinterview.getbee.adapter.ExStepLanListViewAdapter;
-import com.vietinterview.getbee.adapter.ExStepLvListViewAdapter;
+import com.vietinterview.getbee.adapter.ExLanListViewAdapter;
+import com.vietinterview.getbee.adapter.ExLvListViewAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,8 +23,8 @@ import butterknife.OnClick;
 public class LevelFragment extends BaseFragment {
     private ExpandableListView exLvLevel;
     private ExpandableListView exLvLanguage;
-    private ExStepLvListViewAdapter exStepLvListViewAdapter;
-    private ExStepLanListViewAdapter exStepLanListViewAdapter;
+    private ExLvListViewAdapter exStepLvListViewAdapter;
+    private ExLanListViewAdapter exStepLanListViewAdapter;
     private List<String> listDataGroup;
     private int lastExpandedPosition = -1;
     private int lastExpandedPositionlangeuage = -1;
@@ -72,8 +71,8 @@ public class LevelFragment extends BaseFragment {
         });
         listDataGroup = new ArrayList<>();
         listDataChild = new HashMap<>();
-        exStepLvListViewAdapter = new ExStepLvListViewAdapter(getActivity(), listDataGroup, listDataChild);
-        exStepLanListViewAdapter = new ExStepLanListViewAdapter(getActivity(), listDataGroup, listDataChild);
+        exStepLvListViewAdapter = new ExLvListViewAdapter(getActivity(), listDataGroup, listDataChild);
+        exStepLanListViewAdapter = new ExLanListViewAdapter(getActivity(), listDataGroup, listDataChild);
         exLvLevel.setAdapter(exStepLvListViewAdapter);
         exLvLanguage.setAdapter(exStepLanListViewAdapter);
         listDataGroup.add(getString(R.string.text_alcohol));
