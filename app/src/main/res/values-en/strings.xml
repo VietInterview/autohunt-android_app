@@ -49,7 +49,7 @@
     <string name="text_expanded">Expanded</string>
     <string name="text_collapsed">Collapsed</string>
 
-    <string name="home">Trang chủ</string>
-    <string name="input_search_key">Nhập từ khóa tìm kiếm</string>
-    <string name="title_dialog_choose_send_cv">Lựa chọn phương thức</string>
+    <string name="home">Home</string>
+    <string name="input_search_key">Input Search Key</string>
+    <string name="title_dialog_choose_send_cv">Choice method</string>
 </resources>

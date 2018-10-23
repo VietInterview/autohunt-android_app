@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_bg"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingTop="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <com.vietinterview.getbee.customview.NunitoBoldTextView
+            android:id="@+id/tvTransfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2.9"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/title_dialog_choose_send_cv"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/btnCancel"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/borderbutton">
+
+        <com.vietinterview.getbee.customview.NunitoBoldTextView
+            android:id="@+id/tvHunt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="60dp"
+            android:drawableLeft="@drawable/ic_hunt"
+            android:drawablePadding="-48dp"
+            android:gravity="center"
+            android:paddingLeft="58dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="Hunt"
+            android:textColor="@color/white"
+            android:textSize="26sp" />
+
+        <ImageView
+            android:id="@+id/imgInfoHunt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="20dp"
+            android:src="@drawable/ic_info_hunt" />
+
+        <com.vietinterview.getbee.customview.NunitoTextView
+            android:id="@+id/tvContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvHunt"
+            android:gravity="center"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:text="Mức thưởng dự kiến mà bạn sẽ nhận được: 4,000,000 VNĐ (tương ứng với 68%)"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/borderbutton_yellow">
+
+        <com.vietinterview.getbee.customview.NunitoBoldTextView
+            android:id="@+id/tvSentCV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="60dp"
+            android:drawableLeft="@drawable/ic_send_cv"
+            android:drawablePadding="-18dp"
+            android:gravity="center"
+            android:paddingLeft="48dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="Chỉ gửi CV"
+            android:textColor="@color/black"
+            android:textSize="26sp" />
+
+        <ImageView
+            android:id="@+id/imgInfoSentCV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="20dp"
+            android:src="@drawable/ic_info_hunt" />
+
+        <com.vietinterview.getbee.customview.NunitoTextView
+            android:id="@+id/tvContentSendCV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvSentCV"
+            android:gravity="center"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:text="Mức thưởng dự kiến mà bạn sẽ nhận được: 1,000,000 VNĐ (tương ứng với 47%)"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:visibility="gone" />
+    </RelativeLayout>
+</LinearLayout>

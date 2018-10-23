@@ -1,5 +1,8 @@
 package com.vietinterview.getbee.fragments;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -7,6 +10,9 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +32,7 @@ public class DetailCVFragment extends BaseFragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private JobList mJobList;
+    private Dialog mNotifydialog;
 
     public static DetailCVFragment newInstance(JobList jobList) {
         DetailCVFragment fm = new DetailCVFragment();
@@ -104,8 +111,49 @@ public class DetailCVFragment extends BaseFragment {
 
     @OnClick(R.id.btnApplyCV)
     public void onApplyCVClick() {
-        FragmentUtil.popEntireFragmentBackStack(this);
-        FragmentUtil.pushFragment(getActivity(), this, new DetailJobFragment().newInstance(mJobList), null);
+        mNotifydialog = new Dialog(getActivity());
+        mNotifydialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mNotifydialog.setContentView(R.layout.dialog_choose_send_cv);
+        mNotifydialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        mNotifydialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        ImageView imgInfoHunt = (ImageView) mNotifydialog.findViewById(R.id.imgInfoHunt);
+        ImageView imgInfoSentCV = (ImageView) mNotifydialog.findViewById(R.id.imgInfoSentCV);
+        final TextView tvContent = (TextView) mNotifydialog.findViewById(R.id.tvContent);
+        final TextView tvContentSendCV = (TextView) mNotifydialog.findViewById(R.id.tvContentSendCV);
+        final TextView tvHunt = (TextView) mNotifydialog.findViewById(R.id.tvHunt);
+        final TextView tvSentCV = (TextView) mNotifydialog.findViewById(R.id.tvSentCV);
+        imgInfoHunt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvContent.setVisibility(View.VISIBLE);
+                tvContentSendCV.setVisibility(View.GONE);
+            }
+        });
+        imgInfoSentCV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvContent.setVisibility(View.GONE);
+                tvContentSendCV.setVisibility(View.VISIBLE);
+            }
+        });
+        tvHunt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mNotifydialog.dismiss();
+                FragmentUtil.popEntireFragmentBackStack(DetailCVFragment.this);
+                FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(mJobList), null);
+            }
+        });
+        tvSentCV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mNotifydialog.dismiss();
+                FragmentUtil.popEntireFragmentBackStack(DetailCVFragment.this);
+                FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(mJobList), null);
+            }
+        });
+        mNotifydialog.show();
     }
 
     private void setupTabIcons() {

@@ -33,9 +33,12 @@ import com.vietinterview.getbee.fragments.LoginFragment;
 import com.vietinterview.getbee.fragments.MyCVFragment;
 import com.vietinterview.getbee.fragments.MyJobFragment;
 import com.vietinterview.getbee.fragments.MyProfileFragment;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
 import net.skoumal.fragmentback.BackFragmentHelper;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 

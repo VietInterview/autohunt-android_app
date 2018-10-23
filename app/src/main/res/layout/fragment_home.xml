@@ -29,7 +29,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:hint="Nhập từ khoá tìm kiếm"
+                android:hint="@string/input_search_key"
                 android:singleLine="true" />
 
             <ImageView

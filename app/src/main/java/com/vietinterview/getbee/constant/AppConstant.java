@@ -9,4 +9,5 @@ public class AppConstant {
     public final static String VISIBLE_SEARCH = "VISIBLE_SEARCH";
     public final static String VISIBLE_CONDITION = "VISIBLE_CONDITION";
     public final static String VISIBLE_FILTER = "VISIBLE_FILTER";
+    public final static String LANGUAGE = "LANGUAGE";
 }

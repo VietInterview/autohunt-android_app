@@ -20,11 +20,13 @@ import android.widget.EditText;
 import com.akexorcist.localizationactivity.LocalizationActivity;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.callback.DetectSwipeGestureListener;
+import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.model.Event;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.EventBusHelper;
 import com.vietinterview.getbee.utils.KeyboardUtil;
+import com.vietinterview.getbee.utils.SharedPrefUtils;
 
 import butterknife.ButterKnife;
 
@@ -52,6 +54,7 @@ public abstract class BaseActivity extends LocalizationActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        setLanguage(SharedPrefUtils.getString(AppConstant.LANGUAGE, "vi"));
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         onPreSetContentView(savedInstanceState);
         super.onCreate(savedInstanceState);
