@@ -19,10 +19,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,8 +27,8 @@ import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.activities.CreateNewCVActivity;
 import com.vietinterview.getbee.adapter.JobsAdapter;
 import com.vietinterview.getbee.api.request.GetSearchJobsRequest;
-import com.vietinterview.getbee.api.response.jobsresponse.JobList;
-import com.vietinterview.getbee.api.response.jobsresponse.JobsResponse;
+import com.vietinterview.getbee.api.response.jobs.JobList;
+import com.vietinterview.getbee.api.response.jobs.JobsResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.callback.OnRefreshHomeListener;
@@ -80,7 +76,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private boolean visibleSearch = false;
     private boolean visibleCondition = false;
     public JobsAdapter adapter;
-    //    public static View.OnClickListener myOnClickListener;
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
     private ArrayList<JobList> jobsList = new ArrayList<>();
@@ -119,7 +114,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 getSearchJob(mCarrerId, mCityId, strSearch, mPage);
             }
         });
-        myOnClickListener = new MyOnClickListener(getActivity());
         recyclerView = (RecyclerView) root.findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -239,13 +233,13 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @OnClick(R.id.llCarrer)
     public void onllCarrerClick() {
         mIsCity = false;
-        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(false), null);
+        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(false, mCarrerId, mCarrerName), null);
     }
 
     @OnClick(R.id.llAdd)
     public void onllAddClick() {
         mIsCity = true;
-        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(true), null);
+        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(true, mCityId, mCityName), null);
     }
 
     //    @OnClick(R.id.llDatePub)

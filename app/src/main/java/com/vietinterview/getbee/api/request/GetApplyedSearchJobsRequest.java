@@ -2,7 +2,7 @@ package com.vietinterview.getbee.api.request;
 
 import com.loopj.android.http.RequestParams;
 import com.vietinterview.getbee.AccountManager;
-import com.vietinterview.getbee.api.response.jobsresponse.JobsResponse;
+import com.vietinterview.getbee.api.response.jobs.JobsResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
 
 import java.lang.reflect.Type;

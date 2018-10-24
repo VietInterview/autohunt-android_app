@@ -1,5 +1,5 @@
 
-package com.vietinterview.getbee.api.response.loginresponse;
+package com.vietinterview.getbee.api.response.login;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

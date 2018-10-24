@@ -11,14 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.adapter.JobsAdapter;
 import com.vietinterview.getbee.adapter.MyJobsAdapter;
 import com.vietinterview.getbee.api.request.GetApplyedSearchJobsRequest;
-import com.vietinterview.getbee.api.response.jobsresponse.JobList;
-import com.vietinterview.getbee.api.response.jobsresponse.JobsResponse;
+import com.vietinterview.getbee.api.response.jobs.JobList;
+import com.vietinterview.getbee.api.response.jobs.JobsResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.utils.DialogUtil;

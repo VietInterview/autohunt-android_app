@@ -17,7 +17,7 @@ import com.vietinterview.getbee.adapter.ChoiceCVAdapter;
 import com.vietinterview.getbee.adapter.NotChoiceCVAdapter;
 import com.vietinterview.getbee.api.request.GetListCareerRequest;
 import com.vietinterview.getbee.api.response.CareerResponse;
-import com.vietinterview.getbee.api.response.jobsresponse.JobList;
+import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.customview.NunitoBoldButton;
 import com.vietinterview.getbee.utils.DebugLog;

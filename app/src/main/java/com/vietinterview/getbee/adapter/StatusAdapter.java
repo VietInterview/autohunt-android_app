@@ -8,36 +8,32 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.api.response.CareerResponse;
-import com.vietinterview.getbee.api.response.jobs.JobList;
+import com.vietinterview.getbee.api.response.CityResponse;
 import com.vietinterview.getbee.customview.CheckableLinearLayout;
-import com.vietinterview.getbee.fragments.ChoiceCVFragment;
-import com.vietinterview.getbee.fragments.DetailCVFragment;
-import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.model.CVStatus;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class NotChoiceCVAdapter extends BaseAdapter {
+public class StatusAdapter extends BaseAdapter {
     private LayoutInflater inflater;
-    List<CareerResponse> mCareerResponses;
-    private ChoiceCVFragment mChoiceCVFragment;
-    JobList mJobList;
+    List<CVStatus> cvStatuses;
+    List<CVStatus> cvStatusesFilter;
 
-    public NotChoiceCVAdapter(ChoiceCVFragment choiceCVFragment, Context context, List<CareerResponse> careerResponses, JobList jobList) {
-        mCareerResponses = careerResponses;
+    public StatusAdapter(Context context, List<CVStatus> cvStatuses1) {
+        this.cvStatuses = cvStatuses1;
+        cvStatusesFilter = cvStatuses1;
         inflater = LayoutInflater.from(context);
-        this.mJobList = jobList;
-        this.mChoiceCVFragment = choiceCVFragment;
     }
 
     @Override
     public int getCount() {
-        return mCareerResponses.size();
+        return cvStatusesFilter.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return mCareerResponses.get(i);
+        return cvStatusesFilter.get(i);
     }
 
     @Override
@@ -48,18 +44,14 @@ public class NotChoiceCVAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder viewHolder;
-        final CareerResponse careerResponse = mCareerResponses.get(i);
+        final CVStatus cvStatus = cvStatusesFilter.get(i);
+
         if (view == null) {
-            view = inflater.inflate(R.layout.list_item_mycv, viewGroup, false);
+            view = inflater.inflate(R.layout.list_item, viewGroup, false);
+
             viewHolder = new ViewHolder();
             viewHolder.name = (TextView) view.findViewById(R.id.item_name);
             viewHolder.checkableLinearLayout = (CheckableLinearLayout) view.findViewById(R.id.llCheck);
-            viewHolder.checkableLinearLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    FragmentUtil.pushFragment(mChoiceCVFragment.getActivity(), mChoiceCVFragment, new DetailCVFragment().newInstance(mJobList), null);
-                }
-            });
             if (i % 2 == 0) {
                 viewHolder.checkableLinearLayout.setBackgroundResource(R.color.browse);
             } else {
@@ -70,7 +62,7 @@ public class NotChoiceCVAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        viewHolder.name.setText(careerResponse.getName());
+        viewHolder.name.setText(cvStatus.getStatusName());
 
         return view;
     }
@@ -78,5 +70,11 @@ public class NotChoiceCVAdapter extends BaseAdapter {
     private class ViewHolder {
         TextView name;
         CheckableLinearLayout checkableLinearLayout;
+    }
+
+    public void setFilter(List<CVStatus> cvStatuses) {
+        cvStatusesFilter = new ArrayList<>();
+        cvStatusesFilter.addAll(cvStatuses);
+        notifyDataSetChanged();
     }
 }

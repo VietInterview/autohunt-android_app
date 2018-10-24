@@ -1,6 +1,5 @@
 package com.vietinterview.getbee.adapter;
 
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,21 +14,17 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.api.request.GetSearchJobsRequest;
 import com.vietinterview.getbee.api.request.SaveUnsaveJobRequest;
 import com.vietinterview.getbee.api.response.AddRemoveJobResponse;
-import com.vietinterview.getbee.api.response.jobsresponse.JobList;
+import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.fragments.BaseFragment;
 import com.vietinterview.getbee.fragments.DetailJobFragment;
-import com.vietinterview.getbee.fragments.HomeFragment;
 import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.StringUtils;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,31 +41,6 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     FragmentActivity mActivity;
     private SaveUnsaveJobRequest saveUnsaveJobRequest;
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView tvjobTitle;
-        TextView tvCompanyName;
-        TextView tvCarrer;
-        TextView tvListCity;
-        TextView tvExpireDate;
-        TextView tvFee;
-        ImageView imgBussiness;
-        ImageView imgStatus;
-        CardView card_view;
-
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            this.tvjobTitle = (TextView) itemView.findViewById(R.id.tvjobTitle);
-            this.tvCompanyName = (TextView) itemView.findViewById(R.id.tvCompanyName);
-            this.tvCarrer = (TextView) itemView.findViewById(R.id.tvCarrer);
-            this.tvListCity = (TextView) itemView.findViewById(R.id.tvListCity);
-            this.tvExpireDate = (TextView) itemView.findViewById(R.id.tvExpireDate);
-            this.tvFee = (TextView) itemView.findViewById(R.id.tvFee);
-            this.imgBussiness = (ImageView) itemView.findViewById(R.id.imgBussiness);
-            this.imgStatus = (ImageView) itemView.findViewById(R.id.imgStatus);
-            this.card_view = (CardView) itemView.findViewById(R.id.card_view);
-        }
-    }
 
     public JobsAdapter(RecyclerView recyclerView, ArrayList<JobList> data, BaseFragment homeFragment, FragmentActivity activity) {
         this.dataSet = data;
@@ -120,7 +90,7 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (holder instanceof MyViewHolder) {
             final MyViewHolder myViewHolder = (MyViewHolder) holder;
 //            if (dataSet.get(listPosition).getCompanyImg() != null) {
-            Glide.with(mActivity).load("http://getbee.vn/download-16.jpg").into(myViewHolder.imgBussiness);
+            Glide.with(mActivity).load("https://pbs.twimg.com/profile_images/710856659325874176/7ybxcLl8_400x400.jpg").into(myViewHolder.imgBussiness);
 //            }
             myViewHolder.tvjobTitle.setText(StringUtils.nullStrToEmpty(dataSet.get(listPosition).getJobTitle()));
             myViewHolder.tvCompanyName.setText(dataSet.get(listPosition).getCompanyName());
@@ -176,6 +146,32 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.progressBar.setIndeterminate(true);
+        }
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView tvjobTitle;
+        TextView tvCompanyName;
+        TextView tvCarrer;
+        TextView tvListCity;
+        TextView tvExpireDate;
+        TextView tvFee;
+        ImageView imgBussiness;
+        ImageView imgStatus;
+        CardView card_view;
+
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            this.tvjobTitle = (TextView) itemView.findViewById(R.id.tvjobTitle);
+            this.tvCompanyName = (TextView) itemView.findViewById(R.id.tvCompanyName);
+            this.tvCarrer = (TextView) itemView.findViewById(R.id.tvCarrer);
+            this.tvListCity = (TextView) itemView.findViewById(R.id.tvListCity);
+            this.tvExpireDate = (TextView) itemView.findViewById(R.id.tvExpireDate);
+            this.tvFee = (TextView) itemView.findViewById(R.id.tvFee);
+            this.imgBussiness = (ImageView) itemView.findViewById(R.id.imgBussiness);
+            this.imgStatus = (ImageView) itemView.findViewById(R.id.imgStatus);
+            this.card_view = (CardView) itemView.findViewById(R.id.card_view);
         }
     }
 

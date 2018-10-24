@@ -12,6 +12,7 @@ public class ApiConstant {
     public static final boolean IS_DEBUG_BUILD_TYPE = BuildConfig.BUILD_TYPE.equals("debug");
 
     public static final int REQUEST_TIMEOUT = 10;
+    public static final int LIMIT = 10;
 
     //Server KH
     public final static String REAL_URL = "https://api.dev.getbee.vn/";
@@ -30,4 +31,7 @@ public class ApiConstant {
     public final static String GET_LIST_CITY = BASE_URL + "svccollaborator/api/mstCity";
     public final static String SAVE_UNSAVE_JOB = BASE_URL + "svccollaborator/api/jobs/addRemoveMyJob";
     public final static String GET_DETAIL_JOB = BASE_URL + "svccollaborator/api/jobs/getJobDetail";
+    public final static String SEARCH_CV_SAVE = BASE_URL + "svccollaborator/api/cvs/searchCvSave";
+    public final static String SEARCH_CV_SUBMIT = BASE_URL + "svccollaborator/api/cvs/searchCvSubmit";
+    public final static String SEARCH_MY_CV = BASE_URL + "svccollaborator/api/cvs/searchMyCv";
 }

@@ -1,6 +1,6 @@
 package com.vietinterview.getbee.api.request;
 
-import com.vietinterview.getbee.api.response.loginresponse.LoginResponse;
+import com.vietinterview.getbee.api.response.login.LoginResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
 
 import org.json.JSONException;

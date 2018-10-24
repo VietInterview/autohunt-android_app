@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.api.response.detailjobresponse.DetailJobResponse;
+import com.vietinterview.getbee.api.response.detailjob.DetailJobResponse;
 
 import butterknife.BindView;
 

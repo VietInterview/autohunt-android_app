@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.SaveUnsaveJobRequest;
 import com.vietinterview.getbee.api.response.AddRemoveJobResponse;
-import com.vietinterview.getbee.api.response.jobsresponse.JobList;
+import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.fragments.BaseFragment;

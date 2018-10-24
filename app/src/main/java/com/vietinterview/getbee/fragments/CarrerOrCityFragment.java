@@ -30,6 +30,7 @@ import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.customview.NunitoEditText;
 import com.vietinterview.getbee.customview.NunitoTextView;
 import com.vietinterview.getbee.utils.DebugLog;
+import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
 import java.util.ArrayList;
@@ -57,15 +58,19 @@ public class CarrerOrCityFragment extends BaseFragment {
     private Menu mMenu;
     private MenuItem mMenuItem;
     boolean mIsCity;
+    String mId;
+    String mName;
     List<CareerResponse> careerResponses;
     List<CityResponse> cityResponses;
     List<CareerResponse> careerResponsesFilter;
     List<CityResponse> cityResponsesFilter;
 
-    public static CarrerOrCityFragment newInstance(boolean isCity) {
+    public static CarrerOrCityFragment newInstance(boolean isCity, String Id, String Name) {
         CarrerOrCityFragment fm = new CarrerOrCityFragment();
         Bundle bundle = new Bundle();
         bundle.putBoolean("isCity", isCity);
+        bundle.putString(isCity ? "cityId" : "carrerId", Id);
+        bundle.putString(isCity ? "cityName" : "carrerName", Name);
         fm.setArguments(bundle);
         return fm;
     }
@@ -150,6 +155,8 @@ public class CarrerOrCityFragment extends BaseFragment {
     @Override
     protected void getArgument(Bundle bundle) {
         mIsCity = bundle.getBoolean("isCity");
+        mId = bundle.getString(mIsCity ? "cityId" : "carrerId");
+        mName = bundle.getString(mIsCity ? "cityName" : "carrerName");
     }
 
     @Override
@@ -179,6 +186,7 @@ public class CarrerOrCityFragment extends BaseFragment {
             @Override
             public void onFail(int failCode, CareerResponse data, List<CareerResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
+                DialogUtil.showDialog(getActivity(), "Thông báo", message);
             }
         });
     }
@@ -274,6 +282,7 @@ public class CarrerOrCityFragment extends BaseFragment {
             @Override
             public void onFail(int failCode, CityResponse data, List<CityResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
+                DialogUtil.showDialog(getActivity(), "Thông báo", message);
             }
         });
     }
@@ -293,11 +302,19 @@ public class CarrerOrCityFragment extends BaseFragment {
 
     @Override
     protected void processCustomToolbar() {
+        Intent intent = new Intent(getActivity(), CarrerOrCityFragment.class);
+        intent.putExtra(mIsCity ? "cityId" : "carrerId", mId);
+        intent.putExtra(mIsCity ? "cityName" : "carrerName", mName);
+        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
         FragmentUtil.popBackStack(this);
     }
 
     @Override
     protected void processOnBackPress() {
+        Intent intent = new Intent(getActivity(), CarrerOrCityFragment.class);
+        intent.putExtra(mIsCity ? "cityId" : "carrerId", mId);
+        intent.putExtra(mIsCity ? "cityName" : "carrerName", mName);
+        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
         FragmentUtil.popBackStack(this);
     }
 

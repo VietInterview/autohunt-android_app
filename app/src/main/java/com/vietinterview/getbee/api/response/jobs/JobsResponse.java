@@ -1,5 +1,5 @@
 
-package com.vietinterview.getbee.api.response.jobsresponse;
+package com.vietinterview.getbee.api.response.jobs;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

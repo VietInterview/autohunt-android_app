@@ -38,22 +38,24 @@ public abstract class BaseRequest<T> {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 if (response != null) {
-                    DebugLog.jsonFormat("response", response);
+                    DebugLog.jsonFormat("response " + getAbsoluteUrl(), response);
                     mApiObjectCallBack.onSuccess(GsonUtils.fromJson(response.toString(), getResponseClass()), null, statusCode, "");
                 } else {
                     DebugLog.showLogCat(statusCode + "");
+                    mApiObjectCallBack.onFail(statusCode, null, null, "Lỗi chưa biết");
                 }
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 if (response != null) {
-                    DebugLog.jsonFormat("response", response);
+                    DebugLog.jsonFormat("response " + getAbsoluteUrl(), response);
                     tList = getListResponseClass();
                     tList = GsonUtils.fromJson(response.toString(), getType());
                     mApiObjectCallBack.onSuccess(null, tList, statusCode, "");
                 } else {
                     DebugLog.showLogCat(statusCode + "");
+                    mApiObjectCallBack.onFail(statusCode, null, null, "Lỗi chưa biết");
                 }
             }
 
@@ -66,12 +68,13 @@ public abstract class BaseRequest<T> {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 if (errorResponse != null) {
-                    DebugLog.jsonFormat("response", errorResponse);
+                    DebugLog.jsonFormat("response " + getAbsoluteUrl(), errorResponse);
                     tList = getListResponseClass();
                     tList = GsonUtils.fromJson(errorResponse.toString(), getType());
                     mApiObjectCallBack.onFail(statusCode, null, tList, throwable.getMessage());
                 } else {
                     DebugLog.showLogCat(statusCode + "");
+                    mApiObjectCallBack.onFail(statusCode, null, null, throwable.getMessage());
                 }
             }
 
@@ -81,7 +84,7 @@ public abstract class BaseRequest<T> {
                 if (errorResponse != null)
                     mApiObjectCallBack.onFail(statusCode, GsonUtils.fromJson(errorResponse.toString(), getResponseClass()), null, throwable.getMessage());
                 else {
-                    DebugLog.showLogCat(statusCode + "");
+                    mApiObjectCallBack.onFail(statusCode, null, null, throwable.getMessage());
                 }
             }
 

@@ -3,7 +3,6 @@ package com.vietinterview.getbee.fragments;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -12,16 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ViewPagerAdapter;
-import com.vietinterview.getbee.api.response.jobsresponse.JobList;
+import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
-import butterknife.BindView;
 import butterknife.OnClick;
 
 /**

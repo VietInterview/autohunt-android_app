@@ -26,7 +26,7 @@ import butterknife.OnClick;
 public class MyProfileFragment extends BaseFragment {
     @BindView(R.id.scrollView)
     TouchDetectableScrollView scrollView;
-//    @BindView(R.id.fab)
+    //    @BindView(R.id.fab)
 //    FloatingActionButton fab;
     String mNameFragment;
     LoginRequest loginRequest;
@@ -97,7 +97,7 @@ public class MyProfileFragment extends BaseFragment {
 
     @OnClick(R.id.rlChooseJob)
     public void onChooseJobClick() {
-        FragmentUtil.pushFragment(getActivity(),MyProfileFragment.this, new CarrerOrCityFragment().newInstance(false), null);
+        FragmentUtil.pushFragment(getActivity(), MyProfileFragment.this, new CarrerOrCityFragment().newInstance(false, "4", "IT, Phần mềm"), null);
     }
 
     @Override

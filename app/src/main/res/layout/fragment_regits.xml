@@ -6,7 +6,7 @@
 
     <ImageView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="220dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_background" />
 
@@ -264,6 +264,7 @@
             android:background="@drawable/borderbutton"
             android:fontFamily=""
             android:text="ĐĂNG KÝ"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
     </LinearLayout>
 </FrameLayout>

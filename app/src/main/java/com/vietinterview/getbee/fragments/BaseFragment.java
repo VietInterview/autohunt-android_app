@@ -65,7 +65,6 @@ public abstract class BaseFragment extends Fragment {
 
     @BindView(R.id.common_layout)
     LinearLayout linearLayoutEmpty;
-    public static View.OnClickListener myOnClickListener;
     @BindView(R.id.common_txt_empty)
     TextView tvEmpty;
     LayoutInflater mInflater;
@@ -130,7 +129,6 @@ public abstract class BaseFragment extends Fragment {
     private View createRootView(LayoutInflater inflater, ViewGroup container) {
         mInflater = inflater;
         mContainer = container;
-        myOnClickListener = new MyOnClickListener(getActivity());
         if (isSkipGenerateBaseLayout()) {
             rootView = inflater.inflate(getLayoutId(), container, false);
             ButterKnife.bind(rootView);
@@ -163,19 +161,13 @@ public abstract class BaseFragment extends Fragment {
         if (getArguments() != null) {
             getArgument(getArguments());
         }
-        // Create a common gesture listener object.
         DetectSwipeGestureListener gestureListener = new DetectSwipeGestureListener();
-
-        // Set activity in the listener.
         gestureListener.setBaseFragment(this);
-
-        // Create the gesture detector with the gesture listener.
         gestureDetectorCompat = new GestureDetectorCompat(getActivity(), gestureListener);
         view.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 gestureDetectorCompat.onTouchEvent(event);
                 if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    //do something
                 }
                 return true;
             }
@@ -205,20 +197,6 @@ public abstract class BaseFragment extends Fragment {
         return act;
     }
 
-    private static class MyOnClickListener implements View.OnClickListener {
-
-        private final FragmentActivity fragmentActivity;
-
-        private MyOnClickListener(FragmentActivity fragmentActivity) {
-            this.fragmentActivity = fragmentActivity;
-        }
-
-        @Override
-        public void onClick(View v) {
-//            DebugLog.showLogCat(v.getVerticalScrollbarPosition() + "");
-//            FragmentUtil.pushFragment(fragmentActivity, new DetailJobFragment(), null);
-        }
-    }
 
     public void showProgressDialog(boolean cancleable) {
         if (progressDlg != null && progressDlg.isShowing()) {

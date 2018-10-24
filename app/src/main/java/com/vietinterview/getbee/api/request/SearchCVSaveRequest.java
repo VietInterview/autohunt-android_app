@@ -2,30 +2,30 @@ package com.vietinterview.getbee.api.request;
 
 import com.loopj.android.http.RequestParams;
 import com.vietinterview.getbee.AccountManager;
-import com.vietinterview.getbee.api.response.detailjob.DetailJobResponse;
+import com.vietinterview.getbee.api.response.listcv.CVResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
 
 import java.lang.reflect.Type;
 import java.util.List;
 
 /**
- * Created by hiepnguyennghia on 10/18/18.
+ * Created by hiepnguyennghia on 10/24/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class GetDetailJobRequest extends BaseRequest<DetailJobResponse> {
-    private int jobId;
+public class SearchCVSaveRequest extends BaseRequest<CVResponse> {
+    private int mPage;
 
-    public GetDetailJobRequest(int jobId) {
-        this.jobId = jobId;
+    public SearchCVSaveRequest(int mPage) {
+        this.mPage = mPage;
     }
 
     @Override
-    public Class<DetailJobResponse> getResponseClass() {
-        return DetailJobResponse.class;
+    public Class<CVResponse> getResponseClass() {
+        return CVResponse.class;
     }
 
     @Override
-    public List<DetailJobResponse> getListResponseClass() {
+    public List<CVResponse> getListResponseClass() {
         return null;
     }
 
@@ -37,7 +37,8 @@ public class GetDetailJobRequest extends BaseRequest<DetailJobResponse> {
     @Override
     protected RequestParams putParams() {
         RequestParams requestParams = new RequestParams();
-        requestParams.put("jobId", jobId + "");
+        requestParams.put("itemPerPage", ApiConstant.LIMIT + "");
+        requestParams.put("page", mPage + "");
         return requestParams;
     }
 
@@ -53,6 +54,6 @@ public class GetDetailJobRequest extends BaseRequest<DetailJobResponse> {
 
     @Override
     protected String getAbsoluteUrl() {
-        return ApiConstant.GET_DETAIL_JOB;
+        return ApiConstant.SEARCH_CV_SAVE;
     }
 }

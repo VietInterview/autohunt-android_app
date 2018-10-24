@@ -1,14 +1,13 @@
 
-package com.vietinterview.getbee.api.response.detailjobresponse;
+package com.vietinterview.getbee.api.response.jobs;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class DetailJobResponse implements Parcelable {
+public class JobList implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -73,6 +72,18 @@ public class DetailJobResponse implements Parcelable {
     @SerializedName("countGotoWork")
     @Expose
     private Integer countGotoWork;
+    @SerializedName("createDate")
+    @Expose
+    private Object createDate;
+    @SerializedName("createBy")
+    @Expose
+    private Object createBy;
+    @SerializedName("updateDate")
+    @Expose
+    private Object updateDate;
+    @SerializedName("updateBy")
+    @Expose
+    private Object updateBy;
     @SerializedName("collStatus")
     @Expose
     private Integer collStatus;
@@ -82,29 +93,11 @@ public class DetailJobResponse implements Parcelable {
     @SerializedName("careerName")
     @Expose
     private String careerName;
-    @SerializedName("myCountCv")
-    @Expose
-    private Integer myCountCv;
-    @SerializedName("myCountInviteInterview")
-    @Expose
-    private Integer myCountInviteInterview;
-    @SerializedName("myCountInterview")
-    @Expose
-    private Integer myCountInterview;
-    @SerializedName("myCountOffer")
-    @Expose
-    private Integer myCountOffer;
-    @SerializedName("myCountGotoWork")
-    @Expose
-    private Integer myCountGotoWork;
     @SerializedName("companyImg")
     @Expose
-    private Object companyImg;
-    @SerializedName("lstJobApply")
-    @Expose
-    private List<LstJobApply> lstJobApply = null;
+    private String companyImg;
 
-    protected DetailJobResponse(Parcel in) {
+    protected JobList(Parcel in) {
         if (in.readByte() == 0) {
             id = null;
         } else {
@@ -197,44 +190,27 @@ public class DetailJobResponse implements Parcelable {
         }
         companyName = in.readString();
         careerName = in.readString();
-        if (in.readByte() == 0) {
-            myCountCv = null;
-        } else {
-            myCountCv = in.readInt();
-        }
-        if (in.readByte() == 0) {
-            myCountInviteInterview = null;
-        } else {
-            myCountInviteInterview = in.readInt();
-        }
-        if (in.readByte() == 0) {
-            myCountInterview = null;
-        } else {
-            myCountInterview = in.readInt();
-        }
-        if (in.readByte() == 0) {
-            myCountOffer = null;
-        } else {
-            myCountOffer = in.readInt();
-        }
-        if (in.readByte() == 0) {
-            myCountGotoWork = null;
-        } else {
-            myCountGotoWork = in.readInt();
-        }
     }
 
-    public static final Creator<DetailJobResponse> CREATOR = new Creator<DetailJobResponse>() {
+    public static final Creator<JobList> CREATOR = new Creator<JobList>() {
         @Override
-        public DetailJobResponse createFromParcel(Parcel in) {
-            return new DetailJobResponse(in);
+        public JobList createFromParcel(Parcel in) {
+            return new JobList(in);
         }
 
         @Override
-        public DetailJobResponse[] newArray(int size) {
-            return new DetailJobResponse[size];
+        public JobList[] newArray(int size) {
+            return new JobList[size];
         }
     };
+
+    public String getCompanyImg() {
+        return companyImg;
+    }
+
+    public void setCompanyImg(String companyImg) {
+        this.companyImg = companyImg;
+    }
 
     public Integer getId() {
         return id;
@@ -404,6 +380,38 @@ public class DetailJobResponse implements Parcelable {
         this.countGotoWork = countGotoWork;
     }
 
+    public Object getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Object createDate) {
+        this.createDate = createDate;
+    }
+
+    public Object getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(Object createBy) {
+        this.createBy = createBy;
+    }
+
+    public Object getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Object updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public Object getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(Object updateBy) {
+        this.updateBy = updateBy;
+    }
+
     public Integer getCollStatus() {
         return collStatus;
     }
@@ -426,62 +434,6 @@ public class DetailJobResponse implements Parcelable {
 
     public void setCareerName(String careerName) {
         this.careerName = careerName;
-    }
-
-    public Integer getMyCountCv() {
-        return myCountCv;
-    }
-
-    public void setMyCountCv(Integer myCountCv) {
-        this.myCountCv = myCountCv;
-    }
-
-    public Integer getMyCountInviteInterview() {
-        return myCountInviteInterview;
-    }
-
-    public void setMyCountInviteInterview(Integer myCountInviteInterview) {
-        this.myCountInviteInterview = myCountInviteInterview;
-    }
-
-    public Integer getMyCountInterview() {
-        return myCountInterview;
-    }
-
-    public void setMyCountInterview(Integer myCountInterview) {
-        this.myCountInterview = myCountInterview;
-    }
-
-    public Integer getMyCountOffer() {
-        return myCountOffer;
-    }
-
-    public void setMyCountOffer(Integer myCountOffer) {
-        this.myCountOffer = myCountOffer;
-    }
-
-    public Integer getMyCountGotoWork() {
-        return myCountGotoWork;
-    }
-
-    public void setMyCountGotoWork(Integer myCountGotoWork) {
-        this.myCountGotoWork = myCountGotoWork;
-    }
-
-    public Object getCompanyImg() {
-        return companyImg;
-    }
-
-    public void setCompanyImg(Object companyImg) {
-        this.companyImg = companyImg;
-    }
-
-    public List<LstJobApply> getLstJobApply() {
-        return lstJobApply;
-    }
-
-    public void setLstJobApply(List<LstJobApply> lstJobApply) {
-        this.lstJobApply = lstJobApply;
     }
 
     @Override
@@ -600,35 +552,5 @@ public class DetailJobResponse implements Parcelable {
         }
         parcel.writeString(companyName);
         parcel.writeString(careerName);
-        if (myCountCv == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(myCountCv);
-        }
-        if (myCountInviteInterview == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(myCountInviteInterview);
-        }
-        if (myCountInterview == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(myCountInterview);
-        }
-        if (myCountOffer == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(myCountOffer);
-        }
-        if (myCountGotoWork == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(myCountGotoWork);
-        }
     }
 }

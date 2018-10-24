@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.api.response.detailjobresponse.DetailJobResponse;
+import com.vietinterview.getbee.api.response.detailjob.DetailJobResponse;
 import com.vietinterview.getbee.customview.FlowLayout;
 import com.vietinterview.getbee.customview.NunitoTextView;
 import com.vietinterview.getbee.utils.DateUtil;

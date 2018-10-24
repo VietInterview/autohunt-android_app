@@ -3,7 +3,6 @@ package com.vietinterview.getbee.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-
 import com.vietinterview.getbee.callback.OnChangeStepExpListener;
 import com.vietinterview.getbee.callback.OnFillBackgroundListener;
 import com.vietinterview.getbee.callback.OnRefreshHomeListener;

@@ -143,14 +143,14 @@ public class MyJobFragment extends BaseFragment {
     public void onllCarrerClick() {
         mIsCity = false;
         visibleFilter = false;
-        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(false), null);
+        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(false, mCarrerId, mCarrerName), null);
     }
 
     @OnClick(R.id.llAdd)
     public void onllAddClick() {
         mIsCity = true;
         visibleFilter = false;
-        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(true), null);
+        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(true, mCityId, mCityName), null);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -212,7 +212,7 @@ public class MyJobFragment extends BaseFragment {
             } else {
                 visibleFilter = true;
                 llCondition.setVisibility(View.VISIBLE);
-                menu.getItem(0).setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_saveok));
+                menu.getItem(0).setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_close));
             }
             return true;
         }

@@ -67,7 +67,6 @@ public class DateUtil {
             SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
             converted_date = sdf2.format(date.getTime());
         } catch (Exception e) {
-            DebugLog.showLogCat(e.toString());
         }
         return converted_date;
     }

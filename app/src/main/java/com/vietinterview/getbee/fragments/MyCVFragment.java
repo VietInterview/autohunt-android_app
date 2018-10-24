@@ -36,17 +36,26 @@ public class MyCVFragment extends BaseFragment {
     TextView tvCarrerName;
     @BindView(R.id.tvCityName)
     TextView tvCityName;
+    @BindView(R.id.tvStatus)
+    TextView tvStatus;
     @BindView(R.id.llStatus)
     LinearLayout llStatus;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+    @BindView(R.id.viewpager)
+    ViewPager viewPager;
+    @BindView(R.id.tabs)
+    TabLayout tabLayout;
     private Menu menu;
+    private ViewPagerAdapter viewPagerAdapter;
     private boolean visibleFilter = false;
     private boolean mIsCity = false;
+    private boolean mIsStatus = false;
+    private int mPosition = 0;
     private String mCarrerId = "4";
     private String mCarrerName = "IT, Phần mềm";
     private String mCityId = "1";
     private String mCityName = "Hà Nội";
+    private String mStatusId = "11";
+    private String mStatusName = "Mặc định";
 
     @Override
     protected int getLayoutId() {
@@ -58,8 +67,6 @@ public class MyCVFragment extends BaseFragment {
         getEventBaseFragment().doFillBackground("CV của tôi");
         setCustomToolbar(true);
         setHasOptionsMenu(true);
-        viewPager = (ViewPager) root.findViewById(R.id.viewpager);
-        tabLayout = (TabLayout) root.findViewById(R.id.tabs);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.underline_tablyaout));
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -69,6 +76,7 @@ public class MyCVFragment extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
+                mPosition = position;
                 if (position == 0) {
                     llStatus.setVisibility(View.GONE);
                 } else if (position == 1) {
@@ -84,9 +92,6 @@ public class MyCVFragment extends BaseFragment {
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
-        TabLayout.Tab tab = tabLayout.getTabAt(0);
-        ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
-        tab.select();
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -103,6 +108,9 @@ public class MyCVFragment extends BaseFragment {
 
             }
         });
+        tvCarrerName.setText(mCarrerName);
+        tvCityName.setText(mCityName);
+        tvStatus.setText(mStatusName);
     }
 
     @Override
@@ -118,33 +126,45 @@ public class MyCVFragment extends BaseFragment {
     private void setupTabIcons() {
         TextView tabOne = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
         tabOne.setText("CV đã lưu");
+        tabOne.setTextColor(getResources().getColor(R.color.black));
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
         tabTwo.setText("CV đã nộp");
+        tabTwo.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
         tabLayout.getTabAt(1).setCustomView(tabTwo);
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFrag(new MyCVSavedFragment(), "CV đã lưu");
-        adapter.addFrag(new MyCVApplyedFragment(), "CV đã nộp");
-        viewPager.setCurrentItem(0);
-        viewPager.setAdapter(adapter);
+        viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+        viewPagerAdapter.addFrag(visibleFilter ? new MyCVSavedFragment().newInstance(Integer.parseInt(mCarrerId), Integer.parseInt(mCityId)) : new MyCVSavedFragment(), "CV đã lưu");
+        viewPagerAdapter.addFrag(new MyCVApplyedFragment().newInstance(Integer.parseInt(mStatusId)), "CV đã nộp");
+        viewPager.setCurrentItem(mPosition);
+        viewPager.setAdapter(viewPagerAdapter);
     }
 
     @OnClick(R.id.llCarrer)
     public void onllCarrerClick() {
         mIsCity = false;
-        visibleFilter = false;
-        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(false), null);
+        mIsStatus = false;
+        visibleFilter = true;
+        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(false, mCarrerId, mCarrerName), null);
     }
 
     @OnClick(R.id.llAdd)
     public void onllAddClick() {
         mIsCity = true;
-        visibleFilter = false;
-        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(true), null);
+        mIsStatus = false;
+        visibleFilter = true;
+        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(true, mCityId, mCityName), null);
+    }
+
+    @OnClick(R.id.llStatus)
+    public void onllStatusClick() {
+        mIsCity = false;
+        mIsStatus = true;
+        visibleFilter = true;
+        FragmentUtil.pushFragment(getActivity(), this, new StatusFragment().newInstance(mStatusId, mStatusName), null);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -152,21 +172,30 @@ public class MyCVFragment extends BaseFragment {
         if (resultCode == RESULT_OK) {
             if (requestCode == AppConstant.FRAGMENT_CODE) {
                 if (mIsCity) {
-                    mCityId = String.valueOf(data.getIntExtra("cityId", 0));
+                    mCityId = String.valueOf(data.getIntExtra("cityId", Integer.parseInt(mCityId)));
                     mCityName = data.getStringExtra("cityName");
                     tvCityName.setText(mCityName);
                 } else {
-                    mCarrerId = String.valueOf(data.getIntExtra("carrerId", 0));
-                    mCarrerName = data.getStringExtra("carrerName");
-                    tvCarrerName.setText(mCarrerName);
+                    if (mIsStatus) {
+                        mStatusId = String.valueOf(data.getIntExtra("statusId", Integer.parseInt(mStatusId)));
+                        mStatusName = data.getStringExtra("statusName");
+                        tvStatus.setText(mStatusName);
+                    } else {
+                        mCarrerId = String.valueOf(data.getIntExtra("carrerId", Integer.parseInt(mCarrerId)));
+                        mCarrerName = data.getStringExtra("carrerName");
+                        tvCarrerName.setText(mCarrerName);
+                    }
                 }
+                viewPager.setCurrentItem(mPosition);
             }
         }
     }
 
     @Override
     protected void initialize() {
-
+        if (visibleFilter) {
+            llCondition.setVisibility(View.VISIBLE);
+        } else llCondition.setVisibility(View.GONE);
     }
 
     @Override

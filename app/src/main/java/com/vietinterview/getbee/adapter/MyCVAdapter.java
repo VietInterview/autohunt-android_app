@@ -4,16 +4,18 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.api.response.listcv.CvList;
+import com.vietinterview.getbee.utils.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,7 @@ public class MyCVAdapter extends RecyclerView.Adapter<MyCVAdapter.ViewHolder> {
         SHOWING_SECONDARY_CONTENT
     }
 
-    private ArrayList<String> titles;
+    private ArrayList<CvList> cvLists;
     private List<SwipedState> mItemSwipedStates;
     private Context mContext;
 
@@ -44,11 +46,11 @@ public class MyCVAdapter extends RecyclerView.Adapter<MyCVAdapter.ViewHolder> {
         }
     }
 
-    public MyCVAdapter(Context context, ArrayList<String> titles) {
-        this.titles = titles;
+    public MyCVAdapter(Context context, ArrayList<CvList> cvLists) {
+        this.cvLists = cvLists;
         this.mContext = context;
         mItemSwipedStates = new ArrayList<>();
-        for (int i = 0; i < titles.size(); i++) {
+        for (int i = 0; i < cvLists.size(); i++) {
             mItemSwipedStates.add(i, SwipedState.SHOWING_PRIMARY_CONTENT);
         }
     }
@@ -70,13 +72,14 @@ public class MyCVAdapter extends RecyclerView.Adapter<MyCVAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        ((TextView) holder.mView.findViewById(R.id.tvName)).setText(titles.get(position));
-        Log.i("MyAdapter", "PagePosition " + position + " set to " + mItemSwipedStates.get(position).ordinal());
+        ((TextView) holder.mView.findViewById(R.id.tvName)).setText(cvLists.get(position).getFullName());
+        ((TextView) holder.mView.findViewById(R.id.tvCarrer)).setText(cvLists.get(position).getCareerName());
+        ((TextView) holder.mView.findViewById(R.id.tvDate)).setText("Cập nhật: " + DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(cvLists.get(position).getUpdatedDate())+""));
         ((ViewPager) holder.mView).setCurrentItem(mItemSwipedStates.get(position).ordinal());
         if (position % 2 == 0) {
-            ((CardView) holder.mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.row_not_white));
+            ((RelativeLayout) holder.mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.row_not_white));
         } else {
-            ((CardView) holder.mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.white));
+            ((RelativeLayout) holder.mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.white));
         }
         ((ViewPager) holder.mView).setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             int previousPagePosition = 0;
@@ -114,13 +117,13 @@ public class MyCVAdapter extends RecyclerView.Adapter<MyCVAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return titles.size();
+        return cvLists.size();
     }
 
-    public void addItem(String title) {
-        titles.add(title);
+    public void addItem(CvList cvList) {
+        cvLists.add(cvList);
         mItemSwipedStates.add(SwipedState.SHOWING_PRIMARY_CONTENT);
-        notifyItemInserted(titles.size());
+        notifyItemInserted(cvLists.size());
     }
 
 
