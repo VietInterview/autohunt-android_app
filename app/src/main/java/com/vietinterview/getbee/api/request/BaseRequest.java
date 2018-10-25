@@ -1,6 +1,7 @@
 package com.vietinterview.getbee.api.request;
 
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
@@ -97,8 +98,22 @@ public abstract class BaseRequest<T> {
         DebugLog.showLogCat(getAbsoluteUrl() + "\n" + putParams() + "\n " + getAccessToken());
         if (getMethod() == ApiConstant.POST) {
             client.post(getAbsoluteUrl(), putParams(), mJsonHttpResponseHandler);
-        } else {
+        } else if (getMethod() == ApiConstant.GET) {
             client.get(getAbsoluteUrl(), putParams(), mJsonHttpResponseHandler);
+        } else if (getMethod() == ApiConstant.DELETE) {
+            client.delete(getAbsoluteUrl(), putParams(), new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    DebugLog.showLogCat(responseBody.toString());
+                    mApiObjectCallBack.onSuccess(null, null, statusCode, responseBody.toString());
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    DebugLog.showLogCat(error.getMessage());
+                    mApiObjectCallBack.onFail(statusCode, null, null, error.getMessage());
+                }
+            });
         }
     }
 

@@ -123,10 +123,12 @@ public class MyJobFragment extends BaseFragment {
     private void setupTabIcons() {
         TextView tabOne = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
         tabOne.setText("Công việc đã lưu");
+        tabOne.setTextColor(getResources().getColor(R.color.black));
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
         tabTwo.setText("Công việc đã nộp");
+        tabTwo.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
         tabLayout.getTabAt(1).setCustomView(tabTwo);
     }
 
@@ -142,14 +144,14 @@ public class MyJobFragment extends BaseFragment {
     @OnClick(R.id.llCarrer)
     public void onllCarrerClick() {
         mIsCity = false;
-        visibleFilter = false;
+        visibleFilter = true;
         FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(false, mCarrerId, mCarrerName), null);
     }
 
     @OnClick(R.id.llAdd)
     public void onllAddClick() {
         mIsCity = true;
-        visibleFilter = false;
+        visibleFilter = true;
         FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(true, mCityId, mCityName), null);
     }
 
@@ -177,11 +179,11 @@ public class MyJobFragment extends BaseFragment {
 
     @Override
     protected void initialize() {
-//        if (visibleFilter) {
-//            llCondition.setVisibility(View.VISIBLE);
-//        } else {
-//            llCondition.setVisibility(View.GONE);
-//        }
+        if (visibleFilter) {
+            llCondition.setVisibility(View.VISIBLE);
+        } else {
+            llCondition.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -197,7 +199,10 @@ public class MyJobFragment extends BaseFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_myjob, menu);
+        if (visibleFilter)
+            inflater.inflate(R.menu.menu_cv_job_saved, menu);
+        else
+            inflater.inflate(R.menu.menu_myjob, menu);
         this.menu = menu;
     }
 

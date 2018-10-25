@@ -34,6 +34,8 @@ public class StatisticalFragment extends BaseFragment {
     TextView tvmyCountOffer;
     @BindView(R.id.tvmyCountGotoWork)
     TextView tvmyCountGotoWork;
+    @BindView(R.id.tvcountCared)
+    TextView tvcountCared;
     DetailJobResponse detailJobResponse;
 
     public static StatisticalFragment newInstance(DetailJobResponse detailJobResponse) {
@@ -60,6 +62,7 @@ public class StatisticalFragment extends BaseFragment {
         tvmyCountInterview.setText(detailJobResponse.getMyCountInterview() != null ? detailJobResponse.getMyCountInterview() + "" : "0");
         tvmyCountOffer.setText(detailJobResponse.getMyCountOffer() != null ? detailJobResponse.getMyCountOffer() + "" : "0");
         tvmyCountGotoWork.setText(detailJobResponse.getMyCountGotoWork() != null ? detailJobResponse.getMyCountGotoWork() + "" : "0");
+        tvcountCared.setText(detailJobResponse.getCountColl() != null ? detailJobResponse.getCountColl() + "" : "0");
     }
 
     @Override

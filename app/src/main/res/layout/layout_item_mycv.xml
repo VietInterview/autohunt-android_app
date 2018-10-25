@@ -55,7 +55,6 @@
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:layout_marginRight="16dp"
-            android:background="@drawable/borderbutton_notyet_send"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingHorizontal="8dp">
@@ -79,19 +78,7 @@
         android:orientation="horizontal">
 
         <com.vietinterview.getbee.customview.NunitoRegularButton
-            android:id="@+id/btn2"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:background="@color/underline_tablyaout"
-            android:drawableTop="@drawable/ic_pencil_my_cv"
-            android:drawablePadding="-30dp"
-            android:paddingTop="20dp"
-            android:text="Sửa"
-            android:textColor="@color/white" />
-
-        <com.vietinterview.getbee.customview.NunitoRegularButton
-            android:id="@+id/btn3"
+            android:id="@+id/btnDeleteCV"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"

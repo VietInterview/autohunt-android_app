@@ -77,15 +77,6 @@ public class DetailJobFragment extends BaseFragment {
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-        rlHeader.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                getGestureDetectorCompat().onTouchEvent(event);
-                if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    //do something
-                }
-                return true;
-            }
-        });
         getEventBaseFragment().doFillBackground("Chi tiết công viêc");
         setCustomToolbar(true);
 //        setHasOptionsMenu(true);
@@ -125,19 +116,22 @@ public class DetailJobFragment extends BaseFragment {
             if (collStatus == 0) {
                 Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
                 img.setBounds(0, 0, 40, 50);
-                saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+                saveUnsaveJob.setCompoundDrawables(img, null, null, null); saveUnsaveJob.setText("Lưu công việc");
                 saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
+                saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_unsave_button));
             } else {
                 Drawable img = getContext().getResources().getDrawable(R.drawable.ic_saved);
-                img.setBounds(0, 0, 40, 50);
+                img.setBounds(0, 0, 40, 50); saveUnsaveJob.setText("Đã lưu việc");
                 saveUnsaveJob.setCompoundDrawables(img, null, null, null);
                 saveUnsaveJob.setTextColor(getResources().getColor(R.color.red));
+                saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_save_button));
             }
         } else {
             Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
             img.setBounds(0, 0, 40, 50);
-            saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+            saveUnsaveJob.setCompoundDrawables(img, null, null, null); saveUnsaveJob.setText("Lưu công việc");
             saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
+            saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_unsave_button));
         }
         getDetailJob(mJobList.getId());
     }
@@ -154,10 +148,10 @@ public class DetailJobFragment extends BaseFragment {
                 tvjobTitle.setText(data.getJobTitle());
                 if (data.getStatus() == 1) {
                     tvstatus.setText("Đang tuyển");
-                    llStatus.setBackgroundColor(getResources().getColor(R.color.step_complete));
+                    llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));
                 } else {
                     tvstatus.setText("Đã đóng");
-                    llStatus.setBackgroundColor(getResources().getColor(R.color.background_icon_not_focus));
+                    llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_notyet_send));
                 }
                 setupViewPager(viewPager);
                 tabLayout.setupWithViewPager(viewPager);
@@ -204,11 +198,15 @@ public class DetailJobFragment extends BaseFragment {
                         img.setBounds(0, 0, 40, 50);
                         saveUnsaveJob.setCompoundDrawables(img, null, null, null);
                         saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
+                        saveUnsaveJob.setText("Lưu công việc");
+                        saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_unsave_button));
                     } else if (data.getStatus() == 1) {
                         Drawable img = getContext().getResources().getDrawable(R.drawable.ic_saved);
                         img.setBounds(0, 0, 40, 50);
                         saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+                        saveUnsaveJob.setText("Đã lưu viêc");
                         saveUnsaveJob.setTextColor(getResources().getColor(R.color.red));
+                        saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_save_button));
                     }
                 }
             }

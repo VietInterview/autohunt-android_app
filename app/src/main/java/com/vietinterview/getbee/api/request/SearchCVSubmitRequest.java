@@ -15,10 +15,14 @@ import java.util.List;
 public class SearchCVSubmitRequest extends BaseRequest<CVResponse> {
     private int mPage;
     private int mStatus;
+    private int mCareerId;
+    private int mCityId;
 
-    public SearchCVSubmitRequest(int mPage, int mStatus) {
+    public SearchCVSubmitRequest(int mPage, int mStatus, int mCareerId, int mCityId) {
         this.mPage = mPage;
         this.mStatus = mStatus;
+        this.mCareerId = mCareerId;
+        this.mCityId = mCityId;
     }
 
     @Override
@@ -41,6 +45,8 @@ public class SearchCVSubmitRequest extends BaseRequest<CVResponse> {
         RequestParams requestParams = new RequestParams();
         requestParams.put("itemPerPage", ApiConstant.LIMIT + "");
         requestParams.put("page", mPage + "");
+        requestParams.put("careerId", mCareerId + "");
+        requestParams.put("cityId", mCityId + "");
         if (mStatus != 11)
             requestParams.put("status", mStatus + "");
         return requestParams;

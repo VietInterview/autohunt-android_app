@@ -78,10 +78,10 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
             public void onScrolled(RecyclerView rcvApplyedJob, int dx, int dy) {
                 super.onScrolled(rcvApplyedJob, dx, dy);
                 if (dy > 0) {
-                    titleHeader.setVisibility(View.GONE);
+//                    titleHeader.setVisibility(View.GONE);
 //                    fab.hide();
                 } else {
-                    titleHeader.setVisibility(View.VISIBLE);
+//                    titleHeader.setVisibility(View.VISIBLE);
 //                    fab.show();
                 }
             }

@@ -138,7 +138,7 @@ public class MyCVFragment extends BaseFragment {
     private void setupViewPager(ViewPager viewPager) {
         viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         viewPagerAdapter.addFrag(visibleFilter ? new MyCVSavedFragment().newInstance(Integer.parseInt(mCarrerId), Integer.parseInt(mCityId)) : new MyCVSavedFragment(), "CV đã lưu");
-        viewPagerAdapter.addFrag(new MyCVApplyedFragment().newInstance(Integer.parseInt(mStatusId)), "CV đã nộp");
+        viewPagerAdapter.addFrag(new MyCVApplyedFragment().newInstance(Integer.parseInt(mStatusId), Integer.parseInt(mCarrerId), Integer.parseInt(mCityId)), "CV đã nộp");
         viewPager.setCurrentItem(mPosition);
         viewPager.setAdapter(viewPagerAdapter);
     }
@@ -216,7 +216,10 @@ public class MyCVFragment extends BaseFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_myjob, menu);
+        if (visibleFilter)
+            inflater.inflate(R.menu.menu_cv_job_saved, menu);
+        else
+            inflater.inflate(R.menu.menu_myjob, menu);
         this.menu = menu;
     }
 

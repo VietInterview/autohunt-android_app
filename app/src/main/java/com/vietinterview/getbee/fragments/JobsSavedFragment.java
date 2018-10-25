@@ -76,10 +76,10 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
             public void onScrolled(RecyclerView rcvSavedJob, int dx, int dy) {
                 super.onScrolled(rcvSavedJob, dx, dy);
                 if (dy > 0) {
-                    titleHeader.setVisibility(View.GONE);
+//                    titleHeader.setVisibility(View.GONE);
 //                    fab.hide();
                 } else {
-                    titleHeader.setVisibility(View.VISIBLE);
+//                    titleHeader.setVisibility(View.VISIBLE);
 //                    fab.show();
                 }
             }

@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import com.vietinterview.getbee.callback.OnChangeStepExpListener;
 import com.vietinterview.getbee.callback.OnFillBackgroundListener;
 import com.vietinterview.getbee.callback.OnRefreshHomeListener;
+import com.vietinterview.getbee.callback.OnRefreshMyCVSavedListener;
+import com.vietinterview.getbee.callback.OnRefreshMyCVSubmitListener;
 import com.vietinterview.getbee.callback.OnShowLogoListener;
 
 /**
@@ -17,6 +19,8 @@ public class Event implements Parcelable {
     private OnShowLogoListener onShowLogoListener;
     private OnRefreshHomeListener onRefreshHomeListener;
     private OnChangeStepExpListener onChangeStepExpListener;
+    private OnRefreshMyCVSavedListener onRefreshMyCVListener;
+    private OnRefreshMyCVSubmitListener onRefreshMyCVSubmitListener;
 
     protected Event(Parcel in) {
     }
@@ -36,6 +40,14 @@ public class Event implements Parcelable {
             return new Event[size];
         }
     };
+
+    public void setOnRefreshMyCVSubmitListener(OnRefreshMyCVSubmitListener onRefreshMyCVSubmitListener) {
+        this.onRefreshMyCVSubmitListener = onRefreshMyCVSubmitListener;
+    }
+
+    public void setOnRefreshMyCVListener(OnRefreshMyCVSavedListener onRefreshMyCVListener) {
+        this.onRefreshMyCVListener = onRefreshMyCVListener;
+    }
 
     public void setOnFillBackgroundListener(OnFillBackgroundListener listener) {
         mOnEventListener = listener;
@@ -74,6 +86,18 @@ public class Event implements Parcelable {
     public void changeStepExp(int step) {
         if (this.onChangeStepExpListener != null) {
             this.onChangeStepExpListener.onChangeStepExp(step);
+        }
+    }
+
+    public void refreshMyCV() {
+        if (this.onRefreshMyCVListener != null) {
+            this.onRefreshMyCVListener.onRefreshMyCV();
+        }
+    }
+
+    public void refreshMyCVSubmit() {
+        if (this.onRefreshMyCVSubmitListener != null) {
+            this.onRefreshMyCVSubmitListener.onRefreshMyCVSubmit();
         }
     }
 

@@ -5,6 +5,8 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
@@ -13,6 +15,7 @@ import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.StringUtils;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by hiepn on 23/03/2017.
@@ -41,7 +44,12 @@ public class InfoFragment extends BaseFragment {
     TextView tvcountCv;
     @BindView(R.id.tvjobDescription)
     TextView tvjobDescription;
+    @BindView(R.id.llContentDes)
+    LinearLayout llContentDes;
+    @BindView(R.id.imgDes)
+    ImageView imgDes;
     DetailJobResponse detailJobResponse;
+    boolean isVisibleDes = true;
 
     public static InfoFragment newInstance(DetailJobResponse detailJobResponse) {
         InfoFragment fm = new InfoFragment();
@@ -73,10 +81,10 @@ public class InfoFragment extends BaseFragment {
             tvstatus.setText("Đã đóng");
             tvstatus.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
         }
-        tvSalaryFromTo.setText(detailJobResponse.getFromSalary() + " - " + detailJobResponse.getToSalary());
+        tvSalaryFromTo.setText(StringUtils.filterCurrencyString(detailJobResponse.getFromSalary()) + "USD - " + StringUtils.filterCurrencyString(detailJobResponse.getToSalary()) + " USD");
         tvquantity.setText(detailJobResponse.getQuantity() + "");
         tvcountCv.setText(detailJobResponse.getCountCv() + "");
-        tvRewardCTV.setText(detailJobResponse.getFee() + "");
+        tvRewardCTV.setText(StringUtils.filterCurrencyString(detailJobResponse.getFee()) + " USD");
         tvjobDescription.setText(Html.fromHtml(detailJobResponse.getJobDescription()));
     }
 
@@ -88,6 +96,19 @@ public class InfoFragment extends BaseFragment {
     @Override
     protected void initData() {
 
+    }
+
+    @OnClick(R.id.llDes)
+    public void onExpanDesClick() {
+        if (isVisibleDes) {
+            isVisibleDes = false;
+            llContentDes.setVisibility(View.GONE);
+            imgDes.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_right));
+        } else {
+            isVisibleDes = true;
+            llContentDes.setVisibility(View.VISIBLE);
+            imgDes.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_down));
+        }
     }
 
     @Override

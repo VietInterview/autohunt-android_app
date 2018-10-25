@@ -88,6 +88,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private String mCityId = "1";
     private String mCityName = "Hà Nội";
     private String strSearch = "";
+    private Menu menu;
+    MenuItem mItem;
 
     public static HomeFragment newInstance(String nameFragment) {
         HomeFragment fm = new HomeFragment();
@@ -347,23 +349,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             adapter.setOnLoadMoreListener(HomeFragment.this);
         }
     }
-
-    private static class MyOnClickListener implements View.OnClickListener {
-
-        private final FragmentActivity fragmentActivity;
-
-        private MyOnClickListener(FragmentActivity fragmentActivity) {
-            this.fragmentActivity = fragmentActivity;
-        }
-
-        @Override
-        public void onClick(View v) {
-            DebugLog.showLogCat(v.getVerticalScrollbarPosition() + "");
-        }
-    }
-
-    private Menu menu;
-    MenuItem mItem;
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

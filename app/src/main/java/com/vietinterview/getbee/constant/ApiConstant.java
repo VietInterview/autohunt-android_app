@@ -21,7 +21,7 @@ public class ApiConstant {
     public final static String BASE_URL = IS_DEBUG_BUILD_TYPE ? DEV_URL : REAL_URL;
     public final static int POST = 1;
     public final static int GET = 0;
-
+    public final static int DELETE = 2;
     public final static String LOGIN = BASE_URL + "api/authenticate";
     public final static String REGIST = BASE_URL + "api/register";
     public final static String GET_SEARCH_JOBS = BASE_URL + "svccollaborator/api/jobs/searchJob";
@@ -34,4 +34,5 @@ public class ApiConstant {
     public final static String SEARCH_CV_SAVE = BASE_URL + "svccollaborator/api/cvs/searchCvSave";
     public final static String SEARCH_CV_SUBMIT = BASE_URL + "svccollaborator/api/cvs/searchCvSubmit";
     public final static String SEARCH_MY_CV = BASE_URL + "svccollaborator/api/cvs/searchMyCv";
+    public final static String DELETE_MY_CV = BASE_URL + "svccollaborator/api/cvs/delete";
 }
