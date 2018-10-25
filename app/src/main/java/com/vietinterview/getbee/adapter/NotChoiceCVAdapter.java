@@ -10,21 +10,23 @@ import android.widget.TextView;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.CareerResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
+import com.vietinterview.getbee.api.response.listcv.CvList;
 import com.vietinterview.getbee.customview.CheckableLinearLayout;
 import com.vietinterview.getbee.fragments.ChoiceCVFragment;
 import com.vietinterview.getbee.fragments.DetailCVFragment;
+import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
 import java.util.List;
 
 public class NotChoiceCVAdapter extends BaseAdapter {
     private LayoutInflater inflater;
-    List<CareerResponse> mCareerResponses;
+    List<CvList> cvLists;
     private ChoiceCVFragment mChoiceCVFragment;
     JobList mJobList;
 
-    public NotChoiceCVAdapter(ChoiceCVFragment choiceCVFragment, Context context, List<CareerResponse> careerResponses, JobList jobList) {
-        mCareerResponses = careerResponses;
+    public NotChoiceCVAdapter(ChoiceCVFragment choiceCVFragment, Context context, List<CvList> cvLists1, JobList jobList) {
+        cvLists = cvLists1;
         inflater = LayoutInflater.from(context);
         this.mJobList = jobList;
         this.mChoiceCVFragment = choiceCVFragment;
@@ -32,12 +34,12 @@ public class NotChoiceCVAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mCareerResponses.size();
+        return cvLists.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return mCareerResponses.get(i);
+        return cvLists.get(i);
     }
 
     @Override
@@ -48,16 +50,21 @@ public class NotChoiceCVAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder viewHolder;
-        final CareerResponse careerResponse = mCareerResponses.get(i);
+        final CvList cvList = cvLists.get(i);
         if (view == null) {
             view = inflater.inflate(R.layout.list_item_mycv, viewGroup, false);
             viewHolder = new ViewHolder();
             viewHolder.name = (TextView) view.findViewById(R.id.item_name);
+            viewHolder.item_carrer = (TextView) view.findViewById(R.id.item_carrer);
+            viewHolder.item_date = (TextView) view.findViewById(R.id.item_date);
+            viewHolder.name.setText(cvList.getFullName());
+            viewHolder.item_carrer.setText(cvList.getCareerName());
+            viewHolder.item_date.setText("Cập nhật: " + DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(cvList.getUpdatedDate()) + ""));
             viewHolder.checkableLinearLayout = (CheckableLinearLayout) view.findViewById(R.id.llCheck);
             viewHolder.checkableLinearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentUtil.pushFragment(mChoiceCVFragment.getActivity(), mChoiceCVFragment, new DetailCVFragment().newInstance(mJobList), null);
+                    FragmentUtil.pushFragment(mChoiceCVFragment.getActivity(), mChoiceCVFragment, new DetailCVFragment().newInstance(mJobList, cvList.getId()), null);
                 }
             });
             if (i % 2 == 0) {
@@ -70,13 +77,14 @@ public class NotChoiceCVAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        viewHolder.name.setText(careerResponse.getName());
 
         return view;
     }
 
     private class ViewHolder {
         TextView name;
+        TextView item_carrer;
+        TextView item_date;
         CheckableLinearLayout checkableLinearLayout;
     }
 }

@@ -6,12 +6,23 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 
 /**
  * Created by hiepnguyennghia on 10/23/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 public class SkillDetailCVFragment extends BaseFragment {
+    DetailCVResponse detailCVResponse;
+
+    public static SkillDetailCVFragment newInstance(DetailCVResponse detailCVResponse) {
+        SkillDetailCVFragment fm = new SkillDetailCVFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("detailCVResponse", detailCVResponse);
+        fm.setArguments(bundle);
+        return fm;
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_skill_detail_cv;
@@ -24,7 +35,7 @@ public class SkillDetailCVFragment extends BaseFragment {
 
     @Override
     protected void getArgument(Bundle bundle) {
-
+        detailCVResponse = bundle.getParcelable("detailCVResponse");
     }
 
     @Override

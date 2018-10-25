@@ -31,6 +31,7 @@
             android:textSize="18sp" />
 
         <com.vietinterview.getbee.customview.NunitoBoldTextView
+            android:id="@+id/tvCompanyName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -56,6 +57,7 @@
             android:textSize="18sp" />
 
         <com.vietinterview.getbee.customview.NunitoBoldTextView
+            android:id="@+id/tvQuantityEmploy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -81,6 +83,7 @@
             android:textSize="18sp" />
 
         <com.vietinterview.getbee.customview.NunitoBoldTextView
+            android:id="@+id/tvJobTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -106,6 +109,7 @@
             android:textSize="18sp" />
 
         <com.vietinterview.getbee.customview.NunitoBoldTextView
+            android:id="@+id/tvWorkTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -140,6 +144,7 @@
             android:textSize="18sp" />
 
         <com.vietinterview.getbee.customview.NunitoBoldTextView
+            android:id="@+id/tvSalary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -165,6 +170,7 @@
             android:textSize="18sp" />
 
         <com.vietinterview.getbee.customview.NunitoBoldTextView
+            android:id="@+id/tvJobDes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -190,6 +196,7 @@
             android:textSize="18sp" />
 
         <com.vietinterview.getbee.customview.NunitoBoldTextView
+            android:id="@+id/tvAchievements"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"

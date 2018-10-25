@@ -134,7 +134,7 @@
                 android:id="@+id/btnApplyCV"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@color/yellow_highlight"
+                android:background="@drawable/borderbutton_yellow"
                 android:text="Nộp CV"
                 android:textColor="@color/black" />
         </LinearLayout>

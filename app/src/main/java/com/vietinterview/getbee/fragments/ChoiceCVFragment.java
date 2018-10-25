@@ -14,13 +14,17 @@ import android.widget.ListView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ChoiceCVAdapter;
+import com.vietinterview.getbee.adapter.MyCVAdapter;
 import com.vietinterview.getbee.adapter.NotChoiceCVAdapter;
 import com.vietinterview.getbee.api.request.GetListCareerRequest;
+import com.vietinterview.getbee.api.request.SearchCVSaveRequest;
 import com.vietinterview.getbee.api.response.CareerResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
+import com.vietinterview.getbee.api.response.listcv.CVResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.customview.NunitoBoldButton;
 import com.vietinterview.getbee.utils.DebugLog;
+import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
 import java.util.ArrayList;
@@ -40,11 +44,9 @@ public class ChoiceCVFragment extends BaseFragment {
     NunitoBoldButton btnDelete;
     private ChoiceCVAdapter choiceCVAdapter;
     private NotChoiceCVAdapter notChoiceCVAdapter;
-    GetListCareerRequest getListCareerRequest;
-    List<CareerResponse> careerResponses;
+    private SearchCVSaveRequest searchCVSaveRequest;
     private boolean isEdit = false;
     private Menu menu;
-    private View mView;
     private JobList mJobList;
 
     public static ChoiceCVFragment newInstance(JobList jobList) {
@@ -62,18 +64,11 @@ public class ChoiceCVFragment extends BaseFragment {
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-        mView = root;
         setCustomToolbar(true);
         setCustomToolbarVisible(true);
         setHasOptionsMenu(true);
         getEventBaseFragment().doFillBackground("Chọn CV của tôi");
-        getListCarrer();
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                updateMenuTitles();
-            }
-        });
+        getCVSaved(0);
     }
 
     @Override
@@ -86,23 +81,22 @@ public class ChoiceCVFragment extends BaseFragment {
 
     }
 
-    public void getListCarrer() {
+    public void getCVSaved(final int page) {
         showCoverNetworkLoading();
-        getListCareerRequest = new GetListCareerRequest();
-        getListCareerRequest.callRequest(new ApiObjectCallBack<CareerResponse>() {
-
+        searchCVSaveRequest = new SearchCVSaveRequest(page);
+        searchCVSaveRequest.callRequest(new ApiObjectCallBack<CVResponse>() {
             @Override
-            public void onSuccess(CareerResponse data, List<CareerResponse> dataArrayList, int status, String message) {
+            public void onSuccess(CVResponse data, List<CVResponse> dataArrayList, int status, String message) {
                 hideCoverNetworkLoading();
-                careerResponses = dataArrayList;
-                choiceCVAdapter = new ChoiceCVAdapter(getActivity(), dataArrayList);
-                notChoiceCVAdapter = new NotChoiceCVAdapter(ChoiceCVFragment.this, getActivity(), dataArrayList, mJobList);
+                choiceCVAdapter = new ChoiceCVAdapter(getActivity(), data.getCvList());
+                notChoiceCVAdapter = new NotChoiceCVAdapter(ChoiceCVFragment.this, getActivity(), data.getCvList(), mJobList);
                 listView.setAdapter(notChoiceCVAdapter);
             }
 
             @Override
-            public void onFail(int failCode, CareerResponse data, List<CareerResponse> dataArrayList, String message) {
+            public void onFail(int failCode, CVResponse data, List<CVResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
+                DialogUtil.showDialog(getActivity(), "Thông báo", message);
             }
         });
     }

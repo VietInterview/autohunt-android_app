@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.api.response.detailcv.LstEmploymentHi;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,9 +18,9 @@ import java.util.List;
 public class ExExpListViewAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<String> listDataGroup;
-    private HashMap<String, List<String>> listDataChild;
+    private HashMap<String, List<LstEmploymentHi>> listDataChild;
 
-    public ExExpListViewAdapter(Context context, List<String> listDataGroup, HashMap<String, List<String>> listChildData) {
+    public ExExpListViewAdapter(Context context, List<String> listDataGroup, HashMap<String, List<LstEmploymentHi>> listChildData) {
         this.context = context;
         this.listDataGroup = listDataGroup;
         this.listDataChild = listChildData;
@@ -37,13 +38,25 @@ public class ExExpListViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        final String childText = (String) getChild(groupPosition, childPosition);
+        final LstEmploymentHi lstEmploymentHi = (LstEmploymentHi) getChild(groupPosition, childPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_ex_row_child, null);
         }
-        TextView textViewChild = convertView.findViewById(R.id.textViewChild);
-        textViewChild.setText(childText);
+        TextView tvCompanyName = convertView.findViewById(R.id.tvCompanyName);
+        TextView tvQuantityEmploy = convertView.findViewById(R.id.tvQuantityEmploy);
+        TextView tvJobTitle = convertView.findViewById(R.id.tvJobTitle);
+        TextView tvWorkTime = convertView.findViewById(R.id.tvWorkTime);
+        TextView tvSalary = convertView.findViewById(R.id.tvSalary);
+        TextView tvJobDes = convertView.findViewById(R.id.tvJobDes);
+        TextView tvAchievements = convertView.findViewById(R.id.tvAchievements);
+        tvCompanyName.setText(lstEmploymentHi.getCompanyName());
+        tvQuantityEmploy.setText("unknown");
+        tvJobTitle.setText(lstEmploymentHi.getTitle());
+        tvWorkTime.setText(lstEmploymentHi.getFromMonth() + " - " + lstEmploymentHi.getToMonth());
+        tvSalary.setText(lstEmploymentHi.getSalary() + "");
+        tvJobDes.setText(lstEmploymentHi.getJobDescription());
+        tvAchievements.setText(lstEmploymentHi.getAchievement());
         return convertView;
     }
 

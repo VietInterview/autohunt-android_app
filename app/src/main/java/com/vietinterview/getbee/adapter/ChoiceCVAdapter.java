@@ -8,30 +8,29 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.api.response.CareerResponse;
+import com.vietinterview.getbee.api.response.listcv.CvList;
 import com.vietinterview.getbee.customview.CheckableLinearLayout;
-import com.vietinterview.getbee.utils.DebugLog;
+import com.vietinterview.getbee.utils.DateUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChoiceCVAdapter extends BaseAdapter {
     private LayoutInflater inflater;
-    List<CareerResponse> mCareerResponses;
+    List<CvList> cvLists;
 
-    public ChoiceCVAdapter(Context context, List<CareerResponse> careerResponses) {
-        mCareerResponses = careerResponses;
+    public ChoiceCVAdapter(Context context, List<CvList> cvLists1) {
+        cvLists = cvLists1;
         inflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
-        return mCareerResponses.size();
+        return cvLists.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return mCareerResponses.get(i);
+        return cvLists.get(i);
     }
 
     @Override
@@ -42,11 +41,16 @@ public class ChoiceCVAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder viewHolder;
-        final CareerResponse careerResponse = mCareerResponses.get(i);
+        final CvList careerResponse = cvLists.get(i);
         if (view == null) {
             view = inflater.inflate(R.layout.list_item_choice_mycv, viewGroup, false);
             viewHolder = new ViewHolder();
             viewHolder.name = (TextView) view.findViewById(R.id.item_name);
+            viewHolder.item_carrer = (TextView) view.findViewById(R.id.item_carrer);
+            viewHolder.item_date = (TextView) view.findViewById(R.id.item_date);
+            viewHolder.name.setText(careerResponse.getFullName());
+            viewHolder.item_carrer.setText(careerResponse.getCareerName());
+            viewHolder.item_date.setText("Cập nhật: " + DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(careerResponse.getUpdatedDate()) + ""));
             viewHolder.checkableLinearLayout = (CheckableLinearLayout) view.findViewById(R.id.llCheck);
             if (i % 2 == 0) {
                 viewHolder.checkableLinearLayout.setBackgroundResource(R.color.browse);
@@ -58,13 +62,14 @@ public class ChoiceCVAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        viewHolder.name.setText(careerResponse.getName());
 
         return view;
     }
 
     private class ViewHolder {
         TextView name;
+        TextView item_carrer;
+        TextView item_date;
         CheckableLinearLayout checkableLinearLayout;
     }
 

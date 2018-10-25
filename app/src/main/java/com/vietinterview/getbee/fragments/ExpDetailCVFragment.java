@@ -8,6 +8,8 @@ import android.widget.ExpandableListView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ExExpListViewAdapter;
+import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
+import com.vietinterview.getbee.api.response.detailcv.LstEmploymentHi;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +24,16 @@ public class ExpDetailCVFragment extends BaseFragment {
     private ExExpListViewAdapter exExpListViewAdapter;
     private List<String> listDataGroup;
     private int lastExpandedPosition = -1;
-    private HashMap<String, List<String>> listDataChild;
+    private HashMap<String, List<LstEmploymentHi>> listDataChild;
+    DetailCVResponse detailCVResponse;
+
+    public static ExpDetailCVFragment newInstance(DetailCVResponse detailCVResponse) {
+        ExpDetailCVFragment fm = new ExpDetailCVFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("detailCVResponse", detailCVResponse);
+        fm.setArguments(bundle);
+        return fm;
+    }
 
     @Override
     protected int getLayoutId() {
@@ -62,41 +73,20 @@ public class ExpDetailCVFragment extends BaseFragment {
         listDataChild = new HashMap<>();
         exExpListViewAdapter = new ExExpListViewAdapter(getActivity(), listDataGroup, listDataChild);
         expandableListView.setAdapter(exExpListViewAdapter);
-        listDataGroup.add(getString(R.string.text_alcohol));
-        listDataGroup.add(getString(R.string.text_coffee));
-        listDataGroup.add(getString(R.string.text_pasta));
-        listDataGroup.add(getString(R.string.text_cold_drinks));
-        String[] array;
-        List<String> alcoholList = new ArrayList<>();
-        array = getResources().getStringArray(R.array.string_array_alcohol);
-        for (String item : array) {
-            alcoholList.add(item);
+        for (int i = 0; i < detailCVResponse.getLstEmploymentHis().size(); i++) {
+            listDataGroup.add(detailCVResponse.getLstEmploymentHis().get(i).getCompanyName());
+            List<LstEmploymentHi> lstEmploymentHis = new ArrayList<>();
+            for (LstEmploymentHi item : detailCVResponse.getLstEmploymentHis()) {
+                lstEmploymentHis.add(item);
+            }
+            listDataChild.put(listDataGroup.get(i), lstEmploymentHis);
         }
-        List<String> coffeeList = new ArrayList<>();
-        array = getResources().getStringArray(R.array.string_array_coffee);
-        for (String item : array) {
-            coffeeList.add(item);
-        }
-        List<String> pastaList = new ArrayList<>();
-        array = getResources().getStringArray(R.array.string_array_pasta);
-        for (String item : array) {
-            pastaList.add(item);
-        }
-        List<String> coldDrinkList = new ArrayList<>();
-        array = getResources().getStringArray(R.array.string_array_cold_drinks);
-        for (String item : array) {
-            coldDrinkList.add(item);
-        }
-        listDataChild.put(listDataGroup.get(0), alcoholList);
-        listDataChild.put(listDataGroup.get(1), coffeeList);
-        listDataChild.put(listDataGroup.get(2), pastaList);
-        listDataChild.put(listDataGroup.get(3), coldDrinkList);
         exExpListViewAdapter.notifyDataSetChanged();
     }
 
     @Override
     protected void getArgument(Bundle bundle) {
-
+        detailCVResponse = bundle.getParcelable("detailCVResponse");
     }
 
     @Override

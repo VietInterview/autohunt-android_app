@@ -35,4 +35,5 @@ public class ApiConstant {
     public final static String SEARCH_CV_SUBMIT = BASE_URL + "svccollaborator/api/cvs/searchCvSubmit";
     public final static String SEARCH_MY_CV = BASE_URL + "svccollaborator/api/cvs/searchMyCv";
     public final static String DELETE_MY_CV = BASE_URL + "svccollaborator/api/cvs/delete";
+    public final static String GET_DETAIL_CV = BASE_URL + "svccollaborator/api/cvs/getCvById";
 }

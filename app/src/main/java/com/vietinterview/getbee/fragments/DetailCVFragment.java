@@ -16,8 +16,14 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ViewPagerAdapter;
+import com.vietinterview.getbee.api.request.GetDetailCVRequest;
+import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
+import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
+
+import java.util.List;
 
 import butterknife.OnClick;
 
@@ -30,11 +36,14 @@ public class DetailCVFragment extends BaseFragment {
     private ViewPager viewPager;
     private JobList mJobList;
     private Dialog mNotifydialog;
+    private GetDetailCVRequest getDetailCVRequest;
+    private int mCvId;
 
-    public static DetailCVFragment newInstance(JobList jobList) {
+    public static DetailCVFragment newInstance(JobList jobList, int cvId) {
         DetailCVFragment fm = new DetailCVFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable("jobList", jobList);
+        bundle.putInt("cvId", cvId);
         fm.setArguments(bundle);
         return fm;
     }
@@ -70,35 +79,17 @@ public class DetailCVFragment extends BaseFragment {
 
             }
         });
-        setupViewPager(viewPager);
-        tabLayout.setupWithViewPager(viewPager);
-        setupTabIcons();
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.background_icon_not_focus));
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
     }
 
     @Override
     protected void getArgument(Bundle bundle) {
         mJobList = bundle.getParcelable("jobList");
+        mCvId = bundle.getInt("cvId");
     }
 
     @Override
     protected void initData() {
-
+        getDetailCV(mCvId);
     }
 
     @OnClick(R.id.imglogo)
@@ -182,14 +173,50 @@ public class DetailCVFragment extends BaseFragment {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFrag(new InfoDetailCVFragment(), "Thông tin");
-        adapter.addFrag(new ExpDetailCVFragment(), "Kinh nghiệm");
-        adapter.addFrag(new LevelDetailCVFragment(), "Trình độ");
-        adapter.addFrag(new LanDetailCVFragment(), "Ngoại ngữ");
-        adapter.addFrag(new SkillDetailCVFragment(), "Kỹ năng");
+        adapter.addFrag(new InfoDetailCVFragment().newInstance(detailCVResponse), "Thông tin");
+        adapter.addFrag(new ExpDetailCVFragment().newInstance(detailCVResponse), "Kinh nghiệm");
+        adapter.addFrag(new LevelDetailCVFragment().newInstance(detailCVResponse), "Trình độ");
+        adapter.addFrag(new LanDetailCVFragment().newInstance(detailCVResponse), "Ngoại ngữ");
+        adapter.addFrag(new SkillDetailCVFragment().newInstance(detailCVResponse), "Kỹ năng");
         viewPager.setCurrentItem(0);
         viewPager.setOffscreenPageLimit(0);
         viewPager.setAdapter(adapter);
+    }
+
+    DetailCVResponse detailCVResponse;
+
+    public void getDetailCV(int id) {
+        getDetailCVRequest = new GetDetailCVRequest(id);
+        getDetailCVRequest.callRequest(new ApiObjectCallBack<DetailCVResponse>() {
+            @Override
+            public void onSuccess(DetailCVResponse data, List<DetailCVResponse> dataArrayList, int status, String message) {
+                detailCVResponse = data;
+                setupViewPager(viewPager);
+                tabLayout.setupWithViewPager(viewPager);
+                setupTabIcons();
+                tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                    @Override
+                    public void onTabSelected(TabLayout.Tab tab) {
+                        ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
+                    }
+
+                    @Override
+                    public void onTabUnselected(TabLayout.Tab tab) {
+                        ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.background_icon_not_focus));
+                    }
+
+                    @Override
+                    public void onTabReselected(TabLayout.Tab tab) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onFail(int failCode, DetailCVResponse data, List<DetailCVResponse> dataArrayList, String message) {
+
+            }
+        });
     }
 
     @Override

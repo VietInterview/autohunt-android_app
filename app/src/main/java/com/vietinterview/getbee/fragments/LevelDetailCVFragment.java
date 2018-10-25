@@ -8,6 +8,7 @@ import android.widget.ExpandableListView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ExLvListViewAdapter;
+import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +24,15 @@ public class LevelDetailCVFragment extends BaseFragment {
     private List<String> listDataGroup;
     private int lastExpandedPosition = -1;
     private HashMap<String, List<String>> listDataChild;
+    DetailCVResponse detailCVResponse;
 
+    public static LevelDetailCVFragment newInstance(DetailCVResponse detailCVResponse) {
+        LevelDetailCVFragment fm = new LevelDetailCVFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("detailCVResponse", detailCVResponse);
+        fm.setArguments(bundle);
+        return fm;
+    }
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_level_detail_cv;
@@ -89,7 +98,7 @@ public class LevelDetailCVFragment extends BaseFragment {
 
     @Override
     protected void getArgument(Bundle bundle) {
-
+        detailCVResponse = bundle.getParcelable("detailCVResponse");
     }
 
     @Override

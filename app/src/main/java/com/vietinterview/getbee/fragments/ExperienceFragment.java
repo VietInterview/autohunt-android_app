@@ -62,7 +62,7 @@ public class ExperienceFragment extends BaseFragment {
         });
         listDataGroup = new ArrayList<>();
         listDataChild = new HashMap<>();
-        exExpListViewAdapter = new ExExpListViewAdapter(getActivity(), listDataGroup, listDataChild);
+//        exExpListViewAdapter = new ExExpListViewAdapter(getActivity(), listDataGroup, listDataChild);
         expandableListView.setAdapter(exExpListViewAdapter);
         listDataGroup.add(getString(R.string.text_alcohol));
         listDataGroup.add(getString(R.string.text_coffee));
