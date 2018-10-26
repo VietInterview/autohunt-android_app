@@ -12,7 +12,7 @@
     <ExpandableListView
         android:id="@+id/exLvLanguage"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="match_parent"
         android:layout_above="@+id/add"
         android:nestedScrollingEnabled="true"
         android:visibility="visible" />

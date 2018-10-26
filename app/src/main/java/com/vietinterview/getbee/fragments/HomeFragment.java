@@ -83,10 +83,10 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private GetSearchJobsRequest getSearchJobsRequest;
     int mPage = 0;
     private boolean mIsCity = false;
-    private String mCarrerId = "4";
-    private String mCarrerName = "IT, Phần mềm";
-    private String mCityId = "1";
-    private String mCityName = "Hà Nội";
+    private String mCarrerId = "0";
+    private String mCarrerName = "";
+    private String mCityId = "0";
+    private String mCityName = "";
     private String strSearch = "";
     private Menu menu;
     MenuItem mItem;

@@ -10,143 +10,158 @@ import com.google.gson.annotations.SerializedName;
 
 public class DetailCVResponse implements Parcelable {
 
-    @SerializedName("id")
-    @Expose
-    private Integer id;
-    @SerializedName("fullName")
-    @Expose
-    private String fullName;
-    @SerializedName("email")
-    @Expose
-    private String email;
-    @SerializedName("phone")
-    @Expose
-    private String phone;
-    @SerializedName("birthday")
-    @Expose
-    private Integer birthday;
     @SerializedName("address")
     @Expose
     private String address;
-    @SerializedName("pictureUrl")
+    @SerializedName("birthday")
     @Expose
-    private String pictureUrl;
+    private Integer birthday;
+    @SerializedName("careerName")
+    @Expose
+    private String careerName;
+    @SerializedName("careerObjectives")
+    @Expose
+    private String careerObjectives;
+    @SerializedName("cityId")
+    @Expose
+    private Integer cityId;
+    @SerializedName("collaboratorId")
+    @Expose
+    private Integer collaboratorId;
+    @SerializedName("companyName")
+    @Expose
+    private String companyName;
+    @SerializedName("createdBy")
+    @Expose
+    private Integer createdBy;
+    @SerializedName("createdDate")
+    @Expose
+    private String createdDate;
+    @SerializedName("currencyId")
+    @Expose
+    private Integer currencyId;
     @SerializedName("currentLevelId")
     @Expose
     private Integer currentLevelId;
     @SerializedName("desiredLevelId")
     @Expose
     private Integer desiredLevelId;
-    @SerializedName("lstCareerId")
-    @Expose
-    private String lstCareerId;
-    @SerializedName("cityId")
-    @Expose
-    private Integer cityId;
-    @SerializedName("educationLevelId")
-    @Expose
-    private Integer educationLevelId;
-    @SerializedName("experienceYearId")
-    @Expose
-    private Integer experienceYearId;
-    @SerializedName("workingFormId")
-    @Expose
-    private Integer workingFormId;
     @SerializedName("desiredSalary")
     @Expose
     private Integer desiredSalary;
-    @SerializedName("careerObjectives")
+    @SerializedName("educationLevelId")
     @Expose
-    private String careerObjectives;
-    @SerializedName("collaboratorId")
+    private Integer educationLevelId;
+    @SerializedName("email")
     @Expose
-    private Integer collaboratorId;
-    @SerializedName("supporterId")
+    private String email;
+    @SerializedName("experienceYearId")
     @Expose
-    private Integer supporterId;
-    @SerializedName("status")
-    @Expose
-    private Integer status;
-    @SerializedName("createdDate")
-    @Expose
-    private String createdDate;
-    @SerializedName("createdBy")
-    @Expose
-    private Integer createdBy;
-    @SerializedName("updatedDate")
-    @Expose
-    private String updatedDate;
-    @SerializedName("updatedBy")
-    @Expose
-    private Integer updatedBy;
-    @SerializedName("careerName")
-    @Expose
-    private String careerName;
-    @SerializedName("currencyId")
-    @Expose
-    private Integer currencyId;
-    @SerializedName("jobId")
-    @Expose
-    private Integer jobId;
-    @SerializedName("companyName")
-    @Expose
-    private String companyName;
-    @SerializedName("lstJobCityId")
-    @Expose
-    private String lstJobCityId;
-    @SerializedName("jobListcityName")
-    @Expose
-    private String jobListcityName;
-    @SerializedName("jobCareerName")
-    @Expose
-    private String jobCareerName;
-    @SerializedName("jobTitle")
-    @Expose
-    private String jobTitle;
-    @SerializedName("toSalary")
-    @Expose
-    private Integer toSalary;
-    @SerializedName("fromSalary")
-    @Expose
-    private Integer fromSalary;
+    private Integer experienceYearId;
     @SerializedName("fee")
     @Expose
     private Integer fee;
+    @SerializedName("fromSalary")
+    @Expose
+    private Integer fromSalary;
+    @SerializedName("fullName")
+    @Expose
+    private String fullName;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("jobCareerName")
+    @Expose
+    private String jobCareerName;
+    @SerializedName("jobId")
+    @Expose
+    private Integer jobId;
+    @SerializedName("jobListcityName")
+    @Expose
+    private String jobListcityName;
+    @SerializedName("jobTitle")
+    @Expose
+    private String jobTitle;
     @SerializedName("levelName")
     @Expose
     private String levelName;
+    @SerializedName("lstCareerId")
+    @Expose
+    private String lstCareerId;
+    @SerializedName("lstComputerSkill")
+    @Expose
+    private List<LstComputerSkill> lstComputerSkill = null;
+    @SerializedName("lstCvSkill")
+    @Expose
+    private List<LstCvSkill> lstCvSkill = null;
+    @SerializedName("lstEducationHis")
+    @Expose
+    private List<LstEducationHi> lstEducationHis = null;
     @SerializedName("lstEmploymentHis")
     @Expose
     private List<LstEmploymentHi> lstEmploymentHis = null;
-    @SerializedName("lstEducationHis")
+    @SerializedName("lstJobCityId")
     @Expose
-    private List<Object> lstEducationHis = null;
+    private String lstJobCityId;
     @SerializedName("lstLanguage")
     @Expose
-    private List<Object> lstLanguage = null;
-    @SerializedName("lstComputerSkill")
+    private List<LstLanguage> lstLanguage = null;
+    @SerializedName("phone")
     @Expose
-    private List<Object> lstComputerSkill = null;
-    @SerializedName("lstCvSkill")
+    private String phone;
+    @SerializedName("pictureUrl")
     @Expose
-    private List<Object> lstCvSkill = null;
+    private String pictureUrl;
+    @SerializedName("status")
+    @Expose
+    private Integer status;
+    @SerializedName("supporterId")
+    @Expose
+    private Integer supporterId;
+    @SerializedName("toSalary")
+    @Expose
+    private Integer toSalary;
+    @SerializedName("updatedBy")
+    @Expose
+    private Integer updatedBy;
+    @SerializedName("updatedDate")
+    @Expose
+    private String updatedDate;
+    @SerializedName("workingFormId")
+    @Expose
+    private Integer workingFormId;
 
     protected DetailCVResponse(Parcel in) {
-        if (in.readByte() == 0) {
-            id = null;
-        } else {
-            id = in.readInt();
-        }
-        fullName = in.readString();
-        email = in.readString();
-        phone = in.readString();
+        address = in.readString();
         if (in.readByte() == 0) {
             birthday = null;
         } else {
             birthday = in.readInt();
         }
-        address = in.readString();
-        pictureUrl = in.readString();
+        careerName = in.readString();
+        careerObjectives = in.readString();
+        if (in.readByte() == 0) {
+            cityId = null;
+        } else {
+            cityId = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            collaboratorId = null;
+        } else {
+            collaboratorId = in.readInt();
+        }
+        companyName = in.readString();
+        if (in.readByte() == 0) {
+            createdBy = null;
+        } else {
+            createdBy = in.readInt();
+        }
+        createdDate = in.readString();
+        if (in.readByte() == 0) {
+            currencyId = null;
+        } else {
+            currencyId = in.readInt();
+        }
         if (in.readByte() == 0) {
             currentLevelId = null;
         } else {
@@ -157,37 +172,55 @@ public class DetailCVResponse implements Parcelable {
         } else {
             desiredLevelId = in.readInt();
         }
-        lstCareerId = in.readString();
         if (in.readByte() == 0) {
-            cityId = null;
+            desiredSalary = null;
         } else {
-            cityId = in.readInt();
+            desiredSalary = in.readInt();
         }
         if (in.readByte() == 0) {
             educationLevelId = null;
         } else {
             educationLevelId = in.readInt();
         }
+        email = in.readString();
         if (in.readByte() == 0) {
             experienceYearId = null;
         } else {
             experienceYearId = in.readInt();
         }
         if (in.readByte() == 0) {
-            workingFormId = null;
+            fee = null;
         } else {
-            workingFormId = in.readInt();
+            fee = in.readInt();
         }
         if (in.readByte() == 0) {
-            desiredSalary = null;
+            fromSalary = null;
         } else {
-            desiredSalary = in.readInt();
+            fromSalary = in.readInt();
         }
-        careerObjectives = in.readString();
+        fullName = in.readString();
         if (in.readByte() == 0) {
-            collaboratorId = null;
+            id = null;
         } else {
-            collaboratorId = in.readInt();
+            id = in.readInt();
+        }
+        jobCareerName = in.readString();
+        if (in.readByte() == 0) {
+            jobId = null;
+        } else {
+            jobId = in.readInt();
+        }
+        jobListcityName = in.readString();
+        jobTitle = in.readString();
+        levelName = in.readString();
+        lstCareerId = in.readString();
+        lstJobCityId = in.readString();
+        phone = in.readString();
+        pictureUrl = in.readString();
+        if (in.readByte() == 0) {
+            status = null;
+        } else {
+            status = in.readInt();
         }
         if (in.readByte() == 0) {
             supporterId = null;
@@ -195,54 +228,21 @@ public class DetailCVResponse implements Parcelable {
             supporterId = in.readInt();
         }
         if (in.readByte() == 0) {
-            status = null;
-        } else {
-            status = in.readInt();
-        }
-        createdDate = in.readString();
-        if (in.readByte() == 0) {
-            createdBy = null;
-        } else {
-            createdBy = in.readInt();
-        }
-        updatedDate = in.readString();
-        if (in.readByte() == 0) {
-            updatedBy = null;
-        } else {
-            updatedBy = in.readInt();
-        }
-        careerName = in.readString();
-        if (in.readByte() == 0) {
-            currencyId = null;
-        } else {
-            currencyId = in.readInt();
-        }
-        if (in.readByte() == 0) {
-            jobId = null;
-        } else {
-            jobId = in.readInt();
-        }
-        companyName = in.readString();
-        lstJobCityId = in.readString();
-        jobListcityName = in.readString();
-        jobCareerName = in.readString();
-        jobTitle = in.readString();
-        if (in.readByte() == 0) {
             toSalary = null;
         } else {
             toSalary = in.readInt();
         }
         if (in.readByte() == 0) {
-            fromSalary = null;
+            updatedBy = null;
         } else {
-            fromSalary = in.readInt();
+            updatedBy = in.readInt();
         }
+        updatedDate = in.readString();
         if (in.readByte() == 0) {
-            fee = null;
+            workingFormId = null;
         } else {
-            fee = in.readInt();
+            workingFormId = in.readInt();
         }
-        levelName = in.readString();
     }
 
     public static final Creator<DetailCVResponse> CREATOR = new Creator<DetailCVResponse>() {
@@ -257,36 +257,12 @@ public class DetailCVResponse implements Parcelable {
         }
     };
 
-    public Integer getId() {
-        return id;
+    public String getAddress() {
+        return address;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Integer getBirthday() {
@@ -297,20 +273,68 @@ public class DetailCVResponse implements Parcelable {
         this.birthday = birthday;
     }
 
-    public String getAddress() {
-        return address;
+    public String getCareerName() {
+        return careerName;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setCareerName(String careerName) {
+        this.careerName = careerName;
     }
 
-    public String getPictureUrl() {
-        return pictureUrl;
+    public String getCareerObjectives() {
+        return careerObjectives;
     }
 
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
+    public void setCareerObjectives(String careerObjectives) {
+        this.careerObjectives = careerObjectives;
+    }
+
+    public Integer getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
+    }
+
+    public Integer getCollaboratorId() {
+        return collaboratorId;
+    }
+
+    public void setCollaboratorId(Integer collaboratorId) {
+        this.collaboratorId = collaboratorId;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public Integer getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Integer getCurrencyId() {
+        return currencyId;
+    }
+
+    public void setCurrencyId(Integer currencyId) {
+        this.currencyId = currencyId;
     }
 
     public Integer getCurrentLevelId() {
@@ -329,20 +353,12 @@ public class DetailCVResponse implements Parcelable {
         this.desiredLevelId = desiredLevelId;
     }
 
-    public String getLstCareerId() {
-        return lstCareerId;
+    public Integer getDesiredSalary() {
+        return desiredSalary;
     }
 
-    public void setLstCareerId(String lstCareerId) {
-        this.lstCareerId = lstCareerId;
-    }
-
-    public Integer getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(Integer cityId) {
-        this.cityId = cityId;
+    public void setDesiredSalary(Integer desiredSalary) {
+        this.desiredSalary = desiredSalary;
     }
 
     public Integer getEducationLevelId() {
@@ -353,172 +369,20 @@ public class DetailCVResponse implements Parcelable {
         this.educationLevelId = educationLevelId;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Integer getExperienceYearId() {
         return experienceYearId;
     }
 
     public void setExperienceYearId(Integer experienceYearId) {
         this.experienceYearId = experienceYearId;
-    }
-
-    public Integer getWorkingFormId() {
-        return workingFormId;
-    }
-
-    public void setWorkingFormId(Integer workingFormId) {
-        this.workingFormId = workingFormId;
-    }
-
-    public Integer getDesiredSalary() {
-        return desiredSalary;
-    }
-
-    public void setDesiredSalary(Integer desiredSalary) {
-        this.desiredSalary = desiredSalary;
-    }
-
-    public String getCareerObjectives() {
-        return careerObjectives;
-    }
-
-    public void setCareerObjectives(String careerObjectives) {
-        this.careerObjectives = careerObjectives;
-    }
-
-    public Integer getCollaboratorId() {
-        return collaboratorId;
-    }
-
-    public void setCollaboratorId(Integer collaboratorId) {
-        this.collaboratorId = collaboratorId;
-    }
-
-    public Integer getSupporterId() {
-        return supporterId;
-    }
-
-    public void setSupporterId(Integer supporterId) {
-        this.supporterId = supporterId;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public String getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Integer getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Integer createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public String getUpdatedDate() {
-        return updatedDate;
-    }
-
-    public void setUpdatedDate(String updatedDate) {
-        this.updatedDate = updatedDate;
-    }
-
-    public Integer getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(Integer updatedBy) {
-        this.updatedBy = updatedBy;
-    }
-
-    public String getCareerName() {
-        return careerName;
-    }
-
-    public void setCareerName(String careerName) {
-        this.careerName = careerName;
-    }
-
-    public Integer getCurrencyId() {
-        return currencyId;
-    }
-
-    public void setCurrencyId(Integer currencyId) {
-        this.currencyId = currencyId;
-    }
-
-    public Integer getJobId() {
-        return jobId;
-    }
-
-    public void setJobId(Integer jobId) {
-        this.jobId = jobId;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getLstJobCityId() {
-        return lstJobCityId;
-    }
-
-    public void setLstJobCityId(String lstJobCityId) {
-        this.lstJobCityId = lstJobCityId;
-    }
-
-    public String getJobListcityName() {
-        return jobListcityName;
-    }
-
-    public void setJobListcityName(String jobListcityName) {
-        this.jobListcityName = jobListcityName;
-    }
-
-    public String getJobCareerName() {
-        return jobCareerName;
-    }
-
-    public void setJobCareerName(String jobCareerName) {
-        this.jobCareerName = jobCareerName;
-    }
-
-    public String getJobTitle() {
-        return jobTitle;
-    }
-
-    public void setJobTitle(String jobTitle) {
-        this.jobTitle = jobTitle;
-    }
-
-    public Integer getToSalary() {
-        return toSalary;
-    }
-
-    public void setToSalary(Integer toSalary) {
-        this.toSalary = toSalary;
-    }
-
-    public Integer getFromSalary() {
-        return fromSalary;
-    }
-
-    public void setFromSalary(Integer fromSalary) {
-        this.fromSalary = fromSalary;
     }
 
     public Integer getFee() {
@@ -529,12 +393,100 @@ public class DetailCVResponse implements Parcelable {
         this.fee = fee;
     }
 
+    public Integer getFromSalary() {
+        return fromSalary;
+    }
+
+    public void setFromSalary(Integer fromSalary) {
+        this.fromSalary = fromSalary;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getJobCareerName() {
+        return jobCareerName;
+    }
+
+    public void setJobCareerName(String jobCareerName) {
+        this.jobCareerName = jobCareerName;
+    }
+
+    public Integer getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(Integer jobId) {
+        this.jobId = jobId;
+    }
+
+    public String getJobListcityName() {
+        return jobListcityName;
+    }
+
+    public void setJobListcityName(String jobListcityName) {
+        this.jobListcityName = jobListcityName;
+    }
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
     public String getLevelName() {
         return levelName;
     }
 
     public void setLevelName(String levelName) {
         this.levelName = levelName;
+    }
+
+    public String getLstCareerId() {
+        return lstCareerId;
+    }
+
+    public void setLstCareerId(String lstCareerId) {
+        this.lstCareerId = lstCareerId;
+    }
+
+    public List<LstComputerSkill> getLstComputerSkill() {
+        return lstComputerSkill;
+    }
+
+    public void setLstComputerSkill(List<LstComputerSkill> lstComputerSkill) {
+        this.lstComputerSkill = lstComputerSkill;
+    }
+
+    public List<LstCvSkill> getLstCvSkill() {
+        return lstCvSkill;
+    }
+
+    public void setLstCvSkill(List<LstCvSkill> lstCvSkill) {
+        this.lstCvSkill = lstCvSkill;
+    }
+
+    public List<LstEducationHi> getLstEducationHis() {
+        return lstEducationHis;
+    }
+
+    public void setLstEducationHis(List<LstEducationHi> lstEducationHis) {
+        this.lstEducationHis = lstEducationHis;
     }
 
     public List<LstEmploymentHi> getLstEmploymentHis() {
@@ -545,36 +497,84 @@ public class DetailCVResponse implements Parcelable {
         this.lstEmploymentHis = lstEmploymentHis;
     }
 
-    public List<Object> getLstEducationHis() {
-        return lstEducationHis;
+    public String getLstJobCityId() {
+        return lstJobCityId;
     }
 
-    public void setLstEducationHis(List<Object> lstEducationHis) {
-        this.lstEducationHis = lstEducationHis;
+    public void setLstJobCityId(String lstJobCityId) {
+        this.lstJobCityId = lstJobCityId;
     }
 
-    public List<Object> getLstLanguage() {
+    public List<LstLanguage> getLstLanguage() {
         return lstLanguage;
     }
 
-    public void setLstLanguage(List<Object> lstLanguage) {
+    public void setLstLanguage(List<LstLanguage> lstLanguage) {
         this.lstLanguage = lstLanguage;
     }
 
-    public List<Object> getLstComputerSkill() {
-        return lstComputerSkill;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setLstComputerSkill(List<Object> lstComputerSkill) {
-        this.lstComputerSkill = lstComputerSkill;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public List<Object> getLstCvSkill() {
-        return lstCvSkill;
+    public String getPictureUrl() {
+        return pictureUrl;
     }
 
-    public void setLstCvSkill(List<Object> lstCvSkill) {
-        this.lstCvSkill = lstCvSkill;
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getSupporterId() {
+        return supporterId;
+    }
+
+    public void setSupporterId(Integer supporterId) {
+        this.supporterId = supporterId;
+    }
+
+    public Integer getToSalary() {
+        return toSalary;
+    }
+
+    public void setToSalary(Integer toSalary) {
+        this.toSalary = toSalary;
+    }
+
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public String getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(String updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
+    public Integer getWorkingFormId() {
+        return workingFormId;
+    }
+
+    public void setWorkingFormId(Integer workingFormId) {
+        this.workingFormId = workingFormId;
     }
 
     @Override
@@ -584,23 +584,41 @@ public class DetailCVResponse implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        if (id == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(id);
-        }
-        parcel.writeString(fullName);
-        parcel.writeString(email);
-        parcel.writeString(phone);
+        parcel.writeString(address);
         if (birthday == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
             parcel.writeInt(birthday);
         }
-        parcel.writeString(address);
-        parcel.writeString(pictureUrl);
+        parcel.writeString(careerName);
+        parcel.writeString(careerObjectives);
+        if (cityId == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(cityId);
+        }
+        if (collaboratorId == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(collaboratorId);
+        }
+        parcel.writeString(companyName);
+        if (createdBy == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(createdBy);
+        }
+        parcel.writeString(createdDate);
+        if (currencyId == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(currencyId);
+        }
         if (currentLevelId == null) {
             parcel.writeByte((byte) 0);
         } else {
@@ -613,12 +631,11 @@ public class DetailCVResponse implements Parcelable {
             parcel.writeByte((byte) 1);
             parcel.writeInt(desiredLevelId);
         }
-        parcel.writeString(lstCareerId);
-        if (cityId == null) {
+        if (desiredSalary == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeInt(cityId);
+            parcel.writeInt(desiredSalary);
         }
         if (educationLevelId == null) {
             parcel.writeByte((byte) 0);
@@ -626,86 +643,12 @@ public class DetailCVResponse implements Parcelable {
             parcel.writeByte((byte) 1);
             parcel.writeInt(educationLevelId);
         }
+        parcel.writeString(email);
         if (experienceYearId == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
             parcel.writeInt(experienceYearId);
-        }
-        if (workingFormId == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(workingFormId);
-        }
-        if (desiredSalary == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(desiredSalary);
-        }
-        parcel.writeString(careerObjectives);
-        if (collaboratorId == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(collaboratorId);
-        }
-        if (supporterId == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(supporterId);
-        }
-        if (status == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(status);
-        }
-        parcel.writeString(createdDate);
-        if (createdBy == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(createdBy);
-        }
-        parcel.writeString(updatedDate);
-        if (updatedBy == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(updatedBy);
-        }
-        parcel.writeString(careerName);
-        if (currencyId == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(currencyId);
-        }
-        if (jobId == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(jobId);
-        }
-        parcel.writeString(companyName);
-        parcel.writeString(lstJobCityId);
-        parcel.writeString(jobListcityName);
-        parcel.writeString(jobCareerName);
-        parcel.writeString(jobTitle);
-        if (toSalary == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(toSalary);
-        }
-        if (fromSalary == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(fromSalary);
         }
         if (fee == null) {
             parcel.writeByte((byte) 0);
@@ -713,6 +656,63 @@ public class DetailCVResponse implements Parcelable {
             parcel.writeByte((byte) 1);
             parcel.writeInt(fee);
         }
+        if (fromSalary == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(fromSalary);
+        }
+        parcel.writeString(fullName);
+        if (id == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(id);
+        }
+        parcel.writeString(jobCareerName);
+        if (jobId == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(jobId);
+        }
+        parcel.writeString(jobListcityName);
+        parcel.writeString(jobTitle);
         parcel.writeString(levelName);
+        parcel.writeString(lstCareerId);
+        parcel.writeString(lstJobCityId);
+        parcel.writeString(phone);
+        parcel.writeString(pictureUrl);
+        if (status == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(status);
+        }
+        if (supporterId == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(supporterId);
+        }
+        if (toSalary == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(toSalary);
+        }
+        if (updatedBy == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(updatedBy);
+        }
+        parcel.writeString(updatedDate);
+        if (workingFormId == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(workingFormId);
+        }
     }
 }

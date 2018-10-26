@@ -122,6 +122,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 findItem(R.id.nav_job));
         slideshow = (CircularTextView) MenuItemCompat.getActionView(navigationView.getMenu().
                 findItem(R.id.nav_cv));
+        slideshow.setVisibility(View.GONE);
+        gallery.setVisibility(View.GONE);
         initializeCountDrawer();
         drawer.setDrawerListener(toggle);
         toggle.syncState();

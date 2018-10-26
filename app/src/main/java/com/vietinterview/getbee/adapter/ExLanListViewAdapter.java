@@ -9,16 +9,17 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.api.response.detailcv.LstLanguage;
 
 import java.util.HashMap;
 import java.util.List;
 
 public class ExLanListViewAdapter extends BaseExpandableListAdapter {
     private Context context;
-    private List<String> listDataGroup;
-    private HashMap<String, List<String>> listDataChild;
+    private List<LstLanguage> listDataGroup;
+    private HashMap<String, List<LstLanguage>> listDataChild;
 
-    public ExLanListViewAdapter(Context context, List<String> listDataGroup, HashMap<String, List<String>> listChildData) {
+    public ExLanListViewAdapter(Context context, List<LstLanguage> listDataGroup, HashMap<String, List<LstLanguage>> listChildData) {
         this.context = context;
         this.listDataGroup = listDataGroup;
         this.listDataChild = listChildData;
@@ -26,7 +27,7 @@ public class ExLanListViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosititon) {
-        return this.listDataChild.get(this.listDataGroup.get(groupPosition)).get(childPosititon);
+        return this.listDataChild.get(this.listDataGroup.get(groupPosition).getLanguageId()).get(childPosititon);
     }
 
     @Override
@@ -36,19 +37,19 @@ public class ExLanListViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        final String childText = (String) getChild(groupPosition, childPosition);
+        final LstLanguage lstLanguage = (LstLanguage) getChild(groupPosition, childPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_lan_row_child, null);
         }
         TextView textViewChild = convertView.findViewById(R.id.textViewChild);
-        textViewChild.setText(childText);
+        textViewChild.setText(lstLanguage.getListen() + "");
         return convertView;
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this.listDataChild.get(this.listDataGroup.get(groupPosition)).size();
+        return this.listDataChild.get(this.listDataGroup.get(groupPosition).getLanguageId()).size();
     }
 
     @Override
@@ -68,14 +69,13 @@ public class ExLanListViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        String headerTitle = (String) getGroup(groupPosition);
+        LstLanguage lstLanguage = (LstLanguage) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_lan_row_group, null);
         }
-        TextView tvJob = convertView.findViewById(R.id.tvJob);
-        tvJob.setTypeface(null, Typeface.BOLD);
-        tvJob.setText(headerTitle);
+        TextView tvLanguage = convertView.findViewById(R.id.tvLanguage);
+        tvLanguage.setText(lstLanguage.getLanguageId() + "");
         return convertView;
     }
 

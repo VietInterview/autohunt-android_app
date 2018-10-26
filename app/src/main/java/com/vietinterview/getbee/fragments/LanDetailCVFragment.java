@@ -9,6 +9,7 @@ import android.widget.ExpandableListView;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ExLanListViewAdapter;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
+import com.vietinterview.getbee.api.response.detailcv.LstLanguage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,8 +23,8 @@ public class LanDetailCVFragment extends BaseFragment {
     private ExLanListViewAdapter exStepLanListViewAdapter;
     private ExpandableListView exLvLanguage;
     private int lastExpandedPositionlangeuage = -1;
-    private List<String> listDataGroup;
-    private HashMap<String, List<String>> listDataChild;
+    private List<LstLanguage> listDataGroup;
+    private HashMap<String, List<LstLanguage>> listDataChild;
     DetailCVResponse detailCVResponse;
 
     public static LanDetailCVFragment newInstance(DetailCVResponse detailCVResponse) {
@@ -33,6 +34,7 @@ public class LanDetailCVFragment extends BaseFragment {
         fm.setArguments(bundle);
         return fm;
     }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_lan_detail_cv;
@@ -40,9 +42,10 @@ public class LanDetailCVFragment extends BaseFragment {
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-
         exLvLanguage = root.findViewById(R.id.exLvLanguage);
-        exLvLanguage.setIndicatorBounds(exLvLanguage.getRight() + 900, exLvLanguage.getWidth());
+        exLvLanguage.setIndicatorBounds(exLvLanguage.getRight() + 800, exLvLanguage.getWidth());
+        exLvLanguage.setDivider(getResources().getDrawable(R.color.white));
+        exLvLanguage.setDividerHeight(0);
         exLvLanguage.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
             @Override
@@ -57,35 +60,14 @@ public class LanDetailCVFragment extends BaseFragment {
         listDataChild = new HashMap<>();
         exStepLanListViewAdapter = new ExLanListViewAdapter(getActivity(), listDataGroup, listDataChild);
         exLvLanguage.setAdapter(exStepLanListViewAdapter);
-        listDataGroup.add(getString(R.string.text_alcohol));
-        listDataGroup.add(getString(R.string.text_coffee));
-        listDataGroup.add(getString(R.string.text_pasta));
-        listDataGroup.add(getString(R.string.text_cold_drinks));
-        String[] array;
-        List<String> alcoholList = new ArrayList<>();
-        array = getResources().getStringArray(R.array.string_array_alcohol);
-        for (String item : array) {
-            alcoholList.add(item);
+        for (int i = 0; i < detailCVResponse.getLstLanguage().size(); i++) {
+            listDataGroup.add(detailCVResponse.getLstLanguage().get(i));
+            List<LstLanguage> alcoholList = new ArrayList<>();
+            for (LstLanguage item : detailCVResponse.getLstLanguage()) {
+                alcoholList.add(item);
+            }
+            listDataChild.put(listDataGroup.get(i).getLanguageId() + "", alcoholList);
         }
-        List<String> coffeeList = new ArrayList<>();
-        array = getResources().getStringArray(R.array.string_array_coffee);
-        for (String item : array) {
-            coffeeList.add(item);
-        }
-        List<String> pastaList = new ArrayList<>();
-        array = getResources().getStringArray(R.array.string_array_pasta);
-        for (String item : array) {
-            pastaList.add(item);
-        }
-        List<String> coldDrinkList = new ArrayList<>();
-        array = getResources().getStringArray(R.array.string_array_cold_drinks);
-        for (String item : array) {
-            coldDrinkList.add(item);
-        }
-        listDataChild.put(listDataGroup.get(0), alcoholList);
-        listDataChild.put(listDataGroup.get(1), coffeeList);
-        listDataChild.put(listDataGroup.get(2), pastaList);
-        listDataChild.put(listDataGroup.get(3), coldDrinkList);
         exStepLanListViewAdapter.notifyDataSetChanged();
     }
 

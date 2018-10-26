@@ -22,7 +22,7 @@ import java.util.List;
 public class ExpDetailCVFragment extends BaseFragment {
     private ExpandableListView expandableListView;
     private ExExpListViewAdapter exExpListViewAdapter;
-    private List<String> listDataGroup;
+    private List<LstEmploymentHi> listDataGroup;
     private int lastExpandedPosition = -1;
     private HashMap<String, List<LstEmploymentHi>> listDataChild;
     DetailCVResponse detailCVResponse;
@@ -43,14 +43,6 @@ public class ExpDetailCVFragment extends BaseFragment {
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         expandableListView = root.findViewById(R.id.expandableListView);
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition, int childPosition, long id) {
-                return false;
-            }
-        });
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
             @Override
@@ -61,26 +53,21 @@ public class ExpDetailCVFragment extends BaseFragment {
                 lastExpandedPosition = groupPosition;
             }
         });
-        expandableListView.setIndicatorBounds(expandableListView.getRight() + 900, expandableListView.getWidth());
-        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-
-            }
-        });
+        expandableListView.setIndicatorBounds(expandableListView.getRight() + 800, expandableListView.getWidth());
+        expandableListView.setDivider(getResources().getDrawable(R.color.white));
+        expandableListView.setDividerHeight(0);
         listDataGroup = new ArrayList<>();
         listDataChild = new HashMap<>();
-        exExpListViewAdapter = new ExExpListViewAdapter(getActivity(), listDataGroup, listDataChild);
-        expandableListView.setAdapter(exExpListViewAdapter);
         for (int i = 0; i < detailCVResponse.getLstEmploymentHis().size(); i++) {
-            listDataGroup.add(detailCVResponse.getLstEmploymentHis().get(i).getCompanyName());
+            listDataGroup.add(detailCVResponse.getLstEmploymentHis().get(i));
             List<LstEmploymentHi> lstEmploymentHis = new ArrayList<>();
             for (LstEmploymentHi item : detailCVResponse.getLstEmploymentHis()) {
                 lstEmploymentHis.add(item);
             }
-            listDataChild.put(listDataGroup.get(i), lstEmploymentHis);
+            listDataChild.put(listDataGroup.get(i).getTitle(), lstEmploymentHis);
         }
+        exExpListViewAdapter = new ExExpListViewAdapter(getActivity(), listDataGroup, listDataChild);
+        expandableListView.setAdapter(exExpListViewAdapter);
         exExpListViewAdapter.notifyDataSetChanged();
     }
 

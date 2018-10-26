@@ -9,6 +9,7 @@ import android.widget.ExpandableListView;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ExLvListViewAdapter;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
+import com.vietinterview.getbee.api.response.detailcv.LstEducationHi;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,9 +22,9 @@ import java.util.List;
 public class LevelDetailCVFragment extends BaseFragment {
     private ExLvListViewAdapter exStepLvListViewAdapter;
     private ExpandableListView exLvLevel;
-    private List<String> listDataGroup;
+    private List<LstEducationHi> listDataGroup;
     private int lastExpandedPosition = -1;
-    private HashMap<String, List<String>> listDataChild;
+    private HashMap<String, List<LstEducationHi>> listDataChild;
     DetailCVResponse detailCVResponse;
 
     public static LevelDetailCVFragment newInstance(DetailCVResponse detailCVResponse) {
@@ -33,6 +34,7 @@ public class LevelDetailCVFragment extends BaseFragment {
         fm.setArguments(bundle);
         return fm;
     }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_level_detail_cv;
@@ -41,7 +43,9 @@ public class LevelDetailCVFragment extends BaseFragment {
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         exLvLevel = root.findViewById(R.id.exLvLevel);
-        exLvLevel.setIndicatorBounds(exLvLevel.getRight() + 900, exLvLevel.getWidth());
+        exLvLevel.setIndicatorBounds(exLvLevel.getRight() + 800, exLvLevel.getWidth());
+        exLvLevel.setDivider(getResources().getDrawable(R.color.white));
+        exLvLevel.setDividerHeight(0);
         exLvLevel.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
             @Override
@@ -64,35 +68,15 @@ public class LevelDetailCVFragment extends BaseFragment {
         listDataChild = new HashMap<>();
         exStepLvListViewAdapter = new ExLvListViewAdapter(getActivity(), listDataGroup, listDataChild);
         exLvLevel.setAdapter(exStepLvListViewAdapter);
-        listDataGroup.add(getString(R.string.text_alcohol));
-        listDataGroup.add(getString(R.string.text_coffee));
-        listDataGroup.add(getString(R.string.text_pasta));
-        listDataGroup.add(getString(R.string.text_cold_drinks));
-        String[] array;
-        List<String> alcoholList = new ArrayList<>();
-        array = getResources().getStringArray(R.array.string_array_alcohol);
-        for (String item : array) {
-            alcoholList.add(item);
+        for (int i = 0; i < detailCVResponse.getLstEducationHis().size(); i++) {
+            listDataGroup.add(detailCVResponse.getLstEducationHis().get(i));
+            String[] array;
+            List<LstEducationHi> lstEducationHis = new ArrayList<>();
+            for (LstEducationHi item : detailCVResponse.getLstEducationHis()) {
+                lstEducationHis.add(item);
+            }
+            listDataChild.put(listDataGroup.get(i).getSchool(), lstEducationHis);
         }
-        List<String> coffeeList = new ArrayList<>();
-        array = getResources().getStringArray(R.array.string_array_coffee);
-        for (String item : array) {
-            coffeeList.add(item);
-        }
-        List<String> pastaList = new ArrayList<>();
-        array = getResources().getStringArray(R.array.string_array_pasta);
-        for (String item : array) {
-            pastaList.add(item);
-        }
-        List<String> coldDrinkList = new ArrayList<>();
-        array = getResources().getStringArray(R.array.string_array_cold_drinks);
-        for (String item : array) {
-            coldDrinkList.add(item);
-        }
-        listDataChild.put(listDataGroup.get(0), alcoholList);
-        listDataChild.put(listDataGroup.get(1), coffeeList);
-        listDataChild.put(listDataGroup.get(2), pastaList);
-        listDataChild.put(listDataGroup.get(3), coldDrinkList);
         exStepLvListViewAdapter.notifyDataSetChanged();
     }
 

@@ -27,7 +27,7 @@
                     android:id="@+id/imgBussiness"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="top"
                     android:layout_margin="8dp"
                     android:layout_weight="0.5"
                     android:elevation="2dp"
@@ -45,6 +45,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
+                        android:maxLines="2"
                         android:text="Nhân viên hành chính"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textSize="18sp" />
@@ -55,6 +56,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:layout_marginBottom="5dp"
+                        android:singleLine="true"
                         android:text="Cannon Việt Nam"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textSize="16sp" />
@@ -85,7 +87,7 @@
                     android:orientation="horizontal">
 
                     <com.vietinterview.getbee.customview.NunitoTextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Ngành nghề"
@@ -94,10 +96,11 @@
 
                     <com.vietinterview.getbee.customview.NunitoTextView
                         android:id="@+id/tvCarrer"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:gravity="right"
+                        android:singleLine="true"
                         android:text="IT, Phần mềm"
                         android:textColor="#191830"
                         android:textSize="16sp" />
@@ -109,7 +112,7 @@
                     android:orientation="horizontal">
 
                     <com.vietinterview.getbee.customview.NunitoTextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Địa điểm"
@@ -118,10 +121,11 @@
 
                     <com.vietinterview.getbee.customview.NunitoTextView
                         android:id="@+id/tvListCity"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:gravity="right"
+                        android:singleLine="true"
                         android:text="Hồ Chí Minh"
                         android:textColor="#191830"
                         android:textSize="16sp" />
@@ -133,7 +137,7 @@
                     android:orientation="horizontal">
 
                     <com.vietinterview.getbee.customview.NunitoTextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Thời hạn tuyển"
@@ -142,9 +146,9 @@
 
                     <com.vietinterview.getbee.customview.NunitoTextView
                         android:id="@+id/tvExpireDate"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:gravity="right"
                         android:text="12/08/2018"
                         android:textColor="#191830"
@@ -157,7 +161,7 @@
                     android:orientation="horizontal">
 
                     <com.vietinterview.getbee.customview.NunitoTextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Tiền thưởng"
@@ -166,9 +170,9 @@
 
                     <com.vietinterview.getbee.customview.NunitoBoldTextView
                         android:id="@+id/tvFee"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:gravity="right"
                         android:text="1,200 USD"
                         android:textColor="#DC4444"

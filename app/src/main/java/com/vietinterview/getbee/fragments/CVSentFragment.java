@@ -56,34 +56,34 @@ public class CVSentFragment extends BaseFragment {
                 tvDate.setText(DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(detailJobResponse.getLstJobApply().get(i).getCreatedDate()) + ""));
                 if (detailJobResponse.getLstJobApply().get(i).getStatus() == 1) {
                     btnStatus.setText("Chưa gửi");
-                    llStatus.setBackgroundColor(getResources().getColor(R.color.background_icon_not_focus));
+                    llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_notyet_send));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 2) {
                     btnStatus.setText("Chờ duyệt");
-                    llStatus.setBackgroundColor(getResources().getColor(R.color.red));
+                    llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_red));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 3) {
                     btnStatus.setText("Đã phê duyệt");
-                    llStatus.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
+                    llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_yellow));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 4) {
                     btnStatus.setText("Đã xem");
-                    llStatus.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
+                    llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_yellow));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 5) {
                     btnStatus.setText("Từ chối");
-                    llStatus.setBackgroundColor(getResources().getColor(R.color.background_icon_not_focus));
+                    llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_notyet_send));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 6) {
                     btnStatus.setText("Mời phỏng vấn");
-                    llStatus.setBackgroundColor(getResources().getColor(R.color.red));
+                    llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_red));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 7) {
                     btnStatus.setText("Đã phỏng vấn");
-                    llStatus.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
+                    llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_yellow));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 8) {
                     btnStatus.setText("Đã offer");
-                    llStatus.setBackgroundColor(getResources().getColor(R.color.green));
+                    llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 9) {
                     btnStatus.setText("Đã nhận việc");
-                    llStatus.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
+                    llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_yellow));
                 } else {
                     btnStatus.setText("Đã submit");
-                    llStatus.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
+                    llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_yellow));
                 }
                 mFlowLayout.addView(linearLayout);
             }

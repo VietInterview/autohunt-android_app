@@ -17,10 +17,10 @@ import java.util.List;
 
 public class ExExpListViewAdapter extends BaseExpandableListAdapter {
     private Context context;
-    private List<String> listDataGroup;
+    private List<LstEmploymentHi> listDataGroup;
     private HashMap<String, List<LstEmploymentHi>> listDataChild;
 
-    public ExExpListViewAdapter(Context context, List<String> listDataGroup, HashMap<String, List<LstEmploymentHi>> listChildData) {
+    public ExExpListViewAdapter(Context context, List<LstEmploymentHi> listDataGroup, HashMap<String, List<LstEmploymentHi>> listChildData) {
         this.context = context;
         this.listDataGroup = listDataGroup;
         this.listDataChild = listChildData;
@@ -28,7 +28,7 @@ public class ExExpListViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosititon) {
-        return this.listDataChild.get(this.listDataGroup.get(groupPosition)).get(childPosititon);
+        return this.listDataChild.get(this.listDataGroup.get(groupPosition).getTitle()).get(childPosititon);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class ExExpListViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this.listDataChild.get(this.listDataGroup.get(groupPosition)).size();
+        return this.listDataChild.get(this.listDataGroup.get(groupPosition).getTitle()).size();
     }
 
     @Override
@@ -82,14 +82,15 @@ public class ExExpListViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        String headerTitle = (String) getGroup(groupPosition);
+        LstEmploymentHi lstEmploymentHi = (LstEmploymentHi) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_ex_row_group, null);
         }
         TextView tvJob = convertView.findViewById(R.id.tvJob);
-        tvJob.setTypeface(null, Typeface.BOLD);
-        tvJob.setText(headerTitle);
+        TextView tvCompany = convertView.findViewById(R.id.tvCompany);
+        tvJob.setText(lstEmploymentHi.getTitle());
+        tvCompany.setText(lstEmploymentHi.getCompanyName());
         return convertView;
     }
 

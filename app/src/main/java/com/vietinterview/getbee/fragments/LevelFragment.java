@@ -71,8 +71,8 @@ public class LevelFragment extends BaseFragment {
         });
         listDataGroup = new ArrayList<>();
         listDataChild = new HashMap<>();
-        exStepLvListViewAdapter = new ExLvListViewAdapter(getActivity(), listDataGroup, listDataChild);
-        exStepLanListViewAdapter = new ExLanListViewAdapter(getActivity(), listDataGroup, listDataChild);
+//        exStepLvListViewAdapter = new ExLvListViewAdapter(getActivity(), listDataGroup, listDataChild);
+//        exStepLanListViewAdapter = new ExLanListViewAdapter(getActivity(), listDataGroup, listDataChild);
         exLvLevel.setAdapter(exStepLvListViewAdapter);
         exLvLanguage.setAdapter(exStepLanListViewAdapter);
         listDataGroup.add(getString(R.string.text_alcohol));

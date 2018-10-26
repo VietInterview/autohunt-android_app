@@ -9,78 +9,80 @@ import com.google.gson.annotations.SerializedName;
 
 public class LstEmploymentHi implements Parcelable {
 
-    @SerializedName("id")
-    @Expose
-    private Integer id;
-    @SerializedName("cvId")
-    @Expose
-    private Integer cvId;
-    @SerializedName("companyName")
-    @Expose
-    private String companyName;
-    @SerializedName("title")
-    @Expose
-    private String title;
-    @SerializedName("fromMonth")
-    @Expose
-    private Integer fromMonth;
-    @SerializedName("toMonth")
-    @Expose
-    private Integer toMonth;
-    @SerializedName("isCurrent")
-    @Expose
-    private Object isCurrent;
-    @SerializedName("salaryCurency")
-    @Expose
-    private Integer salaryCurency;
-    @SerializedName("salary")
-    @Expose
-    private Integer salary;
-    @SerializedName("jobDescription")
-    @Expose
-    private String jobDescription;
     @SerializedName("achievement")
     @Expose
     private String achievement;
-    @SerializedName("humanResources")
+    @SerializedName("companyName")
     @Expose
-    private Integer humanResources;
+    private String companyName;
+    @SerializedName("cvId")
+    @Expose
+    private Integer cvId;
+    @SerializedName("fromMonth")
+    @Expose
+    private Integer fromMonth;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("isCurrent")
+    @Expose
+    private Integer isCurrent;
+    @SerializedName("jobDescription")
+    @Expose
+    private String jobDescription;
+    @SerializedName("salary")
+    @Expose
+    private Integer salary;
+    @SerializedName("salaryCurency")
+    @Expose
+    private Integer salaryCurency;
+    @SerializedName("title")
+    @Expose
+    private String title;
+    @SerializedName("toMonth")
+    @Expose
+    private Integer toMonth;
 
     protected LstEmploymentHi(Parcel in) {
-        if (in.readByte() == 0) {
-            id = null;
-        } else {
-            id = in.readInt();
-        }
+        achievement = in.readString();
+        companyName = in.readString();
         if (in.readByte() == 0) {
             cvId = null;
         } else {
             cvId = in.readInt();
         }
-        companyName = in.readString();
-        title = in.readString();
         if (in.readByte() == 0) {
             fromMonth = null;
         } else {
             fromMonth = in.readInt();
         }
         if (in.readByte() == 0) {
-            toMonth = null;
+            id = null;
         } else {
-            toMonth = in.readInt();
+            id = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            isCurrent = null;
+        } else {
+            isCurrent = in.readInt();
+        }
+        jobDescription = in.readString();
+        if (in.readByte() == 0) {
+            salary = null;
+        } else {
+            salary = in.readInt();
         }
         if (in.readByte() == 0) {
             salaryCurency = null;
         } else {
             salaryCurency = in.readInt();
         }
+        title = in.readString();
         if (in.readByte() == 0) {
-            salary = null;
+            toMonth = null;
         } else {
-            salary = in.readInt();
+            toMonth = in.readInt();
         }
-        jobDescription = in.readString();
-        achievement = in.readString();
     }
 
     public static final Creator<LstEmploymentHi> CREATOR = new Creator<LstEmploymentHi>() {
@@ -95,28 +97,12 @@ public class LstEmploymentHi implements Parcelable {
         }
     };
 
-    public Integer getHumanResources() {
-        return humanResources;
+    public String getAchievement() {
+        return achievement;
     }
 
-    public void setHumanResources(Integer humanResources) {
-        this.humanResources = humanResources;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getCvId() {
-        return cvId;
-    }
-
-    public void setCvId(Integer cvId) {
-        this.cvId = cvId;
+    public void setAchievement(String achievement) {
+        this.achievement = achievement;
     }
 
     public String getCompanyName() {
@@ -127,12 +113,12 @@ public class LstEmploymentHi implements Parcelable {
         this.companyName = companyName;
     }
 
-    public String getTitle() {
-        return title;
+    public Integer getCvId() {
+        return cvId;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setCvId(Integer cvId) {
+        this.cvId = cvId;
     }
 
     public Integer getFromMonth() {
@@ -143,36 +129,20 @@ public class LstEmploymentHi implements Parcelable {
         this.fromMonth = fromMonth;
     }
 
-    public Integer getToMonth() {
-        return toMonth;
+    public Integer getId() {
+        return id;
     }
 
-    public void setToMonth(Integer toMonth) {
-        this.toMonth = toMonth;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Object getIsCurrent() {
+    public Integer getIsCurrent() {
         return isCurrent;
     }
 
-    public void setIsCurrent(Object isCurrent) {
+    public void setIsCurrent(Integer isCurrent) {
         this.isCurrent = isCurrent;
-    }
-
-    public Integer getSalaryCurency() {
-        return salaryCurency;
-    }
-
-    public void setSalaryCurency(Integer salaryCurency) {
-        this.salaryCurency = salaryCurency;
-    }
-
-    public Integer getSalary() {
-        return salary;
-    }
-
-    public void setSalary(Integer salary) {
-        this.salary = salary;
     }
 
     public String getJobDescription() {
@@ -183,12 +153,36 @@ public class LstEmploymentHi implements Parcelable {
         this.jobDescription = jobDescription;
     }
 
-    public String getAchievement() {
-        return achievement;
+    public Integer getSalary() {
+        return salary;
     }
 
-    public void setAchievement(String achievement) {
-        this.achievement = achievement;
+    public void setSalary(Integer salary) {
+        this.salary = salary;
+    }
+
+    public Integer getSalaryCurency() {
+        return salaryCurency;
+    }
+
+    public void setSalaryCurency(Integer salaryCurency) {
+        this.salaryCurency = salaryCurency;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Integer getToMonth() {
+        return toMonth;
+    }
+
+    public void setToMonth(Integer toMonth) {
+        this.toMonth = toMonth;
     }
 
     @Override
@@ -198,31 +192,38 @@ public class LstEmploymentHi implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        if (id == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(id);
-        }
+        parcel.writeString(achievement);
+        parcel.writeString(companyName);
         if (cvId == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
             parcel.writeInt(cvId);
         }
-        parcel.writeString(companyName);
-        parcel.writeString(title);
         if (fromMonth == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
             parcel.writeInt(fromMonth);
         }
-        if (toMonth == null) {
+        if (id == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeInt(toMonth);
+            parcel.writeInt(id);
+        }
+        if (isCurrent == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(isCurrent);
+        }
+        parcel.writeString(jobDescription);
+        if (salary == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(salary);
         }
         if (salaryCurency == null) {
             parcel.writeByte((byte) 0);
@@ -230,13 +231,12 @@ public class LstEmploymentHi implements Parcelable {
             parcel.writeByte((byte) 1);
             parcel.writeInt(salaryCurency);
         }
-        if (salary == null) {
+        parcel.writeString(title);
+        if (toMonth == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeInt(salary);
+            parcel.writeInt(toMonth);
         }
-        parcel.writeString(jobDescription);
-        parcel.writeString(achievement);
     }
 }

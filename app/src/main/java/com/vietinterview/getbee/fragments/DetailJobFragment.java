@@ -1,6 +1,7 @@
 package com.vietinterview.getbee.fragments;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -116,12 +117,14 @@ public class DetailJobFragment extends BaseFragment {
             if (collStatus == 0) {
                 Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
                 img.setBounds(0, 0, 40, 50);
-                saveUnsaveJob.setCompoundDrawables(img, null, null, null); saveUnsaveJob.setText("Lưu công việc");
+                saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+                saveUnsaveJob.setText("Lưu công việc");
                 saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
                 saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_unsave_button));
             } else {
                 Drawable img = getContext().getResources().getDrawable(R.drawable.ic_saved);
-                img.setBounds(0, 0, 40, 50); saveUnsaveJob.setText("Đã lưu việc");
+                img.setBounds(0, 0, 40, 50);
+                saveUnsaveJob.setText("Đã lưu việc");
                 saveUnsaveJob.setCompoundDrawables(img, null, null, null);
                 saveUnsaveJob.setTextColor(getResources().getColor(R.color.red));
                 saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_save_button));
@@ -129,7 +132,8 @@ public class DetailJobFragment extends BaseFragment {
         } else {
             Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
             img.setBounds(0, 0, 40, 50);
-            saveUnsaveJob.setCompoundDrawables(img, null, null, null); saveUnsaveJob.setText("Lưu công việc");
+            saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+            saveUnsaveJob.setText("Lưu công việc");
             saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
             saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_unsave_button));
         }
@@ -177,7 +181,12 @@ public class DetailJobFragment extends BaseFragment {
             @Override
             public void onFail(int failCode, DetailJobResponse data, List<DetailJobResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
-                DialogUtil.showDialog(getActivity(), "Thông báo", message);
+                DialogUtil.showDialog(getActivity(), "Thông báo", message, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        FragmentUtil.popBackStack(DetailJobFragment.this);
+                    }
+                });
             }
         });
     }

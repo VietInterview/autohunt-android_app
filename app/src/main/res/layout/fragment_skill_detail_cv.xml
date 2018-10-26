@@ -5,6 +5,7 @@
     Copyright © 2018 Vietinterview. All rights reserved.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -25,11 +26,11 @@
             android:textSize="18sp" />
 
         <com.vietinterview.getbee.customview.NunitoBoldTextView
+            android:id="@+id/tvSkillPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
-            android:text="Không có dữ liệu"
             android:textColor="#B1B1BA"
             android:textSize="18sp" />
     </RelativeLayout>
@@ -38,7 +39,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="4dp">
 
         <com.vietinterview.getbee.customview.NunitoTextView
             android:layout_width="wrap_content"
@@ -49,165 +51,12 @@
             android:textColor="#505059"
             android:textSize="18sp" />
 
-        <LinearLayout
+        <com.vietinterview.getbee.customview.FlowLayout
+            android:id="@+id/container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_marginRight="8dp"
-                android:background="@drawable/dot" />
-
-            <com.vietinterview.getbee.customview.NunitoBoldTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentBottom="true"
-                android:drawablePadding="10dp"
-                android:text="Lãnh đạo"
-                android:textColor="#B1B1BA"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_marginRight="8dp"
-                android:background="@drawable/dot" />
-
-            <com.vietinterview.getbee.customview.NunitoBoldTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentBottom="true"
-                android:drawablePadding="10dp"
-                android:text="Giao tiếp và tạo lập quan hệ"
-                android:textColor="#B1B1BA"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_marginRight="8dp"
-                android:background="@drawable/dot" />
-
-            <com.vietinterview.getbee.customview.NunitoBoldTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentBottom="true"
-                android:drawablePadding="10dp"
-                android:text="Đàm phán thuyết phục"
-                android:textColor="#B1B1BA"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_marginRight="8dp"
-                android:background="@drawable/dot" />
-
-            <com.vietinterview.getbee.customview.NunitoBoldTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentBottom="true"
-                android:drawablePadding="10dp"
-                android:text="Làm việc nhóm"
-                android:textColor="#B1B1BA"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_marginRight="8dp"
-                android:background="@drawable/dot" />
-
-            <com.vietinterview.getbee.customview.NunitoBoldTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentBottom="true"
-                android:drawablePadding="10dp"
-                android:text="Học và tự học"
-                android:textColor="#B1B1BA"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_marginRight="8dp"
-                android:background="@drawable/dot" />
-
-            <com.vietinterview.getbee.customview.NunitoBoldTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentBottom="true"
-                android:drawablePadding="10dp"
-                android:text="Tổ chức công việc hiệu quả"
-                android:textColor="#B1B1BA"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_marginRight="8dp"
-                android:background="@drawable/dot" />
-
-            <com.vietinterview.getbee.customview.NunitoBoldTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentBottom="true"
-                android:drawablePadding="10dp"
-                android:text="Giải quyết vấn đề"
-                android:textColor="#B1B1BA"
-                android:textSize="18sp" />
-        </LinearLayout>
+            android:orientation="vertical"
+            app:horizontalSpacing="5dp"
+            app:verticalSpacing="5dp" />
     </LinearLayout>
 </LinearLayout>

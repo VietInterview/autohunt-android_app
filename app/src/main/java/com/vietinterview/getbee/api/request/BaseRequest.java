@@ -91,8 +91,8 @@ public abstract class BaseRequest<T> {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                DebugLog.showLogCat(responseString);
-                mApiObjectCallBack.onFail(statusCode, null, null, responseString);
+                DebugLog.showLogCat(throwable.toString());
+                mApiObjectCallBack.onFail(statusCode, null, null, "Đã có lỗi xảy ra, xin thử lại sau.");
             }
         };
         DebugLog.showLogCat(getAbsoluteUrl() + "\n" + putParams() + "\n " + getAccessToken());

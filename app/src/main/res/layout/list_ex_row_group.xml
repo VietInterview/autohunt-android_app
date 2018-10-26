@@ -2,27 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#F7FAFF"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:background="@android:color/transparent"
+    android:paddingHorizontal="16dp"
+    android:paddingTop="16dp">
 
-    <com.vietinterview.getbee.customview.NunitoTextView
-        android:id="@+id/tvJob"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="8dp"
-        android:paddingTop="8dp"
-        android:text="dasdasd"
-        android:textColor="#191830"
-        android:textSize="18sp" />
+        android:background="@drawable/border_expandable_group"
+        android:orientation="vertical"
+        android:padding="8dp">
 
-    <com.vietinterview.getbee.customview.NunitoTextView
-        android:id="@+id/tvCompany"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="8dp"
-        android:paddingBottom="8dp"
-        android:text="Canon Vietnam"
-        android:textColor="#B1B1BA"
-        android:textSize="16sp" />
+        <com.vietinterview.getbee.customview.NunitoTextView
+            android:id="@+id/tvJob"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:paddingTop="8dp"
+            android:text="dasdasd"
+            android:textColor="#191830"
+            android:textSize="18sp" />
+
+        <com.vietinterview.getbee.customview.NunitoTextView
+            android:id="@+id/tvCompany"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:paddingBottom="8dp"
+            android:text="Canon Vietnam"
+            android:textColor="#B1B1BA"
+            android:textSize="16sp" />
+    </LinearLayout>
 </LinearLayout>

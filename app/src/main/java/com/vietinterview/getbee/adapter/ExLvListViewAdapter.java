@@ -9,16 +9,17 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.api.response.detailcv.LstEducationHi;
 
 import java.util.HashMap;
 import java.util.List;
 
 public class ExLvListViewAdapter extends BaseExpandableListAdapter {
     private Context context;
-    private List<String> listDataGroup;
-    private HashMap<String, List<String>> listDataChild;
+    private List<LstEducationHi> listDataGroup;
+    private HashMap<String, List<LstEducationHi>> listDataChild;
 
-    public ExLvListViewAdapter(Context context, List<String> listDataGroup, HashMap<String, List<String>> listChildData) {
+    public ExLvListViewAdapter(Context context, List<LstEducationHi> listDataGroup, HashMap<String, List<LstEducationHi>> listChildData) {
         this.context = context;
         this.listDataGroup = listDataGroup;
         this.listDataChild = listChildData;
@@ -26,7 +27,7 @@ public class ExLvListViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosititon) {
-        return this.listDataChild.get(this.listDataGroup.get(groupPosition)).get(childPosititon);
+        return this.listDataChild.get(this.listDataGroup.get(groupPosition).getSchool()).get(childPosititon);
     }
 
     @Override
@@ -36,19 +37,19 @@ public class ExLvListViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        final String childText = (String) getChild(groupPosition, childPosition);
+        final LstEducationHi lstEducationHi = (LstEducationHi) getChild(groupPosition, childPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_lv_row_child, null);
         }
         TextView textViewChild = convertView.findViewById(R.id.textViewChild);
-        textViewChild.setText(childText);
+        textViewChild.setText(lstEducationHi.getNote());
         return convertView;
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this.listDataChild.get(this.listDataGroup.get(groupPosition)).size();
+        return this.listDataChild.get(this.listDataGroup.get(groupPosition).getSchool()).size();
     }
 
     @Override
@@ -68,14 +69,15 @@ public class ExLvListViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        String headerTitle = (String) getGroup(groupPosition);
+        LstEducationHi lstEducationHi = (LstEducationHi) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_lv_row_group, null);
         }
-        TextView tvJob = convertView.findViewById(R.id.tvJob);
-        tvJob.setTypeface(null, Typeface.BOLD);
-        tvJob.setText(headerTitle);
+        TextView tvSchoolName = convertView.findViewById(R.id.tvSchoolName);
+        TextView tvTime = convertView.findViewById(R.id.tvTime);
+        tvSchoolName.setText(lstEducationHi.getSchool());
+        tvTime.setText(lstEducationHi.getFromMonth() + " - " + lstEducationHi.getToMonth());
         return convertView;
     }
 

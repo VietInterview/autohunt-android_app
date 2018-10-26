@@ -55,6 +55,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:layout_marginRight="16dp"
+            android:background="@drawable/borderbutton_notyet_send"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingHorizontal="8dp">
