@@ -37,6 +37,7 @@
                 android:textSize="18sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvListen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -62,6 +63,7 @@
                 android:textSize="18sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvSpeak"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -87,6 +89,7 @@
                 android:textSize="18sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -112,6 +115,7 @@
                 android:textSize="18sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvWrite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

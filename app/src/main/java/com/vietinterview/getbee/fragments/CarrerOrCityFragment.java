@@ -82,8 +82,8 @@ public class CarrerOrCityFragment extends BaseFragment {
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-        getEventBaseFragment().doFillBackground(!mIsCity ? "Ngành Nghề" : "Thành Phố");
-        tvHeader.setText(mIsCity ? "Tất cả thành phố" : "Tất cả ngành nghề");
+        getEventBaseFragment().doFillBackground(!mIsCity ? getResources().getString(R.string.carrer) : getResources().getString(R.string.city));
+        tvHeader.setText(mIsCity ? getResources().getString(R.string.all_city) : getResources().getString(R.string.all_carrer));
         setCustomToolbar(true);
         setHasOptionsMenu(true);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -186,20 +186,24 @@ public class CarrerOrCityFragment extends BaseFragment {
             @Override
             public void onFail(int failCode, CareerResponse data, List<CareerResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
-                DialogUtil.showDialog(getActivity(), "Thông báo", message);
+                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
             }
         });
     }
 
     private CareerResponse getSelectedItemsCarrer() {
         SparseBooleanArray checkedItems = listView.getCheckedItemPositions();
-        CareerResponse careerResponse = (CareerResponse) listView.getItemAtPosition(checkedItems.keyAt(0));
+        CareerResponse careerResponse = null;
+        if (checkedItems.size() > 0)
+            careerResponse = (CareerResponse) listView.getItemAtPosition(checkedItems.keyAt(0));
         return careerResponse;
     }
 
     private CityResponse getSelectedItemsCity() {
         SparseBooleanArray checkedItems = listView.getCheckedItemPositions();
-        CityResponse cityResponse = (CityResponse) listView.getItemAtPosition(checkedItems.keyAt(0));
+        CityResponse cityResponse = null;
+        if (checkedItems.size() > 0)
+            cityResponse = (CityResponse) listView.getItemAtPosition(checkedItems.keyAt(0));
         return cityResponse;
     }
 
@@ -243,14 +247,20 @@ public class CarrerOrCityFragment extends BaseFragment {
                 public void onClick(View view) {
                     Intent intent = new Intent(getActivity(), CarrerOrCityFragment.class);
                     if (mIsCity) {
-                        intent.putExtra("cityId", getSelectedItemsCity().getId());
-                        intent.putExtra("cityName", getSelectedItemsCity().getName());
+                        if (getSelectedItemsCity() != null) {
+                            intent.putExtra("cityId", getSelectedItemsCity().getId());
+                            intent.putExtra("cityName", getSelectedItemsCity().getName());
+                            getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+                            FragmentUtil.popBackStack(CarrerOrCityFragment.this);
+                        }
                     } else {
-                        intent.putExtra("carrerId", getSelectedItemsCarrer().getId());
-                        intent.putExtra("carrerName", getSelectedItemsCarrer().getName());
+                        if (getSelectedItemsCarrer() != null) {
+                            intent.putExtra("carrerId", getSelectedItemsCarrer().getId());
+                            intent.putExtra("carrerName", getSelectedItemsCarrer().getName());
+                            getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+                            FragmentUtil.popBackStack(CarrerOrCityFragment.this);
+                        }
                     }
-                    getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
-                    FragmentUtil.popBackStack(CarrerOrCityFragment.this);
                 }
             });
         }
@@ -261,7 +271,6 @@ public class CarrerOrCityFragment extends BaseFragment {
         item = mMenuItem;
         int id = item.getItemId();
         if (id == R.id.choose) {
-            Toast.makeText(getActivity(), "Choose", Toast.LENGTH_SHORT).show();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -282,7 +291,7 @@ public class CarrerOrCityFragment extends BaseFragment {
             @Override
             public void onFail(int failCode, CityResponse data, List<CityResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
-                DialogUtil.showDialog(getActivity(), "Thông báo", message);
+                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
             }
         });
     }

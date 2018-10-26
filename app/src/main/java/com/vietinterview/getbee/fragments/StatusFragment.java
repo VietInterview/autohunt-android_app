@@ -68,8 +68,8 @@ public class StatusFragment extends BaseFragment {
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-        getEventBaseFragment().doFillBackground("Trạng thái");
-        tvHeader.setText("Tất cả trạng thái");
+        getEventBaseFragment().doFillBackground(getResources().getString(R.string.status));
+        tvHeader.setText(getResources().getString(R.string.all_status));
         setCustomToolbar(true);
         setHasOptionsMenu(true);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -126,18 +126,18 @@ public class StatusFragment extends BaseFragment {
     protected void initData() {
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         cvStatuses = new ArrayList<>();
-        cvStatuses.add(new CVStatus(0, "Chưa lưu"));
-        cvStatuses.add(new CVStatus(1, "Lưu việc"));
-        cvStatuses.add(new CVStatus(2, "Đã nộp"));
-        cvStatuses.add(new CVStatus(3, "Đã duyệt"));
-        cvStatuses.add(new CVStatus(4, "Đã xem"));
-        cvStatuses.add(new CVStatus(5, "Từ chối"));
-        cvStatuses.add(new CVStatus(6, "Mời PV"));
-        cvStatuses.add(new CVStatus(7, "Đã PV"));
-        cvStatuses.add(new CVStatus(8, "Đã Offer"));
-        cvStatuses.add(new CVStatus(9, "Đi làm"));
-        cvStatuses.add(new CVStatus(10, "Ký hợp đồng"));
-        cvStatuses.add(new CVStatus(11, "Mặc định"));
+        cvStatuses.add(new CVStatus(0, getResources().getString(R.string.not_save)));
+        cvStatuses.add(new CVStatus(1, getResources().getString(R.string.saved)));
+        cvStatuses.add(new CVStatus(2, getResources().getString(R.string.applyed)));
+        cvStatuses.add(new CVStatus(3, getResources().getString(R.string.approved)));
+        cvStatuses.add(new CVStatus(4, getResources().getString(R.string.seen)));
+        cvStatuses.add(new CVStatus(5, getResources().getString(R.string.not_accept)));
+        cvStatuses.add(new CVStatus(6, getResources().getString(R.string.invite_interview)));
+        cvStatuses.add(new CVStatus(7, getResources().getString(R.string.interviewed)));
+        cvStatuses.add(new CVStatus(8, getResources().getString(R.string.offered)));
+        cvStatuses.add(new CVStatus(9, getResources().getString(R.string.go_to_work)));
+        cvStatuses.add(new CVStatus(10, getResources().getString(R.string.contract)));
+        cvStatuses.add(new CVStatus(11, getResources().getString(R.string.default_key)));
         cvStatusesFilter = cvStatuses;
         statusAdapter = new StatusAdapter(getActivity(), cvStatuses);
         listView.setAdapter(statusAdapter);
@@ -146,7 +146,9 @@ public class StatusFragment extends BaseFragment {
 
     private CVStatus getSelectedItemsStatus() {
         SparseBooleanArray checkedItems = listView.getCheckedItemPositions();
-        CVStatus cvStatus = (CVStatus) listView.getItemAtPosition(checkedItems.keyAt(0));
+        CVStatus cvStatus = null;
+        if (checkedItems.size() > 0)
+            cvStatus = (CVStatus) listView.getItemAtPosition(checkedItems.keyAt(0));
         return cvStatus;
     }
 
@@ -179,7 +181,7 @@ public class StatusFragment extends BaseFragment {
         mMenuItem = menuItem;
         if (menuItem != null) {
             TextView textView = (TextView) menuItem.getActionView();
-            textView.setText("Chọn");
+            textView.setText(getResources().getString(R.string.choose));
             textView.setPadding(0, 0, 16, 0);
             textView.setTextSize(18);
             textView.setTextColor(Color.BLACK);
@@ -188,11 +190,13 @@ public class StatusFragment extends BaseFragment {
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getActivity(), StatusFragment.class);
-                    intent.putExtra("statusId", getSelectedItemsStatus().getStatusId());
-                    intent.putExtra("statusName", getSelectedItemsStatus().getStatusName());
-                    getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
-                    FragmentUtil.popBackStack(StatusFragment.this);
+                    if (getSelectedItemsStatus() != null) {
+                        Intent intent = new Intent(getActivity(), StatusFragment.class);
+                        intent.putExtra("statusId", getSelectedItemsStatus().getStatusId());
+                        intent.putExtra("statusName", getSelectedItemsStatus().getStatusName());
+                        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+                        FragmentUtil.popBackStack(StatusFragment.this);
+                    }
                 }
             });
         }
@@ -203,7 +207,6 @@ public class StatusFragment extends BaseFragment {
         item = mMenuItem;
         int id = item.getItemId();
         if (id == R.id.choose) {
-            Toast.makeText(getActivity(), "Choose", Toast.LENGTH_SHORT).show();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -213,7 +216,7 @@ public class StatusFragment extends BaseFragment {
         MenuItem menuItem = mMenu.findItem(R.id.choose);
         if (menuItem != null) {
             TextView textView = (TextView) menuItem.getActionView();
-            textView.setText("Chọn");
+            textView.setText(getResources().getString(R.string.choose));
             textView.setTextSize(18);
             textView.setTextColor(Color.BLACK);
             textView.setPadding(0, 0, 16, 0);

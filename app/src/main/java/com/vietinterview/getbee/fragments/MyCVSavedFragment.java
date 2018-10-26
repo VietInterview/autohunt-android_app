@@ -108,7 +108,7 @@ public class MyCVSavedFragment extends BaseFragment implements SwipeRefreshLayou
                 mSwipeRefreshLayout.setRefreshing(false);
                 cvListsServer.clear();
                 cvListsServer.addAll(data.getCvList());
-                tvCountCV.setText(data.getTotal() + " CV đã lưu được tìm thấy");
+                tvCountCV.setText(data.getTotal() + " " + getResources().getString(R.string.cv_saved_found));
                 if (page == 0) cvLists.clear();
                 else {
 ////                    jobsList.remove(jobsList.size() - 1);
@@ -126,7 +126,7 @@ public class MyCVSavedFragment extends BaseFragment implements SwipeRefreshLayou
             public void onFail(int failCode, CVResponse data, List<CVResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 mSwipeRefreshLayout.setRefreshing(false);
-                DialogUtil.showDialog(getActivity(), "Thông báo", message);
+                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
             }
         });
     }
@@ -142,7 +142,7 @@ public class MyCVSavedFragment extends BaseFragment implements SwipeRefreshLayou
                 mSwipeRefreshLayout.setRefreshing(false);
                 cvListsServer.clear();
                 cvListsServer.addAll(data.getCvList());
-                tvCountCV.setText(data.getTotal() + " CV đã lưu được tìm thấy");
+                tvCountCV.setText(data.getTotal() + " " + getResources().getString(R.string.cv_saved_found));
                 if (page == 0) cvLists.clear();
                 else {
 //                    jobsList.remove(jobsList.size() - 1);
@@ -160,7 +160,7 @@ public class MyCVSavedFragment extends BaseFragment implements SwipeRefreshLayou
             public void onFail(int failCode, CVResponse data, List<CVResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 mSwipeRefreshLayout.setRefreshing(false);
-                DialogUtil.showDialog(getActivity(), "Thông báo", message);
+                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
             }
         });
     }

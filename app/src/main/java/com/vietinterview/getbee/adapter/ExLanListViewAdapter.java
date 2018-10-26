@@ -1,7 +1,6 @@
 package com.vietinterview.getbee.adapter;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,7 @@ public class ExLanListViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosititon) {
-        return this.listDataChild.get(this.listDataGroup.get(groupPosition).getLanguageId()).get(childPosititon);
+        return this.listDataChild.get(this.listDataGroup.get(groupPosition).getLanguageName()).get(childPosititon);
     }
 
     @Override
@@ -42,14 +41,43 @@ public class ExLanListViewAdapter extends BaseExpandableListAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_lan_row_child, null);
         }
-        TextView textViewChild = convertView.findViewById(R.id.textViewChild);
-        textViewChild.setText(lstLanguage.getListen() + "");
+        TextView tvListen = convertView.findViewById(R.id.tvListen);
+        TextView tvSpeak = convertView.findViewById(R.id.tvSpeak);
+        TextView tvRead = convertView.findViewById(R.id.tvRead);
+        TextView tvWrite = convertView.findViewById(R.id.tvWrite);
+        tvListen.setText(genString(lstLanguage.getListen()));
+        tvSpeak.setText(genString(lstLanguage.getSpeak()));
+        tvRead.setText(genString(lstLanguage.getRead()));
+        tvWrite.setText(genString(lstLanguage.getWrite()));
         return convertView;
+    }
+
+    public String genString(int value) {
+        String valueString;
+        switch (value) {
+            case 1:
+                valueString = "Tốt";
+                break;
+            case 2:
+                valueString = "khá";
+                break;
+            case 3:
+                valueString = "Trung bình";
+                break;
+            case 4:
+                valueString = "kém";
+                break;
+
+            default:
+                valueString = "Invalid";
+                break;
+        }
+        return valueString;
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this.listDataChild.get(this.listDataGroup.get(groupPosition).getLanguageId()).size();
+        return this.listDataChild.get(this.listDataGroup.get(groupPosition).getLanguageName()).size();
     }
 
     @Override
@@ -75,7 +103,7 @@ public class ExLanListViewAdapter extends BaseExpandableListAdapter {
             convertView = layoutInflater.inflate(R.layout.list_lan_row_group, null);
         }
         TextView tvLanguage = convertView.findViewById(R.id.tvLanguage);
-        tvLanguage.setText(lstLanguage.getLanguageId() + "");
+        tvLanguage.setText(lstLanguage.getLanguageName());
         return convertView;
     }
 

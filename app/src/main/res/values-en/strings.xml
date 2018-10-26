@@ -1,55 +1,72 @@
 <resources>
     <string name="app_name">GetBee</string>
-    <string name="action_settings">Settings</string>
     <string name="dialog_btn_close">Close</string>
     <string name="apierror">API error</string>
     <string name="pleaseinputdata">Please input data</string>
-    <string name="dialog_error_api">Đã xảy ra lỗi. Vui lòng thử lại từ thời gian sau đó.</string>
-    <string name="dialog_error_timeout">センターへの接続が失敗しました。\nしばらく経ってからもう1度お試しください。</string>
-    <string name="dialog_error_no_connection">ネットワークに接続できません。もう一度ご確認ください。</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="hello_blank_fragment">Anh DQ</string>
-    <string name="fck">f<sub><small>ck</small></sub> [mpa]</string>
-    <string name="some_string">meters<sup>2</sup></string>
-    <string-array name="jobs_array">
-        <item>An toàn lao đông</item>
-        <item>Bác sĩ</item>
-        <item>Bán hàng</item>
-        <item>Bán hàng kỹ thuật </item>
-        <item>Bán sỉ/Bán lẻ</item>
-        <item>Bảo hiểm</item>
-        <item>Bảo trì/Sửa chữa</item>
-    </string-array>
-    <string-array name="stepLabels">
-        <item>Thông tin</item>
-        <item>Kinh nghiệm</item>
-        <item>Trình độ</item>
-        <item>Kỹ năng</item>
-    </string-array>
-    <string-array name="string_array_alcohol">
-        <item>Vodka</item>
-    </string-array>
-
-    <string-array name="string_array_coffee">
-        <item>Espresso</item>
-    </string-array>
-
-    <string-array name="string_array_pasta">
-        <item>Carbonara</item>
-    </string-array>
-
-    <string-array name="string_array_cold_drinks">
-        <item>Cola</item>
-    </string-array>
-    <string name="text_alcohol">Alcohol</string>
-    <string name="text_coffee">Coffee</string>
-    <string name="text_pasta">Pasta</string>
-    <string name="text_cold_drinks">Cold Drinks</string>
-    <string name="text_expanded">Expanded</string>
-    <string name="text_collapsed">Collapsed</string>
 
     <string name="home">Home</string>
     <string name="input_search_key">Input Search Key</string>
     <string name="title_dialog_choose_send_cv">Choice method</string>
+    <string name="job_found"> job(s) found</string>
+    <string name="noti_title">Notify</string>
+    <string name="carrer">Carrer</string>
+    <string name="city">City</string>
+    <string name="all_carrer">All Carrer</string>
+    <string name="all_city">All City</string>
+    <string name="change_password">Change password</string>
+    <string name="choice_cv">Choose my cv</string>
+    <string name="cv_found">CV found</string>
+    <string name="edit">Edit</string>
+    <string name="cancel">Cancel</string>
+    <string name="create_new_cv">Create new CV</string>
+    <string name="cv_applyed">CV Applyed</string>
+    <string name="not_send">Not yet send</string>
+    <string name="wait_approve">Wait approve</string>
+    <string name="approved">Approved</string>
+    <string name="interviewd">Interviewed</string>
+    <string name="accept_offer">Accept Offer</string>
+    <string name="cv_submited">Submited</string>
+    <string name="cv_submited_title">CV Applyed</string>
+    <string name="info">Info</string>
+    <string name="exp">Experience</string>
+    <string name="level">Level</string>
+    <string name="language">Language</string>
+    <string name="skill">Skill</string>
+    <string name="detail_job">Detail Job</string>
+    <string name="save_job">Save job</string>
+    <string name="saved_job">Saved job</string>
+    <string name="hiring">Hiring</string>
+    <string name="closed">Closed</string>
+    <string name="statistic">Statistic</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="other_sex">Other</string>
+    <string name="job_saved"> Job saved</string>
+    <string name="job_applyed">Job Applyed</string>
+    <string name="input_email">Please input email</string>
+    <string name="input_pass">Please input password</string>
+    <string name="mycv">My CV</string>
+    <string name="cv_saved">CV Saved</string>
+    <string name="cv_applyed_tit">CV Applyed</string>
+    <string name="cv_saved_found">CV saved found</string>
+    <string name="my_job">My job</string>
+    <string name="input_name">Please input fullname</string>
+    <string name="input_phone">Please input phone number</string>
+    <string name="email_esxit">Email already exists</string>
+    <string name="regist_succces">You have signed up for a contributor account. We will send the email information and password through the mailbox you registered</string>
+    <string name="status">Status</string>
+    <string name="all_status">All Status</string>
+    <string name="choose">Choose</string>
+    <string name="not_save">Chưa lưu</string>
+    <string name="saved">Lưu việc</string>
+    <string name="applyed">Applyed</string>
+    <string name="approve">Approved</string>
+    <string name="seen">Seend</string>
+    <string name="not_accept">Not Accpet</string>
+    <string name="invite_interview">Invite Interview</string>
+    <string name="interviewed">Interviewed</string>
+    <string name="offered">Offered</string>
+    <string name="go_to_work">Go to work</string>
+    <string name="contract">Contract</string>
+    <string name="default_key">Default</string>
 </resources>

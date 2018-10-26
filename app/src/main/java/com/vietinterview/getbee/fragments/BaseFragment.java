@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.Toolbar;
@@ -20,20 +19,15 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.vietinterview.getbee.GetBeeApplication;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.activities.BaseActivity;
 import com.vietinterview.getbee.activities.CreateNewCVActivity;
 import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.api.request.BaseJsonRequest;
-import com.vietinterview.getbee.callback.DetectSwipeGestureListener;
 import com.vietinterview.getbee.model.Event;
 import com.vietinterview.getbee.utils.DebugLog;
-import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.KeyboardUtil;
 import com.vietinterview.getbee.utils.UiUtil;
-
-import net.skoumal.fragmentback.BackFragment;
 
 import java.util.ArrayList;
 
@@ -161,17 +155,17 @@ public abstract class BaseFragment extends Fragment {
         if (getArguments() != null) {
             getArgument(getArguments());
         }
-        DetectSwipeGestureListener gestureListener = new DetectSwipeGestureListener();
-        gestureListener.setBaseFragment(this);
-        gestureDetectorCompat = new GestureDetectorCompat(getActivity(), gestureListener);
-        view.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                gestureDetectorCompat.onTouchEvent(event);
-                if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                }
-                return true;
-            }
-        });
+//        DetectSwipeGestureListener gestureListener = new DetectSwipeGestureListener();
+//        gestureListener.setBaseFragment(this);
+//        gestureDetectorCompat = new GestureDetectorCompat(getActivity(), gestureListener);
+//        view.setOnTouchListener(new View.OnTouchListener() {
+//            public boolean onTouch(View v, MotionEvent event) {
+//                gestureDetectorCompat.onTouchEvent(event);
+//                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+//                }
+//                return true;
+//            }
+//        });
         baseActivity = (BaseActivity) getActivity();
         initView(rootView, mInflater, mContainer);
         initData();

@@ -75,13 +75,13 @@ public class InfoFragment extends BaseFragment {
         tvsubmitDate.setText(DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(detailJobResponse.getSubmitDate()) + ""));
         tvexpireDate.setText(DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(detailJobResponse.getExpireDate()) + ""));
         if (detailJobResponse.getStatus() == 1) {
-            tvstatus.setText("Đang tuyển");
+            tvstatus.setText(getResources().getString(R.string.hiring));
             tvstatus.setTextColor(getResources().getColor(R.color.step_complete));
         } else {
-            tvstatus.setText("Đã đóng");
+            tvstatus.setText(getResources().getString(R.string.closed));
             tvstatus.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
         }
-        tvSalaryFromTo.setText(StringUtils.filterCurrencyString(detailJobResponse.getFromSalary()) + "USD - " + StringUtils.filterCurrencyString(detailJobResponse.getToSalary()) + " USD");
+        tvSalaryFromTo.setText(StringUtils.filterCurrencyString(detailJobResponse.getFromSalary()) + " USD - " + StringUtils.filterCurrencyString(detailJobResponse.getToSalary()) + " USD");
         tvquantity.setText(detailJobResponse.getQuantity() + "");
         tvcountCv.setText(detailJobResponse.getCountCv() + "");
         tvRewardCTV.setText(StringUtils.filterCurrencyString(detailJobResponse.getFee()) + " USD");

@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +79,7 @@ public class LoginFragment extends BaseFragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.toString().equalsIgnoreCase("")) {
-                    edtEmail.setHint("Xin hãy nhập Email");
+                    edtEmail.setHint(getResources().getString(R.string.input_email));
                     icRightEmail.setVisibility(View.VISIBLE);
                 } else {
                     edtEmail.setTextColor(Color.BLACK);
@@ -169,7 +170,11 @@ public class LoginFragment extends BaseFragment {
         mForgotPassdialog.setContentView(R.layout.dialog_forgotpass);
         mForgotPassdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mForgotPassdialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
+        Window window = mForgotPassdialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        wlp.gravity = Gravity.TOP;
+        wlp.y = 300;
+        window.setAttributes(wlp);
         Button btnOK = (Button) mForgotPassdialog.findViewById(R.id.btnOK);
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,11 +189,11 @@ public class LoginFragment extends BaseFragment {
     public void onbtnLoginClick() {
         if (edtEmail.getText().toString().equalsIgnoreCase("")) {
             edtEmail.setText("");
-            edtEmail.setHint("Xin hãy nhập email");
+            edtEmail.setHint(getResources().getString(R.string.input_email));
             edtEmail.setHintTextColor(Color.RED);
             icRightEmail.setVisibility(View.VISIBLE);
         } else if (edtPass.getText().toString().equalsIgnoreCase("")) {
-            edtPass.setHint("Xin hãy nhập mật khẩu");
+            edtPass.setHint(getResources().getString(R.string.input_pass));
             edtPass.setHintTextColor(Color.RED);
             icRightPass.setVisibility(View.VISIBLE);
         } else {
@@ -218,7 +223,11 @@ public class LoginFragment extends BaseFragment {
                     mNotifydialog.setContentView(R.layout.dialog_noti);
                     mNotifydialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     mNotifydialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
+                    Window window = mNotifydialog.getWindow();
+                    WindowManager.LayoutParams wlp = window.getAttributes();
+                    wlp.gravity = Gravity.TOP;
+                    wlp.y = 300;
+                    window.setAttributes(wlp);
                     Button btnOK = (Button) mNotifydialog.findViewById(R.id.btnOK);
                     btnOK.setOnClickListener(new View.OnClickListener() {
                         @Override

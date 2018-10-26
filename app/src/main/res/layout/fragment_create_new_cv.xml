@@ -18,7 +18,6 @@
         app:stpi_circleStrokeWidth="2dp"
         app:stpi_indicatorColor="@color/step_complete"
         app:stpi_labelSize="14sp"
-        app:stpi_labels="@array/stepLabels"
         app:stpi_lineDoneColor="@color/step_complete" />
 
     <com.vietinterview.getbee.customview.NonSwipeableViewPager

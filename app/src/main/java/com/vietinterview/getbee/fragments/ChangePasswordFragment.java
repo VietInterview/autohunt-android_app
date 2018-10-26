@@ -52,7 +52,7 @@ public class ChangePasswordFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        getEventBaseFragment().doFillBackground("Thay đổi mật khẩu");
+        getEventBaseFragment().doFillBackground(getResources().getString(R.string.change_password));
     }
 
     @Override
@@ -107,7 +107,6 @@ public class ChangePasswordFragment extends BaseFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.save) {
-            Toast.makeText(getActivity(), "Add", Toast.LENGTH_SHORT).show();
             return true;
         }
         return super.onOptionsItemSelected(item);

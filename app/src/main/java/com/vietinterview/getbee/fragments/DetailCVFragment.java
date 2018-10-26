@@ -14,17 +14,18 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ViewPagerAdapter;
 import com.vietinterview.getbee.api.request.GetDetailCVRequest;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
-import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -32,6 +33,12 @@ import butterknife.OnClick;
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 public class DetailCVFragment extends BaseFragment {
+    @BindView(R.id.tvFullName)
+    TextView tvFullName;
+    @BindView(R.id.tvBirthDay)
+    TextView tvBirthDay;
+    @BindView(R.id.imgAva)
+    ImageView imgAva;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private JobList mJobList;
@@ -146,38 +153,38 @@ public class DetailCVFragment extends BaseFragment {
 
     private void setupTabIcons() {
         TextView tabOne = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabOne.setText("Thông tin");
+        tabOne.setText(getResources().getString(R.string.info));
         tabOne.setTextColor(getResources().getColor(R.color.black));
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabTwo.setText("Kinh nghiệm");
+        tabTwo.setText(getResources().getString(R.string.exp));
         tabTwo.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
         tabLayout.getTabAt(1).setCustomView(tabTwo);
 
         TextView tabThree = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabThree.setText("Trình độ");
+        tabThree.setText(getResources().getString(R.string.level));
         tabThree.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
         tabLayout.getTabAt(2).setCustomView(tabThree);
 
         TextView tabFour = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabFour.setText("Ngoại ngữ");
+        tabFour.setText(getResources().getString(R.string.language));
         tabFour.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
         tabLayout.getTabAt(3).setCustomView(tabFour);
 
         TextView tabFive = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabFive.setText("Kỹ năng");
+        tabFive.setText(getResources().getString(R.string.skill));
         tabFive.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
         tabLayout.getTabAt(4).setCustomView(tabFive);
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFrag(new InfoDetailCVFragment().newInstance(detailCVResponse), "Thông tin");
-        adapter.addFrag(new ExpDetailCVFragment().newInstance(detailCVResponse), "Kinh nghiệm");
-        adapter.addFrag(new LevelDetailCVFragment().newInstance(detailCVResponse), "Trình độ");
-        adapter.addFrag(new LanDetailCVFragment().newInstance(detailCVResponse), "Ngoại ngữ");
-        adapter.addFrag(new SkillDetailCVFragment().newInstance(detailCVResponse), "Kỹ năng");
+        adapter.addFrag(new InfoDetailCVFragment().newInstance(detailCVResponse), getResources().getString(R.string.info));
+        adapter.addFrag(new ExpDetailCVFragment().newInstance(detailCVResponse), getResources().getString(R.string.exp));
+        adapter.addFrag(new LevelDetailCVFragment().newInstance(detailCVResponse), getResources().getString(R.string.level));
+        adapter.addFrag(new LanDetailCVFragment().newInstance(detailCVResponse), getResources().getString(R.string.language));
+        adapter.addFrag(new SkillDetailCVFragment().newInstance(detailCVResponse), getResources().getString(R.string.skill));
         viewPager.setCurrentItem(0);
         viewPager.setOffscreenPageLimit(0);
         viewPager.setAdapter(adapter);
@@ -191,6 +198,9 @@ public class DetailCVFragment extends BaseFragment {
             @Override
             public void onSuccess(DetailCVResponse data, List<DetailCVResponse> dataArrayList, int status, String message) {
                 detailCVResponse = data;
+                tvFullName.setText(detailCVResponse.getFullName());
+                tvBirthDay.setText(detailCVResponse.getBirthday() + "");
+                Glide.with(getActivity()).load(detailCVResponse.getPictureUrl()).into(imgAva);
                 setupViewPager(viewPager);
                 tabLayout.setupWithViewPager(viewPager);
                 setupTabIcons();

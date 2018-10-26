@@ -70,7 +70,6 @@ public abstract class BaseActivity extends LocalizationActivity {
         isUnregistEventBus = false;
         eventBaseActivity = new Event();
         initView();
-        initDialogApi();
         initData();
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -102,11 +101,6 @@ public abstract class BaseActivity extends LocalizationActivity {
         return gestureDetectorCompat;
     }
 
-    private void initDialogApi() {
-        dialogErrorAPI = DialogUtil.createApiErrorDialog(this, null, getString(R.string.dialog_error_api));
-        dialogTimeOutAPI = DialogUtil.createApiErrorDialog(this, null, getString(R.string.dialog_error_timeout));
-        dialogNoConnection = DialogUtil.createApiErrorDialog(this, null, getString(R.string.dialog_error_no_connection));
-    }
 
     protected boolean checkApiDialogIsShow() {
         return dialogErrorAPI.isShowing() || dialogTimeOutAPI.isShowing() || dialogNoConnection.isShowing();

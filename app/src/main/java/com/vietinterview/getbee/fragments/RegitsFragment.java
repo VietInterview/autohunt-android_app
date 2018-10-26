@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -232,17 +233,17 @@ public class RegitsFragment extends BaseFragment {
     public void onSignupClick() {
         if (edtEmail.getText().toString().trim().equalsIgnoreCase("")) {
             edtEmail.setText("");
-            edtEmail.setHint("Email không hợp lệ");
+            edtEmail.setHint(getResources().getString(R.string.input_email));
             edtEmail.setHintTextColor(Color.RED);
             icRightEmail.setVisibility(View.VISIBLE);
         } else if (edtName.getText().toString().trim().equalsIgnoreCase("")) {
             edtName.setText("");
-            edtName.setHint("Xin hãy nhập họ và tên");
+            edtName.setHint(getResources().getString(R.string.input_name));
             edtName.setHintTextColor(Color.RED);
             icRightName.setVisibility(View.VISIBLE);
         } else if (edtPhone.getText().toString().trim().equalsIgnoreCase("")) {
             edtPhone.setText("");
-            edtPhone.setHint("Xin hãy nhập số điện thoại");
+            edtPhone.setHint(getResources().getString(R.string.input_phone));
             edtPhone.setHintTextColor(Color.RED);
             icRightPhone.setVisibility(View.VISIBLE);
         } else {
@@ -260,8 +261,13 @@ public class RegitsFragment extends BaseFragment {
                             mNotifydialog.setContentView(R.layout.dialog_noti);
                             mNotifydialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                             mNotifydialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                            Window window = mNotifydialog.getWindow();
+                            WindowManager.LayoutParams wlp = window.getAttributes();
+                            wlp.gravity = Gravity.TOP;
+                            wlp.y = 250;
+                            window.setAttributes(wlp);
                             NunitoTextView nunitoTextView = (NunitoTextView) mNotifydialog.findViewById(R.id.tvContent);
-                            nunitoTextView.setText("Bạn đã đăng ký tài khoản Cộng tác viên. Chúng tôi sẽ gửi thông tin email và mật khẩu qua hòm thư mà bạn đã đăng ký");
+                            nunitoTextView.setText(getResources().getString(R.string.regist_succces));
                             Button btnOK = (Button) mNotifydialog.findViewById(R.id.btnOK);
                             btnOK.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -273,7 +279,7 @@ public class RegitsFragment extends BaseFragment {
                             mNotifydialog.show();
                         } else {
                             if (data != null)
-                                DialogUtil.showDialog(getActivity(), "Thông báo", data.getMessage());
+                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), data.getMessage());
                         }
                     }
 
@@ -282,7 +288,7 @@ public class RegitsFragment extends BaseFragment {
                         hideCoverNetworkLoading();
                         if (data != null) {
                             if (data.getErrorKey().equalsIgnoreCase("userexists"))
-                                DialogUtil.showDialog(getActivity(), "Thông báo", "Email không hơp lệ");
+                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.email_esxit));
                         } else {
                             if (failCode == 201) {
                                 mNotifydialog = new Dialog(getActivity());
@@ -290,8 +296,13 @@ public class RegitsFragment extends BaseFragment {
                                 mNotifydialog.setContentView(R.layout.dialog_noti);
                                 mNotifydialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                                 mNotifydialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                                Window window = mNotifydialog.getWindow();
+                                WindowManager.LayoutParams wlp = window.getAttributes();
+                                wlp.gravity = Gravity.TOP;
+                                wlp.y = 250;
+                                window.setAttributes(wlp);
                                 NunitoTextView nunitoTextView = (NunitoTextView) mNotifydialog.findViewById(R.id.tvContent);
-                                nunitoTextView.setText("Bạn đã đăng ký tài khoản Cộng tác viên. Chúng tôi sẽ gửi thông tin email và mật khẩu qua hòm thư mà bạn đã đăng ký");
+                                nunitoTextView.setText(getResources().getString(R.string.regist_succces));
                                 Button btnOK = (Button) mNotifydialog.findViewById(R.id.btnOK);
                                 btnOK.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -302,7 +313,7 @@ public class RegitsFragment extends BaseFragment {
                                 });
                                 mNotifydialog.show();
                             } else
-                                DialogUtil.showDialog(getActivity(), "Thông báo", message);
+                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
                         }
                     }
                 });

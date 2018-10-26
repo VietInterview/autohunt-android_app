@@ -33,67 +33,67 @@ public class ExperienceFragment extends BaseFragment {
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-        expandableListView = root.findViewById(R.id.expandableListView);
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition, int childPosition, long id) {
-                return false;
-            }
-        });
-        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                if (lastExpandedPosition != -1 && groupPosition != lastExpandedPosition) {
-                    expandableListView.collapseGroup(lastExpandedPosition);
-                }
-                lastExpandedPosition = groupPosition;
-            }
-        });
-        expandableListView.setIndicatorBounds(expandableListView.getRight() + 900, expandableListView.getWidth());
-        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-
-            }
-        });
-        listDataGroup = new ArrayList<>();
-        listDataChild = new HashMap<>();
+//        expandableListView = root.findViewById(R.id.expandableListView);
+//        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+//
+//            @Override
+//            public boolean onChildClick(ExpandableListView parent, View v,
+//                                        int groupPosition, int childPosition, long id) {
+//                return false;
+//            }
+//        });
+//        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+//
+//            @Override
+//            public void onGroupExpand(int groupPosition) {
+//                if (lastExpandedPosition != -1 && groupPosition != lastExpandedPosition) {
+//                    expandableListView.collapseGroup(lastExpandedPosition);
+//                }
+//                lastExpandedPosition = groupPosition;
+//            }
+//        });
+//        expandableListView.setIndicatorBounds(expandableListView.getRight() + 900, expandableListView.getWidth());
+//        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+//
+//            @Override
+//            public void onGroupCollapse(int groupPosition) {
+//
+//            }
+//        });
+//        listDataGroup = new ArrayList<>();
+//        listDataChild = new HashMap<>();
 //        exExpListViewAdapter = new ExExpListViewAdapter(getActivity(), listDataGroup, listDataChild);
-        expandableListView.setAdapter(exExpListViewAdapter);
-        listDataGroup.add(getString(R.string.text_alcohol));
-        listDataGroup.add(getString(R.string.text_coffee));
-        listDataGroup.add(getString(R.string.text_pasta));
-        listDataGroup.add(getString(R.string.text_cold_drinks));
-        String[] array;
-        List<String> alcoholList = new ArrayList<>();
-        array = getResources().getStringArray(R.array.string_array_alcohol);
-        for (String item : array) {
-            alcoholList.add(item);
-        }
-        List<String> coffeeList = new ArrayList<>();
-        array = getResources().getStringArray(R.array.string_array_coffee);
-        for (String item : array) {
-            coffeeList.add(item);
-        }
-        List<String> pastaList = new ArrayList<>();
-        array = getResources().getStringArray(R.array.string_array_pasta);
-        for (String item : array) {
-            pastaList.add(item);
-        }
-        List<String> coldDrinkList = new ArrayList<>();
-        array = getResources().getStringArray(R.array.string_array_cold_drinks);
-        for (String item : array) {
-            coldDrinkList.add(item);
-        }
-        listDataChild.put(listDataGroup.get(0), alcoholList);
-        listDataChild.put(listDataGroup.get(1), coffeeList);
-        listDataChild.put(listDataGroup.get(2), pastaList);
-        listDataChild.put(listDataGroup.get(3), coldDrinkList);
-        exExpListViewAdapter.notifyDataSetChanged();
+//        expandableListView.setAdapter(exExpListViewAdapter);
+//        listDataGroup.add(getString(R.string.text_alcohol));
+//        listDataGroup.add(getString(R.string.text_coffee));
+//        listDataGroup.add(getString(R.string.text_pasta));
+//        listDataGroup.add(getString(R.string.text_cold_drinks));
+//        String[] array;
+//        List<String> alcoholList = new ArrayList<>();
+//        array = getResources().getStringArray(R.array.string_array_alcohol);
+//        for (String item : array) {
+//            alcoholList.add(item);
+//        }
+//        List<String> coffeeList = new ArrayList<>();
+//        array = getResources().getStringArray(R.array.string_array_coffee);
+//        for (String item : array) {
+//            coffeeList.add(item);
+//        }
+//        List<String> pastaList = new ArrayList<>();
+//        array = getResources().getStringArray(R.array.string_array_pasta);
+//        for (String item : array) {
+//            pastaList.add(item);
+//        }
+//        List<String> coldDrinkList = new ArrayList<>();
+//        array = getResources().getStringArray(R.array.string_array_cold_drinks);
+//        for (String item : array) {
+//            coldDrinkList.add(item);
+//        }
+//        listDataChild.put(listDataGroup.get(0), alcoholList);
+//        listDataChild.put(listDataGroup.get(1), coffeeList);
+//        listDataChild.put(listDataGroup.get(2), pastaList);
+//        listDataChild.put(listDataGroup.get(3), coldDrinkList);
+//        exExpListViewAdapter.notifyDataSetChanged();
     }
 
     @Override

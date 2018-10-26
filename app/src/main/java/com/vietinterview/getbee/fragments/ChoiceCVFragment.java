@@ -102,7 +102,7 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
         setCustomToolbar(true);
         setCustomToolbarVisible(true);
 //        setHasOptionsMenu(true);
-        getEventBaseFragment().doFillBackground("Chọn CV của tôi");
+        getEventBaseFragment().doFillBackground(getResources().getString(R.string.choice_cv));
         getCVSaved(mPage);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
@@ -123,7 +123,6 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                DebugLog.showLogCat(listView.getLastVisiblePosition() + "");
                 if (scrollState == SCROLL_STATE_IDLE && listView.getLastVisiblePosition() == cvLists.size()) {
                     if (cvListsServer.size() >= 10) {
                         mPage++;
@@ -154,7 +153,7 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
             @Override
             public void onSuccess(CVResponse data, List<CVResponse> dataArrayList, int status, String message) {
                 hideCoverNetworkLoading();
-                tvCount.setText(data.getTotal() + " CV được tìm thấy");
+                tvCount.setText(data.getTotal() + " " + getResources().getString(R.string.cv_found));
                 mSwipeRefreshLayout.setRefreshing(false);
                 mCvResponse = data;
                 cvListsServer.clear();
@@ -176,7 +175,7 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
             public void onFail(int failCode, CVResponse data, List<CVResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 mSwipeRefreshLayout.setRefreshing(false);
-                DialogUtil.showDialog(getActivity(), "Thông báo", message);
+                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
             }
         });
     }
@@ -240,13 +239,13 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
                 listView.setChoiceMode(ListView.CHOICE_MODE_NONE);
                 listView.setAdapter(notChoiceCVAdapter);
                 btnDelete.setVisibility(View.GONE);
-                menu.getItem(0).setTitle("Sửa");
+                menu.getItem(0).setTitle(getResources().getString(R.string.edit));
             } else {
                 isEdit = true;
                 listView.setAdapter(choiceCVAdapter);
                 listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
                 btnDelete.setVisibility(View.VISIBLE);
-                menu.getItem(0).setTitle("Hủy");
+                menu.getItem(0).setTitle(getResources().getString(R.string.cancel));
             }
             return true;
         }

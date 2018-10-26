@@ -36,6 +36,7 @@
                 android:textSize="18sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvCertificate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -61,6 +62,7 @@
                 android:textSize="18sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvSchoolName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -86,6 +88,7 @@
                 android:textSize="18sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -111,6 +114,7 @@
                 android:textSize="18sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvSpecialize"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -136,6 +140,7 @@
                 android:textSize="18sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvGraduationType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"

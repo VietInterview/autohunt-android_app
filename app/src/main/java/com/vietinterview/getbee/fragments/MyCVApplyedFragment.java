@@ -105,7 +105,7 @@ public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLay
                 cvResponse = data;
                 cvListsServer.clear();
                 cvListsServer.addAll(data.getCvList());
-                tvCountCV.setText(data.getTotal() + " CV đã nộp được tìm thấy");
+                tvCountCV.setText(data.getTotal() + " CV " + getResources().getString(R.string.cv_found));
                 if (page == 0) cvLists.clear();
                 else {
 ////                    jobsList.remove(jobsList.size() - 1);
@@ -122,7 +122,7 @@ public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLay
             public void onFail(int failCode, CVResponse data, List<CVResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 mSwipeRefreshLayout.setRefreshing(false);
-                DialogUtil.showDialog(getActivity(), "Thông báo", message);
+                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
             }
         });
     }

@@ -1,7 +1,6 @@
 package com.vietinterview.getbee.adapter;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,8 +41,16 @@ public class ExLvListViewAdapter extends BaseExpandableListAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_lv_row_child, null);
         }
-        TextView textViewChild = convertView.findViewById(R.id.textViewChild);
-        textViewChild.setText(lstEducationHi.getNote());
+        TextView tvCertificate = convertView.findViewById(R.id.tvCertificate);
+        TextView tvSchoolName = convertView.findViewById(R.id.tvSchoolName);
+        TextView tvTime = convertView.findViewById(R.id.tvTime);
+        TextView tvSpecialize = convertView.findViewById(R.id.tvSpecialize);
+        TextView tvGraduationType = convertView.findViewById(R.id.tvGraduationType);
+        tvCertificate.setText(lstEducationHi.getSubject());
+        tvSchoolName.setText(lstEducationHi.getSchool());
+        tvTime.setText(lstEducationHi.getFromMonth() + " - " + lstEducationHi.getToMonth());
+        tvSpecialize.setText(lstEducationHi.getCareer());
+        tvGraduationType.setText(lstEducationHi.getGraduationTypeName());
         return convertView;
     }
 

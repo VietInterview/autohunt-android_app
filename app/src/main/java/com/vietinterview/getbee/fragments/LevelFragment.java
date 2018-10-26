@@ -37,75 +37,75 @@ public class LevelFragment extends BaseFragment {
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-        exLvLevel = root.findViewById(R.id.exLvLevel);
-        exLvLanguage = root.findViewById(R.id.exLvLanguage);
-        exLvLevel.setIndicatorBounds(exLvLevel.getRight() + 900, exLvLevel.getWidth());
-        exLvLanguage.setIndicatorBounds(exLvLanguage.getRight() + 900, exLvLanguage.getWidth());
-        exLvLevel.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition, int childPosition, long id) {
-                return false;
-            }
-        });
-        exLvLevel.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                if (lastExpandedPosition != -1 && groupPosition != lastExpandedPosition) {
-                    exLvLevel.collapseGroup(lastExpandedPosition);
-                }
-                lastExpandedPosition = groupPosition;
-            }
-        });
-        exLvLanguage.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                if (lastExpandedPositionlangeuage != -1 && groupPosition != lastExpandedPositionlangeuage) {
-                    exLvLanguage.collapseGroup(lastExpandedPositionlangeuage);
-                }
-                lastExpandedPositionlangeuage = groupPosition;
-            }
-        });
-        listDataGroup = new ArrayList<>();
-        listDataChild = new HashMap<>();
-//        exStepLvListViewAdapter = new ExLvListViewAdapter(getActivity(), listDataGroup, listDataChild);
-//        exStepLanListViewAdapter = new ExLanListViewAdapter(getActivity(), listDataGroup, listDataChild);
-        exLvLevel.setAdapter(exStepLvListViewAdapter);
-        exLvLanguage.setAdapter(exStepLanListViewAdapter);
-        listDataGroup.add(getString(R.string.text_alcohol));
-        listDataGroup.add(getString(R.string.text_coffee));
-        listDataGroup.add(getString(R.string.text_pasta));
-        listDataGroup.add(getString(R.string.text_cold_drinks));
-        String[] array;
-        List<String> alcoholList = new ArrayList<>();
-        array = getResources().getStringArray(R.array.string_array_alcohol);
-        for (String item : array) {
-            alcoholList.add(item);
-        }
-        List<String> coffeeList = new ArrayList<>();
-        array = getResources().getStringArray(R.array.string_array_coffee);
-        for (String item : array) {
-            coffeeList.add(item);
-        }
-        List<String> pastaList = new ArrayList<>();
-        array = getResources().getStringArray(R.array.string_array_pasta);
-        for (String item : array) {
-            pastaList.add(item);
-        }
-        List<String> coldDrinkList = new ArrayList<>();
-        array = getResources().getStringArray(R.array.string_array_cold_drinks);
-        for (String item : array) {
-            coldDrinkList.add(item);
-        }
-        listDataChild.put(listDataGroup.get(0), alcoholList);
-        listDataChild.put(listDataGroup.get(1), coffeeList);
-        listDataChild.put(listDataGroup.get(2), pastaList);
-        listDataChild.put(listDataGroup.get(3), coldDrinkList);
-        exStepLvListViewAdapter.notifyDataSetChanged();
-        exStepLanListViewAdapter.notifyDataSetChanged();
+//        exLvLevel = root.findViewById(R.id.exLvLevel);
+//        exLvLanguage = root.findViewById(R.id.exLvLanguage);
+//        exLvLevel.setIndicatorBounds(exLvLevel.getRight() + 900, exLvLevel.getWidth());
+//        exLvLanguage.setIndicatorBounds(exLvLanguage.getRight() + 900, exLvLanguage.getWidth());
+//        exLvLevel.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+//
+//            @Override
+//            public boolean onChildClick(ExpandableListView parent, View v,
+//                                        int groupPosition, int childPosition, long id) {
+//                return false;
+//            }
+//        });
+//        exLvLevel.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+//
+//            @Override
+//            public void onGroupExpand(int groupPosition) {
+//                if (lastExpandedPosition != -1 && groupPosition != lastExpandedPosition) {
+//                    exLvLevel.collapseGroup(lastExpandedPosition);
+//                }
+//                lastExpandedPosition = groupPosition;
+//            }
+//        });
+//        exLvLanguage.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+//
+//            @Override
+//            public void onGroupExpand(int groupPosition) {
+//                if (lastExpandedPositionlangeuage != -1 && groupPosition != lastExpandedPositionlangeuage) {
+//                    exLvLanguage.collapseGroup(lastExpandedPositionlangeuage);
+//                }
+//                lastExpandedPositionlangeuage = groupPosition;
+//            }
+//        });
+//        listDataGroup = new ArrayList<>();
+//        listDataChild = new HashMap<>();
+////        exStepLvListViewAdapter = new ExLvListViewAdapter(getActivity(), listDataGroup, listDataChild);
+////        exStepLanListViewAdapter = new ExLanListViewAdapter(getActivity(), listDataGroup, listDataChild);
+//        exLvLevel.setAdapter(exStepLvListViewAdapter);
+//        exLvLanguage.setAdapter(exStepLanListViewAdapter);
+//        listDataGroup.add(getString(R.string.text_alcohol));
+//        listDataGroup.add(getString(R.string.text_coffee));
+//        listDataGroup.add(getString(R.string.text_pasta));
+//        listDataGroup.add(getString(R.string.text_cold_drinks));
+//        String[] array;
+//        List<String> alcoholList = new ArrayList<>();
+//        array = getResources().getStringArray(R.array.string_array_alcohol);
+//        for (String item : array) {
+//            alcoholList.add(item);
+//        }
+//        List<String> coffeeList = new ArrayList<>();
+//        array = getResources().getStringArray(R.array.string_array_coffee);
+//        for (String item : array) {
+//            coffeeList.add(item);
+//        }
+//        List<String> pastaList = new ArrayList<>();
+//        array = getResources().getStringArray(R.array.string_array_pasta);
+//        for (String item : array) {
+//            pastaList.add(item);
+//        }
+//        List<String> coldDrinkList = new ArrayList<>();
+//        array = getResources().getStringArray(R.array.string_array_cold_drinks);
+//        for (String item : array) {
+//            coldDrinkList.add(item);
+//        }
+//        listDataChild.put(listDataGroup.get(0), alcoholList);
+//        listDataChild.put(listDataGroup.get(1), coffeeList);
+//        listDataChild.put(listDataGroup.get(2), pastaList);
+//        listDataChild.put(listDataGroup.get(3), coldDrinkList);
+//        exStepLvListViewAdapter.notifyDataSetChanged();
+//        exStepLanListViewAdapter.notifyDataSetChanged();
     }
 
     @Override

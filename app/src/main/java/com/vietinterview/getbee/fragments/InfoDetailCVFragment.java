@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
-import com.vietinterview.getbee.api.response.jobs.JobList;
 
 import butterknife.BindView;
 
@@ -66,17 +65,23 @@ public class InfoDetailCVFragment extends BaseFragment {
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         tvPhone.setText(detailCVResponse.getPhone());
         tvEmail.setText(detailCVResponse.getEmail());
-        tvGender.setText("unkonw");
+        if (detailCVResponse.getSex() != null) {
+            if (detailCVResponse.getSex() == 1)
+                tvGender.setText(getResources().getString(R.string.male));
+            else if (detailCVResponse.getSex() == 0)
+                tvGender.setText(getResources().getString(R.string.female));
+            else tvGender.setText(getResources().getString(R.string.other_sex));
+        }
         tvAdd.setText(detailCVResponse.getAddress());
-        tvCity.setText("unknown");
+        tvCity.setText(detailCVResponse.getCity().getName());
         tvSignle.setText("unknown");
-        tvPositionWish.setText("unknown");
-        tvLevelNow.setText("unknown");
-        tvLevelWish.setText("unknown");
+        tvPositionWish.setText(detailCVResponse.getCvTitle());
+        tvLevelNow.setText(detailCVResponse.getCurrentLevel().getName());
+        tvLevelWish.setText(detailCVResponse.getDesiredLevel().getName());
         tvCarrer.setText(detailCVResponse.getCareerName());
         tvAddWork.setText(detailCVResponse.getJobListcityName());
-        tvEducation.setText("unkonown");
-        tvExp.setText("unkonwo");
+        tvEducation.setText(detailCVResponse.getEducationLevel().getName());
+        tvExp.setText(detailCVResponse.getExperienceYear().getName());
         tvSalary.setText(detailCVResponse.getDesiredSalary() + "");
         tvTarget.setText(detailCVResponse.getCareerObjectives());
     }

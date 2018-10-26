@@ -19,6 +19,7 @@ import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.api.response.jobs.JobsResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
+import com.vietinterview.getbee.constant.ApiConstant;
 import com.vietinterview.getbee.utils.DialogUtil;
 
 import java.util.ArrayList;
@@ -151,7 +152,7 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
             showCoverNetworkLoading();
 
-        getApplyedSearchJobsRequest = new GetApplyedSearchJobsRequest(careerId, cityId, "10", jobtile, page);
+        getApplyedSearchJobsRequest = new GetApplyedSearchJobsRequest(careerId, cityId, String.valueOf(ApiConstant.LIMIT), jobtile, page);
         getApplyedSearchJobsRequest.callRequest(new ApiObjectCallBack<JobsResponse>() {
 
             @Override
@@ -166,7 +167,7 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
                     adapter.notifyItemRemoved(jobsList.size());
                 }
                 jobsList.addAll(data.getJobList());
-                titleHeader.setText(data.getTotal() + " công việc được nộp");
+                titleHeader.setText(data.getTotal() + " " + getResources().getString(R.string.job_applyed));
                 adapter.notifyDataSetChanged();
                 adapter.setLoaded();
             }
@@ -176,7 +177,7 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
                 if (mSwipeRefreshLayout != null)
                     mSwipeRefreshLayout.setRefreshing(false);
                 hideCoverNetworkLoading();
-                DialogUtil.showDialog(getActivity(), "Thông báo", message);
+                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
             }
         });
     }

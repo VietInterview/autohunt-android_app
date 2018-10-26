@@ -60,7 +60,7 @@ public class MyJobFragment extends BaseFragment {
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-        getEventBaseFragment().doFillBackground("Công việc của tôi");
+        getEventBaseFragment().doFillBackground(getResources().getString(R.string.my_job));
         setCustomToolbar(true);
         setHasOptionsMenu(true);
         tvCityName.setText(mCityName);
@@ -122,20 +122,20 @@ public class MyJobFragment extends BaseFragment {
 
     private void setupTabIcons() {
         TextView tabOne = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabOne.setText("Công việc đã lưu");
+        tabOne.setText(getResources().getString(R.string.job_saved));
         tabOne.setTextColor(getResources().getColor(R.color.black));
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabTwo.setText("Công việc đã nộp");
+        tabTwo.setText(getResources().getString(R.string.job_applyed));
         tabTwo.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
         tabLayout.getTabAt(1).setCustomView(tabTwo);
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFrag(new JobsSavedFragment().newInstance(mCityId, mCarrerId), "Công việc đã lưu");
-        adapter.addFrag(new JobsApplyedFragment().newInstance(mCityId, mCarrerId), "Công việc đã nộp");
+        adapter.addFrag(new JobsSavedFragment().newInstance(mCityId, mCarrerId), getResources().getString(R.string.job_saved));
+        adapter.addFrag(new JobsApplyedFragment().newInstance(mCityId, mCarrerId), getResources().getString(R.string.job_applyed));
         viewPager.setCurrentItem(0);
         viewPager.setAdapter(adapter);
     }

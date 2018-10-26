@@ -10,8 +10,6 @@ import android.widget.TextView;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 import com.vietinterview.getbee.customview.FlowLayout;
-import com.vietinterview.getbee.customview.NunitoTextView;
-import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.LayoutUtils;
 
 import butterknife.BindView;
@@ -42,13 +40,13 @@ public class SkillDetailCVFragment extends BaseFragment {
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-        if (detailCVResponse.getLstCvSkill().size() > 0) {
-            tvSkillPrimary.setText(detailCVResponse.getLstCvSkill().get(0).getPrimarySkill());
+        if (detailCVResponse.getCvSkill() != null) {
+            tvSkillPrimary.setText(detailCVResponse.getCvSkill().getPrimarySkill());
             mFlowLayout.removeAllViews();
-            for (int i = 0; i < detailCVResponse.getLstCvSkill().size(); i++) {
+            for (int i = 0; i < detailCVResponse.getCvSkill().getLstOtherSkillName().size(); i++) {
                 LinearLayout linearLayout = (LinearLayout) LayoutUtils.inflate(mFlowLayout, R.layout.other_skill_item_view, false);
                 TextView tvSkillOther = (TextView) linearLayout.findViewById(R.id.tvSkillOther);
-                tvSkillOther.setText(detailCVResponse.getLstCvSkill().get(i).getOtherSkill());
+                tvSkillOther.setText(detailCVResponse.getCvSkill().getLstOtherSkillName().get(i));
                 mFlowLayout.addView(linearLayout);
             }
         }

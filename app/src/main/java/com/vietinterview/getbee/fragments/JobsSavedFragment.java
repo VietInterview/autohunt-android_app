@@ -18,6 +18,7 @@ import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.api.response.jobs.JobsResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
+import com.vietinterview.getbee.constant.ApiConstant;
 import com.vietinterview.getbee.utils.DialogUtil;
 
 import java.util.ArrayList;
@@ -159,7 +160,7 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
             showCoverNetworkLoading();
 
-        getSavedSearchJobsRequest = new GetSavedSearchJobsRequest(careerId, cityId, "10", jobtile, page);
+        getSavedSearchJobsRequest = new GetSavedSearchJobsRequest(careerId, cityId, String.valueOf(ApiConstant.LIMIT), jobtile, page);
         getSavedSearchJobsRequest.callRequest(new ApiObjectCallBack<JobsResponse>() {
 
             @Override
@@ -174,7 +175,7 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
                     adapter.notifyItemRemoved(jobsList.size());
                 }
                 jobsList.addAll(data.getJobList());
-                titleHeader.setText(data.getTotal() + " công việc được lưu");
+                titleHeader.setText(data.getTotal() + " "+getResources().getString(R.string.job_saved));
                 adapter.notifyDataSetChanged();
                 adapter.setLoaded();
             }

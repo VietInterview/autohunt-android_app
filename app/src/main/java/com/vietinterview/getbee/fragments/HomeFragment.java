@@ -13,12 +13,14 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ContextMenu;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,6 +34,7 @@ import com.vietinterview.getbee.api.response.jobs.JobsResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.callback.OnRefreshHomeListener;
+import com.vietinterview.getbee.constant.ApiConstant;
 import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.customview.ClearableRegularEditText;
 import com.vietinterview.getbee.utils.DebugLog;
@@ -61,8 +64,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     TextView tvCarrerName;
     @BindView(R.id.tvCityName)
     TextView tvCityName;
-    //    @BindView(R.id.llDatePub)
-//    LinearLayout llDatePub;
     @BindView(R.id.titleHeader)
     TextView titleHeader;
     @BindView(R.id.llHeader)
@@ -75,13 +76,13 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     SwipeRefreshLayout mSwipeRefreshLayout;
     private boolean visibleSearch = false;
     private boolean visibleCondition = false;
-    public JobsAdapter adapter;
+    private JobsAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private static RecyclerView recyclerView;
+    private RecyclerView recyclerView;
     private ArrayList<JobList> jobsList = new ArrayList<>();
     private ArrayList<JobList> jobsListServer = new ArrayList<>();
     private GetSearchJobsRequest getSearchJobsRequest;
-    int mPage = 0;
+    private int mPage = 0;
     private boolean mIsCity = false;
     private String mCarrerId = "0";
     private String mCarrerName = "";
@@ -89,7 +90,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private String mCityName = "";
     private String strSearch = "";
     private Menu menu;
-    MenuItem mItem;
+    private MenuItem mItem;
 
     public static HomeFragment newInstance(String nameFragment) {
         HomeFragment fm = new HomeFragment();
@@ -166,6 +167,16 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
             }
         });
+        edtJobTitle.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        edtJobTitle.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    getSearchJob(mCarrerId, mCityId, strSearch, mPage);
+                }
+                return false;
+            }
+        });
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
                 android.R.color.holo_green_dark,
@@ -192,17 +203,17 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             getSearchJob(mCarrerId, mCityId, strSearch, mPage);
     }
 
-    @OnClick(R.id.fab)
-    public void onFabClick() {
-        startActivity(new Intent(getActivity(), CreateNewCVActivity.class));
+//    @OnClick(R.id.fab)
+//    public void onFabClick() {
+//        startActivity(new Intent(getActivity(), CreateNewCVActivity.class));
 //        FragmentUtil.pushFragment(getActivity(), this, new CreateNewCVFragment(), null);
-    }
+//    }
 
     public void getSearchJob(String careerId, String cityId, String jobtile, final int page) {
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
             showCoverNetworkLoading();
 
-        getSearchJobsRequest = new GetSearchJobsRequest(careerId, cityId, "10", jobtile, page);
+        getSearchJobsRequest = new GetSearchJobsRequest(careerId, cityId, ApiConstant.LIMIT, jobtile, page);
         getSearchJobsRequest.callRequest(new ApiObjectCallBack<JobsResponse>() {
 
             @Override
@@ -217,7 +228,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                     adapter.notifyItemRemoved(jobsList.size());
                 }
                 jobsList.addAll(data.getJobList());
-                titleHeader.setText(data.getTotal() + " công việc được tìm thấy");
+                titleHeader.setText(data.getTotal() + " " + getResources().getString(R.string.job_found));
                 adapter.notifyDataSetChanged();
                 adapter.setLoaded();
             }
@@ -227,7 +238,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 if (mSwipeRefreshLayout != null)
                     mSwipeRefreshLayout.setRefreshing(false);
                 hideCoverNetworkLoading();
-                DialogUtil.showDialog(getActivity(), "Thông báo", message);
+                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
             }
         });
     }

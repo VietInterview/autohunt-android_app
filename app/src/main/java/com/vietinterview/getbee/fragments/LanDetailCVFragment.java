@@ -66,7 +66,7 @@ public class LanDetailCVFragment extends BaseFragment {
             for (LstLanguage item : detailCVResponse.getLstLanguage()) {
                 alcoholList.add(item);
             }
-            listDataChild.put(listDataGroup.get(i).getLanguageId() + "", alcoholList);
+            listDataChild.put(listDataGroup.get(i).getLanguageName(), alcoholList);
         }
         exStepLanListViewAdapter.notifyDataSetChanged();
     }

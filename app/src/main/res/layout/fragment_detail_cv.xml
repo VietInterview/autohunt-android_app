@@ -67,7 +67,7 @@
                         android:orientation="vertical">
 
                         <com.vietinterview.getbee.customview.NunitoBoldTextView
-                            android:id="@+id/tvcompanyName"
+                            android:id="@+id/tvFullName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -78,7 +78,7 @@
                             android:textSize="18sp" />
 
                         <com.vietinterview.getbee.customview.NunitoTextView
-                            android:id="@+id/tvjobTitle"
+                            android:id="@+id/tvBirthDay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -90,6 +90,7 @@
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/imgAva"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_centerHorizontal="true"

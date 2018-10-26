@@ -1,55 +1,72 @@
 <resources>
     <string name="app_name">GetBee</string>
-    <string name="action_settings">Settings</string>
     <string name="dialog_btn_close">Close</string>
     <string name="apierror">API error</string>
     <string name="pleaseinputdata">Please input data</string>
-    <string name="dialog_error_api">Đã xảy ra lỗi. Vui lòng thử lại từ thời gian sau đó.</string>
-    <string name="dialog_error_timeout">センターへの接続が失敗しました。\nしばらく経ってからもう1度お試しください。</string>
-    <string name="dialog_error_no_connection">ネットワークに接続できません。もう一度ご確認ください。</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="hello_blank_fragment">Anh DQ</string>
-    <string name="fck">f<sub><small>ck</small></sub> [mpa]</string>
-    <string name="some_string">meters<sup>2</sup></string>
-    <string-array name="jobs_array">
-        <item>An toàn lao đông</item>
-        <item>Bác sĩ</item>
-        <item>Bán hàng</item>
-        <item>Bán hàng kỹ thuật </item>
-        <item>Bán sỉ/Bán lẻ</item>
-        <item>Bảo hiểm</item>
-        <item>Bảo trì/Sửa chữa</item>
-    </string-array>
-    <string-array name="stepLabels">
-        <item>Thông tin</item>
-        <item>Kinh nghiệm</item>
-        <item>Trình độ</item>
-        <item>Kỹ năng</item>
-    </string-array>
-    <string-array name="string_array_alcohol">
-        <item>Vodka</item>
-    </string-array>
-
-    <string-array name="string_array_coffee">
-        <item>Espresso</item>
-    </string-array>
-
-    <string-array name="string_array_pasta">
-        <item>Carbonara</item>
-    </string-array>
-
-    <string-array name="string_array_cold_drinks">
-        <item>Cola</item>
-    </string-array>
-    <string name="text_alcohol">Alcohol</string>
-    <string name="text_coffee">Coffee</string>
-    <string name="text_pasta">Pasta</string>
-    <string name="text_cold_drinks">Cold Drinks</string>
-    <string name="text_expanded">Expanded</string>
-    <string name="text_collapsed">Collapsed</string>
 
     <string name="home">Trang chủ</string>
     <string name="input_search_key">Nhập từ khóa tìm kiếm</string>
     <string name="title_dialog_choose_send_cv">Lựa chọn phương thức</string>
+    <string name="job_found"> công việc được tìm thấy</string>
+    <string name="noti_title">Thông báo</string>
+    <string name="carrer">Ngành nghề</string>
+    <string name="city">Thành phố</string>
+    <string name="all_carrer">Tất cả ngành nghề</string>
+    <string name="all_city">Tất cả thành phố</string>
+    <string name="change_password">Thay đổi mật khẩu</string>
+    <string name="choice_cv">Chọn CV của tôi</string>
+    <string name="cv_found">CV được tìm thấy</string>
+    <string name="edit">Sửa</string>
+    <string name="cancel">Hủy</string>
+    <string name="create_new_cv">Tạo mới CV</string>
+    <string name="cv_applyed">CV đã được nộp</string>
+    <string name="not_send">Chưa gửi</string>
+    <string name="wait_approve">Chờ duyệt</string>
+    <string name="approved">Đã duyệt</string>
+    <string name="interviewd">Đã phỏng vấn</string>
+    <string name="accept_offer">Đã nhận việc</string>
+    <string name="cv_submited">Đã đã nộp</string>
+    <string name="cv_submited_title">CV đã được nộp</string>
+    <string name="info">Thông tin</string>
+    <string name="exp">Kinh nghiệm</string>
+    <string name="level">Trình độ</string>
+    <string name="language">Ngoại ngữ</string>
+    <string name="skill">Kỹ năng</string>
+    <string name="detail_job">Chi tiết công việc</string>
+    <string name="save_job">Lưu công việc</string>
+    <string name="saved_job">Đã lưu việc</string>
+    <string name="hiring">Đang tuyển</string>
+    <string name="closed">Đã đóng</string>
+    <string name="statistic">Thống kê</string>
+    <string name="male">Nam</string>
+    <string name="female">Nữ</string>
+    <string name="other_sex">Khác</string>
+    <string name="job_saved"> công việc đã lưu</string>
+    <string name="job_applyed"> công việc đã nộp</string>
+    <string name="input_email">Xin hãy nhập email</string>
+    <string name="input_pass">Xin hãy nhập mật khẩu</string>
+    <string name="mycv">CV của tôi</string>
+    <string name="cv_saved">CV đã lưu</string>
+    <string name="cv_applyed_tit">CV đã nộp</string>
+    <string name="cv_saved_found">CV đã lưu được tìm thấy</string>
+    <string name="my_job">Công việc của tôi</string>
+    <string name="input_name">Xin hãy nhập họ và tên</string>
+    <string name="input_phone">Xin hãy nhập số điện thoại</string>
+    <string name="email_esxit">Email đã tồn tại trong hệ thống</string>
+    <string name="regist_succces">Bạn đã đăng ký tài khoản Cộng tác viên. Chúng tôi sẽ gửi thông tin email và mật khẩu qua hòm thư mà bạn đã đăng ký</string>
+    <string name="status">Trạng thái</string>
+    <string name="all_status">Tất cả trạng thái</string>
+    <string name="choose">Chọn</string>
+    <string name="not_save">Chưa lưu</string>
+    <string name="saved">Lưu việc</string>
+    <string name="applyed">Đã nộp</string>
+    <string name="approve">Đã duyệt</string>
+    <string name="seen">Đã xem</string>
+    <string name="not_accept">Từ chối</string>
+    <string name="invite_interview">Mời PV</string>
+    <string name="interviewed">Đã PV</string>
+    <string name="offered">Đã Offer</string>
+    <string name="go_to_work">Đi làm</string>
+    <string name="contract">Ký hợp đồng</string>
+    <string name="default_key">Mặc định</string>
 </resources>

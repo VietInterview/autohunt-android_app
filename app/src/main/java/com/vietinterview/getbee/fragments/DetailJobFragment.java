@@ -78,7 +78,7 @@ public class DetailJobFragment extends BaseFragment {
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-        getEventBaseFragment().doFillBackground("Chi tiết công viêc");
+        getEventBaseFragment().doFillBackground(getResources().getString(R.string.detail_job));
         setCustomToolbar(true);
 //        setHasOptionsMenu(true);
         viewPager = (ViewPager) root.findViewById(R.id.viewpager);
@@ -118,13 +118,13 @@ public class DetailJobFragment extends BaseFragment {
                 Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
                 img.setBounds(0, 0, 40, 50);
                 saveUnsaveJob.setCompoundDrawables(img, null, null, null);
-                saveUnsaveJob.setText("Lưu công việc");
+                saveUnsaveJob.setText(getResources().getString(R.string.save_job));
                 saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
                 saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_unsave_button));
             } else {
                 Drawable img = getContext().getResources().getDrawable(R.drawable.ic_saved);
                 img.setBounds(0, 0, 40, 50);
-                saveUnsaveJob.setText("Đã lưu việc");
+                saveUnsaveJob.setText(getResources().getString(R.string.saved_job));
                 saveUnsaveJob.setCompoundDrawables(img, null, null, null);
                 saveUnsaveJob.setTextColor(getResources().getColor(R.color.red));
                 saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_save_button));
@@ -133,7 +133,7 @@ public class DetailJobFragment extends BaseFragment {
             Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
             img.setBounds(0, 0, 40, 50);
             saveUnsaveJob.setCompoundDrawables(img, null, null, null);
-            saveUnsaveJob.setText("Lưu công việc");
+            saveUnsaveJob.setText(getResources().getString(R.string.save_job));
             saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
             saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_unsave_button));
         }
@@ -151,10 +151,10 @@ public class DetailJobFragment extends BaseFragment {
                 tvcompanyName.setText(data.getCompanyName());
                 tvjobTitle.setText(data.getJobTitle());
                 if (data.getStatus() == 1) {
-                    tvstatus.setText("Đang tuyển");
+                    tvstatus.setText(getResources().getString(R.string.hiring));
                     llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));
                 } else {
-                    tvstatus.setText("Đã đóng");
+                    tvstatus.setText(getResources().getString(R.string.closed));
                     llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_notyet_send));
                 }
                 setupViewPager(viewPager);
@@ -181,7 +181,7 @@ public class DetailJobFragment extends BaseFragment {
             @Override
             public void onFail(int failCode, DetailJobResponse data, List<DetailJobResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
-                DialogUtil.showDialog(getActivity(), "Thông báo", message, new DialogInterface.OnClickListener() {
+                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         FragmentUtil.popBackStack(DetailJobFragment.this);
@@ -207,13 +207,13 @@ public class DetailJobFragment extends BaseFragment {
                         img.setBounds(0, 0, 40, 50);
                         saveUnsaveJob.setCompoundDrawables(img, null, null, null);
                         saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
-                        saveUnsaveJob.setText("Lưu công việc");
+                        saveUnsaveJob.setText(getResources().getString(R.string.save_job));
                         saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_unsave_button));
                     } else if (data.getStatus() == 1) {
                         Drawable img = getContext().getResources().getDrawable(R.drawable.ic_saved);
                         img.setBounds(0, 0, 40, 50);
                         saveUnsaveJob.setCompoundDrawables(img, null, null, null);
-                        saveUnsaveJob.setText("Đã lưu viêc");
+                        saveUnsaveJob.setText(getResources().getString(R.string.saved_job));
                         saveUnsaveJob.setTextColor(getResources().getColor(R.color.red));
                         saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_save_button));
                     }
@@ -255,26 +255,26 @@ public class DetailJobFragment extends BaseFragment {
 
     private void setupTabIcons() {
         TextView tabOne = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabOne.setText("Thông tin");
+        tabOne.setText(getResources().getString(R.string.info));
         tabOne.setTextColor(getResources().getColor(R.color.black));
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabTwo.setText("Thống kê");
+        tabTwo.setText(getResources().getString(R.string.statistic));
         tabTwo.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
         tabLayout.getTabAt(1).setCustomView(tabTwo);
 
         TextView tabThree = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabThree.setText("CV đã nộp");
+        tabThree.setText(getResources().getString(R.string.cv_submited));
         tabThree.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
         tabLayout.getTabAt(2).setCustomView(tabThree);
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFrag(new InfoFragment().newInstance(detailJobResponse), "Thông tin");
-        adapter.addFrag(new StatisticalFragment().newInstance(detailJobResponse), "Thống kê");
-        adapter.addFrag(new CVSentFragment().newInstance(detailJobResponse), "CV đã nộp");
+        adapter.addFrag(new InfoFragment().newInstance(detailJobResponse), getResources().getString(R.string.info));
+        adapter.addFrag(new StatisticalFragment().newInstance(detailJobResponse), getResources().getString(R.string.statistic));
+        adapter.addFrag(new CVSentFragment().newInstance(detailJobResponse), getResources().getString(R.string.cv_submited));
         viewPager.setCurrentItem(0);
         viewPager.setOffscreenPageLimit(0);
         viewPager.setAdapter(adapter);

@@ -1,7 +1,6 @@
 package com.vietinterview.getbee.adapter;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +50,7 @@ public class ExExpListViewAdapter extends BaseExpandableListAdapter {
         TextView tvJobDes = convertView.findViewById(R.id.tvJobDes);
         TextView tvAchievements = convertView.findViewById(R.id.tvAchievements);
         tvCompanyName.setText(lstEmploymentHi.getCompanyName());
-        tvQuantityEmploy.setText("unknown");
+        tvQuantityEmploy.setText(lstEmploymentHi.getHumanResources() + "");
         tvJobTitle.setText(lstEmploymentHi.getTitle());
         tvWorkTime.setText(lstEmploymentHi.getFromMonth() + " - " + lstEmploymentHi.getToMonth());
         tvSalary.setText(lstEmploymentHi.getSalary() + "");

@@ -64,7 +64,7 @@ public class MyCVFragment extends BaseFragment {
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-        getEventBaseFragment().doFillBackground("CV của tôi");
+        getEventBaseFragment().doFillBackground(getResources().getString(R.string.mycv));
         setCustomToolbar(true);
         setHasOptionsMenu(true);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.underline_tablyaout));
@@ -125,12 +125,12 @@ public class MyCVFragment extends BaseFragment {
 
     private void setupTabIcons() {
         TextView tabOne = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabOne.setText("CV đã lưu");
+        tabOne.setText(getResources().getString(R.string.cv_saved));
         tabOne.setTextColor(getResources().getColor(R.color.black));
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabTwo.setText("CV đã nộp");
+        tabTwo.setText(getResources().getString(R.string.cv_saved));
         tabTwo.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
         tabLayout.getTabAt(1).setCustomView(tabTwo);
     }

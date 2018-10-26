@@ -64,7 +64,7 @@ public class NotChoiceCVAdapter extends BaseAdapter {
             viewHolder.checkableLinearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentUtil.pushFragment(mChoiceCVFragment.getActivity(), mChoiceCVFragment, new DetailCVFragment().newInstance(mJobList, cvList.getId()), null);
+                    FragmentUtil.pushFragment(mChoiceCVFragment.getActivity(), mChoiceCVFragment, new DetailCVFragment().newInstance(mJobList, 56), null);
                 }
             });
             if (i % 2 == 0) {

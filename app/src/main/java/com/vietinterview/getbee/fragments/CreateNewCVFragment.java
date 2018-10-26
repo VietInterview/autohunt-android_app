@@ -38,7 +38,7 @@ public class CreateNewCVFragment extends BaseFragment implements BackFragment {
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         customToolbar(true);
         setMenuVisibility(true);
-        getEventBaseFragment().doFillBackground("Tạo CV mới");
+        getEventBaseFragment().doFillBackground(getResources().getString(R.string.create_new_cv));
         setupViewPager(mViewPager);
         getEventBaseFragment().setOnChangeStepExpListener(new OnChangeStepExpListener() {
             @Override

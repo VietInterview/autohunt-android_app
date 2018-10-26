@@ -43,7 +43,7 @@ public class CVSentFragment extends BaseFragment {
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         if (detailJobResponse.getLstJobApply() != null) {
-            tvCount.setText(detailJobResponse.getLstJobApply().size() + " CV đã được nộp");
+            tvCount.setText(detailJobResponse.getLstJobApply().size() + " " + getResources().getString(R.string.cv_submited_title));
             mFlowLayout.removeAllViews();
             for (int i = 0; i < detailJobResponse.getLstJobApply().size(); i++) {
                 LinearLayout linearLayout = (LinearLayout) LayoutUtils.inflate(mFlowLayout, R.layout.cv_sent_item_view, false);
@@ -55,40 +55,40 @@ public class CVSentFragment extends BaseFragment {
                 tvName.setText(detailJobResponse.getLstJobApply().get(i).getFullName());
                 tvDate.setText(DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(detailJobResponse.getLstJobApply().get(i).getCreatedDate()) + ""));
                 if (detailJobResponse.getLstJobApply().get(i).getStatus() == 1) {
-                    btnStatus.setText("Chưa gửi");
+                    btnStatus.setText(getResources().getString(R.string.not_send));
                     llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_notyet_send));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 2) {
-                    btnStatus.setText("Chờ duyệt");
+                    btnStatus.setText(getResources().getString(R.string.wait_approve));
                     llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_red));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 3) {
-                    btnStatus.setText("Đã phê duyệt");
+                    btnStatus.setText(getResources().getString(R.string.approved));
                     llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_yellow));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 4) {
-                    btnStatus.setText("Đã xem");
+                    btnStatus.setText(getResources().getString(R.string.seen));
                     llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_yellow));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 5) {
-                    btnStatus.setText("Từ chối");
+                    btnStatus.setText(getResources().getString(R.string.not_accept));
                     llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_notyet_send));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 6) {
-                    btnStatus.setText("Mời phỏng vấn");
+                    btnStatus.setText(getResources().getString(R.string.invite_interview));
                     llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_red));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 7) {
-                    btnStatus.setText("Đã phỏng vấn");
+                    btnStatus.setText(getResources().getString(R.string.interviewd));
                     llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_yellow));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 8) {
-                    btnStatus.setText("Đã offer");
+                    btnStatus.setText(getResources().getString(R.string.offered));
                     llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 9) {
-                    btnStatus.setText("Đã nhận việc");
+                    btnStatus.setText(getResources().getString(R.string.accept_offer));
                     llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_yellow));
                 } else {
-                    btnStatus.setText("Đã submit");
+                    btnStatus.setText(getResources().getString(R.string.cv_submited));
                     llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_yellow));
                 }
                 mFlowLayout.addView(linearLayout);
             }
         } else {
-            tvCount.setText("0 CV đã được nộp");
+            tvCount.setText("0 " + getResources().getString(R.string.cv_submited_title));
         }
     }
 

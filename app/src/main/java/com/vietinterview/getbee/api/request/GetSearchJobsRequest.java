@@ -15,11 +15,11 @@ import java.util.List;
 public class GetSearchJobsRequest extends BaseRequest<JobsResponse> {
     String mCareerId;
     String mCityId;
-    String mItemPerPage;
+    int mItemPerPage;
     String mJobtile;
     int mPage;
 
-    public GetSearchJobsRequest(String careerId, String cityId, String itemPerPage, String jobtile, int page) {
+    public GetSearchJobsRequest(String careerId, String cityId, int itemPerPage, String jobtile, int page) {
         this.mCareerId = careerId;
         this.mCityId = cityId;
         this.mItemPerPage = itemPerPage;
