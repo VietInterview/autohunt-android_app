@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:padding="@dimen/activity_vertical_margin"
-                android:text="Số điện thoại"
+                android:text="@string/phone_number"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:padding="@dimen/activity_vertical_margin"
-                android:text="Giới tính"
+                android:text="@string/sex"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:paddingHorizontal="@dimen/activity_vertical_margin"
-                android:text="Địa chỉ hiện tại"
+                android:text="@string/address"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -127,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:padding="@dimen/activity_vertical_margin"
-                android:text="Tỉnh/thành phố"
+                android:text="@string/city"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -152,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:padding="@dimen/activity_vertical_margin"
-                android:text="Tình trạng hôn nhân"
+                android:text="@string/married"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -177,7 +177,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:padding="@dimen/activity_vertical_margin"
-                android:text="Vị trí mong muốn"
+                android:text="@string/position_wish"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -202,7 +202,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:padding="@dimen/activity_vertical_margin"
-                android:text="Cấp bậc hiện tại"
+                android:text="@string/level_current"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -227,7 +227,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:padding="@dimen/activity_vertical_margin"
-                android:text="Cấp bậc mong muốn"
+                android:text="@string/level_wish"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -252,7 +252,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:padding="@dimen/activity_vertical_margin"
-                android:text="Ngành nghề"
+                android:text="@string/carrer"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -277,7 +277,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:padding="@dimen/activity_vertical_margin"
-                android:text="Địa điểm làm việc"
+                android:text="@string/location_work"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -302,7 +302,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:padding="@dimen/activity_vertical_margin"
-                android:text="Trình độ học vấn cao nhất"
+                android:text="@string/level"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -327,7 +327,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:padding="@dimen/activity_vertical_margin"
-                android:text="Tổng số năm kinh nghiệm"
+                android:text="@string/exp_years"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -352,7 +352,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:padding="@dimen/activity_vertical_margin"
-                android:text="Mong muốn mức lương tối thiểu"
+                android:text="@string/salary_wish"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -377,7 +377,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:padding="@dimen/activity_vertical_margin"
-                android:text="Mục tiêu nghề nghiệp"
+                android:text="@string/target"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 

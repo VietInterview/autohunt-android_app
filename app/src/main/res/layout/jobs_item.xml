@@ -90,7 +90,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Ngành nghề"
+                        android:text="@string/carrer"
                         android:textColor="#505059"
                         android:textSize="16sp" />
 
@@ -115,7 +115,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Địa điểm"
+                        android:text="@string/location"
                         android:textColor="#505059"
                         android:textSize="16sp" />
 
@@ -140,7 +140,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Thời hạn tuyển"
+                        android:text="@string/exp_date"
                         android:textColor="#505059"
                         android:textSize="16sp" />
 
@@ -164,7 +164,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Tiền thưởng"
+                        android:text="@string/money_reward"
                         android:textColor="#505059"
                         android:textSize="16sp" />
 

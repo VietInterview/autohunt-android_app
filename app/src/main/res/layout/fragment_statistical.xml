@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="Ứng viên đã ứng tuyển"
+                android:text="@string/candidate_applied"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -51,7 +51,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:text="Số ứng viên đã gửi"
+                android:text="@string/candidate_send"
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
@@ -86,7 +86,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="2"
                 android:background="@android:color/transparent"
-                android:text="Số cộng tác viên đã quan tâm"
+                android:text="@string/contributer_interest"
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
@@ -121,7 +121,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="2"
                 android:background="@android:color/transparent"
-                android:text="Số ứng viên đã phỏng vấn"
+                android:text="@string/candidate_interviewed"
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
@@ -157,7 +157,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:text="Số ứng viên đã Offer"
+                android:text="@string/candidate_offered"
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
@@ -194,7 +194,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="3"
                 android:background="@android:color/transparent"
-                android:text="Số ứng viên được nhận vào làm"
+                android:text="@string/candidate_work"
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
@@ -229,7 +229,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="Ứng viên của tôi"
+                android:text="@string/my_candidate"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -254,7 +254,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:text="Số ứng viên đã gửi"
+                android:text="@string/candidate_send"
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
@@ -290,7 +290,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="2"
                 android:background="@android:color/transparent"
-                android:text="Số ứng viên được mời phỏng vấn"
+                android:text="@string/candidate_invite_interview"
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
@@ -326,7 +326,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="2"
                 android:background="@android:color/transparent"
-                android:text="Số ứng viên đã phỏng vấn"
+                android:text="@string/candidate_interviewed"
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
@@ -362,7 +362,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:text="Số ứng viên đã Offer"
+                android:text="@string/candidate_offered"
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
@@ -398,7 +398,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="3"
                 android:background="@android:color/transparent"
-                android:text="Số ứng viên được nhận vào làm"
+                android:text="@string/candidate_work"
                 android:textColor="#505059"
                 android:textSize="16sp" />
 

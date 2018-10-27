@@ -69,7 +69,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
-                    android:hint="Ngành Nghề" />
+                    android:hint="@string/carrer" />
 
                 <com.vietinterview.getbee.customview.NunitoTextView
                     android:id="@+id/tvCarrerName"
@@ -109,7 +109,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
-                    android:hint="Địa điểm" />
+                    android:hint="@string/location" />
 
                 <com.vietinterview.getbee.customview.NunitoTextView
                     android:id="@+id/tvCityName"

@@ -22,7 +22,7 @@
             android:layout_weight="2.9"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Thông báo"
+            android:text="@string/noti_title"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="24dp"
-        android:text="Tài khoản đăng nhập hoặc mật khẩu của bạn không đúng. Xin vui lòng nhập lại!"
+        android:text="@string/wrong_acc"
         android:textSize="18sp" />
 
     <LinearLayout

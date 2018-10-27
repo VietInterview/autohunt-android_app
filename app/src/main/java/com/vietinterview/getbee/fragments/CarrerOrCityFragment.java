@@ -236,7 +236,7 @@ public class CarrerOrCityFragment extends BaseFragment {
         mMenuItem = menuItem;
         if (menuItem != null) {
             TextView textView = (TextView) menuItem.getActionView();
-            textView.setText("Chọn");
+            textView.setText(getResources().getString(R.string.choose));
             textView.setPadding(0, 0, 16, 0);
             textView.setTextSize(18);
             textView.setTextColor(Color.BLACK);
@@ -300,7 +300,7 @@ public class CarrerOrCityFragment extends BaseFragment {
         MenuItem menuItem = mMenu.findItem(R.id.choose);
         if (menuItem != null) {
             TextView textView = (TextView) menuItem.getActionView();
-            textView.setText("Chọn");
+            textView.setText(getResources().getString(R.string.choose));
             textView.setTextSize(18);
             textView.setTextColor(Color.BLACK);
             textView.setPadding(0, 0, 16, 0);

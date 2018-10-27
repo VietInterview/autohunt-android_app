@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:text="Tên công ty/ tổ chức"
+                android:text="@string/company_organization"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:text="Quy mô nhân sự"
+                android:text="@string/human_resource"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:text="Chức danh"
+                android:text="@string/job_title"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:text="Thời gian làm việc"
+                android:text="@string/work_time"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -145,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:text="Mức lương"
+                android:text="@string/salary_level"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -171,7 +171,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:text="Mô tả công việc"
+                android:text="@string/job_des"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -197,7 +197,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:text="Thành tích đạt được"
+                android:text="@string/achievement"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 

@@ -14,7 +14,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:padding="@dimen/activity_vertical_margin"
-            android:text="Mật khẩu"
             android:textColor="#000000"
             android:textSize="16sp" />
 
@@ -24,7 +23,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:padding="@dimen/activity_vertical_margin"
-            android:text="Ngày nộp: 04/10/2018"
             android:textColor="#191830"
             android:textSize="16sp" />
 
@@ -41,7 +39,6 @@
                 android:id="@+id/tvStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chờ duyệt"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
         </LinearLayout>

@@ -24,7 +24,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:text="Ngành Nghề"
+                android:text="@string/carrer"
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
@@ -60,7 +60,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:text="Cấp bậc"
+                android:text="@string/position"
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
@@ -96,7 +96,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:text="Địa điểm"
+                android:text="@string/location"
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
@@ -132,7 +132,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:text="Ngày đăng tuyển"
+                android:text="@string/pub_date"
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
@@ -168,7 +168,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:text="Thời hạn đăng tuyển"
+                android:text="@string/exp_date"
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
@@ -204,7 +204,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:text="Trạng thái"
+                android:text="@string/status"
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
@@ -240,7 +240,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1.2"
                 android:background="@android:color/transparent"
-                android:text="Lương ứng viên"
+                android:text="@string/salary"
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
@@ -276,7 +276,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:text="Thưởng CTV"
+                android:text="@string/reward_ctv"
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
@@ -312,7 +312,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:text="Số lượng cần tuyển"
+                android:text="@string/quantity_hiring"
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
@@ -348,7 +348,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:text="CV đã gửi"
+                android:text="@string/cv_send"
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
@@ -384,7 +384,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="Mô tả công việc"
+                android:text="@string/job_des"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 

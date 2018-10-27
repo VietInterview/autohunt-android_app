@@ -205,8 +205,10 @@ public class LoginFragment extends BaseFragment {
                     if (status == 200) {
                         UserInfoBean userInfoBean = new UserInfoBean();
                         userInfoBean.nickname = edtEmail.getText().toString().trim();
+                        userInfoBean.name = edtEmail.getText().toString().trim().split("[$&<@%*]")[0];
                         userInfoBean.access_token = data.getApiToken();
                         AccountManager.setUserInfoBean(userInfoBean);
+                        getEventBaseFragment().setTextGreeting(AccountManager.getUserInfoBean().name);
                         if (getActivity() instanceof MainActivity) {
                             ((MainActivity) getActivity()).drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                         }

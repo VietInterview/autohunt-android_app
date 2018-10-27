@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:text="Kỹ năng chính"
+            android:text="@string/skill_main"
             android:textColor="#505059"
             android:textSize="18sp" />
 
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:text="Kỹ năng khác"
+            android:text="@string/other_skill"
             android:textColor="#505059"
             android:textSize="18sp" />
 

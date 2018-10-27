@@ -72,7 +72,7 @@
             android:gravity="center"
             android:paddingHorizontal="16dp"
             android:paddingVertical="8dp"
-            android:text="Mức thưởng dự kiến mà bạn sẽ nhận được: 4,000,000 VNĐ (tương ứng với 68%)"
+            android:text="@string/hunt_reward"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:visibility="gone" />
@@ -95,7 +95,7 @@
             android:paddingLeft="48dp"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:text="Chỉ gửi CV"
+            android:text="@string/cv_reward_title"
             android:textColor="@color/black"
             android:textSize="26sp" />
 
@@ -115,7 +115,7 @@
             android:gravity="center"
             android:paddingHorizontal="16dp"
             android:paddingVertical="8dp"
-            android:text="Mức thưởng dự kiến mà bạn sẽ nhận được: 1,000,000 VNĐ (tương ứng với 47%)"
+            android:text="@string/cv_reward"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:visibility="gone" />

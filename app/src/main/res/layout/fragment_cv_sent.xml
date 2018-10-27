@@ -28,7 +28,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="5 CV đã được nộp"
                 android:textColor="#B1B1BA"
                 android:textSize="12sp" />
         </LinearLayout>

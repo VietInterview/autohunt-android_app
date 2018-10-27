@@ -8,6 +8,7 @@ import com.vietinterview.getbee.callback.OnFillBackgroundListener;
 import com.vietinterview.getbee.callback.OnRefreshHomeListener;
 import com.vietinterview.getbee.callback.OnRefreshMyCVSavedListener;
 import com.vietinterview.getbee.callback.OnRefreshMyCVSubmitListener;
+import com.vietinterview.getbee.callback.OnSetTextGreetingListener;
 import com.vietinterview.getbee.callback.OnShowLogoListener;
 
 /**
@@ -21,6 +22,7 @@ public class Event implements Parcelable {
     private OnChangeStepExpListener onChangeStepExpListener;
     private OnRefreshMyCVSavedListener onRefreshMyCVListener;
     private OnRefreshMyCVSubmitListener onRefreshMyCVSubmitListener;
+    private OnSetTextGreetingListener onSetTextGreetingListener;
 
     protected Event(Parcel in) {
     }
@@ -40,6 +42,10 @@ public class Event implements Parcelable {
             return new Event[size];
         }
     };
+
+    public void setOnSetTextGreetingListener(OnSetTextGreetingListener onSetTextGreetingListener) {
+        this.onSetTextGreetingListener = onSetTextGreetingListener;
+    }
 
     public void setOnRefreshMyCVSubmitListener(OnRefreshMyCVSubmitListener onRefreshMyCVSubmitListener) {
         this.onRefreshMyCVSubmitListener = onRefreshMyCVSubmitListener;
@@ -98,6 +104,12 @@ public class Event implements Parcelable {
     public void refreshMyCVSubmit() {
         if (this.onRefreshMyCVSubmitListener != null) {
             this.onRefreshMyCVSubmitListener.onRefreshMyCVSubmit();
+        }
+    }
+
+    public void setTextGreeting(String name) {
+        if (this.onSetTextGreetingListener != null) {
+            this.onSetTextGreetingListener.onSetTextGreeting(name);
         }
     }
 

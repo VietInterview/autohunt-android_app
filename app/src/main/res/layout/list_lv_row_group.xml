@@ -21,7 +21,6 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:paddingLeft="8dp"
-            android:text="fdsfsdfsdfsdf"
             android:textColor="#505059"
             android:textSize="18sp" />
 
@@ -31,7 +30,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvSchoolName"
             android:paddingLeft="8dp"
-            android:text="Canon Vietnam"
             android:textColor="#B1B1BA"
             android:textSize="16sp" />
 

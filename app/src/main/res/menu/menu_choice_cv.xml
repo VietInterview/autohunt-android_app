@@ -9,6 +9,6 @@
     <item
         android:id="@+id/edit"
         android:orderInCategory="10"
-        android:title="Sửa"
+        android:title="@string/edit"
         app:showAsAction="ifRoom" />
 </menu>

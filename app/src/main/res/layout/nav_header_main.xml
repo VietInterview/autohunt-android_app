@@ -19,10 +19,10 @@
         app:srcCompat="@android:drawable/sym_def_app_icon" />
 
     <com.vietinterview.getbee.customview.NunitoTextView
+        android:id="@+id/tvGreeting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="Xin chào, Tùng!"
         android:textSize="30sp"
         android:textColor="@color/white"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />

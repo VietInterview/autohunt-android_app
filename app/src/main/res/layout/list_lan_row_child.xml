@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:text="Nghe"
+                android:text="@string/listen"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:text="Nói"
+                android:text="@string/speak"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:text="Đọc"
+                android:text="@string/read"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:text="Viết"
+                android:text="@string/write"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 

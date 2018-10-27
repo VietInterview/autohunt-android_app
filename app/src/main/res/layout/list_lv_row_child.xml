@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:text="Tên bằng cấp/chứng chỉ"
+                android:text="@string/degree_certificate"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:text="Trường/đơn vị đào tạo"
+                android:text="@string/school_training"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:text="Thời gian"
+                android:text="@string/time"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -109,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:text="Chuyên nghành"
+                android:text="@string/specialized"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -135,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:text="Loại tốt nghiệp"
+                android:text="@string/graduation_type"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 

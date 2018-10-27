@@ -53,6 +53,6 @@
         android:layout_height="24dp"
         android:layout_weight="1"
         android:background="@drawable/borderbutton_notyet_send"
-        android:text="Chưa gửi"
+        android:text="@string/not_send"
         android:textColor="@color/white" />
 </com.vietinterview.getbee.customview.CheckableLinearLayout>

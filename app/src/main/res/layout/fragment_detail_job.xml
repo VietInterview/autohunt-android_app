@@ -149,7 +149,6 @@
                 android:drawableLeft="@drawable/ic_save"
                 android:drawablePadding="-16dp"
                 android:paddingLeft="16dp"
-                android:text="Lưu công việc"
                 android:textColor="#B1B1BA" />
 
             <com.vietinterview.getbee.customview.NunitoBoldButton
@@ -161,7 +160,7 @@
                 android:drawableLeft="@drawable/ic_addcv"
                 android:drawablePadding="-32dp"
                 android:paddingLeft="32dp"
-                android:text="Nộp CV" />
+                android:text="@string/apply_cv" />
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.callback.OnFillBackgroundListener;
+import com.vietinterview.getbee.callback.OnSetTextGreetingListener;
 import com.vietinterview.getbee.callback.OnShowLogoListener;
 import com.vietinterview.getbee.customview.CircularTextView;
 import com.vietinterview.getbee.customview.CustomTypefaceSpan;
@@ -55,6 +56,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public DrawerLayout drawer;
     @BindView(R.id.mainview)
     public CoordinatorLayout mainview;
+    TextView tvGreeting;
     public ActionBarDrawerToggle toggle;
 
     CircularTextView slideshow;
@@ -78,6 +80,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 imglogo.setVisibility(View.GONE);
             }
         });
+        View headerView = navigationView.getHeaderView(0);
+        tvGreeting = (TextView) headerView.findViewById(R.id.tvGreeting);
+        getEventBaseActivity().setOnSetTextGreetingListener(new OnSetTextGreetingListener() {
+            @Override
+            public void onSetTextGreeting(String name) {
+                tvGreeting.setText(getResources().getString(R.string.greeting) + name + "!");
+            }
+        });
         getEventBaseActivity().setOnShowLogoListener(new OnShowLogoListener() {
             @Override
             public void onShowLogo(boolean isShowLogo) {
@@ -93,6 +103,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (AccountManager.getUserInfoBean() != null) {
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             navigationView.setCheckedItem(R.id.nav_home);
+            tvGreeting.setText(getResources().getString(R.string.greeting) + AccountManager.getUserInfoBean().name + "!");
             FragmentUtil.replaceFragment(this, new HomeFragment(), null);
         } else {
             FragmentUtil.replaceFragment(MainActivity.this, new LoginFragment(), null);
@@ -161,6 +172,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void initData() {
+    }
+
+    public TextView getTvGreeting() {
+        return tvGreeting;
     }
 
     private void initializeCountDrawer() {
