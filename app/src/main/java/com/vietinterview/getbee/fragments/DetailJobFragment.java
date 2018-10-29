@@ -24,6 +24,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ViewPagerAdapter;
 import com.vietinterview.getbee.api.request.GetDetailJobRequest;
@@ -154,7 +157,12 @@ public class DetailJobFragment extends BaseFragment {
                 detailJobResponse = data;
                 tvcompanyName.setText(data.getCompanyName());
                 tvjobTitle.setText(data.getJobTitle());
-                Glide.with(getActivity()).load(data.getCompanyImg()).into(imgCompany);
+                RequestOptions options = new RequestOptions()
+                        .fitCenter()
+                        .error(R.drawable.ic_company_null)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .priority(Priority.HIGH);
+                Glide.with(getActivity()).load(data.getCompanyImg()).apply(options).into(imgCompany);
                 if (data.getStatus() == 1) {
                     tvstatus.setText(getResources().getString(R.string.hiring));
                     llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));

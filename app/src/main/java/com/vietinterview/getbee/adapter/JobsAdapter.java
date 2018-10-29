@@ -1,5 +1,6 @@
 package com.vietinterview.getbee.adapter;
 
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.SaveUnsaveJobRequest;
 import com.vietinterview.getbee.api.response.AddRemoveJobResponse;
@@ -89,9 +94,12 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int listPosition) {
         if (holder instanceof MyViewHolder) {
             final MyViewHolder myViewHolder = (MyViewHolder) holder;
-//            if (dataSet.get(listPosition).getCompanyImg() != null) {
-            Glide.with(mActivity).load(dataSet.get(listPosition).getCompanyImg()).into(myViewHolder.imgBussiness);
-//            }
+            RequestOptions options = new RequestOptions()
+                    .fitCenter()
+                    .error(R.drawable.ic_company_null)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .priority(Priority.HIGH);
+            Glide.with(mActivity).load(dataSet.get(listPosition).getCompanyImg()).apply(options).into(myViewHolder.imgBussiness);
             myViewHolder.tvjobTitle.setText(StringUtils.nullStrToEmpty(dataSet.get(listPosition).getJobTitle()));
             myViewHolder.tvCompanyName.setText(dataSet.get(listPosition).getCompanyName());
             myViewHolder.tvCarrer.setText(dataSet.get(listPosition).getCareerName());
