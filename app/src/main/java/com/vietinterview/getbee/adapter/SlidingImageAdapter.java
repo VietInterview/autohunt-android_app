@@ -21,14 +21,14 @@ import java.util.ArrayList;
 /**
  * Created by SONU on 29/08/15.
  */
-public class SlidingImage_Adapter extends PagerAdapter {
+public class SlidingImageAdapter extends PagerAdapter {
     private ArrayList<Integer> IMAGES;
     ArrayList<String> introString;
     private LayoutInflater inflater;
     private Context context;
     BaseActivity baseActivity;
 
-    public SlidingImage_Adapter(Context context, ArrayList<Integer> IMAGES, ArrayList<String> introString, BaseActivity baseActivity) {
+    public SlidingImageAdapter(Context context, ArrayList<Integer> IMAGES, ArrayList<String> introString, BaseActivity baseActivity) {
         this.context = context;
         this.IMAGES = IMAGES;
         this.introString = introString;

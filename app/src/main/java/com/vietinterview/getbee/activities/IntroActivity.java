@@ -1,12 +1,10 @@
 package com.vietinterview.getbee.activities;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.support.v4.view.ViewPager;
-import android.widget.ImageView;
 
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.adapter.SlidingImage_Adapter;
+import com.vietinterview.getbee.adapter.SlidingImageAdapter;
 import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -17,7 +15,7 @@ import java.util.ArrayList;
  * Created by hienvv7 on 05/07/2017.
  */
 
-public class SplashActivity extends BaseActivity {
+public class IntroActivity extends BaseActivity {
     private static ViewPager mPager;
     private static int currentPage = 0;
     private static int NUM_PAGES = 0;
@@ -55,7 +53,7 @@ public class SplashActivity extends BaseActivity {
         for (int i = 0; i < String.length; i++)
             StringsArray.add(String[i]);
         mPager = (ViewPager) findViewById(R.id.pager);
-        mPager.setAdapter(new SlidingImage_Adapter(SplashActivity.this, ImagesArray, StringsArray, this));
+        mPager.setAdapter(new SlidingImageAdapter(IntroActivity.this, ImagesArray, StringsArray, this));
         CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(mPager);
         final float density = getResources().getDisplayMetrics().density;

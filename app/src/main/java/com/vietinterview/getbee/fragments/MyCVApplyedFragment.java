@@ -105,7 +105,7 @@ public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLay
                 cvResponse = data;
                 cvListsServer.clear();
                 cvListsServer.addAll(data.getCvList());
-                tvCountCV.setText(data.getTotal() + " CV " + getResources().getString(R.string.cv_found));
+                tvCountCV.setText(data.getTotal() + " " + getResources().getString(R.string.cv_found));
                 if (page == 0) cvLists.clear();
                 else {
 ////                    jobsList.remove(jobsList.size() - 1);
