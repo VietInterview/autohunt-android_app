@@ -137,4 +137,6 @@
     <string name="specialized">Chuyên nghành</string>
     <string name="graduation_type">Loại tốt nghiệp</string>
     <string name="greeting">Xin chào,</string>
+    <string name="update">Cập nhật: </string>
+    <string name="error_please_try">Đã có lỗi xảy ra, xin thử lại sau.</string>
 </resources>

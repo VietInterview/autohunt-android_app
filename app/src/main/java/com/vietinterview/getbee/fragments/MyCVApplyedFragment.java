@@ -97,7 +97,7 @@ public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLay
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
             showCoverNetworkLoading();
         searchCVSubmitRequest = new SearchCVSubmitRequest(page, status, carrerId, cityId);
-        searchCVSubmitRequest.callRequest(new ApiObjectCallBack<CVResponse>() {
+        searchCVSubmitRequest.callRequest(getActivity(), new ApiObjectCallBack<CVResponse>() {
             @Override
             public void onSuccess(CVResponse data, List<CVResponse> dataArrayList, int status, String message) {
                 hideCoverNetworkLoading();

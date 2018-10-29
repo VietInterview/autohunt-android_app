@@ -161,7 +161,7 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
             showCoverNetworkLoading();
 
         getSavedSearchJobsRequest = new GetSavedSearchJobsRequest(careerId, cityId, String.valueOf(ApiConstant.LIMIT), jobtile, page);
-        getSavedSearchJobsRequest.callRequest(new ApiObjectCallBack<JobsResponse>() {
+        getSavedSearchJobsRequest.callRequest(getActivity(), new ApiObjectCallBack<JobsResponse>() {
 
             @Override
             public void onSuccess(JobsResponse data, List<JobsResponse> dataArrayList, int status, String message) {
@@ -175,7 +175,7 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
                     adapter.notifyItemRemoved(jobsList.size());
                 }
                 jobsList.addAll(data.getJobList());
-                titleHeader.setText(data.getTotal() + " "+getResources().getString(R.string.job_saved));
+                titleHeader.setText(data.getTotal() + " " + getResources().getString(R.string.job_saved));
                 adapter.notifyDataSetChanged();
                 adapter.setLoaded();
             }

@@ -194,7 +194,7 @@ public class DetailCVFragment extends BaseFragment {
 
     public void getDetailCV(int id) {
         getDetailCVRequest = new GetDetailCVRequest(id);
-        getDetailCVRequest.callRequest(new ApiObjectCallBack<DetailCVResponse>() {
+        getDetailCVRequest.callRequest(getActivity(), new ApiObjectCallBack<DetailCVResponse>() {
             @Override
             public void onSuccess(DetailCVResponse data, List<DetailCVResponse> dataArrayList, int status, String message) {
                 detailCVResponse = data;

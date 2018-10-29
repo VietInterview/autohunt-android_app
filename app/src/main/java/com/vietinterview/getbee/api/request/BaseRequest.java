@@ -1,9 +1,12 @@
 package com.vietinterview.getbee.api.request;
 
+import android.content.Context;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.constant.ApiConstant;
 import com.vietinterview.getbee.utils.DebugLog;
@@ -25,9 +28,11 @@ public abstract class BaseRequest<T> {
     private JsonHttpResponseHandler mJsonHttpResponseHandler;
     private ApiObjectCallBack<T> mApiObjectCallBack;
     private List<T> tList;
+    private Context mContext;
 
-    public void callRequest(ApiObjectCallBack<T> tApiObjectCallBack) {
+    public void callRequest(Context context, ApiObjectCallBack<T> tApiObjectCallBack) {
         client.setTimeout(ApiConstant.REQUEST_TIMEOUT);
+        this.mContext = context;
         client.setConnectTimeout(ApiConstant.REQUEST_TIMEOUT);
         client.setResponseTimeout(ApiConstant.REQUEST_TIMEOUT);
         if (getAccessToken() != null) {
@@ -43,7 +48,7 @@ public abstract class BaseRequest<T> {
                     mApiObjectCallBack.onSuccess(GsonUtils.fromJson(response.toString(), getResponseClass()), null, statusCode, "");
                 } else {
                     DebugLog.showLogCat(statusCode + "");
-                    mApiObjectCallBack.onFail(statusCode, null, null, "Lỗi chưa biết");
+                    mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
                 }
             }
 
@@ -56,7 +61,7 @@ public abstract class BaseRequest<T> {
                     mApiObjectCallBack.onSuccess(null, tList, statusCode, "");
                 } else {
                     DebugLog.showLogCat(statusCode + "");
-                    mApiObjectCallBack.onFail(statusCode, null, null, "Lỗi chưa biết");
+                    mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
                 }
             }
 
@@ -92,7 +97,7 @@ public abstract class BaseRequest<T> {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 DebugLog.showLogCat(throwable.toString());
-                mApiObjectCallBack.onFail(statusCode, null, null, "Đã có lỗi xảy ra, xin thử lại sau.");
+                mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
             }
         };
         DebugLog.showLogCat(getAbsoluteUrl() + "\n" + putParams() + "\n " + getAccessToken());

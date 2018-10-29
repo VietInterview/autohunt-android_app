@@ -214,7 +214,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             showCoverNetworkLoading();
 
         getSearchJobsRequest = new GetSearchJobsRequest(careerId, cityId, ApiConstant.LIMIT, jobtile, page);
-        getSearchJobsRequest.callRequest(new ApiObjectCallBack<JobsResponse>() {
+        getSearchJobsRequest.callRequest(getActivity(), new ApiObjectCallBack<JobsResponse>() {
 
             @Override
             public void onSuccess(JobsResponse data, List<JobsResponse> dataArrayList, int status, String message) {

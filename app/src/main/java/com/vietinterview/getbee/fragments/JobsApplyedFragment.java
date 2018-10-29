@@ -153,7 +153,7 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
             showCoverNetworkLoading();
 
         getApplyedSearchJobsRequest = new GetApplyedSearchJobsRequest(careerId, cityId, String.valueOf(ApiConstant.LIMIT), jobtile, page);
-        getApplyedSearchJobsRequest.callRequest(new ApiObjectCallBack<JobsResponse>() {
+        getApplyedSearchJobsRequest.callRequest(getActivity(), new ApiObjectCallBack<JobsResponse>() {
 
             @Override
             public void onSuccess(JobsResponse data, List<JobsResponse> dataArrayList, int status, String message) {

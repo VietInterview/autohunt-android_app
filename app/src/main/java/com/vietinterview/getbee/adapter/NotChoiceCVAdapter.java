@@ -59,12 +59,12 @@ public class NotChoiceCVAdapter extends BaseAdapter {
             viewHolder.item_date = (TextView) view.findViewById(R.id.item_date);
             viewHolder.name.setText(cvList.getFullName());
             viewHolder.item_carrer.setText(cvList.getCareerName());
-            viewHolder.item_date.setText("Cập nhật: " + DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(cvList.getUpdatedDate()) + ""));
+            viewHolder.item_date.setText(inflater.getContext().getResources().getString(R.string.update) + " " + DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(cvList.getUpdatedDate()) + ""));
             viewHolder.checkableLinearLayout = (CheckableLinearLayout) view.findViewById(R.id.llCheck);
             viewHolder.checkableLinearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentUtil.pushFragment(mChoiceCVFragment.getActivity(), mChoiceCVFragment, new DetailCVFragment().newInstance(mJobList, 56), null);
+                    FragmentUtil.pushFragment(mChoiceCVFragment.getActivity(), mChoiceCVFragment, new DetailCVFragment().newInstance(mJobList, cvList.getId()), null);
                 }
             });
             if (i % 2 == 0) {

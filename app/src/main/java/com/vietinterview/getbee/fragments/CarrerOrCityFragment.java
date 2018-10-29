@@ -173,7 +173,7 @@ public class CarrerOrCityFragment extends BaseFragment {
     public void getListCarrer() {
         showCoverNetworkLoading();
         getListCareerRequest = new GetListCareerRequest();
-        getListCareerRequest.callRequest(new ApiObjectCallBack<CareerResponse>() {
+        getListCareerRequest.callRequest(getActivity(), new ApiObjectCallBack<CareerResponse>() {
 
             @Override
             public void onSuccess(CareerResponse data, List<CareerResponse> dataArrayList, int status, String message) {
@@ -279,7 +279,7 @@ public class CarrerOrCityFragment extends BaseFragment {
     public void getListCity() {
         showCoverNetworkLoading();
         getListCityRequest = new GetListCityRequest();
-        getListCityRequest.callRequest(new ApiObjectCallBack<CityResponse>() {
+        getListCityRequest.callRequest(getActivity(), new ApiObjectCallBack<CityResponse>() {
             @Override
             public void onSuccess(CityResponse data, List<CityResponse> dataArrayList, int status, String message) {
                 hideCoverNetworkLoading();

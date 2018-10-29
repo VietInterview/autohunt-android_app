@@ -149,7 +149,7 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
             showCoverNetworkLoading();
         searchCVSaveRequest = new SearchCVSaveRequest(page);
-        searchCVSaveRequest.callRequest(new ApiObjectCallBack<CVResponse>() {
+        searchCVSaveRequest.callRequest(getActivity(), new ApiObjectCallBack<CVResponse>() {
             @Override
             public void onSuccess(CVResponse data, List<CVResponse> dataArrayList, int status, String message) {
                 hideCoverNetworkLoading();

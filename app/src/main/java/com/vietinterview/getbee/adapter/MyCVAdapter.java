@@ -123,7 +123,7 @@ public class MyCVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 @Override
                 public void onClick(View view) {
                     baseFragment.showCoverNetworkLoading();
-                    new DeleteCVRequest(cvLists.get(position).getId()).callRequest(new ApiObjectCallBack() {
+                    new DeleteCVRequest(cvLists.get(position).getId()).callRequest(mContext, new ApiObjectCallBack() {
                         @Override
                         public void onSuccess(Object data, List dataArrayList, int status, String message) {
                             baseFragment.hideCoverNetworkLoading();

@@ -143,7 +143,7 @@ public class DetailJobFragment extends BaseFragment {
     public void getDetailJob(int jobId) {
         showCoverNetworkLoading();
         getDetailJobRequest = new GetDetailJobRequest(jobId);
-        getDetailJobRequest.callRequest(new ApiObjectCallBack<DetailJobResponse>() {
+        getDetailJobRequest.callRequest(getActivity(), new ApiObjectCallBack<DetailJobResponse>() {
             @Override
             public void onSuccess(DetailJobResponse data, List<DetailJobResponse> dataArrayList, int status, String message) {
                 hideCoverNetworkLoading();

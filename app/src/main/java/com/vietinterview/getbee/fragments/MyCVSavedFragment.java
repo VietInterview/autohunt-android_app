@@ -101,7 +101,7 @@ public class MyCVSavedFragment extends BaseFragment implements SwipeRefreshLayou
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
             showCoverNetworkLoading();
         searchCVSaveRequest = new SearchCVSaveRequest(page);
-        searchCVSaveRequest.callRequest(new ApiObjectCallBack<CVResponse>() {
+        searchCVSaveRequest.callRequest(getActivity(), new ApiObjectCallBack<CVResponse>() {
             @Override
             public void onSuccess(CVResponse data, List<CVResponse> dataArrayList, int status, String message) {
                 hideCoverNetworkLoading();
@@ -135,7 +135,7 @@ public class MyCVSavedFragment extends BaseFragment implements SwipeRefreshLayou
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
             showCoverNetworkLoading();
         searchMyCVRequest = new SearchMyCVRequest(page, carrerId, cityId);
-        searchMyCVRequest.callRequest(new ApiObjectCallBack<CVResponse>() {
+        searchMyCVRequest.callRequest(getActivity(), new ApiObjectCallBack<CVResponse>() {
             @Override
             public void onSuccess(CVResponse data, List<CVResponse> dataArrayList, int status, String message) {
                 hideCoverNetworkLoading();

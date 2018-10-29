@@ -137,4 +137,6 @@
     <string name="specialized">Specialized</string>
     <string name="graduation_type">Graduation type</string>
     <string name="greeting">Hello,</string>
+    <string name="update">Update: </string>
+    <string name="error_please_try">An error has occurred, please try again later.</string>
 </resources>
