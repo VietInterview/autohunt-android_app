@@ -168,6 +168,7 @@ public class DetailJobFragment extends BaseFragment {
                         saveUnsaveJob.setText(getResources().getString(R.string.cv_applyed_tit));
                         saveUnsaveJob.setCompoundDrawables(img, null, null, null);
                         saveUnsaveJob.setTextColor(getResources().getColor(R.color.white));
+                        saveUnsaveJob.setEnabled(false);
                         saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));
                     }
                 } else {
@@ -241,6 +242,7 @@ public class DetailJobFragment extends BaseFragment {
                         Drawable img = getContext().getResources().getDrawable(R.drawable.ic_tick_white);
                         img.setBounds(0, 0, 40, 50);
                         saveUnsaveJob.setText(getResources().getString(R.string.cv_applyed_tit));
+                        saveUnsaveJob.setEnabled(false);
                         saveUnsaveJob.setCompoundDrawables(img, null, null, null);
                         saveUnsaveJob.setTextColor(getResources().getColor(R.color.white));
                         saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));
