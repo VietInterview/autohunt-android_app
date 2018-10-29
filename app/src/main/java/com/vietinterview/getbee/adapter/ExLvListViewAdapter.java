@@ -48,7 +48,11 @@ public class ExLvListViewAdapter extends BaseExpandableListAdapter {
         TextView tvGraduationType = convertView.findViewById(R.id.tvGraduationType);
         tvCertificate.setText(lstEducationHi.getSubject());
         tvSchoolName.setText(lstEducationHi.getSchool());
-        tvTime.setText(lstEducationHi.getFromMonth() + " - " + lstEducationHi.getToMonth());
+        String yearFrom = String.valueOf(lstEducationHi.getFromMonth()).substring(0, 4);
+        String monthFrom = String.valueOf(lstEducationHi.getFromMonth()).substring(4, 6);
+        String yearTo = String.valueOf(lstEducationHi.getToMonth()).substring(0, 4);
+        String monthTo = String.valueOf(lstEducationHi.getToMonth()).substring(4, 6);
+        tvTime.setText(monthFrom + "/" + yearFrom + " - " + monthTo + "/" + yearTo);
         tvSpecialize.setText(lstEducationHi.getCareer());
         tvGraduationType.setText(lstEducationHi.getGraduationTypeName());
         return convertView;
@@ -84,7 +88,11 @@ public class ExLvListViewAdapter extends BaseExpandableListAdapter {
         TextView tvSchoolName = convertView.findViewById(R.id.tvSchoolName);
         TextView tvTime = convertView.findViewById(R.id.tvTime);
         tvSchoolName.setText(lstEducationHi.getSchool());
-        tvTime.setText(lstEducationHi.getFromMonth() + " - " + lstEducationHi.getToMonth());
+        String yearFrom = String.valueOf(lstEducationHi.getFromMonth()).substring(0, 4);
+        String monthFrom = String.valueOf(lstEducationHi.getFromMonth()).substring(4, 6);
+        String yearTo = String.valueOf(lstEducationHi.getToMonth()).substring(0, 4);
+        String monthTo = String.valueOf(lstEducationHi.getToMonth()).substring(4, 6);
+        tvTime.setText(monthFrom + "/" + yearFrom + " - " + monthTo + "/" + yearTo);
         return convertView;
     }
 

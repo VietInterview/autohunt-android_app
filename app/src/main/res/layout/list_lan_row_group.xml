@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
     android:background="@android:color/transparent"
-    android:paddingHorizontal="16dp"
-    android:paddingTop="16dp">
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
@@ -12,7 +13,6 @@
         android:background="@drawable/border_expandable_group"
         android:orientation="vertical"
         android:padding="8dp">
-
 
         <com.vietinterview.getbee.customview.NunitoTextView
             android:id="@+id/tvLanguage"

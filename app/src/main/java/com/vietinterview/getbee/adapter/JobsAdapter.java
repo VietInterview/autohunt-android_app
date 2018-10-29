@@ -90,7 +90,7 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (holder instanceof MyViewHolder) {
             final MyViewHolder myViewHolder = (MyViewHolder) holder;
 //            if (dataSet.get(listPosition).getCompanyImg() != null) {
-            Glide.with(mActivity).load("https://pbs.twimg.com/profile_images/710856659325874176/7ybxcLl8_400x400.jpg").into(myViewHolder.imgBussiness);
+            Glide.with(mActivity).load(dataSet.get(listPosition).getCompanyImg()).into(myViewHolder.imgBussiness);
 //            }
             myViewHolder.tvjobTitle.setText(StringUtils.nullStrToEmpty(dataSet.get(listPosition).getJobTitle()));
             myViewHolder.tvCompanyName.setText(dataSet.get(listPosition).getCompanyName());

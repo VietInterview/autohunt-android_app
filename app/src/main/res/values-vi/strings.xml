@@ -139,4 +139,13 @@
     <string name="greeting">Xin chào, </string>
     <string name="update">Cập nhật: </string>
     <string name="error_please_try">Đã có lỗi xảy ra, xin thử lại sau.</string>
+    <string name="good">Tốt</string>
+    <string name="rather">Khá</string>
+    <string name="medium">Trung bình</string>
+    <string name="least">Kém</string>
+    <string name="have_married">Đã kết hôn</string>
+    <string name="not_have_married">Chưa kết hôn</string>
+    <string name="delete">Xóa</string>
+    <string name="job_saved_tit">Công việc đã lưu</string>
+    <string name="job_applyed_tit">Công việc đã nộp</string>
 </resources>

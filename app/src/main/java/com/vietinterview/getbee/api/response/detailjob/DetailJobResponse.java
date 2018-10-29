@@ -99,7 +99,7 @@ public class DetailJobResponse implements Parcelable {
     private Integer myCountGotoWork;
     @SerializedName("companyImg")
     @Expose
-    private Object companyImg;
+    private String companyImg;
     @SerializedName("lstJobApply")
     @Expose
     private List<LstJobApply> lstJobApply = null;
@@ -468,11 +468,11 @@ public class DetailJobResponse implements Parcelable {
         this.myCountGotoWork = myCountGotoWork;
     }
 
-    public Object getCompanyImg() {
+    public String getCompanyImg() {
         return companyImg;
     }
 
-    public void setCompanyImg(Object companyImg) {
+    public void setCompanyImg(String companyImg) {
         this.companyImg = companyImg;
     }
 

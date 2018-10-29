@@ -49,6 +49,10 @@ public class ExLanListViewAdapter extends BaseExpandableListAdapter {
         tvSpeak.setText(genString(lstLanguage.getSpeak()));
         tvRead.setText(genString(lstLanguage.getRead()));
         tvWrite.setText(genString(lstLanguage.getWrite()));
+        if (childPosition == this.listDataChild.get(this.listDataGroup.get(groupPosition).getLanguageName()).size() - 1) {
+            convertView.setPadding(32, 0, 32, 32);
+        } else
+            convertView.setPadding(0, 0, 0, 0);
         return convertView;
     }
 
@@ -56,20 +60,20 @@ public class ExLanListViewAdapter extends BaseExpandableListAdapter {
         String valueString;
         switch (value) {
             case 1:
-                valueString = "Tốt";
+                valueString = context.getResources().getString(R.string.good);
                 break;
             case 2:
-                valueString = "khá";
+                valueString = context.getResources().getString(R.string.rather);
                 break;
             case 3:
-                valueString = "Trung bình";
+                valueString = context.getResources().getString(R.string.medium);
                 break;
             case 4:
-                valueString = "kém";
+                valueString = context.getResources().getString(R.string.least);
                 break;
 
             default:
-                valueString = "Invalid";
+                valueString = "";
                 break;
         }
         return valueString;
@@ -104,6 +108,10 @@ public class ExLanListViewAdapter extends BaseExpandableListAdapter {
         }
         TextView tvLanguage = convertView.findViewById(R.id.tvLanguage);
         tvLanguage.setText(lstLanguage.getLanguageName());
+        if (isExpanded)
+            convertView.setPadding(32, 32, 32, 0);
+        else
+            convertView.setPadding(32, 32, 32, 32);
         return convertView;
     }
 

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.detailcv.LstEmploymentHi;
+import com.vietinterview.getbee.utils.DebugLog;
 
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +53,11 @@ public class ExExpListViewAdapter extends BaseExpandableListAdapter {
         tvCompanyName.setText(lstEmploymentHi.getCompanyName());
         tvQuantityEmploy.setText(lstEmploymentHi.getHumanResources() + "");
         tvJobTitle.setText(lstEmploymentHi.getTitle());
-        tvWorkTime.setText(lstEmploymentHi.getFromMonth() + " - " + lstEmploymentHi.getToMonth());
+        String yearFrom = String.valueOf(lstEmploymentHi.getFromMonth()).substring(0, 4);
+        String monthFrom = String.valueOf(lstEmploymentHi.getFromMonth()).substring(4, 6);
+        String yearTo = String.valueOf(lstEmploymentHi.getToMonth()).substring(0, 4);
+        String monthTo = String.valueOf(lstEmploymentHi.getToMonth()).substring(4, 6);
+        tvWorkTime.setText(monthFrom + "/" + yearFrom + " - " + monthTo + "/" + yearTo);
         tvSalary.setText(lstEmploymentHi.getSalary() + "");
         tvJobDes.setText(lstEmploymentHi.getJobDescription());
         tvAchievements.setText(lstEmploymentHi.getAchievement());

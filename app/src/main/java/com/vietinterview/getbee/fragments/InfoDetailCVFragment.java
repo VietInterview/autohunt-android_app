@@ -74,7 +74,11 @@ public class InfoDetailCVFragment extends BaseFragment {
         }
         tvAdd.setText(detailCVResponse.getAddress());
         tvCity.setText(detailCVResponse.getCity().getName());
-        tvSignle.setText("unknown");
+        if (detailCVResponse.getMaritalStatus() == 1) {
+            tvSignle.setText(getResources().getString(R.string.not_have_married));
+        } else {
+            tvSignle.setText(getResources().getString(R.string.have_married));
+        }
         tvPositionWish.setText(detailCVResponse.getCvTitle());
         tvLevelNow.setText(detailCVResponse.getCurrentLevel().getName());
         tvLevelWish.setText(detailCVResponse.getDesiredLevel().getName());

@@ -111,51 +111,51 @@ public class MyCVSubmitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (holder instanceof MyViewHolder) {
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvName)).setText(cvLists.get(position).getFullName());
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCarrer)).setText(cvLists.get(position).getCareerName());
-            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvDate)).setText("Cập nhật: " + DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(cvLists.get(position).getUpdatedDate()) + ""));
+            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvDate)).setText(mContext.getResources().getString(R.string.update) + " " + DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(cvLists.get(position).getUpdatedDate()) + ""));
             ((ViewPager) ((MyViewHolder) holder).mView).setCurrentItem(mItemSwipedStates.get(position).ordinal());
             if (cvLists.get(position).getStatus() == 0) {
                 ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_notyet_send));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Chưa gửi");
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.not_send));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
             } else if (cvLists.get(position).getStatus() == 1) {
                 ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_yellow));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Lưu việc");
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.save_job));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
             } else if (cvLists.get(position).getStatus() == 2) {
                 ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_yellow));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Đã nộp");
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.applyed));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
             } else if (cvLists.get(position).getStatus() == 3) {
                 ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_green));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Đã duyệt");
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.approved));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
             } else if (cvLists.get(position).getStatus() == 4) {
                 ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_yellow));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Đã xem");
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.seen));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
             } else if (cvLists.get(position).getStatus() == 5) {
                 ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_notyet_send));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Từ chối");
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.not_accept));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
             } else if (cvLists.get(position).getStatus() == 6) {
                 ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_red));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Mời PV");
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.invite_interview));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
             } else if (cvLists.get(position).getStatus() == 7) {
                 ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_green));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Đã PV");
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.interviewed));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
             } else if (cvLists.get(position).getStatus() == 8) {
                 ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_green));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Đã Offer");
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.offered));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
             } else if (cvLists.get(position).getStatus() == 9) {
                 ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_green));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Đi làm");
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.go_to_work));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
             } else if (cvLists.get(position).getStatus() == 10) {
                 ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_green));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Ký hợp đồng");
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.contract));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
             }
             if (position % 2 == 0) {
@@ -173,7 +173,6 @@ public class MyCVSubmitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             baseFragment.hideCoverNetworkLoading();
                             baseFragment.getEventBaseFragment().refreshMyCVSubmit();
                             notifyDataSetChanged();
-                            Toast.makeText(baseFragment.getActivity(), "Xóa thành công", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override

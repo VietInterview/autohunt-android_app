@@ -19,7 +19,7 @@ import android.widget.EditText;
 
 import com.akexorcist.localizationactivity.LocalizationActivity;
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.callback.DetectSwipeGestureListener;
+//import com.vietinterview.getbee.callback.DetectSwipeGestureListener;
 import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.model.Event;
 import com.vietinterview.getbee.utils.DebugLog;
@@ -41,16 +41,16 @@ public abstract class BaseActivity extends LocalizationActivity {
     BaseActivity baseActivity;
     boolean isUnregistEventBus = false;
     private Event eventBaseActivity;
-    private GestureDetectorCompat gestureDetectorCompat = null;
-    DetectSwipeGestureListener gestureListener = null;
+//    private GestureDetectorCompat gestureDetectorCompat = null;
+//    DetectSwipeGestureListener gestureListener = null;
 
-    public DetectSwipeGestureListener getGestureListener() {
-        return gestureListener;
-    }
-
-    public void setGestureListener(DetectSwipeGestureListener gestureListener) {
-        this.gestureListener = gestureListener;
-    }
+//    public DetectSwipeGestureListener getGestureListener() {
+//        return gestureListener;
+//    }
+//
+//    public void setGestureListener(DetectSwipeGestureListener gestureListener) {
+//        this.gestureListener = gestureListener;
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,19 +76,19 @@ public abstract class BaseActivity extends LocalizationActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.yellow));
         // Create a common gesture listener object.
-        gestureListener = new DetectSwipeGestureListener();
+//        gestureListener = new DetectSwipeGestureListener();
 
         // Set activity in the listener.
-        gestureListener.setActivity(this);
+//        gestureListener.setActivity(this);
 
         // Create the gesture detector with the gesture listener.
-        gestureDetectorCompat = new GestureDetectorCompat(this, gestureListener);
+//        gestureDetectorCompat = new GestureDetectorCompat(this, gestureListener);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         // Pass activity on touch event to the gesture detector.
-        gestureDetectorCompat.onTouchEvent(event);
+//        gestureDetectorCompat.onTouchEvent(event);
         // Return true to tell android OS that event has been consumed, do not pass it to other event listeners.
         return true;
     }
@@ -97,9 +97,9 @@ public abstract class BaseActivity extends LocalizationActivity {
         return eventBaseActivity;
     }
 
-    public GestureDetectorCompat getGestureDetectorCompat() {
-        return gestureDetectorCompat;
-    }
+//    public GestureDetectorCompat getGestureDetectorCompat() {
+//        return gestureDetectorCompat;
+//    }
 
 
     protected boolean checkApiDialogIsShow() {

@@ -109,7 +109,7 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
                 android.R.color.holo_green_dark,
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
-        setListViewFooter();
+//        setListViewFooter();
         setListOnScrollListener();
     }
 

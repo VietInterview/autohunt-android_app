@@ -147,6 +147,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         adapter = new JobsAdapter(recyclerView, jobsList, HomeFragment.this, getActivity());
         recyclerView.setAdapter(adapter);
 //        this.registerForContextMenu(llDatePub);
+        mCityName = getResources().getString(R.string.all_city);
+        mCarrerName = getResources().getString(R.string.all_carrer);
         tvCityName.setText(mCityName);
         tvCarrerName.setText(mCarrerName);
         edtJobTitle.addTextChangedListener(new TextWatcher() {
@@ -228,7 +230,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                     adapter.notifyItemRemoved(jobsList.size());
                 }
                 jobsList.addAll(data.getJobList());
-                titleHeader.setText(data.getTotal() + " " + getResources().getString(R.string.job_found));
+                titleHeader.setText(data.getTotal() + " " + getActivity().getResources().getString(R.string.job_found));
                 adapter.notifyDataSetChanged();
                 adapter.setLoaded();
             }

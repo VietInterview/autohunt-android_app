@@ -18,10 +18,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ViewPagerAdapter;
 import com.vietinterview.getbee.api.request.GetDetailJobRequest;
@@ -55,6 +57,8 @@ public class DetailJobFragment extends BaseFragment {
     LinearLayout llStatus;
     @BindView(R.id.rlHeader)
     RelativeLayout rlHeader;
+    @BindView(R.id.imgCompany)
+    ImageView imgCompany;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Dialog mNotifydialog;
@@ -150,6 +154,7 @@ public class DetailJobFragment extends BaseFragment {
                 detailJobResponse = data;
                 tvcompanyName.setText(data.getCompanyName());
                 tvjobTitle.setText(data.getJobTitle());
+                Glide.with(getActivity()).load(data.getCompanyImg()).into(imgCompany);
                 if (data.getStatus() == 1) {
                     tvstatus.setText(getResources().getString(R.string.hiring));
                     llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));

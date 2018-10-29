@@ -143,6 +143,9 @@ public class DetailCVResponse implements Parcelable {
     @SerializedName("sex")
     @Expose
     private Integer sex;
+    @SerializedName("maritalStatus")
+    @Expose
+    private Integer maritalStatus;
 
     protected DetailCVResponse(Parcel in) {
         address = in.readString();
@@ -244,6 +247,14 @@ public class DetailCVResponse implements Parcelable {
             return new DetailCVResponse[size];
         }
     };
+
+    public Integer getMaritalStatus() {
+        return maritalStatus;
+    }
+
+    public void setMaritalStatus(Integer maritalStatus) {
+        this.maritalStatus = maritalStatus;
+    }
 
     public Integer getSex() {
         return sex;

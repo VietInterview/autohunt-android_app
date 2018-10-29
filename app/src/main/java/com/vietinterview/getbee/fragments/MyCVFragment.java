@@ -50,12 +50,12 @@ public class MyCVFragment extends BaseFragment {
     private boolean mIsCity = false;
     private boolean mIsStatus = false;
     private int mPosition = 0;
-    private String mCarrerId = "4";
-    private String mCarrerName = "IT, Phần mềm";
-    private String mCityId = "1";
-    private String mCityName = "Hà Nội";
+    private String mCarrerId = "0";
+    private String mCarrerName = "";
+    private String mCityId = "0";
+    private String mCityName = "";
     private String mStatusId = "11";
-    private String mStatusName = "Mặc định";
+    private String mStatusName = "";
 
     @Override
     protected int getLayoutId() {
@@ -108,6 +108,9 @@ public class MyCVFragment extends BaseFragment {
 
             }
         });
+        mCityName = getResources().getString(R.string.all_city);
+        mCarrerName = getResources().getString(R.string.all_carrer);
+        mStatusName = getResources().getString(R.string.default_key);
         tvCarrerName.setText(mCarrerName);
         tvCityName.setText(mCityName);
         tvStatus.setText(mStatusName);
@@ -130,7 +133,7 @@ public class MyCVFragment extends BaseFragment {
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabTwo.setText(getResources().getString(R.string.cv_saved));
+        tabTwo.setText(getResources().getString(R.string.cv_applyed_tit));
         tabTwo.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
         tabLayout.getTabAt(1).setCustomView(tabTwo);
     }

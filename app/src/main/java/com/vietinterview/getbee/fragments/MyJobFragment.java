@@ -48,10 +48,10 @@ public class MyJobFragment extends BaseFragment {
     private Menu menu;
     private boolean visibleFilter = false;
     private boolean mIsCity = false;
-    private String mCarrerId = "4";
-    private String mCarrerName = "IT, Phần mềm";
-    private String mCityId = "1";
-    private String mCityName = "Hà Nội";
+    private String mCarrerId = "0";
+    private String mCarrerName = "";
+    private String mCityId = "0";
+    private String mCityName = "";
 
     @Override
     protected int getLayoutId() {
@@ -63,6 +63,8 @@ public class MyJobFragment extends BaseFragment {
         getEventBaseFragment().doFillBackground(getResources().getString(R.string.my_job));
         setCustomToolbar(true);
         setHasOptionsMenu(true);
+        mCityName = getResources().getString(R.string.all_city);
+        mCarrerName = getResources().getString(R.string.all_carrer);
         tvCityName.setText(mCityName);
         tvCarrerName.setText(mCarrerName);
         viewPager = (ViewPager) root.findViewById(R.id.viewpager);
@@ -122,12 +124,12 @@ public class MyJobFragment extends BaseFragment {
 
     private void setupTabIcons() {
         TextView tabOne = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabOne.setText(getResources().getString(R.string.job_saved));
+        tabOne.setText(getResources().getString(R.string.job_saved_tit));
         tabOne.setTextColor(getResources().getColor(R.color.black));
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabTwo.setText(getResources().getString(R.string.job_applyed));
+        tabTwo.setText(getResources().getString(R.string.job_applyed_tit));
         tabTwo.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
         tabLayout.getTabAt(1).setCustomView(tabTwo);
     }

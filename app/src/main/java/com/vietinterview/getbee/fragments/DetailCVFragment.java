@@ -1,6 +1,7 @@
 package com.vietinterview.getbee.fragments;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import com.vietinterview.getbee.api.request.GetDetailCVRequest;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
 import java.util.List;
@@ -193,10 +195,12 @@ public class DetailCVFragment extends BaseFragment {
     DetailCVResponse detailCVResponse;
 
     public void getDetailCV(int id) {
+        showCoverNetworkLoading();
         getDetailCVRequest = new GetDetailCVRequest(id);
         getDetailCVRequest.callRequest(getActivity(), new ApiObjectCallBack<DetailCVResponse>() {
             @Override
             public void onSuccess(DetailCVResponse data, List<DetailCVResponse> dataArrayList, int status, String message) {
+                hideCoverNetworkLoading();
                 detailCVResponse = data;
                 tvFullName.setText(detailCVResponse.getFullName());
                 tvBirthDay.setText(detailCVResponse.getBirthday() + "");
@@ -224,7 +228,13 @@ public class DetailCVFragment extends BaseFragment {
 
             @Override
             public void onFail(int failCode, DetailCVResponse data, List<DetailCVResponse> dataArrayList, String message) {
-
+                hideCoverNetworkLoading();
+                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        FragmentUtil.popBackStack(DetailCVFragment.this);
+                    }
+                });
             }
         });
     }

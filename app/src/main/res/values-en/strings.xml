@@ -139,4 +139,13 @@
     <string name="greeting">Hello,</string>
     <string name="update">Update: </string>
     <string name="error_please_try">An error has occurred, please try again later.</string>
+    <string name="good">Good</string>
+    <string name="rather">Rather</string>
+    <string name="medium">Medium</string>
+    <string name="least">Least</string>
+    <string name="have_married">Married</string>
+    <string name="not_have_married">Not married</string>
+    <string name="delete">Delete</string>
+    <string name="job_saved_tit">Job saved</string>
+    <string name="job_applyed_tit">Job Applyed</string>
 </resources>
