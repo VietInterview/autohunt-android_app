@@ -66,6 +66,7 @@ public class MyCVFragment extends BaseFragment {
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         getEventBaseFragment().doFillBackground(getResources().getString(R.string.mycv));
         setCustomToolbar(true);
+        setCustomToolbarVisible(true);
         setHasOptionsMenu(true);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.underline_tablyaout));
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

@@ -92,8 +92,7 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_centerHorizontal="true"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/ava" />
+                        android:background="@drawable/border_image" />
                 </RelativeLayout>
 
                 <android.support.design.widget.TabLayout

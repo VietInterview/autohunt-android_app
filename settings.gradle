@@ -1,1 +1,1 @@
-include ':app', ':library', ':floatingedittext'
+include ':app', ':library', ':floatingedittext',':libs:ViewPagerIndicator-Library'

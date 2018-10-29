@@ -17,6 +17,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        abortOnError false
+    }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES.txt'
         exclude 'META-INF/LICENSE.txt'
@@ -49,4 +52,5 @@ dependencies {
     implementation 'com.akexorcist:localizationactivity:1.1.2'
     implementation 'org.droidparts:droidparts:2.9.7'
     implementation 'net.skoumal.fragmentback:fragment-back:0.2.3'
+    implementation project(':libs:ViewPagerIndicator-Library')
 }

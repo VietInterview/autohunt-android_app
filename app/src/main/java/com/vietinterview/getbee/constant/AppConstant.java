@@ -12,5 +12,5 @@ public class AppConstant {
     public final static String VISIBLE_CONDITION = "VISIBLE_CONDITION";
     public final static String VISIBLE_FILTER = "VISIBLE_FILTER";
     public final static String LANGUAGE = "LANGUAGE";
-    public final static String IS_SEARCHING = "IS_SEARCHING";
+    public final static String FIRST = "FIRST";
 }

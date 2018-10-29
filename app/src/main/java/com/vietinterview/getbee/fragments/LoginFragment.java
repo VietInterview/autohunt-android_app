@@ -6,15 +6,18 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
+import android.text.Layout;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -32,6 +35,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.vietinterview.getbee.utils.EventBusHelper.post;
 
 /**
  * Created by hiepnguyennghia on 10/8/18.
@@ -66,6 +71,8 @@ public class LoginFragment extends BaseFragment {
     protected int getLayoutId() {
         return R.layout.fragment_login;
     }
+
+    boolean textFocus = false; //define somewhere globally in the class
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {

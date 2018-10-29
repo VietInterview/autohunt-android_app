@@ -34,6 +34,7 @@ import com.vietinterview.getbee.fragments.LoginFragment;
 import com.vietinterview.getbee.fragments.MyCVFragment;
 import com.vietinterview.getbee.fragments.MyJobFragment;
 import com.vietinterview.getbee.fragments.MyProfileFragment;
+import com.vietinterview.getbee.fragments.RegitsFragment;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
@@ -106,7 +107,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             tvGreeting.setText(getResources().getString(R.string.greeting) + AccountManager.getUserInfoBean().name + "!");
             FragmentUtil.replaceFragment(this, new HomeFragment(), null);
         } else {
-            FragmentUtil.replaceFragment(MainActivity.this, new LoginFragment(), null);
+            boolean isLogin = getIntent().getBooleanExtra("isLogin", true);
+            FragmentUtil.replaceFragment(MainActivity.this, isLogin ? new LoginFragment() : new RegitsFragment(), null);
         }
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.app_name, R.string.app_name) {
             public void onDrawerClosed(View view) {

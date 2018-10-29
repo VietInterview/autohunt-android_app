@@ -98,7 +98,7 @@
                 <com.vietinterview.getbee.customview.ClearableRegularEditText
                     android:id="@+id/edtEmail"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="6"
                     android:background="@null"
                     android:hint="@string/input_email"
@@ -142,7 +142,7 @@
                 <com.vietinterview.getbee.customview.ClearableRegularEditText
                     android:id="@+id/edtPass"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="6"
                     android:background="@null"
                     android:hint="@string/input_pass"

@@ -12,13 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ViewPagerAdapter;
 import com.vietinterview.getbee.api.request.GetDetailCVRequest;
+import com.vietinterview.getbee.api.request.SubmitCVRequest;
+import com.vietinterview.getbee.api.response.SubmitCVResponse;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
@@ -41,6 +48,8 @@ public class DetailCVFragment extends BaseFragment {
     TextView tvBirthDay;
     @BindView(R.id.imgAva)
     ImageView imgAva;
+    @BindView(R.id.llFooter)
+    LinearLayout llFooter;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private JobList mJobList;
@@ -88,6 +97,7 @@ public class DetailCVFragment extends BaseFragment {
 
             }
         });
+        if (mJobList == null) llFooter.setVisibility(View.GONE);
     }
 
     @Override
@@ -137,17 +147,40 @@ public class DetailCVFragment extends BaseFragment {
         tvHunt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mNotifydialog.dismiss();
-                FragmentUtil.popEntireFragmentBackStack(DetailCVFragment.this);
-                FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(mJobList), null);
+                new SubmitCVRequest(mCvId, mJobList.getId(), 1).callRequest(getActivity(), new ApiObjectCallBack<SubmitCVResponse>() {
+                    @Override
+                    public void onSuccess(SubmitCVResponse data, List<SubmitCVResponse> dataArrayList, int status, String message) {
+                        mNotifydialog.dismiss();
+                        FragmentUtil.popEntireFragmentBackStack(DetailCVFragment.this);
+                        FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(mJobList), null);
+                    }
+
+                    @Override
+                    public void onFail(int failCode, SubmitCVResponse data, List<SubmitCVResponse> dataArrayList, String message) {
+
+                    }
+                });
+
             }
         });
         tvSentCV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mNotifydialog.dismiss();
-                FragmentUtil.popEntireFragmentBackStack(DetailCVFragment.this);
-                FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(mJobList), null);
+                new SubmitCVRequest(mCvId, mJobList.getId(), 2).callRequest(getActivity(), new ApiObjectCallBack<SubmitCVResponse>() {
+                    @Override
+                    public void onSuccess(SubmitCVResponse data, List<SubmitCVResponse> dataArrayList, int status, String message) {
+                        mNotifydialog.dismiss();
+                        FragmentUtil.popEntireFragmentBackStack(DetailCVFragment.this);
+                        FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(mJobList), null);
+                    }
+
+                    @Override
+                    public void onFail(int failCode, SubmitCVResponse data, List<SubmitCVResponse> dataArrayList, String message) {
+
+                    }
+                });
+
+
             }
         });
         mNotifydialog.show();
@@ -204,7 +237,12 @@ public class DetailCVFragment extends BaseFragment {
                 detailCVResponse = data;
                 tvFullName.setText(detailCVResponse.getFullName());
                 tvBirthDay.setText(detailCVResponse.getBirthday() + "");
-                Glide.with(getActivity()).load(detailCVResponse.getPictureUrl()).into(imgAva);
+                RequestOptions options = new RequestOptions()
+                        .fitCenter()
+                        .error(R.drawable.ic_ava_null)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .priority(Priority.HIGH);
+                Glide.with(getActivity()).load(detailCVResponse.getPictureUrl()).apply(options).into(imgAva);
                 setupViewPager(viewPager);
                 tabLayout.setupWithViewPager(viewPager);
                 setupTabIcons();

@@ -23,7 +23,9 @@ import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.customview.NunitoRegularButton;
 import com.vietinterview.getbee.fragments.BaseFragment;
+import com.vietinterview.getbee.fragments.DetailCVFragment;
 import com.vietinterview.getbee.utils.DateUtil;
+import com.vietinterview.getbee.utils.FragmentUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,6 +115,12 @@ public class MyCVSubmitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCarrer)).setText(cvLists.get(position).getCareerName());
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvDate)).setText(mContext.getResources().getString(R.string.update) + " " + DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(cvLists.get(position).getUpdatedDate()) + ""));
             ((ViewPager) ((MyViewHolder) holder).mView).setCurrentItem(mItemSwipedStates.get(position).ordinal());
+            ((RelativeLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailCVFragment().newInstance(null, cvLists.get(position).getId()), null);
+                }
+            });
             if (cvLists.get(position).getStatus() == 0) {
                 ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_notyet_send));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.not_send));

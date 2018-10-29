@@ -119,31 +119,6 @@ public class DetailJobFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        if (mJobList.getCollStatus() != null) {
-            Integer collStatus = mJobList.getCollStatus();
-            if (collStatus == 0) {
-                Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
-                img.setBounds(0, 0, 40, 50);
-                saveUnsaveJob.setCompoundDrawables(img, null, null, null);
-                saveUnsaveJob.setText(getResources().getString(R.string.save_job));
-                saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
-                saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_unsave_button));
-            } else {
-                Drawable img = getContext().getResources().getDrawable(R.drawable.ic_saved);
-                img.setBounds(0, 0, 40, 50);
-                saveUnsaveJob.setText(getResources().getString(R.string.saved_job));
-                saveUnsaveJob.setCompoundDrawables(img, null, null, null);
-                saveUnsaveJob.setTextColor(getResources().getColor(R.color.red));
-                saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_save_button));
-            }
-        } else {
-            Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
-            img.setBounds(0, 0, 40, 50);
-            saveUnsaveJob.setCompoundDrawables(img, null, null, null);
-            saveUnsaveJob.setText(getResources().getString(R.string.save_job));
-            saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
-            saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_unsave_button));
-        }
         getDetailJob(mJobList.getId());
     }
 
@@ -169,6 +144,39 @@ public class DetailJobFragment extends BaseFragment {
                 } else {
                     tvstatus.setText(getResources().getString(R.string.closed));
                     llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_notyet_send));
+                }
+
+                if (data.getCollStatus() != null) {
+                    Integer collStatus = data.getCollStatus();
+                    if (collStatus == 0) {
+                        Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
+                        img.setBounds(0, 0, 40, 50);
+                        saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+                        saveUnsaveJob.setText(getResources().getString(R.string.save_job));
+                        saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
+                        saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_unsave_button));
+                    } else if (collStatus == 1) {
+                        Drawable img = getContext().getResources().getDrawable(R.drawable.ic_saved);
+                        img.setBounds(0, 0, 40, 50);
+                        saveUnsaveJob.setText(getResources().getString(R.string.saved_job));
+                        saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+                        saveUnsaveJob.setTextColor(getResources().getColor(R.color.red));
+                        saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_save_button));
+                    } else {
+                        Drawable img = getContext().getResources().getDrawable(R.drawable.ic_tick_white);
+                        img.setBounds(0, 0, 50, 50);
+                        saveUnsaveJob.setText(getResources().getString(R.string.cv_applyed_tit));
+                        saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+                        saveUnsaveJob.setTextColor(getResources().getColor(R.color.white));
+                        saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));
+                    }
+                } else {
+                    Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
+                    img.setBounds(0, 0, 40, 50);
+                    saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+                    saveUnsaveJob.setText(getResources().getString(R.string.save_job));
+                    saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
+                    saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_unsave_button));
                 }
                 setupViewPager(viewPager);
                 tabLayout.setupWithViewPager(viewPager);
@@ -229,6 +237,13 @@ public class DetailJobFragment extends BaseFragment {
                         saveUnsaveJob.setText(getResources().getString(R.string.saved_job));
                         saveUnsaveJob.setTextColor(getResources().getColor(R.color.red));
                         saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_save_button));
+                    } else {
+                        Drawable img = getContext().getResources().getDrawable(R.drawable.ic_tick_white);
+                        img.setBounds(0, 0, 40, 50);
+                        saveUnsaveJob.setText(getResources().getString(R.string.cv_applyed_tit));
+                        saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+                        saveUnsaveJob.setTextColor(getResources().getColor(R.color.white));
+                        saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));
                     }
                 }
             }
