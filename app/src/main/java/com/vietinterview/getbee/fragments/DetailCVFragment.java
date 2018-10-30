@@ -74,6 +74,7 @@ public class DetailCVFragment extends BaseFragment {
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbarVisible(false);
+        setProcessOnBackPess(true);
         getEventBaseFragment().doFillBackground("");
         viewPager = (ViewPager) root.findViewById(R.id.viewpager);
         tabLayout = (TabLayout) root.findViewById(R.id.tabs);
@@ -298,5 +299,10 @@ public class DetailCVFragment extends BaseFragment {
     @Override
     protected void onRestore() {
 
+    }
+
+    @Override
+    protected void processOnBackPress() {
+        FragmentUtil.popBackStack(this);
     }
 }

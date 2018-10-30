@@ -20,7 +20,7 @@
     <string name="cancel">Cancel</string>
     <string name="create_new_cv">Create new CV</string>
     <string name="cv_applyed">CV Applyed</string>
-    <string name="not_send">Not yet send</string>
+    <string name="not_send">Unsent</string>
     <string name="wait_approve">Wait approve</string>
     <string name="approved">Approved</string>
     <string name="interviewd">Interviewed</string>
@@ -155,4 +155,5 @@
     <string name="info_acc_tit">Personal information</string>
     <string name="saved_noti">Saved job</string>
     <string name="cancel_save_noti">Cancel save job</string>
+    <string name="city_province">City / Province</string>
 </resources>

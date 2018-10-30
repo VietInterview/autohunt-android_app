@@ -201,6 +201,9 @@ public class MyCVFragment extends BaseFragment {
         tvCarrerName.setText(mCarrerName);
         tvCityName.setText(mCityName);
         tvStatus.setText(mStatusName);
+        tvCityName.setTextColor(mCityName.equalsIgnoreCase(getResources().getString(R.string.all_city)) ? getResources().getColor(R.color.background_icon_not_focus) : getResources().getColor(R.color.black));
+        tvCarrerName.setTextColor(mCarrerName.equalsIgnoreCase(getResources().getString(R.string.all_carrer)) ? getResources().getColor(R.color.background_icon_not_focus) : getResources().getColor(R.color.black));
+        tvStatus.setTextColor(mStatusName.equalsIgnoreCase(getResources().getString(R.string.default_key)) ? getResources().getColor(R.color.background_icon_not_focus) : getResources().getColor(R.color.black));
     }
 
     @Override

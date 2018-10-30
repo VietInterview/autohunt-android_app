@@ -23,7 +23,9 @@
         <item name="android:windowTitleSize">20dip</item>
         <item name="pageMargin">10sp</item>
     </style>
-
+    <style name="customfontstyle" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@fonts/Nunito-Regular</item>
+    </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

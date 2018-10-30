@@ -155,4 +155,5 @@
     <string name="info_acc_tit">Thông tin cá nhân</string>
     <string name="saved_noti">Đã lưu</string>
     <string name="cancel_save_noti">Hủy lưu</string>
+    <string name="city_province">Tỉnh/Thành phố</string>
 </resources>

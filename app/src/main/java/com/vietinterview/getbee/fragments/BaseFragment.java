@@ -23,9 +23,9 @@ import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.activities.BaseActivity;
 import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.api.request.BaseJsonRequest;
+import com.vietinterview.getbee.api.request.BaseRequest;
 import com.vietinterview.getbee.model.Event;
 import com.vietinterview.getbee.utils.DebugLog;
-import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.KeyboardUtil;
 import com.vietinterview.getbee.utils.UiUtil;
 
@@ -101,8 +101,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        DebugLog.i("Lifecycle " + this.getClass().getSimpleName());
-//        handleHeaderCallback(getActivity(), this);
+        DebugLog.showLogCat("Lifecycle " + this.getClass().getSimpleName());
         return createRootView(inflater, container);
     }
 
@@ -166,10 +165,35 @@ public abstract class BaseFragment extends Fragment {
 
     public void setCustomToolbar(boolean isCustom) {
         customToolbar(isCustom);
+        setProcessOnBackPess(isCustom);
     }
 
     public void setCustomToolbarVisible(boolean isVisible) {
         showhidetoolbar(isVisible);
+    }
+
+    public void setProcessOnBackPess(boolean isProcess) {
+        if (isProcess) {
+            if (getView() == null) {
+                return;
+            }
+            getView().setFocusableInTouchMode(true);
+            getView().requestFocus();
+            getView().setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                        if (getFragmentManager().getBackStackEntryCount() > 0) {
+                            processOnBackPress();
+                        } else {
+                            getActivity().finish();
+                        }
+                        return true;
+                    }
+                    return false;
+                }
+            });
+        }
     }
 
     public Event getEventBaseFragment() {
@@ -191,7 +215,7 @@ public abstract class BaseFragment extends Fragment {
         progressDlg.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                cancelAllRequest(getArrayRequest());
+                cancelAllRequest(getArrayJsonRequest(), getArrayBaseRequest());
             }
         });
     }
@@ -206,15 +230,28 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
-    public void cancelAllRequest(ArrayList<BaseJsonRequest> callArrayList) {
-        for (int i = 0; i < callArrayList.size(); i++) {
-            DebugLog.showLogCat("Cancel");
-            if (callArrayList.get(i) != null)
-                callArrayList.get(i).cancelRequest();
+    public void cancelAllRequest(ArrayList<BaseJsonRequest> callArrayList, ArrayList<BaseRequest> baseRequests) {
+        if (callArrayList != null) {
+            for (int i = 0; i < callArrayList.size(); i++) {
+                DebugLog.showLogCat("Cancel Json Request");
+                if (callArrayList.get(i) != null)
+                    callArrayList.get(i).cancelRequest();
+            }
+        }
+        if (baseRequests != null) {
+            for (int i = 0; i < baseRequests.size(); i++) {
+                DebugLog.showLogCat("Cancel Base Request");
+                if (baseRequests.get(i) != null)
+                    baseRequests.get(i).cancelRequest();
+            }
         }
     }
 
-    public ArrayList<BaseJsonRequest> getArrayRequest() {
+    public ArrayList<BaseJsonRequest> getArrayJsonRequest() {
+        return null;
+    }
+
+    public ArrayList<BaseRequest> getArrayBaseRequest() {
         return null;
     }
 
@@ -222,6 +259,7 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         saveStateToArguments();
+        cancelAllRequest(getArrayJsonRequest(), getArrayBaseRequest());
         KeyboardUtil.hideSoftKeyboard(getActivity());
         if (isCancelRequestOnDestroyView()) {
             isLoading = isLoadingMore();
@@ -284,23 +322,6 @@ public abstract class BaseFragment extends Fragment {
         Bundle state = new Bundle();
         onSaveState(state);
         return state;
-    }
-
-    protected void onBackPressFragment(View view) {
-        view.setFocusableInTouchMode(true);
-        view.requestFocus();
-        view.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                    if (keyCode == KeyEvent.KEYCODE_BACK) {
-                        processOnBackPress();
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
     }
 
     protected void processOnBackPress() {
@@ -453,26 +474,6 @@ public abstract class BaseFragment extends Fragment {
                 }
             });
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (getView() == null) {
-            return;
-        }
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    FragmentUtil.popBackStack(BaseFragment.this);
-                    return true;
-                }
-                return false;
-            }
-        });
     }
 }
 

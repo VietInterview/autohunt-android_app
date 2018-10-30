@@ -197,6 +197,15 @@ public abstract class BaseActivity extends LocalizationActivity {
         }
     }
 
+//    @Override
+//    public void onBackPressed() {
+//        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+//            getSupportFragmentManager().popBackStack();
+//        } else {
+//            finish();
+//        }
+//    }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         View v = getCurrentFocus();

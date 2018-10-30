@@ -6,9 +6,9 @@
     android:paddingHorizontal="16dp"
     android:paddingTop="16dp">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="74dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/border_expandable_group"
         android:orientation="vertical"
         android:padding="8dp">
@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
+            android:layout_marginRight="32dp"
             android:paddingLeft="8dp"
             android:textColor="#505059"
             android:textSize="18sp" />
@@ -29,6 +30,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvSchoolName"
+            android:layout_marginRight="32dp"
             android:paddingLeft="8dp"
             android:textColor="#B1B1BA"
             android:textSize="16sp" />

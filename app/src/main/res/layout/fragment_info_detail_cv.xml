@@ -4,15 +4,14 @@
     Created by Hiep Nguyen Nghia.
     Copyright © 2018 Vietinterview. All rights reserved.
 -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:nestedScrollingEnabled="true">
+<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:nestedScrollingEnabled="true">-->
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:nestedScrollingEnabled="true"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -93,7 +92,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="89dp">
 
             <com.vietinterview.getbee.customview.NunitoTextView
                 android:id="@+id/tvTitleAdd"
@@ -127,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:padding="@dimen/activity_vertical_margin"
-                android:text="@string/city"
+                android:text="@string/city_province"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -162,7 +161,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:padding="@dimen/activity_vertical_margin"
-                android:text="Đã có gia đình"
                 android:textColor="#B1B1BA"
                 android:textSize="18sp" />
         </RelativeLayout>
@@ -392,4 +390,4 @@
                 android:textSize="18sp" />
         </RelativeLayout>
     </LinearLayout>
-</ScrollView>
+<!--</ScrollView>-->

@@ -101,7 +101,7 @@ public class MyProfileFragment extends BaseFragment {
     }
 
     @Override
-    public ArrayList<BaseJsonRequest> getArrayRequest() {
+    public ArrayList<BaseJsonRequest> getArrayJsonRequest() {
         ArrayList<BaseJsonRequest> baseRequests = new ArrayList<>();
         baseRequests.add(loginRequest);
         return baseRequests;

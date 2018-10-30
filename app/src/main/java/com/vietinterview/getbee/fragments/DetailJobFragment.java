@@ -30,6 +30,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ViewPagerAdapter;
+import com.vietinterview.getbee.api.request.BaseJsonRequest;
+import com.vietinterview.getbee.api.request.BaseRequest;
 import com.vietinterview.getbee.api.request.GetDetailJobRequest;
 import com.vietinterview.getbee.api.request.SaveUnsaveJobRequest;
 import com.vietinterview.getbee.api.response.AddRemoveJobResponse;
@@ -39,6 +41,7 @@ import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -312,13 +315,13 @@ public class DetailJobFragment extends BaseFragment {
     }
 
     @Override
-    protected void processCustomToolbar() {
+    protected void processOnBackPress() {
         FragmentUtil.popBackStack(this);
     }
 
     @Override
-    protected void processOnBackPress() {
-//        FragmentUtil.popBackStack(DetailJobFragment.this);
+    protected void processCustomToolbar() {
+        FragmentUtil.popBackStack(this);
     }
 
     @Override
@@ -353,5 +356,19 @@ public class DetailJobFragment extends BaseFragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public ArrayList<BaseJsonRequest> getArrayJsonRequest() {
+        ArrayList<BaseJsonRequest> baseJsonRequests = new ArrayList<>();
+        baseJsonRequests.add(saveUnsaveJobRequest);
+        return baseJsonRequests;
+    }
+
+    @Override
+    public ArrayList<BaseRequest> getArrayBaseRequest() {
+        ArrayList<BaseRequest> baseRequests = new ArrayList<>();
+        baseRequests.add(getDetailJobRequest);
+        return baseRequests;
     }
 }

@@ -11,15 +11,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="8dp"
         android:background="#EDF1F8"
         android:orientation="vertical">
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/llFooter"
-            android:layout_marginBottom="8dp">
+            android:layout_above="@+id/llFooter">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -31,6 +29,7 @@
                     android:id="@+id/rlHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:paddingLeft="@dimen/activity_vertical_margin"
                     android:paddingRight="@dimen/activity_vertical_margin">
 
@@ -127,6 +126,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1100dp"
                     android:layout_below="@+id/tabs"
+                    android:layout_marginBottom="8dp"
                     android:nestedScrollingEnabled="true"
                     android:paddingLeft="@dimen/activity_vertical_margin"
                     android:paddingRight="@dimen/activity_vertical_margin"

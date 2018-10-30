@@ -331,6 +331,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         mCarrerName = mCarrerName.equalsIgnoreCase("") ? getResources().getString(R.string.all_carrer) : mCarrerName;
         tvCityName.setText(mCityName);
         tvCarrerName.setText(mCarrerName);
+        tvCityName.setTextColor(mCityName.equalsIgnoreCase(getResources().getString(R.string.all_city)) ? getResources().getColor(R.color.background_icon_not_focus) : getResources().getColor(R.color.black));
+        tvCarrerName.setTextColor(mCarrerName.equalsIgnoreCase(getResources().getString(R.string.all_carrer)) ? getResources().getColor(R.color.background_icon_not_focus) : getResources().getColor(R.color.black));
     }
 
     @Override
