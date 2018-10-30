@@ -116,8 +116,11 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 Integer collStatus = dataSet.get(listPosition).getCollStatus();
                 if (collStatus == null || collStatus == 0) {
                     myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_save));
-                } else {
+                } else if (collStatus == 1) {
                     myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_saved));
+                } else if (collStatus == 2) {
+                    myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_tickok));
+                    myViewHolder.imgStatus.setEnabled(false);
                 }
             } else {
                 myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_save));

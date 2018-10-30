@@ -7,6 +7,7 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -58,6 +59,7 @@ public class SlidingImageAdapter extends PagerAdapter {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                baseActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                 Intent mainIntent = new Intent(baseActivity, MainActivity.class);
                 mainIntent.putExtra("isLogin", true);
                 baseActivity.startActivity(mainIntent);
@@ -67,6 +69,7 @@ public class SlidingImageAdapter extends PagerAdapter {
         btnRegist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                baseActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                 Intent mainIntent = new Intent(baseActivity, MainActivity.class);
                 mainIntent.putExtra("isLogin", false);
                 baseActivity.startActivity(mainIntent);

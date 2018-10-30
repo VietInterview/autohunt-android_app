@@ -2,6 +2,7 @@ package com.vietinterview.getbee.activities;
 
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
+import android.view.WindowManager;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.SlidingImageAdapter;
@@ -10,10 +11,6 @@ import com.vietinterview.getbee.utils.SharedPrefUtils;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
-
-/**
- * Created by hienvv7 on 05/07/2017.
- */
 
 public class IntroActivity extends BaseActivity {
     private static ViewPager mPager;
@@ -26,7 +23,7 @@ public class IntroActivity extends BaseActivity {
 
     @Override
     public int setContentViewId() {
-        return R.layout.activity_splash;
+        return R.layout.activity_intro;
     }
 
     @Override
@@ -47,6 +44,7 @@ public class IntroActivity extends BaseActivity {
     }
 
     private void init() {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         SharedPrefUtils.putBoolean(AppConstant.FIRST, false);
         for (int i = 0; i < IMAGES.length; i++)
             ImagesArray.add(IMAGES[i]);

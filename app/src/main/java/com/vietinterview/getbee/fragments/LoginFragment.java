@@ -72,8 +72,6 @@ public class LoginFragment extends BaseFragment {
         return R.layout.fragment_login;
     }
 
-    boolean textFocus = false; //define somewhere globally in the class
-
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbarVisible(false);
