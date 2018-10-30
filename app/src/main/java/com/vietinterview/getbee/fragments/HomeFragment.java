@@ -147,10 +147,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         adapter = new JobsAdapter(recyclerView, jobsList, HomeFragment.this, getActivity());
         recyclerView.setAdapter(adapter);
 //        this.registerForContextMenu(llDatePub);
-        mCityName = getResources().getString(R.string.all_city);
-        mCarrerName = getResources().getString(R.string.all_carrer);
-        tvCityName.setText(mCityName);
-        tvCarrerName.setText(mCarrerName);
         edtJobTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -333,18 +329,26 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         } else {
             llCondition.setVisibility(View.GONE);
         }
+        mCityName = mCityName.equalsIgnoreCase("") ? getResources().getString(R.string.all_city) : mCityName;
+        mCarrerName = mCarrerName.equalsIgnoreCase("") ? getResources().getString(R.string.all_carrer) : mCarrerName;
+        tvCityName.setText(mCityName);
+        tvCarrerName.setText(mCarrerName);
     }
 
     @Override
     protected void onSaveState(Bundle bundle) {
         bundle.putBoolean(AppConstant.VISIBLE_SEARCH, visibleSearch);
         bundle.putBoolean(AppConstant.VISIBLE_CONDITION, visibleCondition);
+        bundle.putString("mCityName", mCityName);
+        bundle.putString("mCarrerName", mCarrerName);
     }
 
     @Override
     protected void onRestoreState(Bundle bundle) {
         visibleCondition = bundle.getBoolean(AppConstant.VISIBLE_CONDITION);
         visibleSearch = bundle.getBoolean(AppConstant.VISIBLE_SEARCH);
+        mCarrerName = bundle.getString("mCarrerName");
+        mCityName = bundle.getString("mCityName");
     }
 
 

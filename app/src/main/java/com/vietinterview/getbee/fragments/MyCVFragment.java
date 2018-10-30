@@ -109,12 +109,7 @@ public class MyCVFragment extends BaseFragment {
 
             }
         });
-        mCityName = getResources().getString(R.string.all_city);
-        mCarrerName = getResources().getString(R.string.all_carrer);
-        mStatusName = getResources().getString(R.string.default_key);
-        tvCarrerName.setText(mCarrerName);
-        tvCityName.setText(mCityName);
-        tvStatus.setText(mStatusName);
+
     }
 
     @Override
@@ -200,16 +195,28 @@ public class MyCVFragment extends BaseFragment {
         if (visibleFilter) {
             llCondition.setVisibility(View.VISIBLE);
         } else llCondition.setVisibility(View.GONE);
+        mCityName = mCityName.equalsIgnoreCase("") ? getResources().getString(R.string.all_city) : mCityName;
+        mCarrerName = mCarrerName.equalsIgnoreCase("") ? getResources().getString(R.string.all_carrer) : mCarrerName;
+        mStatusName = mStatusName.equalsIgnoreCase("") ? getResources().getString(R.string.default_key) : mStatusName;
+        tvCarrerName.setText(mCarrerName);
+        tvCityName.setText(mCityName);
+        tvStatus.setText(mStatusName);
     }
 
     @Override
     protected void onSaveState(Bundle bundle) {
         bundle.putBoolean(AppConstant.VISIBLE_FILTER, visibleFilter);
+        bundle.putString("mCityName", mCityName);
+        bundle.putString("mCarrerName", mCarrerName);
+        bundle.putString("mStatusName", mStatusName);
     }
 
     @Override
     protected void onRestoreState(Bundle bundle) {
         visibleFilter = bundle.getBoolean(AppConstant.VISIBLE_FILTER);
+        mCarrerName = bundle.getString("mCarrerName");
+        mCityName = bundle.getString("mCityName");
+        mStatusName = bundle.getString("mStatusName");
     }
 
     @Override

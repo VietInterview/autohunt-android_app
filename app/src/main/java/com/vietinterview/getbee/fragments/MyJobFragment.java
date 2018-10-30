@@ -63,10 +63,10 @@ public class MyJobFragment extends BaseFragment {
         getEventBaseFragment().doFillBackground(getResources().getString(R.string.my_job));
         setCustomToolbar(true);
         setHasOptionsMenu(true);
-        mCityName = getResources().getString(R.string.all_city);
-        mCarrerName = getResources().getString(R.string.all_carrer);
-        tvCityName.setText(mCityName);
-        tvCarrerName.setText(mCarrerName);
+//        mCityName = getResources().getString(R.string.all_city);
+//        mCarrerName = getResources().getString(R.string.all_carrer);
+//        tvCityName.setText(mCityName);
+//        tvCarrerName.setText(mCarrerName);
         viewPager = (ViewPager) root.findViewById(R.id.viewpager);
         tabLayout = (TabLayout) root.findViewById(R.id.tabs);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.underline_tablyaout));
@@ -186,16 +186,24 @@ public class MyJobFragment extends BaseFragment {
         } else {
             llCondition.setVisibility(View.GONE);
         }
+        mCityName = mCityName.equalsIgnoreCase("") ? getResources().getString(R.string.all_city) : mCityName;
+        mCarrerName = mCarrerName.equalsIgnoreCase("") ? getResources().getString(R.string.all_carrer) : mCarrerName;
+        tvCityName.setText(mCityName);
+        tvCarrerName.setText(mCarrerName);
     }
 
     @Override
     protected void onSaveState(Bundle bundle) {
         bundle.putBoolean(AppConstant.VISIBLE_FILTER, visibleFilter);
+        bundle.putString("mCityName", mCityName);
+        bundle.putString("mCarrerName", mCarrerName);
     }
 
     @Override
     protected void onRestoreState(Bundle bundle) {
         visibleFilter = bundle.getBoolean(AppConstant.VISIBLE_FILTER);
+        mCarrerName = bundle.getString("mCarrerName");
+        mCityName = bundle.getString("mCityName");
     }
 
     @Override
