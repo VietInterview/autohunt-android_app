@@ -13,7 +13,7 @@ import android.widget.AbsListView;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.adapter.MyJobsAdapter;
+import com.vietinterview.getbee.adapter.MyJobsAppliedAdapter;
 import com.vietinterview.getbee.api.request.GetApplyedSearchJobsRequest;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.api.response.jobs.JobsResponse;
@@ -38,7 +38,7 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
     TextView titleHeader;
     @BindView(R.id.rcvApplyedJob)
     RecyclerView rcvApplyedJob;
-    public MyJobsAdapter adapter;
+    public MyJobsAppliedAdapter adapter;
     public static View.OnClickListener myOnClickListener;
     private RecyclerView.LayoutManager layoutManager;
     //    private static RecyclerView rcvApplyedJob;
@@ -48,8 +48,8 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout mSwipeRefreshLayout;
     int mPage = 0;
-    private String mCarrerId = "4";
-    private String mCityId = "1";
+    private String mCarrerId = "0";
+    private String mCityId = "0";
 
     public static JobsApplyedFragment newInstance(String cityId, String carrerId) {
         JobsApplyedFragment fm = new JobsApplyedFragment();
@@ -69,7 +69,6 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         myOnClickListener = new JobsApplyedFragment.MyOnClickListener(getActivity());
         rcvApplyedJob.setHasFixedSize(true);
-
         layoutManager = new LinearLayoutManager(getActivity());
         rcvApplyedJob.setLayoutManager(layoutManager);
         rcvApplyedJob.setItemAnimator(new DefaultItemAnimator());
@@ -100,7 +99,7 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
                 }
             }
         });
-        adapter = new MyJobsAdapter(rcvApplyedJob, jobsList, this, getActivity(), false);
+        adapter = new MyJobsAppliedAdapter(rcvApplyedJob, jobsList, this, getActivity(), false);
         rcvApplyedJob.setAdapter(adapter);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,

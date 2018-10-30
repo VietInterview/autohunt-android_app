@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ViewPagerAdapter;
 import com.vietinterview.getbee.constant.AppConstant;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
 import java.util.ArrayList;
@@ -63,10 +64,6 @@ public class MyJobFragment extends BaseFragment {
         getEventBaseFragment().doFillBackground(getResources().getString(R.string.my_job));
         setCustomToolbar(true);
         setHasOptionsMenu(true);
-//        mCityName = getResources().getString(R.string.all_city);
-//        mCarrerName = getResources().getString(R.string.all_carrer);
-//        tvCityName.setText(mCityName);
-//        tvCarrerName.setText(mCarrerName);
         viewPager = (ViewPager) root.findViewById(R.id.viewpager);
         tabLayout = (TabLayout) root.findViewById(R.id.tabs);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.underline_tablyaout));

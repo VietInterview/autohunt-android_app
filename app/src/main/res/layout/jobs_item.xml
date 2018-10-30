@@ -69,7 +69,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
-                    android:layout_marginTop="10dp"
+                    android:padding="10dp"
                     android:layout_weight="0.3"
                     android:src="@drawable/ic_save"
                     android:tag="image_tag" />

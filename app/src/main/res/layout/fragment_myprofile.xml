@@ -1,63 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.vietinterview.getbee.customview.TouchDetectableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
+    <com.vietinterview.getbee.customview.TouchDetectableScrollView xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/scrollView"
-        android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/activity_vertical_margin">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+        <LinearLayout xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             tools:context=".fragments.MyProfileFragment">
 
-            <RelativeLayout
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="89dp">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="horizontal"
+                app:hintAnimationEnabled="true"
+                app:hintTextAppearance="@style/HintTextAppearance">
 
-                <com.vietinterview.getbee.customview.NunitoTextView
-                    android:id="@+id/tvTitleName"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true" />
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtFullName"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:padding="@dimen/activity_vertical_margin"
-                    android:text="@string/fullname"
-                    android:textColor="#B1B1BA"
-                    android:textSize="16sp" />
-
-                <com.vietinterview.getbee.customview.NunitoTextView
-                    android:id="@+id/tvName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:padding="@dimen/activity_vertical_margin"
-                    android:text="Nguyễn Sơn Tùng"
-                    android:textColor="#191830"
-                    android:textSize="20sp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerInParent="true"
-                    android:padding="@dimen/activity_vertical_margin"
-                    android:src="@drawable/ic_pencil"
-                    android:visibility="gone" />
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="@dimen/activity_vertical_margin"
-                    android:layout_marginRight="@dimen/activity_vertical_margin"
-                    android:background="#000000" />
-            </RelativeLayout>
+                    android:hint="@string/fullname"
+                    android:text="Nguyễn Nghĩa Hiệp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:hintAnimationEnabled="true"
+                    app:hintTextAppearance="@style/HintTextAppearance" />
+            </android.support.design.widget.TextInputLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -102,173 +86,85 @@
                     android:background="#000000" />
             </RelativeLayout>
 
-            <RelativeLayout
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="89dp">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="horizontal"
+                app:hintAnimationEnabled="true"
+                app:hintTextAppearance="@style/HintTextAppearance">
 
-                <com.vietinterview.getbee.customview.NunitoTextView
-                    android:id="@+id/tvTitlePhone"
-                    android:layout_width="wrap_content"
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtPhone"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:padding="@dimen/activity_vertical_margin"
-                    android:text="@string/phone_number"
-                    android:textColor="#B1B1BA"
-                    android:textSize="16sp" />
+                    android:hint="@string/phone_number"
 
-                <com.vietinterview.getbee.customview.NunitoTextView
-                    android:id="@+id/tvPhone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:padding="@dimen/activity_vertical_margin"
-                    android:text="0989421150"
-                    android:textColor="#191830"
-                    android:textSize="20sp" />
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:hintAnimationEnabled="true"
+                    app:hintTextAppearance="@style/HintTextAppearance" />
+            </android.support.design.widget.TextInputLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerInParent="true"
-                    android:padding="@dimen/activity_vertical_margin"
-                    android:src="@drawable/ic_pencil"
-                    android:visibility="gone" />
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="@dimen/activity_vertical_margin"
-                    android:layout_marginRight="@dimen/activity_vertical_margin"
-                    android:background="#000000" />
-            </RelativeLayout>
-
-            <RelativeLayout
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="89dp">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="horizontal"
+                app:hintAnimationEnabled="true"
+                app:hintTextAppearance="@style/HintTextAppearance">
 
-                <com.vietinterview.getbee.customview.NunitoTextView
-                    android:id="@+id/tvTitleEmail"
-                    android:layout_width="wrap_content"
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtEmail"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:padding="@dimen/activity_vertical_margin"
-                    android:text="Email"
-                    android:textColor="#B1B1BA"
-                    android:textSize="16sp" />
+                    android:hint="Email"
 
-                <com.vietinterview.getbee.customview.NunitoTextView
-                    android:id="@+id/tvEmail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:padding="@dimen/activity_vertical_margin"
-                    android:text="hiep.nguyen@vietinterview.com"
-                    android:textColor="#191830"
-                    android:textSize="20sp" />
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:hintAnimationEnabled="true"
+                    app:hintTextAppearance="@style/HintTextAppearance" />
+            </android.support.design.widget.TextInputLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerInParent="true"
-                    android:padding="@dimen/activity_vertical_margin"
-                    android:src="@drawable/ic_pencil"
-                    android:visibility="gone" />
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="@dimen/activity_vertical_margin"
-                    android:layout_marginRight="@dimen/activity_vertical_margin"
-                    android:background="#000000" />
-            </RelativeLayout>
-
-            <RelativeLayout
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="89dp">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="horizontal"
+                app:hintAnimationEnabled="true"
+                app:hintTextAppearance="@style/HintTextAppearance">
 
-                <com.vietinterview.getbee.customview.NunitoTextView
-                    android:id="@+id/tvTitleAdd"
-                    android:layout_width="wrap_content"
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtAdd"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:padding="@dimen/activity_vertical_margin"
-                    android:text="@string/address"
-                    android:textColor="#B1B1BA"
-                    android:textSize="16sp" />
+                    android:hint="@string/address"
 
-                <com.vietinterview.getbee.customview.NunitoTextView
-                    android:id="@+id/tvAdd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:padding="@dimen/activity_vertical_margin"
-                    android:text="Hà Nội, Việt Nam"
-                    android:textColor="#191830"
-                    android:textSize="20sp" />
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:hintAnimationEnabled="true"
+                    app:hintTextAppearance="@style/HintTextAppearance" />
+            </android.support.design.widget.TextInputLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerInParent="true"
-                    android:padding="@dimen/activity_vertical_margin"
-                    android:src="@drawable/ic_pencil"
-                    android:visibility="gone" />
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="@dimen/activity_vertical_margin"
-                    android:layout_marginRight="@dimen/activity_vertical_margin"
-                    android:background="#000000" />
-            </RelativeLayout>
-
-            <RelativeLayout
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="89dp">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="horizontal"
+                app:hintAnimationEnabled="true"
+                app:hintTextAppearance="@style/HintTextAppearance">
 
-                <com.vietinterview.getbee.customview.NunitoTextView
-                    android:id="@+id/tvTitleJob"
-                    android:layout_width="wrap_content"
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtCarrer"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:padding="@dimen/activity_vertical_margin"
-                    android:text="@string/carrer"
-                    android:textColor="#B1B1BA"
-                    android:textSize="16sp" />
+                    android:hint="@string/carrer"
 
-                <com.vietinterview.getbee.customview.NunitoTextView
-                    android:id="@+id/tvJob"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:padding="@dimen/activity_vertical_margin"
-                    android:text=""
-                    android:textColor="#191830"
-                    android:textSize="20sp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerInParent="true"
-                    android:padding="@dimen/activity_vertical_margin"
-                    android:src="@drawable/ic_pencil"
-                    android:visibility="gone" />
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="@dimen/activity_vertical_margin"
-                    android:layout_marginRight="@dimen/activity_vertical_margin"
-                    android:background="#000000" />
-            </RelativeLayout>
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:hintAnimationEnabled="true"
+                    app:hintTextAppearance="@style/HintTextAppearance" />
+            </android.support.design.widget.TextInputLayout>
 
             <RelativeLayout
                 android:id="@+id/rlChooseJob"
@@ -313,18 +209,4 @@
             </RelativeLayout>
         </LinearLayout>
     </com.vietinterview.getbee.customview.TouchDetectableScrollView>
-
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/fab"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_centerInParent="true"-->
-        <!--android:layout_marginBottom="-4dp"-->
-        <!--android:src="@drawable/ic_addcv_float"-->
-        <!--app:backgroundTint="#00FFFFFF"-->
-        <!--app:borderWidth="0dp"-->
-        <!--app:fabSize="normal"-->
-        <!--app:layout_behavior="com.ic_background_add_cv.valdioveliu.floatingactionbuttonproject.Scrolling_Floating_Action_Button.FAB_Float_on_Scroll"-->
-        <!--app:maxImageSize="55dp" />-->
 </RelativeLayout>

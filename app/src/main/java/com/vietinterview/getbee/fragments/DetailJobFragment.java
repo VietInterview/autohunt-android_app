@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -317,7 +318,7 @@ public class DetailJobFragment extends BaseFragment {
 
     @Override
     protected void processOnBackPress() {
-        FragmentUtil.popBackStack(this);
+//        FragmentUtil.popBackStack(DetailJobFragment.this);
     }
 
     @Override
@@ -335,7 +336,6 @@ public class DetailJobFragment extends BaseFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.share) {
-
             mNotifydialog = new Dialog(getActivity());
             mNotifydialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             mNotifydialog.setContentView(R.layout.dialog_share);

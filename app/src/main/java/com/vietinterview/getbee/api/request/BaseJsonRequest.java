@@ -5,6 +5,7 @@ import android.content.Context;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.MySSLSocketFactory;
+import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.constant.ApiConstant;
 import com.vietinterview.getbee.utils.DebugLog;
@@ -73,6 +74,8 @@ public abstract class BaseJsonRequest<T> {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                } else {
+                    mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
                 }
             }
 

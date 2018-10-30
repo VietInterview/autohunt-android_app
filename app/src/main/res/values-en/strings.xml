@@ -152,4 +152,7 @@
     <string name="ic_pic2_intro">Vietnams Largest Recruitment Agencies Marketplace</string>
     <string name="ic_pic3_intro">1000s of quality recruiters working for you!</string>
     <string name="cv_applied_tit">Applied CV</string>
+    <string name="info_acc_tit">Personal information</string>
+    <string name="saved_noti">Saved job</string>
+    <string name="cancel_save_noti">Cancel save job</string>
 </resources>

@@ -22,9 +22,10 @@ import com.vietinterview.getbee.api.response.AddRemoveJobResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
-import com.vietinterview.getbee.fragments.BaseFragment;
 import com.vietinterview.getbee.fragments.DetailJobFragment;
+import com.vietinterview.getbee.fragments.JobsSavedFragment;
 import com.vietinterview.getbee.utils.DateUtil;
+import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.StringUtils;
 
@@ -32,11 +33,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MyJobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MyJobsSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
     private ArrayList<JobList> dataSet;
-    private BaseFragment mHomeFragment;
+    private JobsSavedFragment jobsSavedFragment;
     private int visibleThreshold = 5;
     private int lastVisibleItem, totalItemCount;
     private OnLoadMoreListener onLoadMoreListener;
@@ -46,9 +47,9 @@ public class MyJobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private boolean mIsJobSaved;
 
 
-    public MyJobsAdapter(RecyclerView recyclerView, ArrayList<JobList> data, BaseFragment homeFragment, FragmentActivity activity, boolean isJobSaved) {
+    public MyJobsSavedAdapter(RecyclerView recyclerView, ArrayList<JobList> data, JobsSavedFragment jobsSavedFragment, FragmentActivity activity, boolean isJobSaved) {
         this.dataSet = data;
-        this.mHomeFragment = homeFragment;
+        this.jobsSavedFragment = jobsSavedFragment;
         this.mActivity = activity;
         this.mIsJobSaved = isJobSaved;
         final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
@@ -109,7 +110,7 @@ public class MyJobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             myViewHolder.card_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentUtil.pushFragment(mActivity, mHomeFragment, new DetailJobFragment().newInstance(dataSet.get(listPosition)), null);
+                    FragmentUtil.pushFragment(mActivity, jobsSavedFragment, new DetailJobFragment().newInstance(dataSet.get(listPosition)), null);
                 }
             });
             if (mIsJobSaved)
@@ -121,8 +122,11 @@ public class MyJobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 Integer collStatus = dataSet.get(listPosition).getCollStatus();
                 if (collStatus == null || collStatus == 0) {
                     myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_save));
-                } else {
+                } else if (collStatus == 1) {
                     myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_saved));
+                } else {
+                    myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_tickok));
+                    myViewHolder.imgStatus.setEnabled(false);
                 }
             } else {
                 myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_save));
@@ -131,20 +135,22 @@ public class MyJobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 myViewHolder.imgStatus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        mHomeFragment.showCoverNetworkLoading();
+                        jobsSavedFragment.showCoverNetworkLoading();
                         Integer collStatus = dataSet.get(listPosition).getCollStatus() == null ? 1 : (Integer) dataSet.get(listPosition).getCollStatus() == 0 ? 1 : 0;
                         saveUnsaveJobRequest = new SaveUnsaveJobRequest(dataSet.get(listPosition).getId(), collStatus);
                         saveUnsaveJobRequest.callRequest(mActivity, new ApiObjectCallBack<AddRemoveJobResponse>() {
                             @Override
                             public void onSuccess(AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, int status, String message) {
-                                mHomeFragment.hideCoverNetworkLoading();
+                                jobsSavedFragment.hideCoverNetworkLoading();
                                 if (status == 200) {
-                                    mHomeFragment.getEventBaseFragment().refreshHome();
+                                    dataSet.remove(dataSet.get(listPosition));
+                                    jobsSavedFragment.getTitleHeader().setText(dataSet.size() + " " + jobsSavedFragment.getResources().getString(R.string.job_saved));
+                                    notifyDataSetChanged();
                                     if (data.getStatus() == 0) {
-                                        Toast.makeText(mHomeFragment.getActivity(), "Hủy lưu", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(jobsSavedFragment.getActivity(), jobsSavedFragment.getResources().getString(R.string.cancel_save_noti), Toast.LENGTH_SHORT).show();
                                         myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_save));
                                     } else if (data.getStatus() == 1) {
-                                        Toast.makeText(mHomeFragment.getActivity(), "Đã lưu", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(jobsSavedFragment.getActivity(), jobsSavedFragment.getResources().getString(R.string.saved_noti), Toast.LENGTH_SHORT).show();
                                         myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_saved));
                                     }
                                 }
@@ -152,7 +158,8 @@ public class MyJobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                             @Override
                             public void onFail(int failCode, AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, String message) {
-                                mHomeFragment.hideCoverNetworkLoading();
+                                jobsSavedFragment.hideCoverNetworkLoading();
+                                DialogUtil.showDialog(jobsSavedFragment.getActivity(), jobsSavedFragment.getActivity().getResources().getString(R.string.noti_title), message);
                             }
                         });
                     }

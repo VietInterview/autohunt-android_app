@@ -1,6 +1,5 @@
 package com.vietinterview.getbee.adapter;
 
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
-import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.vietinterview.getbee.R;
@@ -24,8 +22,8 @@ import com.vietinterview.getbee.api.response.AddRemoveJobResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
-import com.vietinterview.getbee.fragments.BaseFragment;
 import com.vietinterview.getbee.fragments.DetailJobFragment;
+import com.vietinterview.getbee.fragments.JobsApplyedFragment;
 import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.StringUtils;
@@ -34,23 +32,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MyJobsAppliedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
     private ArrayList<JobList> dataSet;
-    BaseFragment mHomeFragment;
+    private JobsApplyedFragment jobsApplyedFragment;
     private int visibleThreshold = 5;
     private int lastVisibleItem, totalItemCount;
     private OnLoadMoreListener onLoadMoreListener;
     private boolean isLoading;
-    FragmentActivity mActivity;
+    private FragmentActivity mActivity;
     private SaveUnsaveJobRequest saveUnsaveJobRequest;
+    private boolean mIsJobSaved;
 
 
-    public JobsAdapter(RecyclerView recyclerView, ArrayList<JobList> data, BaseFragment homeFragment, FragmentActivity activity) {
+    public MyJobsAppliedAdapter(RecyclerView recyclerView, ArrayList<JobList> data, JobsApplyedFragment jobsApplyedFragment1, FragmentActivity activity, boolean isJobSaved) {
         this.dataSet = data;
-        this.mHomeFragment = homeFragment;
+        this.jobsApplyedFragment = jobsApplyedFragment1;
         this.mActivity = activity;
+        this.mIsJobSaved = isJobSaved;
         final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -109,55 +109,75 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             myViewHolder.card_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentUtil.pushFragment(mActivity, mHomeFragment, new DetailJobFragment().newInstance(dataSet.get(listPosition)), null);
+                    FragmentUtil.pushFragment(mActivity, jobsApplyedFragment, new DetailJobFragment().newInstance(dataSet.get(listPosition)), null);
                 }
             });
+            if (mIsJobSaved)
+                myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_saved));
+            else
+                myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_tickok));
+
             if (dataSet.get(listPosition).getCollStatus() != null) {
                 Integer collStatus = dataSet.get(listPosition).getCollStatus();
                 if (collStatus == null || collStatus == 0) {
                     myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_save));
                 } else if (collStatus == 1) {
                     myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_saved));
-                } else if (collStatus == 2) {
+                } else {
                     myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_tickok));
                     myViewHolder.imgStatus.setEnabled(false);
                 }
             } else {
                 myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_save));
             }
-            myViewHolder.imgStatus.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mHomeFragment.showCoverNetworkLoading();
-                    Integer collStatus = dataSet.get(listPosition).getCollStatus() == null ? 1 : (Integer) dataSet.get(listPosition).getCollStatus() == 0 ? 1 : 0;
-                    saveUnsaveJobRequest = new SaveUnsaveJobRequest(dataSet.get(listPosition).getId(), collStatus);
-                    saveUnsaveJobRequest.callRequest(mActivity, new ApiObjectCallBack<AddRemoveJobResponse>() {
-                        @Override
-                        public void onSuccess(AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, int status, String message) {
-                            mHomeFragment.hideCoverNetworkLoading();
-                            if (status == 200) {
-                                mHomeFragment.getEventBaseFragment().refreshHome();
-                                if (data.getStatus() == 0) {
-                                    Toast.makeText(mHomeFragment.getActivity(), mHomeFragment.getResources().getString(R.string.cancel_save_noti), Toast.LENGTH_SHORT).show();
-                                    myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_save));
-                                } else if (data.getStatus() == 1) {
-                                    Toast.makeText(mHomeFragment.getActivity(), mHomeFragment.getResources().getString(R.string.saved_noti), Toast.LENGTH_SHORT).show();
-                                    myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_saved));
+            if (mIsJobSaved) {
+                myViewHolder.imgStatus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        jobsApplyedFragment.showCoverNetworkLoading();
+                        Integer collStatus = dataSet.get(listPosition).getCollStatus() == null ? 1 : (Integer) dataSet.get(listPosition).getCollStatus() == 0 ? 1 : 0;
+                        saveUnsaveJobRequest = new SaveUnsaveJobRequest(dataSet.get(listPosition).getId(), collStatus);
+                        saveUnsaveJobRequest.callRequest(mActivity, new ApiObjectCallBack<AddRemoveJobResponse>() {
+                            @Override
+                            public void onSuccess(AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, int status, String message) {
+                                jobsApplyedFragment.hideCoverNetworkLoading();
+                                if (status == 200) {
+                                    if (data.getStatus() == 0) {
+                                        Toast.makeText(jobsApplyedFragment.getActivity(), jobsApplyedFragment.getResources().getString(R.string.cancel_save_noti), Toast.LENGTH_SHORT).show();
+                                        myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_save));
+                                    } else if (data.getStatus() == 1) {
+                                        Toast.makeText(jobsApplyedFragment.getActivity(), jobsApplyedFragment.getResources().getString(R.string.saved_noti), Toast.LENGTH_SHORT).show();
+                                        myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_saved));
+                                    }
                                 }
                             }
-                        }
 
-                        @Override
-                        public void onFail(int failCode, AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, String message) {
-                            mHomeFragment.hideCoverNetworkLoading();
-                        }
-                    });
-                }
-            });
+                            @Override
+                            public void onFail(int failCode, AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, String message) {
+                                jobsApplyedFragment.hideCoverNetworkLoading();
+                            }
+                        });
+                    }
+                });
+            }
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.progressBar.setIndeterminate(true);
         }
+    }
+
+    private class LoadingViewHolder extends RecyclerView.ViewHolder {
+        public ProgressBar progressBar;
+
+        public LoadingViewHolder(View view) {
+            super(view);
+            progressBar = (ProgressBar) view.findViewById(R.id.progressBar1);
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return dataSet.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -184,19 +204,5 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             this.imgStatus = (ImageView) itemView.findViewById(R.id.imgStatus);
             this.card_view = (CardView) itemView.findViewById(R.id.card_view);
         }
-    }
-
-    private class LoadingViewHolder extends RecyclerView.ViewHolder {
-        public ProgressBar progressBar;
-
-        public LoadingViewHolder(View view) {
-            super(view);
-            progressBar = (ProgressBar) view.findViewById(R.id.progressBar1);
-        }
-    }
-
-    @Override
-    public int getItemCount() {
-        return dataSet.size();
     }
 }

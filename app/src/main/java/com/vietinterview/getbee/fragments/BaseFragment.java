@@ -21,11 +21,11 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.activities.BaseActivity;
-import com.vietinterview.getbee.activities.CreateNewCVActivity;
 import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.api.request.BaseJsonRequest;
 import com.vietinterview.getbee.model.Event;
 import com.vietinterview.getbee.utils.DebugLog;
+import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.KeyboardUtil;
 import com.vietinterview.getbee.utils.UiUtil;
 
@@ -64,7 +64,7 @@ public abstract class BaseFragment extends Fragment {
     LayoutInflater mInflater;
     ViewGroup mContainer;
     MainActivity act;
-    CreateNewCVActivity createNewCVActivity;
+    //    CreateNewCVActivity createNewCVActivity;
     private GestureDetectorCompat gestureDetectorCompat = null;
 
     protected boolean isLoading = false;
@@ -155,17 +155,6 @@ public abstract class BaseFragment extends Fragment {
         if (getArguments() != null) {
             getArgument(getArguments());
         }
-//        DetectSwipeGestureListener gestureListener = new DetectSwipeGestureListener();
-//        gestureListener.setBaseFragment(this);
-//        gestureDetectorCompat = new GestureDetectorCompat(getActivity(), gestureListener);
-//        view.setOnTouchListener(new View.OnTouchListener() {
-//            public boolean onTouch(View v, MotionEvent event) {
-//                gestureDetectorCompat.onTouchEvent(event);
-//                if (event.getAction() == MotionEvent.ACTION_MOVE) {
-//                }
-//                return true;
-//            }
-//        });
         baseActivity = (BaseActivity) getActivity();
         initView(rootView, mInflater, mContainer);
         initData();
@@ -241,9 +230,9 @@ public abstract class BaseFragment extends Fragment {
 
     abstract protected int getLayoutId();
 
-    abstract protected void initView(View root, LayoutInflater inflater, ViewGroup container);
-
     abstract protected void getArgument(Bundle bundle);
+
+    abstract protected void initView(View root, LayoutInflater inflater, ViewGroup container);
 
     abstract protected void initData();
 
@@ -317,112 +306,53 @@ public abstract class BaseFragment extends Fragment {
     protected void processOnBackPress() {
     }
 
-//    public void swipeToRight() {
-//        if (getFragmentManager().getBackStackEntryCount() > 0) {
-//            FragmentUtil.popBackStack(this);
-//        } else {
-//            loadMenuLeft();
-//        }
-//    }
-
     protected void customToolbar(boolean isCustom) {
-        if (getActivity() instanceof MainActivity) {
-            act = (MainActivity) getActivity();
-            if (isCustom) {
-                if (act.getSupportActionBar() != null) {
-                    Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
-                    toolbar.setNavigationIcon(getIconLeft());
-                    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if (getFragmentManager().getBackStackEntryCount() > 0) {
-                                processCustomToolbar();
-                            } else {
-                                loadMenuLeft();
-                            }
+        act = (MainActivity) getActivity();
+        if (isCustom) {
+            if (act.getSupportActionBar() != null) {
+                Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
+                toolbar.setNavigationIcon(getIconLeft());
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (getFragmentManager().getBackStackEntryCount() > 0) {
+                            processCustomToolbar();
+                        } else {
+                            loadMenuLeft();
                         }
-                    });
-                }
-            } else {
-                if (act.getSupportActionBar() != null) {
-                    Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
-                    toolbar.setNavigationIcon(null);
-                }
+                    }
+                });
             }
         } else {
-            createNewCVActivity = (CreateNewCVActivity) getActivity();
-            if (isCustom) {
-                if (createNewCVActivity.getSupportActionBar() != null) {
-                    Toolbar toolbar = (Toolbar) createNewCVActivity.findViewById(R.id.toolbar);
-                    toolbar.setNavigationIcon(getIconLeft());
-                    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-//                            if (getFragmentManager().getBackStackEntryCount() > 0) {
-                            processCustomToolbar();
-//                            } else {
-//                                loadMenuLeft();
-//                            }
-                        }
-                    });
-                }
-            } else {
-                if (createNewCVActivity.getSupportActionBar() != null) {
-                    Toolbar toolbar = (Toolbar) createNewCVActivity.findViewById(R.id.toolbar);
-                    toolbar.setNavigationIcon(null);
-                }
+            if (act.getSupportActionBar() != null) {
+                Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
+                toolbar.setNavigationIcon(null);
             }
         }
     }
 
     protected void showhidetoolbar(boolean isVisible) {
-        if (getActivity() instanceof MainActivity) {
-            act = (MainActivity) getActivity();
-            if (isVisible) {
-                if (act.getSupportActionBar() != null) {
-                    Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
-                    toolbar.setVisibility(View.VISIBLE);
-                    toolbar.setNavigationIcon(getIconLeft());
-                    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if (getFragmentManager().getBackStackEntryCount() > 0) {
-                                processCustomToolbar();
-                            } else {
-                                loadMenuLeft();
-                            }
+        act = (MainActivity) getActivity();
+        if (isVisible) {
+            if (act.getSupportActionBar() != null) {
+                Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
+                toolbar.setVisibility(View.VISIBLE);
+                toolbar.setNavigationIcon(getIconLeft());
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (getFragmentManager().getBackStackEntryCount() > 0) {
+                            processCustomToolbar();
+                        } else {
+                            loadMenuLeft();
                         }
-                    });
-                }
-            } else {
-                if (act.getSupportActionBar() != null) {
-                    Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
-                    toolbar.setVisibility(View.GONE);
-                }
+                    }
+                });
             }
         } else {
-            createNewCVActivity = (CreateNewCVActivity) getActivity();
-            if (isVisible) {
-                if (createNewCVActivity.getSupportActionBar() != null) {
-                    Toolbar toolbar = (Toolbar) createNewCVActivity.findViewById(R.id.toolbar);
-                    toolbar.setVisibility(View.VISIBLE);
-                    toolbar.setNavigationIcon(getIconLeft());
-                    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-//                            if (getFragmentManager().getBackStackEntryCount() > 0) {
-                            processCustomToolbar();
-//                            } else {
-//                                loadMenuLeft();
-//                            }
-                        }
-                    });
-                }
-            } else {
-                if (createNewCVActivity.getSupportActionBar() != null) {
-                    Toolbar toolbar = (Toolbar) createNewCVActivity.findViewById(R.id.toolbar);
-                    toolbar.setVisibility(View.GONE);
-                }
+            if (act.getSupportActionBar() != null) {
+                Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
+                toolbar.setVisibility(View.GONE);
             }
         }
     }
@@ -523,6 +453,26 @@ public abstract class BaseFragment extends Fragment {
                 }
             });
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getView() == null) {
+            return;
+        }
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    FragmentUtil.popBackStack(BaseFragment.this);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }
 

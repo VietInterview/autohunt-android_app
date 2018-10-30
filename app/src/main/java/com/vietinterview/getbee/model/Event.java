@@ -43,6 +43,7 @@ public class Event implements Parcelable {
         }
     };
 
+
     public void setOnSetTextGreetingListener(OnSetTextGreetingListener onSetTextGreetingListener) {
         this.onSetTextGreetingListener = onSetTextGreetingListener;
     }
@@ -112,6 +113,7 @@ public class Event implements Parcelable {
             this.onSetTextGreetingListener.onSetTextGreeting(name);
         }
     }
+
 
     @Override
     public int describeContents() {

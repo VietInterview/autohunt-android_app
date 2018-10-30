@@ -78,12 +78,12 @@ public class MyProfileFragment extends BaseFragment {
 
     @Override
     protected void onRestore() {
-        getEventBaseFragment().doFillBackground("Thông tin cá nhân");
+        getEventBaseFragment().doFillBackground(getResources().getString(R.string.info_acc_tit));
     }
 
     @Override
     protected void initialize() {
-        getEventBaseFragment().doFillBackground("Thông tin cá nhân");
+        getEventBaseFragment().doFillBackground(getResources().getString(R.string.info_acc_tit));
     }
 
     @Override

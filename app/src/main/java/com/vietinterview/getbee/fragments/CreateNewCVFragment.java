@@ -22,7 +22,7 @@ import butterknife.OnClick;
  * Created by hiepnguyennghia on 10/17/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class CreateNewCVFragment extends BaseFragment implements BackFragment {
+public class CreateNewCVFragment extends BaseFragment {
     @BindView(R.id.viewPager)
     NonSwipeableViewPager mViewPager;
     @BindView(R.id.stepper_indicator)
@@ -113,19 +113,19 @@ public class CreateNewCVFragment extends BaseFragment implements BackFragment {
         getActivity().finish();
     }
 
-    @Override
-    public boolean onBackPressed() {
-        if (mStep > 0) {
-            mStep = mStep - 1;
-            mViewPager.setCurrentItem(mStep);
-        } else {
-            getActivity().finish();
-        }
-        return true;
-    }
-
-    @Override
-    public int getBackPriority() {
-        return NORMAL_BACK_PRIORITY;
-    }
+//    @Override
+//    public boolean onBackPressed() {
+//        if (mStep > 0) {
+//            mStep = mStep - 1;
+//            mViewPager.setCurrentItem(mStep);
+//        } else {
+//            getActivity().finish();
+//        }
+//        return true;
+//    }
+//
+//    @Override
+//    public int getBackPriority() {
+//        return NORMAL_BACK_PRIORITY;
+//    }
 }

@@ -236,7 +236,10 @@ public class DetailCVFragment extends BaseFragment {
                 hideCoverNetworkLoading();
                 detailCVResponse = data;
                 tvFullName.setText(detailCVResponse.getFullName());
-                tvBirthDay.setText(detailCVResponse.getBirthday() + "");
+                String year = String.valueOf(detailCVResponse.getBirthday()).substring(0, 4);
+                String month = String.valueOf(detailCVResponse.getBirthday()).substring(4, 6);
+                String day = String.valueOf(detailCVResponse.getBirthday()).substring(6, 8);
+                tvBirthDay.setText(day + "/" + month + "/" + year);
                 RequestOptions options = new RequestOptions()
                         .fitCenter()
                         .error(R.drawable.ic_ava_null)

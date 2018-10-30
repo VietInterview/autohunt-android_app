@@ -1,7 +1,6 @@
 package com.vietinterview.getbee.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.adapter.MyJobsAdapter;
+import com.vietinterview.getbee.adapter.MyJobsSavedAdapter;
 import com.vietinterview.getbee.api.request.GetSavedSearchJobsRequest;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.api.response.jobs.JobsResponse;
@@ -31,23 +30,20 @@ import butterknife.BindView;
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
-    //    @BindView(R.id.fab)
-//    FloatingActionButton fab;
-    public MyJobsAdapter adapter;
     @BindView(R.id.titleHeader)
     TextView titleHeader;
     @BindView(R.id.rcvSavedJob)
     RecyclerView rcvSavedJob;
-    public static View.OnClickListener myOnClickListener;
     private RecyclerView.LayoutManager layoutManager;
+    public MyJobsSavedAdapter adapter;
     private ArrayList<JobList> jobsList = new ArrayList<>();
     private ArrayList<JobList> jobsListServer = new ArrayList<>();
     private GetSavedSearchJobsRequest getSavedSearchJobsRequest;
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout mSwipeRefreshLayout;
     int mPage = 0;
-    private String mCarrerId = "4";
-    private String mCityId = "1";
+    private String mCarrerId = "0";
+    private String mCityId = "0";
 
     public static JobsSavedFragment newInstance(String cityId, String carrerId) {
         JobsSavedFragment fm = new JobsSavedFragment();
@@ -65,9 +61,7 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-        myOnClickListener = new JobsSavedFragment.MyOnClickListener(getActivity());
         rcvSavedJob.setHasFixedSize(true);
-
         layoutManager = new LinearLayoutManager(getActivity());
         rcvSavedJob.setLayoutManager(layoutManager);
         rcvSavedJob.setItemAnimator(new DefaultItemAnimator());
@@ -85,7 +79,7 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
                 }
             }
         });
-        adapter = new MyJobsAdapter(rcvSavedJob, jobsList, this, getActivity(), true);
+        adapter = new MyJobsSavedAdapter(rcvSavedJob, jobsList, this, getActivity(), true);
         rcvSavedJob.setAdapter(adapter);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
@@ -142,18 +136,8 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
         }
     }
 
-    private static class MyOnClickListener implements View.OnClickListener {
-
-        private final FragmentActivity fragmentActivity;
-
-        private MyOnClickListener(FragmentActivity fragmentActivity) {
-            this.fragmentActivity = fragmentActivity;
-        }
-
-        @Override
-        public void onClick(View v) {
-//            FragmentUtil.pushFragment(fragmentActivity, new DetailJobFragment(), null);
-        }
+    public TextView getTitleHeader() {
+        return titleHeader;
     }
 
     public void getSavedSearchJob(String careerId, String cityId, String jobtile, final int page) {

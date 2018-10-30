@@ -108,7 +108,7 @@ public class MyCVSavedFragment extends BaseFragment implements SwipeRefreshLayou
                 mSwipeRefreshLayout.setRefreshing(false);
                 cvListsServer.clear();
                 cvListsServer.addAll(data.getCvList());
-                tvCountCV.setText(data.getTotal() + " " + getResources().getString(R.string.cv_saved_found));
+                tvCountCV.setText(data.getTotal() + " " + getResources().getString(R.string.cv_found));
                 if (page == 0) cvLists.clear();
                 else {
 ////                    jobsList.remove(jobsList.size() - 1);
