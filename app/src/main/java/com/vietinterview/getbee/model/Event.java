@@ -8,8 +8,12 @@ import com.vietinterview.getbee.callback.OnFillBackgroundListener;
 import com.vietinterview.getbee.callback.OnRefreshHomeListener;
 import com.vietinterview.getbee.callback.OnRefreshMyCVSavedListener;
 import com.vietinterview.getbee.callback.OnRefreshMyCVSubmitListener;
+import com.vietinterview.getbee.callback.OnSetHeightViewListener;
 import com.vietinterview.getbee.callback.OnSetTextGreetingListener;
 import com.vietinterview.getbee.callback.OnShowLogoListener;
+import com.vietinterview.getbee.callback.OnSwitchToOneListener;
+import com.vietinterview.getbee.callback.OnSwitchToThreeListener;
+import com.vietinterview.getbee.callback.OnSwitchToTwoListener;
 
 /**
  * Created by V4-OS01 on 14/10/2016.
@@ -23,6 +27,10 @@ public class Event implements Parcelable {
     private OnRefreshMyCVSavedListener onRefreshMyCVListener;
     private OnRefreshMyCVSubmitListener onRefreshMyCVSubmitListener;
     private OnSetTextGreetingListener onSetTextGreetingListener;
+    private OnSetHeightViewListener onSetHeightViewListener;
+    private OnSwitchToOneListener onSwitchToOneListener;
+    private OnSwitchToTwoListener onSwitchToTwoListener;
+    private OnSwitchToThreeListener onSwitchToThreeListener;
 
     protected Event(Parcel in) {
     }
@@ -43,6 +51,21 @@ public class Event implements Parcelable {
         }
     };
 
+    public void setOnSwitchToOneListener(OnSwitchToOneListener onSwitchToOneListener) {
+        this.onSwitchToOneListener = onSwitchToOneListener;
+    }
+
+    public void setOnSwitchToTwoListener(OnSwitchToTwoListener onSwitchToTwoListener) {
+        this.onSwitchToTwoListener = onSwitchToTwoListener;
+    }
+
+    public void setOnSwitchToThreeListener(OnSwitchToThreeListener onSwitchToThreeListener) {
+        this.onSwitchToThreeListener = onSwitchToThreeListener;
+    }
+
+    public void setOnSetHeightViewListener(OnSetHeightViewListener onSetHeightViewListener) {
+        this.onSetHeightViewListener = onSetHeightViewListener;
+    }
 
     public void setOnSetTextGreetingListener(OnSetTextGreetingListener onSetTextGreetingListener) {
         this.onSetTextGreetingListener = onSetTextGreetingListener;
@@ -114,6 +137,29 @@ public class Event implements Parcelable {
         }
     }
 
+    public void setHeightView(int height) {
+        if (this.onSetHeightViewListener != null) {
+            this.onSetHeightViewListener.onSetHeightView(height);
+        }
+    }
+
+    public void setSwitchToOne(int position) {
+        if (this.onSwitchToOneListener != null) {
+            this.onSwitchToOneListener.onSwitchToOne(position);
+        }
+    }
+
+    public void setSwitchToTwo(int position) {
+        if (this.onSwitchToTwoListener != null) {
+            this.onSwitchToTwoListener.onSwitchToTwo(position);
+        }
+    }
+
+    public void setSwitchToThree(int position) {
+        if (this.onSwitchToThreeListener != null) {
+            this.onSwitchToThreeListener.onSwitchToThree(position);
+        }
+    }
 
     @Override
     public int describeContents() {

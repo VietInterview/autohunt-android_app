@@ -2,6 +2,7 @@ package com.vietinterview.getbee.api.request;
 
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.api.response.AddRemoveJobResponse;
+import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
 
 import org.json.JSONException;
@@ -14,7 +15,7 @@ import java.util.List;
  * Created by hiepnguyennghia on 10/15/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class SaveUnsaveJobRequest extends BaseJsonRequest<AddRemoveJobResponse> {
+public class SaveUnsaveJobRequest extends BaseJsonRequest<AddRemoveJobResponse, ErrorResponse> {
     private int mJobId;
     private int mStatus;
 
@@ -24,8 +25,13 @@ public class SaveUnsaveJobRequest extends BaseJsonRequest<AddRemoveJobResponse> 
     }
 
     @Override
-    public Class<AddRemoveJobResponse> getResponseClass() throws JSONException {
+    public Class<AddRemoveJobResponse> getResponseSuccessClass() throws JSONException {
         return AddRemoveJobResponse.class;
+    }
+
+    @Override
+    public Class<ErrorResponse> getResponseFailClass() throws JSONException {
+        return ErrorResponse.class;
     }
 
     @Override

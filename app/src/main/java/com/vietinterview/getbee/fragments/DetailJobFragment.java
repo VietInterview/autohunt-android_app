@@ -8,14 +8,13 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -35,9 +34,12 @@ import com.vietinterview.getbee.api.request.BaseRequest;
 import com.vietinterview.getbee.api.request.GetDetailJobRequest;
 import com.vietinterview.getbee.api.request.SaveUnsaveJobRequest;
 import com.vietinterview.getbee.api.response.AddRemoveJobResponse;
+import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.detailjob.DetailJobResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.callback.OnSetHeightViewListener;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
@@ -66,13 +68,15 @@ public class DetailJobFragment extends BaseFragment {
     RelativeLayout rlHeader;
     @BindView(R.id.imgCompany)
     ImageView imgCompany;
+    @BindView(R.id.viewpager)
+    ViewPager viewPager;
     private TabLayout tabLayout;
-    private ViewPager viewPager;
     private Dialog mNotifydialog;
     private JobList mJobList;
     private SaveUnsaveJobRequest saveUnsaveJobRequest;
     private GetDetailJobRequest getDetailJobRequest;
     private DetailJobResponse detailJobResponse;
+    ViewTreeObserver vto;
 
     public static DetailJobFragment newInstance(JobList jobList) {
         DetailJobFragment fm = new DetailJobFragment();
@@ -92,7 +96,15 @@ public class DetailJobFragment extends BaseFragment {
         getEventBaseFragment().doFillBackground(getResources().getString(R.string.detail_job));
         setCustomToolbar(true);
 //        setHasOptionsMenu(true);
-        viewPager = (ViewPager) root.findViewById(R.id.viewpager);
+        getEventBaseFragment().setOnSetHeightViewListener(new OnSetHeightViewListener() {
+            @Override
+            public void onSetHeightView(int height) {
+                ViewGroup.LayoutParams params = viewPager.getLayoutParams();
+                params.height = height;
+                DebugLog.showLogCat(height + "");
+                viewPager.requestLayout();
+            }
+        });
         tabLayout = (TabLayout) root.findViewById(R.id.tabs);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.transparent));
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -104,8 +116,14 @@ public class DetailJobFragment extends BaseFragment {
             @Override
             public void onPageSelected(int position) {
                 if (position == 0) {
+                    getEventBaseFragment().setSwitchToOne(position);
+                    DebugLog.showLogCat(position + "");
                 } else if (position == 1) {
+                    getEventBaseFragment().setSwitchToTwo(position);
+                    DebugLog.showLogCat(position + "");
                 } else if (position == 2) {
+                    getEventBaseFragment().setSwitchToThree(position);
+                    DebugLog.showLogCat(position + "");
                 }
             }
 
@@ -129,7 +147,7 @@ public class DetailJobFragment extends BaseFragment {
     public void getDetailJob(int jobId) {
         showCoverNetworkLoading();
         getDetailJobRequest = new GetDetailJobRequest(jobId);
-        getDetailJobRequest.callRequest(getActivity(), new ApiObjectCallBack<DetailJobResponse>() {
+        getDetailJobRequest.callRequest(getActivity(), new ApiObjectCallBack<DetailJobResponse, ErrorResponse>() {
             @Override
             public void onSuccess(DetailJobResponse data, List<DetailJobResponse> dataArrayList, int status, String message) {
                 hideCoverNetworkLoading();
@@ -183,6 +201,9 @@ public class DetailJobFragment extends BaseFragment {
                     saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
                     saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_unsave_button));
                 }
+                infoFragment = new InfoFragment().newInstance(detailJobResponse);
+                statisticalFragment = new StatisticalFragment().newInstance(detailJobResponse);
+                cvSentFragment = new CVSentFragment().newInstance(detailJobResponse);
                 setupViewPager(viewPager);
                 tabLayout.setupWithViewPager(viewPager);
                 setupTabIcons();
@@ -205,7 +226,7 @@ public class DetailJobFragment extends BaseFragment {
             }
 
             @Override
-            public void onFail(int failCode, DetailJobResponse data, List<DetailJobResponse> dataArrayList, String message) {
+            public void onFail(int failCode, DetailJobResponse data, ErrorResponse errorResponse, List<DetailJobResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message, new DialogInterface.OnClickListener() {
                     @Override
@@ -222,7 +243,7 @@ public class DetailJobFragment extends BaseFragment {
         showCoverNetworkLoading();
         int collStatus = mJobList.getCollStatus() == null ? 1 : (int) mJobList.getCollStatus() != 0 ? 0 : 1;
         saveUnsaveJobRequest = new SaveUnsaveJobRequest(mJobList.getId(), collStatus);
-        saveUnsaveJobRequest.callRequest(getActivity(), new ApiObjectCallBack<AddRemoveJobResponse>() {
+        saveUnsaveJobRequest.callRequest(getActivity(), new ApiObjectCallBack<AddRemoveJobResponse, ErrorResponse>() {
             @Override
             public void onSuccess(AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, int status, String message) {
                 hideCoverNetworkLoading();
@@ -255,7 +276,7 @@ public class DetailJobFragment extends BaseFragment {
             }
 
             @Override
-            public void onFail(int failCode, AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, String message) {
+            public void onFail(int failCode, AddRemoveJobResponse data, ErrorResponse errorResponse, List<AddRemoveJobResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
             }
         });
@@ -304,13 +325,16 @@ public class DetailJobFragment extends BaseFragment {
         tabLayout.getTabAt(2).setCustomView(tabThree);
     }
 
+    InfoFragment infoFragment;
+    StatisticalFragment statisticalFragment;
+    CVSentFragment cvSentFragment;
+
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFrag(new InfoFragment().newInstance(detailJobResponse), getResources().getString(R.string.info));
-        adapter.addFrag(new StatisticalFragment().newInstance(detailJobResponse), getResources().getString(R.string.statistic));
-        adapter.addFrag(new CVSentFragment().newInstance(detailJobResponse), getResources().getString(R.string.cv_submited));
-        viewPager.setCurrentItem(0);
-        viewPager.setOffscreenPageLimit(0);
+        adapter.addFrag(infoFragment, getResources().getString(R.string.info));
+        adapter.addFrag(statisticalFragment, getResources().getString(R.string.statistic));
+        adapter.addFrag(cvSentFragment, getResources().getString(R.string.cv_submited));
+        viewPager.setCurrentItem(0);viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(adapter);
     }
 

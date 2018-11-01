@@ -4,6 +4,7 @@ import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.RequestParams;
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.api.response.CityResponse;
+import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
 
 import java.lang.reflect.Type;
@@ -14,10 +15,15 @@ import java.util.List;
  * Created by hiepnguyennghia on 10/12/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class GetListCityRequest extends BaseRequest<CityResponse> {
+public class GetListCityRequest extends BaseRequest<CityResponse, ErrorResponse> {
     @Override
-    public Class<CityResponse> getResponseClass() {
+    public Class<CityResponse> getResponseSuccessClass() {
         return CityResponse.class;
+    }
+
+    @Override
+    public Class<ErrorResponse> getResponseFailClass() {
+        return ErrorResponse.class;
     }
 
     @Override

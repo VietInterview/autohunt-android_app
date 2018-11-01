@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingHorizontal="16dp"
     android:paddingBottom="16dp">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
+        android:id="@+id/llInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/border_expandable_child"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -22,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:text="@string/listen"
+                android:text="MS Word"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -48,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:text="@string/speak"
+                android:text="MS Excel"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -74,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:text="@string/read"
+                android:text="MS PowerPoint"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -100,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:text="@string/write"
+                android:text="MS Outlook"
                 android:textColor="#505059"
                 android:textSize="18sp" />
 
@@ -115,4 +117,23 @@
                 android:textSize="18sp" />
         </RelativeLayout>
     </LinearLayout>
-</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llOther"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_expandable_child"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+
+        <com.vietinterview.getbee.customview.NunitoTextView
+            android:id="@+id/tvOtherSoft"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:textColor="#505059"
+            android:textSize="18sp"
+            android:visibility="visible" />
+    </LinearLayout>
+</FrameLayout>

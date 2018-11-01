@@ -7,7 +7,7 @@ package com.vietinterview.getbee.api.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class RegistResponse {
+public class ErrorResponse {
 
     @SerializedName("entityName")
     @Expose

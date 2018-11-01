@@ -7,7 +7,6 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,16 +18,16 @@ import android.widget.EditText;
 
 import com.akexorcist.localizationactivity.LocalizationActivity;
 import com.vietinterview.getbee.R;
-//import com.vietinterview.getbee.callback.DetectSwipeGestureListener;
 import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.model.Event;
 import com.vietinterview.getbee.utils.DebugLog;
-import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.EventBusHelper;
 import com.vietinterview.getbee.utils.KeyboardUtil;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
 
 import butterknife.ButterKnife;
+
+//import com.vietinterview.getbee.callback.DetectSwipeGestureListener;
 
 /**
  * Created by Envy 15T on 6/4/2015.
@@ -41,16 +40,6 @@ public abstract class BaseActivity extends LocalizationActivity {
     BaseActivity baseActivity;
     boolean isUnregistEventBus = false;
     private Event eventBaseActivity;
-//    private GestureDetectorCompat gestureDetectorCompat = null;
-//    DetectSwipeGestureListener gestureListener = null;
-
-//    public DetectSwipeGestureListener getGestureListener() {
-//        return gestureListener;
-//    }
-//
-//    public void setGestureListener(DetectSwipeGestureListener gestureListener) {
-//        this.gestureListener = gestureListener;
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,32 +64,16 @@ public abstract class BaseActivity extends LocalizationActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.yellow));
-        // Create a common gesture listener object.
-//        gestureListener = new DetectSwipeGestureListener();
-
-        // Set activity in the listener.
-//        gestureListener.setActivity(this);
-
-        // Create the gesture detector with the gesture listener.
-//        gestureDetectorCompat = new GestureDetectorCompat(this, gestureListener);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        // Pass activity on touch event to the gesture detector.
-//        gestureDetectorCompat.onTouchEvent(event);
-        // Return true to tell android OS that event has been consumed, do not pass it to other event listeners.
         return true;
     }
 
     public Event getEventBaseActivity() {
         return eventBaseActivity;
     }
-
-//    public GestureDetectorCompat getGestureDetectorCompat() {
-//        return gestureDetectorCompat;
-//    }
-
 
     protected boolean checkApiDialogIsShow() {
         return dialogErrorAPI.isShowing() || dialogTimeOutAPI.isShowing() || dialogNoConnection.isShowing();
@@ -196,15 +169,6 @@ public abstract class BaseActivity extends LocalizationActivity {
             });
         }
     }
-
-//    @Override
-//    public void onBackPressed() {
-//        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-//            getSupportFragmentManager().popBackStack();
-//        } else {
-//            finish();
-//        }
-//    }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {

@@ -20,14 +20,14 @@ public class DateUtil {
     public synchronized static Date convertToGMTDate(String Date) {
         Date converted_date = null;
         try {
-            DateFormat utcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss+0000");
+            DateFormat utcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
             utcFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
             Date date = utcFormat.parse(Date);
             converted_date = date;
         } catch (Exception e) {
         }
         try {
-            DateFormat utcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+0000");
+            DateFormat utcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
             utcFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
             Date date = utcFormat.parse(Date);
             converted_date = date;

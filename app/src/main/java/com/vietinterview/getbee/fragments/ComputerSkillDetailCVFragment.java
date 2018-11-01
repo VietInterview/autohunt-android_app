@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.adapter.ExComSkillListViewAdapter;
 import com.vietinterview.getbee.adapter.ExLanListViewAdapter;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
+import com.vietinterview.getbee.api.response.detailcv.LstComputerSkill;
 import com.vietinterview.getbee.api.response.detailcv.LstLanguage;
 
 import java.util.ArrayList;
@@ -19,16 +21,16 @@ import java.util.List;
  * Created by hiepnguyennghia on 10/23/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class LanDetailCVFragment extends BaseFragment {
-    private ExLanListViewAdapter exStepLanListViewAdapter;
+public class ComputerSkillDetailCVFragment extends BaseFragment {
+    private ExComSkillListViewAdapter exComSkillListViewAdapter;
     private ExpandableListView exLvLanguage;
     private int lastExpandedPositionlangeuage = -1;
-    private List<LstLanguage> listDataGroup;
-    private HashMap<String, List<LstLanguage>> listDataChild;
+    private List<String> listDataGroup;
+    private HashMap<String, List<LstComputerSkill>> listDataChild;
     DetailCVResponse detailCVResponse;
 
-    public static LanDetailCVFragment newInstance(DetailCVResponse detailCVResponse) {
-        LanDetailCVFragment fm = new LanDetailCVFragment();
+    public static ComputerSkillDetailCVFragment newInstance(DetailCVResponse detailCVResponse) {
+        ComputerSkillDetailCVFragment fm = new ComputerSkillDetailCVFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable("detailCVResponse", detailCVResponse);
         fm.setArguments(bundle);
@@ -58,15 +60,20 @@ public class LanDetailCVFragment extends BaseFragment {
         });
         listDataGroup = new ArrayList<>();
         listDataChild = new HashMap<>();
-        exStepLanListViewAdapter = new ExLanListViewAdapter(getActivity(), listDataGroup, listDataChild);
-        exLvLanguage.setAdapter(exStepLanListViewAdapter);
-        for (int i = 0; i < detailCVResponse.getLstLanguage().size(); i++) {
-            listDataGroup.add(detailCVResponse.getLstLanguage().get(i));
-            List<LstLanguage> alcoholList = new ArrayList<>();
-            alcoholList.add(detailCVResponse.getLstLanguage().get(i));
-            listDataChild.put(listDataGroup.get(i).getLanguageName(), alcoholList);
-        }
-        exStepLanListViewAdapter.notifyDataSetChanged();
+        exComSkillListViewAdapter = new ExComSkillListViewAdapter(getActivity(), listDataGroup, listDataChild);
+        exLvLanguage.setAdapter(exComSkillListViewAdapter);
+
+        listDataGroup.add(getResources().getString(R.string.office_information));
+        List<LstComputerSkill> lstComputerSkills = new ArrayList<>();
+        lstComputerSkills.add(detailCVResponse.getLstComputerSkill().get(0));
+        listDataChild.put(listDataGroup.get(0), lstComputerSkills);
+
+        listDataGroup.add(getResources().getString(R.string.other_soft));
+        List<LstComputerSkill> otherSoftList = new ArrayList<>();
+        otherSoftList.add(detailCVResponse.getLstComputerSkill().get(0));
+        listDataChild.put(listDataGroup.get(1), otherSoftList);
+
+        exComSkillListViewAdapter.notifyDataSetChanged();
     }
 
     @Override

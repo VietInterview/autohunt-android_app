@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.DeleteCVRequest;
+import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.listcv.CvList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
@@ -140,7 +141,7 @@ public class MyCVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         }
 
                         @Override
-                        public void onFail(int failCode, Object data, List dataArrayList, String message) {
+                        public void onFail(int failCode, Object dataSuccess, Object dataFail, List dataArrayList, String message) {
                             baseFragment.hideCoverNetworkLoading();
                         }
                     });

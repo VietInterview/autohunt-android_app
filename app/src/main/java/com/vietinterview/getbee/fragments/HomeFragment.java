@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.JobsAdapter;
 import com.vietinterview.getbee.api.request.GetSearchJobsRequest;
+import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.api.response.jobs.JobsResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
@@ -210,7 +211,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             showCoverNetworkLoading();
 
         getSearchJobsRequest = new GetSearchJobsRequest(careerId, cityId, ApiConstant.LIMIT, jobtile, page);
-        getSearchJobsRequest.callRequest(getActivity(), new ApiObjectCallBack<JobsResponse>() {
+        getSearchJobsRequest.callRequest(getActivity(), new ApiObjectCallBack<JobsResponse,ErrorResponse>() {
 
             @Override
             public void onSuccess(JobsResponse data, List<JobsResponse> dataArrayList, int status, String message) {
@@ -230,7 +231,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             }
 
             @Override
-            public void onFail(int failCode, JobsResponse data, List<JobsResponse> dataArrayList, String message) {
+            public void onFail(int failCode, JobsResponse data,ErrorResponse errorResponse, List<JobsResponse> dataArrayList, String message) {
                 if (mSwipeRefreshLayout != null)
                     mSwipeRefreshLayout.setRefreshing(false);
                 hideCoverNetworkLoading();

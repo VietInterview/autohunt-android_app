@@ -19,6 +19,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.SaveUnsaveJobRequest;
 import com.vietinterview.getbee.api.response.AddRemoveJobResponse;
+import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
@@ -137,7 +138,7 @@ public class MyJobsAppliedAdapter extends RecyclerView.Adapter<RecyclerView.View
                         jobsApplyedFragment.showCoverNetworkLoading();
                         Integer collStatus = dataSet.get(listPosition).getCollStatus() == null ? 1 : (Integer) dataSet.get(listPosition).getCollStatus() == 0 ? 1 : 0;
                         saveUnsaveJobRequest = new SaveUnsaveJobRequest(dataSet.get(listPosition).getId(), collStatus);
-                        saveUnsaveJobRequest.callRequest(mActivity, new ApiObjectCallBack<AddRemoveJobResponse>() {
+                        saveUnsaveJobRequest.callRequest(mActivity, new ApiObjectCallBack<AddRemoveJobResponse,ErrorResponse>() {
                             @Override
                             public void onSuccess(AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, int status, String message) {
                                 jobsApplyedFragment.hideCoverNetworkLoading();
@@ -153,7 +154,7 @@ public class MyJobsAppliedAdapter extends RecyclerView.Adapter<RecyclerView.View
                             }
 
                             @Override
-                            public void onFail(int failCode, AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, String message) {
+                            public void onFail(int failCode, AddRemoveJobResponse data,ErrorResponse errorResponse, List<AddRemoveJobResponse> dataArrayList, String message) {
                                 jobsApplyedFragment.hideCoverNetworkLoading();
                             }
                         });

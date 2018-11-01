@@ -11,26 +11,35 @@ import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.constant.ApiConstant;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.GsonUtils;
+import com.vietinterview.getbee.utils.MySSLSocketFactory;
+import com.vietinterview.getbee.utils.TrustManagerManipulator;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import java.util.List;
 
 /**
  * Created by hiepn on 22/04/2017.
  */
 
-public abstract class BaseRequest<T> {
+public abstract class BaseRequest<T, V> {
     private AsyncHttpClient client = new AsyncHttpClient();
     private JsonHttpResponseHandler mJsonHttpResponseHandler;
-    private ApiObjectCallBack<T> mApiObjectCallBack;
+    private ApiObjectCallBack<T, V> mApiObjectCallBack;
     private List<T> tList;
     private Context mContext;
 
-    public void callRequest(Context context, ApiObjectCallBack<T> tApiObjectCallBack) {
+    public void callRequest(Context context, ApiObjectCallBack<T, V> tApiObjectCallBack) {
         client.setTimeout(ApiConstant.REQUEST_TIMEOUT);
         this.mContext = context;
         client.setConnectTimeout(ApiConstant.REQUEST_TIMEOUT);
@@ -45,10 +54,10 @@ public abstract class BaseRequest<T> {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 if (response != null) {
                     DebugLog.jsonFormat("response " + getAbsoluteUrl(), response);
-                    mApiObjectCallBack.onSuccess(GsonUtils.fromJson(response.toString(), getResponseClass()), null, statusCode, "");
+                    mApiObjectCallBack.onSuccess(GsonUtils.fromJson(response.toString(), getResponseSuccessClass()), null, statusCode, "");
                 } else {
                     DebugLog.showLogCat(statusCode + "");
-                    mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
+                    mApiObjectCallBack.onFail(statusCode, null, null, null, mContext.getResources().getString(R.string.error_please_try));
                 }
             }
 
@@ -61,7 +70,7 @@ public abstract class BaseRequest<T> {
                     mApiObjectCallBack.onSuccess(null, tList, statusCode, "");
                 } else {
                     DebugLog.showLogCat(statusCode + "");
-                    mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
+                    mApiObjectCallBack.onFail(statusCode, null, null, null, mContext.getResources().getString(R.string.error_please_try));
                 }
             }
 
@@ -77,10 +86,10 @@ public abstract class BaseRequest<T> {
                     DebugLog.jsonFormat("response " + getAbsoluteUrl(), errorResponse);
                     tList = getListResponseClass();
                     tList = GsonUtils.fromJson(errorResponse.toString(), getType());
-                    mApiObjectCallBack.onFail(statusCode, null, tList, throwable.getMessage());
+                    mApiObjectCallBack.onFail(statusCode, null, null, tList, throwable.getMessage());
                 } else {
                     DebugLog.showLogCat(statusCode + "");
-                    mApiObjectCallBack.onFail(statusCode, null, null, throwable.getMessage());
+                    mApiObjectCallBack.onFail(statusCode, null, null, null, throwable.getMessage());
                 }
             }
 
@@ -88,19 +97,51 @@ public abstract class BaseRequest<T> {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 DebugLog.showLogCat(statusCode + " " + throwable.getMessage());
                 if (errorResponse != null)
-                    mApiObjectCallBack.onFail(statusCode, GsonUtils.fromJson(errorResponse.toString(), getResponseClass()), null, throwable.getMessage());
+                    mApiObjectCallBack.onFail(statusCode, null, GsonUtils.fromJson(errorResponse.toString(), getResponseFailClass()), null, throwable.getMessage());
                 else {
-                    mApiObjectCallBack.onFail(statusCode, null, null, throwable.getMessage());
+                    mApiObjectCallBack.onFail(statusCode, null, null, null, throwable.getMessage());
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 DebugLog.showLogCat(throwable.toString());
-                mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
+                mApiObjectCallBack.onFail(statusCode, null, null, null, mContext.getResources().getString(R.string.error_please_try));
             }
         };
-        DebugLog.showLogCat(getAbsoluteUrl() + "\n" + putParams() + "\n " + getAccessToken());
+        DebugLog.showLogCat(getAbsoluteUrl() + "\n" + putParams() + "\n" + getAccessToken());
+        TrustManagerManipulator.allowAllSSL();
+
+        KeyStore trustStore = null;
+        try {
+            trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        }
+        try {
+            trustStore.load(null, null);
+        } catch (CertificateException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        MySSLSocketFactory socketFactory = null;
+        try {
+            socketFactory = new MySSLSocketFactory(trustStore);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (UnrecoverableKeyException e) {
+            e.printStackTrace();
+        }
+        socketFactory.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+        client.setSSLSocketFactory(socketFactory);
+
         if (getMethod() == ApiConstant.POST) {
             client.post(getAbsoluteUrl(), putParams(), mJsonHttpResponseHandler);
         } else if (getMethod() == ApiConstant.GET) {
@@ -116,7 +157,7 @@ public abstract class BaseRequest<T> {
                 @Override
                 public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                     DebugLog.showLogCat(error.getMessage());
-                    mApiObjectCallBack.onFail(statusCode, null, null, error.getMessage());
+                    mApiObjectCallBack.onFail(statusCode, null, null, null, error.getMessage());
                 }
             });
         }
@@ -126,7 +167,9 @@ public abstract class BaseRequest<T> {
         client.cancelAllRequests(true);
     }
 
-    abstract public Class<T> getResponseClass();
+    abstract public Class<T> getResponseSuccessClass();
+
+    abstract public Class<V> getResponseFailClass();
 
     abstract public List<T> getListResponseClass();
 

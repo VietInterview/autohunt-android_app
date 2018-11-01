@@ -1,6 +1,6 @@
 package com.vietinterview.getbee.api.request;
 
-import com.vietinterview.getbee.api.response.RegistResponse;
+import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
 
 import org.json.JSONException;
@@ -13,30 +13,37 @@ import java.util.List;
  * Created by hiepnguyennghia on 10/9/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class RegistRequest extends BaseJsonRequest<RegistResponse> {
+public class RegistRequest extends BaseJsonRequest<ErrorResponse, ErrorResponse> {
     private String mEmail;
     private String mPhone;
     private String mName;
     private String mCarrer;
     private String mAddress;
 
-    public RegistRequest(String email, String phone, String name, String carrer,String address) {
+    public RegistRequest(String email, String phone, String name, String carrer, String address) {
         this.mEmail = email;
         this.mPhone = phone;
-        this.mName=name;
-        this.mCarrer=carrer;
-        this.mAddress=address;
+        this.mName = name;
+        this.mCarrer = carrer;
+        this.mAddress = address;
+    }
+
+
+    @Override
+    public Class<ErrorResponse> getResponseSuccessClass() throws JSONException {
+        return ErrorResponse.class;
     }
 
     @Override
-    public Class<RegistResponse> getResponseClass() {
-        return RegistResponse.class;
+    public Class<ErrorResponse> getResponseFailClass() throws JSONException {
+        return ErrorResponse.class;
     }
 
     @Override
-    public List<RegistResponse> getListResponseClass() {
+    public List<ErrorResponse> getListResponseClass() {
         return null;
     }
+
 
     @Override
     public Type getType() {

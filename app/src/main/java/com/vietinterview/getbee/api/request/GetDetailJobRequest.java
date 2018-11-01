@@ -2,6 +2,7 @@ package com.vietinterview.getbee.api.request;
 
 import com.loopj.android.http.RequestParams;
 import com.vietinterview.getbee.AccountManager;
+import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.detailjob.DetailJobResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * Created by hiepnguyennghia on 10/18/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class GetDetailJobRequest extends BaseRequest<DetailJobResponse> {
+public class GetDetailJobRequest extends BaseRequest<DetailJobResponse, ErrorResponse> {
     private int jobId;
 
     public GetDetailJobRequest(int jobId) {
@@ -20,8 +21,13 @@ public class GetDetailJobRequest extends BaseRequest<DetailJobResponse> {
     }
 
     @Override
-    public Class<DetailJobResponse> getResponseClass() {
+    public Class<DetailJobResponse> getResponseSuccessClass() {
         return DetailJobResponse.class;
+    }
+
+    @Override
+    public Class<ErrorResponse> getResponseFailClass() {
+        return ErrorResponse.class;
     }
 
     @Override

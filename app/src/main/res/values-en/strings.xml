@@ -156,4 +156,9 @@
     <string name="saved_noti">Saved job</string>
     <string name="cancel_save_noti">Cancel save job</string>
     <string name="city_province">City / Province</string>
+    <string name="conputer_skill_tit">Computer Skill</string>
+    <string name="office_information">Office information</string>
+    <string name="other_soft">Other software</string>
+    <string name="hunt_send_cv_noti">Your CV has been uploaded successfully and is pending before sending to the consumer, processing time is up to 24 hours. We will notify you as soon as it is completed</string>
+
 </resources>

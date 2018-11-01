@@ -6,7 +6,7 @@
     android:paddingHorizontal="16dp"
     android:paddingTop="16dp">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/border_expandable_group"
@@ -17,16 +17,17 @@
             android:id="@+id/tvJob"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="32dp"
             android:paddingLeft="8dp"
             android:paddingTop="8dp"
-            android:layout_marginRight="32dp"
             android:textColor="#191830"
             android:textSize="18sp" />
 
         <com.vietinterview.getbee.customview.NunitoTextView
             android:id="@+id/tvCompany"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:layout_marginRight="32dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="32dp"
             android:paddingLeft="8dp"
             android:paddingBottom="8dp"
             android:textColor="#B1B1BA"

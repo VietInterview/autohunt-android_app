@@ -21,9 +21,8 @@ import android.widget.LinearLayout;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.api.request.RegistRequest;
-import com.vietinterview.getbee.api.response.RegistResponse;
+import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
-import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.StringUtils;
@@ -31,7 +30,6 @@ import com.vietinterview.getbee.customview.NunitoBoldTextView;
 import com.vietinterview.getbee.customview.NunitoEditText;
 import com.vietinterview.getbee.customview.NunitoTextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -250,10 +248,10 @@ public class RegitsFragment extends BaseFragment {
             if (StringUtils.isValidEmail(edtEmail.getText().toString().trim())) {
                 showCoverNetworkLoading();
                 registRequest = new RegistRequest(edtEmail.getText().toString().trim(), edtPhone.getText().toString().trim(), edtName.getText().toString().trim(), edtJob.getText().toString().trim(), edtAdd.getText().toString().trim());
-                registRequest.callRequest(getActivity(), new ApiObjectCallBack<RegistResponse>() {
+                registRequest.callRequest(getActivity(), new ApiObjectCallBack<ErrorResponse, ErrorResponse>() {
 
                     @Override
-                    public void onSuccess(RegistResponse data, List<RegistResponse> dataArrayList, int status, String message) {
+                    public void onSuccess(ErrorResponse data, List<ErrorResponse> dataArrayList, int status, String message) {
                         hideCoverNetworkLoading();
                         if (status == 201) {
                             mNotifydialog = new Dialog(getActivity());
@@ -284,7 +282,7 @@ public class RegitsFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void onFail(int failCode, RegistResponse data, List<RegistResponse> dataArrayList, String message) {
+                    public void onFail(int failCode, ErrorResponse data, ErrorResponse dataFail, List<ErrorResponse> dataArrayList, String message) {
                         hideCoverNetworkLoading();
                         if (data != null) {
                             if (data.getErrorKey().equalsIgnoreCase("userexists"))

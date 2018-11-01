@@ -25,7 +25,7 @@
     <string name="approved">Đã duyệt</string>
     <string name="interviewd">Đã phỏng vấn</string>
     <string name="accept_offer">Đã nhận việc</string>
-    <string name="cv_submited">Đã đã nộp</string>
+    <string name="cv_submited">CV đã nộp</string>
     <string name="cv_submited_title">CV đã được nộp</string>
     <string name="info">Thông tin</string>
     <string name="exp">Kinh nghiệm</string>
@@ -33,7 +33,7 @@
     <string name="language">Ngoại ngữ</string>
     <string name="skill">Kỹ năng</string>
     <string name="detail_job">Chi tiết công việc</string>
-    <string name="save_job">Lưu công việc</string>
+    <string name="save_job">Đã nộp</string>
     <string name="saved_job">Đã lưu việc</string>
     <string name="hiring">Đang tuyển</string>
     <string name="closed">Đã đóng</string>
@@ -47,7 +47,7 @@
     <string name="input_pass">Xin hãy nhập mật khẩu</string>
     <string name="mycv">CV của tôi</string>
     <string name="cv_saved">CV đã lưu</string>
-    <string name="cv_applyed_tit">CV đã nộp</string>
+    <string name="cv_applyed_tit">Đã nộp CV</string>
     <string name="cv_saved_found">CV đã lưu được tìm thấy</string>
     <string name="my_job">Công việc của tôi</string>
     <string name="input_name">Xin hãy nhập họ và tên</string>
@@ -156,4 +156,8 @@
     <string name="saved_noti">Đã lưu</string>
     <string name="cancel_save_noti">Hủy lưu</string>
     <string name="city_province">Tỉnh/Thành phố</string>
+    <string name="conputer_skill_tit">Tin học</string>
+    <string name="office_information">Tin học văn phòng</string>
+    <string name="other_soft">Phần mềm khác</string>
+    <string name="hunt_send_cv_noti">CV của bạn đã được upload thành công và đang được chờ xử lý trước khi gửi đến NTD, thời gian xử lý tối đa là 24 giờ. Chúng tôi sẽ thông báo tới bạn ngay khi hoàn thành</string>
 </resources>

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.MyJobsSavedAdapter;
 import com.vietinterview.getbee.api.request.GetSavedSearchJobsRequest;
+import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.api.response.jobs.JobsResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
@@ -145,7 +146,7 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
             showCoverNetworkLoading();
 
         getSavedSearchJobsRequest = new GetSavedSearchJobsRequest(careerId, cityId, String.valueOf(ApiConstant.LIMIT), jobtile, page);
-        getSavedSearchJobsRequest.callRequest(getActivity(), new ApiObjectCallBack<JobsResponse>() {
+        getSavedSearchJobsRequest.callRequest(getActivity(), new ApiObjectCallBack<JobsResponse, ErrorResponse>() {
 
             @Override
             public void onSuccess(JobsResponse data, List<JobsResponse> dataArrayList, int status, String message) {
@@ -165,7 +166,7 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
             }
 
             @Override
-            public void onFail(int failCode, JobsResponse data, List<JobsResponse> dataArrayList, String message) {
+            public void onFail(int failCode, JobsResponse data, ErrorResponse dataFail, List<JobsResponse> dataArrayList, String message) {
                 if (mSwipeRefreshLayout != null)
                     mSwipeRefreshLayout.setRefreshing(false);
                 hideCoverNetworkLoading();

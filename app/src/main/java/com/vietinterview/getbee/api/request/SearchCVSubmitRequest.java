@@ -2,6 +2,7 @@ package com.vietinterview.getbee.api.request;
 
 import com.loopj.android.http.RequestParams;
 import com.vietinterview.getbee.AccountManager;
+import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.listcv.CVResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * Created by hiepnguyennghia on 10/24/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class SearchCVSubmitRequest extends BaseRequest<CVResponse> {
+public class SearchCVSubmitRequest extends BaseRequest<CVResponse, ErrorResponse> {
     private int mPage;
     private int mStatus;
     private int mCareerId;
@@ -26,8 +27,13 @@ public class SearchCVSubmitRequest extends BaseRequest<CVResponse> {
     }
 
     @Override
-    public Class<CVResponse> getResponseClass() {
+    public Class<CVResponse> getResponseSuccessClass() {
         return CVResponse.class;
+    }
+
+    @Override
+    public Class<ErrorResponse> getResponseFailClass() {
+        return ErrorResponse.class;
     }
 
     @Override

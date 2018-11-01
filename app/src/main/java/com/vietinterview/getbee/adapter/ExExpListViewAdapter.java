@@ -7,10 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.detailcv.LstEmploymentHi;
-import com.vietinterview.getbee.utils.DebugLog;
 
 import java.util.HashMap;
 import java.util.List;

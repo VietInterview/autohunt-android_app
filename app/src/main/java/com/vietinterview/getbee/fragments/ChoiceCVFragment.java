@@ -29,7 +29,9 @@ import com.vietinterview.getbee.adapter.MyCVAdapter;
 import com.vietinterview.getbee.adapter.NotChoiceCVAdapter;
 import com.vietinterview.getbee.api.request.GetListCareerRequest;
 import com.vietinterview.getbee.api.request.SearchCVSaveRequest;
+import com.vietinterview.getbee.api.request.SearchMyCVRequest;
 import com.vietinterview.getbee.api.response.CareerResponse;
+import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.api.response.listcv.CVResponse;
 import com.vietinterview.getbee.api.response.listcv.CvList;
@@ -62,7 +64,7 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
     TextView tvCount;
     private ChoiceCVAdapter choiceCVAdapter;
     private NotChoiceCVAdapter notChoiceCVAdapter;
-    private SearchCVSaveRequest searchCVSaveRequest;
+    private SearchMyCVRequest searchMyCVRequest;
     private boolean isEdit = false;
     private Menu menu;
     private JobList mJobList;
@@ -103,13 +105,13 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
         setCustomToolbarVisible(true);
 //        setHasOptionsMenu(true);
         getEventBaseFragment().doFillBackground(getResources().getString(R.string.choice_cv));
-        getCVSaved(mPage);
+        searchMyCV(0, 0, mPage);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
                 android.R.color.holo_green_dark,
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
-//        setListViewFooter();
+        setListViewFooter();
         setListOnScrollListener();
     }
 
@@ -126,7 +128,7 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
                 if (scrollState == SCROLL_STATE_IDLE && listView.getLastVisiblePosition() == cvLists.size()) {
                     if (cvListsServer.size() >= 10) {
                         mPage++;
-                        getCVSaved(mPage);
+                        searchMyCV(0, 0, mPage);
                         progressBar.setVisibility(View.VISIBLE);
                     } else {
                         progressBar.setVisibility(View.GONE);
@@ -145,11 +147,46 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
 
     }
 
-    public void getCVSaved(final int page) {
+//    public void getCVSaved(final int page) {
+//        if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
+//            showCoverNetworkLoading();
+//        searchCVSaveRequest = new SearchCVSaveRequest(page);
+//        searchCVSaveRequest.callRequest(getActivity(), new ApiObjectCallBack<CVResponse>() {
+//            @Override
+//            public void onSuccess(CVResponse data, List<CVResponse> dataArrayList, int status, String message) {
+//                hideCoverNetworkLoading();
+//                tvCount.setText(data.getTotal() + " " + getResources().getString(R.string.cv_found));
+//                mSwipeRefreshLayout.setRefreshing(false);
+//                mCvResponse = data;
+//                cvListsServer.clear();
+//                cvListsServer.addAll(data.getCvList());
+//                if (page == 0) cvLists.clear();
+//                cvLists.addAll(data.getCvList());
+//                choiceCVAdapter = new ChoiceCVAdapter(getActivity(), cvLists);
+//                notChoiceCVAdapter = new NotChoiceCVAdapter(ChoiceCVFragment.this, getActivity(), cvLists, mJobList);
+//                if (isEdit) {
+//                    listView.setAdapter(choiceCVAdapter);
+//                } else {
+//                    listView.setAdapter(notChoiceCVAdapter);
+//                }
+//                choiceCVAdapter.notifyDataSetChanged();
+//                notChoiceCVAdapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onFail(int failCode, CVResponse data, List<CVResponse> dataArrayList, String message) {
+//                hideCoverNetworkLoading();
+//                mSwipeRefreshLayout.setRefreshing(false);
+//                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+//            }
+//        });
+//    }
+
+    public void searchMyCV(final int carrerId, final int cityId, final int page) {
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
             showCoverNetworkLoading();
-        searchCVSaveRequest = new SearchCVSaveRequest(page);
-        searchCVSaveRequest.callRequest(getActivity(), new ApiObjectCallBack<CVResponse>() {
+        searchMyCVRequest = new SearchMyCVRequest(page, carrerId, cityId);
+        searchMyCVRequest.callRequest(getActivity(), new ApiObjectCallBack<CVResponse, ErrorResponse>() {
             @Override
             public void onSuccess(CVResponse data, List<CVResponse> dataArrayList, int status, String message) {
                 hideCoverNetworkLoading();
@@ -172,7 +209,7 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
             }
 
             @Override
-            public void onFail(int failCode, CVResponse data, List<CVResponse> dataArrayList, String message) {
+            public void onFail(int failCode, CVResponse data, ErrorResponse errorResponse, List<CVResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 mSwipeRefreshLayout.setRefreshing(false);
                 DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
@@ -270,7 +307,7 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
     @Override
     public void onRefresh() {
         mPage = 0;
-        getCVSaved(mPage);
+        searchMyCV(0, 0, mPage);
     }
 
     @Override

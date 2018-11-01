@@ -70,11 +70,8 @@ public class LevelDetailCVFragment extends BaseFragment {
         exLvLevel.setAdapter(exStepLvListViewAdapter);
         for (int i = 0; i < detailCVResponse.getLstEducationHis().size(); i++) {
             listDataGroup.add(detailCVResponse.getLstEducationHis().get(i));
-            String[] array;
             List<LstEducationHi> lstEducationHis = new ArrayList<>();
-//            for (LstEducationHi item : detailCVResponse.getLstEducationHis()) {
             lstEducationHis.add(detailCVResponse.getLstEducationHis().get(i));
-//            }
             listDataChild.put(listDataGroup.get(i).getSchool(), lstEducationHis);
         }
         exStepLvListViewAdapter.notifyDataSetChanged();

@@ -25,6 +25,7 @@ import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ViewPagerAdapter;
 import com.vietinterview.getbee.api.request.GetDetailCVRequest;
 import com.vietinterview.getbee.api.request.SubmitCVRequest;
+import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.SubmitCVResponse;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
@@ -148,17 +149,26 @@ public class DetailCVFragment extends BaseFragment {
         tvHunt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new SubmitCVRequest(mCvId, mJobList.getId(), 1).callRequest(getActivity(), new ApiObjectCallBack<SubmitCVResponse>() {
+                showCoverNetworkLoading();
+                new SubmitCVRequest(mCvId, mJobList.getId(), 1).callRequest(getActivity(), new ApiObjectCallBack<SubmitCVResponse, ErrorResponse>() {
                     @Override
                     public void onSuccess(SubmitCVResponse data, List<SubmitCVResponse> dataArrayList, int status, String message) {
                         mNotifydialog.dismiss();
-                        FragmentUtil.popEntireFragmentBackStack(DetailCVFragment.this);
-                        FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(mJobList), null);
+                        hideCoverNetworkLoading();
+                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.hunt_send_cv_noti), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                FragmentUtil.popEntireFragmentBackStack(DetailCVFragment.this);
+                                FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(mJobList), null);
+                            }
+                        });
                     }
 
                     @Override
-                    public void onFail(int failCode, SubmitCVResponse data, List<SubmitCVResponse> dataArrayList, String message) {
-
+                    public void onFail(int failCode, SubmitCVResponse data, ErrorResponse errorResponse, List<SubmitCVResponse> dataArrayList, String message) {
+                        mNotifydialog.dismiss();
+                        hideCoverNetworkLoading();
+                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), errorResponse.getTitle());
                     }
                 });
 
@@ -167,17 +177,26 @@ public class DetailCVFragment extends BaseFragment {
         tvSentCV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new SubmitCVRequest(mCvId, mJobList.getId(), 2).callRequest(getActivity(), new ApiObjectCallBack<SubmitCVResponse>() {
+                showCoverNetworkLoading();
+                new SubmitCVRequest(mCvId, mJobList.getId(), 2).callRequest(getActivity(), new ApiObjectCallBack<SubmitCVResponse, ErrorResponse>() {
                     @Override
                     public void onSuccess(SubmitCVResponse data, List<SubmitCVResponse> dataArrayList, int status, String message) {
                         mNotifydialog.dismiss();
-                        FragmentUtil.popEntireFragmentBackStack(DetailCVFragment.this);
-                        FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(mJobList), null);
+                        hideCoverNetworkLoading();
+                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.hunt_send_cv_noti), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                FragmentUtil.popEntireFragmentBackStack(DetailCVFragment.this);
+                                FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(mJobList), null);
+                            }
+                        });
                     }
 
                     @Override
-                    public void onFail(int failCode, SubmitCVResponse data, List<SubmitCVResponse> dataArrayList, String message) {
-
+                    public void onFail(int failCode, SubmitCVResponse data, ErrorResponse errorResponse, List<SubmitCVResponse> dataArrayList, String message) {
+                        mNotifydialog.dismiss();
+                        hideCoverNetworkLoading();
+                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), errorResponse.getTitle());
                     }
                 });
 
@@ -209,9 +228,14 @@ public class DetailCVFragment extends BaseFragment {
         tabLayout.getTabAt(3).setCustomView(tabFour);
 
         TextView tabFive = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabFive.setText(getResources().getString(R.string.skill));
+        tabFive.setText(getResources().getString(R.string.conputer_skill_tit));
         tabFive.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
         tabLayout.getTabAt(4).setCustomView(tabFive);
+
+        TextView tabSix = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
+        tabSix.setText(getResources().getString(R.string.skill));
+        tabSix.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
+        tabLayout.getTabAt(5).setCustomView(tabSix);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -220,6 +244,7 @@ public class DetailCVFragment extends BaseFragment {
         adapter.addFrag(new ExpDetailCVFragment().newInstance(detailCVResponse), getResources().getString(R.string.exp));
         adapter.addFrag(new LevelDetailCVFragment().newInstance(detailCVResponse), getResources().getString(R.string.level));
         adapter.addFrag(new LanDetailCVFragment().newInstance(detailCVResponse), getResources().getString(R.string.language));
+        adapter.addFrag(new ComputerSkillDetailCVFragment().newInstance(detailCVResponse), getResources().getString(R.string.conputer_skill_tit));
         adapter.addFrag(new SkillDetailCVFragment().newInstance(detailCVResponse), getResources().getString(R.string.skill));
         viewPager.setCurrentItem(0);
         viewPager.setOffscreenPageLimit(0);
@@ -231,7 +256,7 @@ public class DetailCVFragment extends BaseFragment {
     public void getDetailCV(int id) {
         showCoverNetworkLoading();
         getDetailCVRequest = new GetDetailCVRequest(id);
-        getDetailCVRequest.callRequest(getActivity(), new ApiObjectCallBack<DetailCVResponse>() {
+        getDetailCVRequest.callRequest(getActivity(), new ApiObjectCallBack<DetailCVResponse, ErrorResponse>() {
             @Override
             public void onSuccess(DetailCVResponse data, List<DetailCVResponse> dataArrayList, int status, String message) {
                 hideCoverNetworkLoading();
@@ -269,7 +294,7 @@ public class DetailCVFragment extends BaseFragment {
             }
 
             @Override
-            public void onFail(int failCode, DetailCVResponse data, List<DetailCVResponse> dataArrayList, String message) {
+            public void onFail(int failCode, DetailCVResponse data, ErrorResponse errorResponse, List<DetailCVResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message, new DialogInterface.OnClickListener() {
                     @Override

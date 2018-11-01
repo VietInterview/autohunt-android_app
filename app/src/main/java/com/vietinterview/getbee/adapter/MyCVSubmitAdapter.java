@@ -130,36 +130,36 @@ public class MyCVSubmitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.save_job));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
             } else if (cvLists.get(position).getStatus() == 2) {
-                ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_yellow));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.applyed));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
-            } else if (cvLists.get(position).getStatus() == 3) {
                 ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_green));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.approved));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
-            } else if (cvLists.get(position).getStatus() == 4) {
+            } else if (cvLists.get(position).getStatus() == 3) {
                 ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_yellow));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.seen));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
-            } else if (cvLists.get(position).getStatus() == 5) {
+            } else if (cvLists.get(position).getStatus() == 4) {
                 ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_notyet_send));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.not_accept));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
-            } else if (cvLists.get(position).getStatus() == 6) {
+            } else if (cvLists.get(position).getStatus() == 5) {
                 ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_red));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.invite_interview));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
-            } else if (cvLists.get(position).getStatus() == 7) {
+            } else if (cvLists.get(position).getStatus() == 6) {
                 ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_green));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.interviewed));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
-            } else if (cvLists.get(position).getStatus() == 8) {
+            } else if (cvLists.get(position).getStatus() == 7) {
                 ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_green));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.offered));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
-            } else if (cvLists.get(position).getStatus() == 9) {
+            } else if (cvLists.get(position).getStatus() == 8) {
                 ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_green));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.go_to_work));
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
+            } else if (cvLists.get(position).getStatus() == 9) {
+                ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_green));
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.contract));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
             } else if (cvLists.get(position).getStatus() == 10) {
                 ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_green));
@@ -184,9 +184,10 @@ public class MyCVSubmitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         }
 
                         @Override
-                        public void onFail(int failCode, Object data, List dataArrayList, String message) {
+                        public void onFail(int failCode, Object dataSuccess, Object dataFail, List dataArrayList, String message) {
                             baseFragment.hideCoverNetworkLoading();
                         }
+
                     });
                 }
             });

@@ -1,6 +1,7 @@
 package com.vietinterview.getbee.api.request;
 
 import com.vietinterview.getbee.AccountManager;
+import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.SubmitCVResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
 
@@ -14,7 +15,7 @@ import java.util.List;
  * Created by hiepnguyennghia on 10/29/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class SubmitCVRequest extends BaseJsonRequest<SubmitCVResponse> {
+public class SubmitCVRequest extends BaseJsonRequest<SubmitCVResponse, ErrorResponse> {
     private int cvId;
     private int jobId;
     private int type;
@@ -26,8 +27,13 @@ public class SubmitCVRequest extends BaseJsonRequest<SubmitCVResponse> {
     }
 
     @Override
-    public Class<SubmitCVResponse> getResponseClass() throws JSONException {
+    public Class<SubmitCVResponse> getResponseSuccessClass() throws JSONException {
         return SubmitCVResponse.class;
+    }
+
+    @Override
+    public Class<ErrorResponse> getResponseFailClass() throws JSONException {
+        return ErrorResponse.class;
     }
 
     @Override

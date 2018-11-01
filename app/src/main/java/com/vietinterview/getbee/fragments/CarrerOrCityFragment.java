@@ -26,6 +26,7 @@ import com.vietinterview.getbee.api.request.GetListCareerRequest;
 import com.vietinterview.getbee.api.request.GetListCityRequest;
 import com.vietinterview.getbee.api.response.CareerResponse;
 import com.vietinterview.getbee.api.response.CityResponse;
+import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.customview.NunitoEditText;
 import com.vietinterview.getbee.customview.NunitoTextView;
@@ -173,7 +174,7 @@ public class CarrerOrCityFragment extends BaseFragment {
     public void getListCarrer() {
         showCoverNetworkLoading();
         getListCareerRequest = new GetListCareerRequest();
-        getListCareerRequest.callRequest(getActivity(), new ApiObjectCallBack<CareerResponse>() {
+        getListCareerRequest.callRequest(getActivity(), new ApiObjectCallBack<CareerResponse,ErrorResponse>() {
 
             @Override
             public void onSuccess(CareerResponse data, List<CareerResponse> dataArrayList, int status, String message) {
@@ -184,7 +185,7 @@ public class CarrerOrCityFragment extends BaseFragment {
             }
 
             @Override
-            public void onFail(int failCode, CareerResponse data, List<CareerResponse> dataArrayList, String message) {
+            public void onFail(int failCode, CareerResponse data,ErrorResponse errorResponse, List<CareerResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
             }
@@ -279,7 +280,7 @@ public class CarrerOrCityFragment extends BaseFragment {
     public void getListCity() {
         showCoverNetworkLoading();
         getListCityRequest = new GetListCityRequest();
-        getListCityRequest.callRequest(getActivity(), new ApiObjectCallBack<CityResponse>() {
+        getListCityRequest.callRequest(getActivity(), new ApiObjectCallBack<CityResponse,ErrorResponse>() {
             @Override
             public void onSuccess(CityResponse data, List<CityResponse> dataArrayList, int status, String message) {
                 hideCoverNetworkLoading();
@@ -289,7 +290,7 @@ public class CarrerOrCityFragment extends BaseFragment {
             }
 
             @Override
-            public void onFail(int failCode, CityResponse data, List<CityResponse> dataArrayList, String message) {
+            public void onFail(int failCode, CityResponse data,ErrorResponse errorResponse, List<CityResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
             }

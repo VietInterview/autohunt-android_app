@@ -13,6 +13,7 @@ import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.MyCVAdapter;
 import com.vietinterview.getbee.adapter.MyCVSubmitAdapter;
 import com.vietinterview.getbee.api.request.SearchCVSubmitRequest;
+import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.listcv.CVResponse;
 import com.vietinterview.getbee.api.response.listcv.CvList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
@@ -97,7 +98,7 @@ public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLay
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
             showCoverNetworkLoading();
         searchCVSubmitRequest = new SearchCVSubmitRequest(page, status, carrerId, cityId);
-        searchCVSubmitRequest.callRequest(getActivity(), new ApiObjectCallBack<CVResponse>() {
+        searchCVSubmitRequest.callRequest(getActivity(), new ApiObjectCallBack<CVResponse,ErrorResponse>() {
             @Override
             public void onSuccess(CVResponse data, List<CVResponse> dataArrayList, int status, String message) {
                 hideCoverNetworkLoading();
@@ -119,7 +120,7 @@ public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLay
             }
 
             @Override
-            public void onFail(int failCode, CVResponse data, List<CVResponse> dataArrayList, String message) {
+            public void onFail(int failCode, CVResponse data,ErrorResponse errorResponse, List<CVResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 mSwipeRefreshLayout.setRefreshing(false);
                 DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);

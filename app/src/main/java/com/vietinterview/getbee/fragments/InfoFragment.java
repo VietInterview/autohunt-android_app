@@ -1,17 +1,22 @@
 package com.vietinterview.getbee.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.detailjob.DetailJobResponse;
+import com.vietinterview.getbee.callback.OnSwitchToOneListener;
 import com.vietinterview.getbee.utils.DateUtil;
+import com.vietinterview.getbee.utils.DebugLog;
+import com.vietinterview.getbee.utils.LayoutUtils;
 import com.vietinterview.getbee.utils.StringUtils;
 
 import butterknife.BindView;
@@ -48,8 +53,11 @@ public class InfoFragment extends BaseFragment {
     LinearLayout llContentDes;
     @BindView(R.id.imgDes)
     ImageView imgDes;
+    @BindView(R.id.llInfo)
+    LinearLayout llInfo;
     DetailJobResponse detailJobResponse;
     boolean isVisibleDes = true;
+    ViewTreeObserver vto;
 
     public static InfoFragment newInstance(DetailJobResponse detailJobResponse) {
         InfoFragment fm = new InfoFragment();
@@ -66,6 +74,29 @@ public class InfoFragment extends BaseFragment {
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
+        vto = llInfo.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    llInfo.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                } else {
+                    llInfo.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+                int width = llInfo.getMeasuredWidth();
+                int height = llInfo.getMeasuredHeight();
+                getEventBaseFragment().setHeightView(height);
+            }
+        });
+        getEventBaseFragment().setOnSwitchToOneListener(new OnSwitchToOneListener() {
+            @Override
+            public void onSwitchToOne(int position) {
+                DebugLog.showLogCat(position + "");
+                if (position == 0) {
+                    getEventBaseFragment().setHeightView(LayoutUtils.getViewHeight(llInfo));
+                }
+            }
+        });
         tvCarrer.setText(detailJobResponse.getCareerName());
         if (detailJobResponse.getJobLevel() == 1)
             tvjobLevel.setText("Trưởng phòng");
@@ -104,10 +135,36 @@ public class InfoFragment extends BaseFragment {
             isVisibleDes = false;
             llContentDes.setVisibility(View.GONE);
             imgDes.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_right));
+            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                        llInfo.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    } else {
+                        llInfo.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
+                    int height = llInfo.getMeasuredHeight();
+                    DebugLog.showLogCat(height + "");
+                    getEventBaseFragment().setHeightView(height);
+                }
+            });
         } else {
             isVisibleDes = true;
             llContentDes.setVisibility(View.VISIBLE);
             imgDes.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_down));
+            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                        llInfo.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    } else {
+                        llInfo.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
+                    int height = llInfo.getMeasuredHeight();
+                    DebugLog.showLogCat(height + "");
+                    getEventBaseFragment().setHeightView(height);
+                }
+            });
         }
     }
 

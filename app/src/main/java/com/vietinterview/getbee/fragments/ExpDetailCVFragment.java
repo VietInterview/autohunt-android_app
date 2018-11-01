@@ -61,9 +61,7 @@ public class ExpDetailCVFragment extends BaseFragment {
         for (int i = 0; i < detailCVResponse.getLstEmploymentHis().size(); i++) {
             listDataGroup.add(detailCVResponse.getLstEmploymentHis().get(i));
             List<LstEmploymentHi> lstEmploymentHis = new ArrayList<>();
-//            for (LstEmploymentHi item : detailCVResponse.getLstEmploymentHis()) {
             lstEmploymentHis.add(detailCVResponse.getLstEmploymentHis().get(i));
-//            }
             listDataChild.put(listDataGroup.get(i).getTitle(), lstEmploymentHis);
         }
         exExpListViewAdapter = new ExExpListViewAdapter(getActivity(), listDataGroup, listDataChild);

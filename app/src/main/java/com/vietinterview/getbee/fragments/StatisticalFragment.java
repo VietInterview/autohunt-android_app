@@ -4,10 +4,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.detailjob.DetailJobResponse;
+import com.vietinterview.getbee.callback.OnSwitchToOneListener;
+import com.vietinterview.getbee.callback.OnSwitchToTwoListener;
+import com.vietinterview.getbee.utils.DebugLog;
+import com.vietinterview.getbee.utils.LayoutUtils;
 
 import butterknife.BindView;
 
@@ -36,7 +42,10 @@ public class StatisticalFragment extends BaseFragment {
     TextView tvmyCountGotoWork;
     @BindView(R.id.tvcountCared)
     TextView tvcountCared;
+    @BindView(R.id.llInfo)
+    LinearLayout llInfo;
     DetailJobResponse detailJobResponse;
+    ViewTreeObserver vto;
 
     public static StatisticalFragment newInstance(DetailJobResponse detailJobResponse) {
         StatisticalFragment fm = new StatisticalFragment();
@@ -53,6 +62,15 @@ public class StatisticalFragment extends BaseFragment {
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
+        getEventBaseFragment().setOnSwitchToTwoListener(new OnSwitchToTwoListener() {
+            @Override
+            public void onSwitchToTwo(int position) {
+                DebugLog.showLogCat(position + "");
+                if (position == 1) {
+                    getEventBaseFragment().setHeightView(LayoutUtils.getViewHeight(llInfo));
+                }
+            }
+        });
         tvcountCv.setText(detailJobResponse.getCountCv() != null ? detailJobResponse.getCountCv() + "" : "0");
         tvcountInterview.setText(detailJobResponse.getCountInterview() != null ? detailJobResponse.getCountInterview() + "" : "0");
         tvcountOffer.setText(detailJobResponse.getCountOffer() != null ? detailJobResponse.getCountOffer() + "" : "0");
@@ -75,24 +93,24 @@ public class StatisticalFragment extends BaseFragment {
 
     }
 
+    public LinearLayout getLlInfo() {
+        return llInfo;
+    }
+
     @Override
     protected void onRestore() {
-
     }
 
     @Override
     protected void initialize() {
-
     }
 
     @Override
     protected void onSaveState(Bundle bundle) {
-
     }
 
     @Override
     protected void onRestoreState(Bundle bundle) {
-
     }
 
 

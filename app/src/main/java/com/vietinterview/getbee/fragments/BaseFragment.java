@@ -101,7 +101,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        DebugLog.showLogCat("Lifecycle " + this.getClass().getSimpleName());
+//        DebugLog.showLogCat("Lifecycle " + this.getClass().getSimpleName());
         return createRootView(inflater, container);
     }
 

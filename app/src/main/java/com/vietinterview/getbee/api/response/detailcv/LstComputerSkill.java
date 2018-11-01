@@ -12,9 +12,9 @@ public class LstComputerSkill {
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("msEexcel")
+    @SerializedName("msExcel")
     @Expose
-    private Integer msEexcel;
+    private Integer msExcel;
     @SerializedName("msOutlook")
     @Expose
     private Integer msOutlook;
@@ -45,11 +45,11 @@ public class LstComputerSkill {
     }
 
     public Integer getMsEexcel() {
-        return msEexcel;
+        return msExcel;
     }
 
     public void setMsEexcel(Integer msEexcel) {
-        this.msEexcel = msEexcel;
+        this.msExcel = msEexcel;
     }
 
     public Integer getMsOutlook() {

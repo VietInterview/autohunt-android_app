@@ -2,6 +2,7 @@ package com.vietinterview.getbee.api.request;
 
 import com.loopj.android.http.RequestParams;
 import com.vietinterview.getbee.AccountManager;
+import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
 
 import java.lang.reflect.Type;
@@ -11,7 +12,7 @@ import java.util.List;
  * Created by hiepnguyennghia on 10/25/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class DeleteCVRequest extends BaseRequest {
+public class DeleteCVRequest extends BaseRequest<Object, ErrorResponse> {
     private int mId;
 
     public DeleteCVRequest(int mId) {
@@ -19,7 +20,12 @@ public class DeleteCVRequest extends BaseRequest {
     }
 
     @Override
-    public Class getResponseClass() {
+    public Class getResponseSuccessClass() {
+        return null;
+    }
+
+    @Override
+    public Class getResponseFailClass() {
         return null;
     }
 

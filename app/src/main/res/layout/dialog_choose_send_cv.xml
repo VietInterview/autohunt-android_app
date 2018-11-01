@@ -39,13 +39,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:background="@drawable/borderbutton">
+        android:background="@drawable/borderbutton"
+        android:padding="1dp">
 
         <com.vietinterview.getbee.customview.NunitoBoldTextView
             android:id="@+id/tvHunt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="60dp"
+            android:background="#3C3B6E"
             android:drawableLeft="@drawable/ic_hunt"
             android:drawablePadding="-48dp"
             android:gravity="center"
@@ -61,6 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:background="#484780"
             android:padding="20dp"
             android:src="@drawable/ic_info_hunt" />
 
@@ -69,6 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvHunt"
+            android:background="#31315D"
             android:gravity="center"
             android:paddingHorizontal="16dp"
             android:paddingVertical="8dp"
@@ -82,13 +86,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:background="@drawable/borderbutton_yellow">
+        android:background="@drawable/borderbutton_yellow"
+        android:padding="1dp">
 
         <com.vietinterview.getbee.customview.NunitoBoldTextView
             android:id="@+id/tvSentCV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="60dp"
+            android:background="#FFD215"
             android:drawableLeft="@drawable/ic_send_cv"
             android:drawablePadding="-18dp"
             android:gravity="center"
@@ -104,6 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:background="#F0C820"
             android:padding="20dp"
             android:src="@drawable/ic_info_hunt" />
 
@@ -112,6 +119,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvSentCV"
+            android:background="#E8C21F"
             android:gravity="center"
             android:paddingHorizontal="16dp"
             android:paddingVertical="8dp"
