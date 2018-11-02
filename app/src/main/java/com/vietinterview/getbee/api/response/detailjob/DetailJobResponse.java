@@ -5,6 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -103,6 +104,12 @@ public class DetailJobResponse implements Parcelable {
     @SerializedName("lstJobApply")
     @Expose
     private List<LstJobApply> lstJobApply = null;
+    @SerializedName("currencyName")
+    @Expose
+    private String currencyName;
+    @SerializedName("jobLevelName")
+    @Expose
+    private String jobLevelName;
 
     protected DetailJobResponse(Parcel in) {
         if (in.readByte() == 0) {
@@ -235,6 +242,22 @@ public class DetailJobResponse implements Parcelable {
             return new DetailJobResponse[size];
         }
     };
+
+    public String getCurrencyName() {
+        return currencyName;
+    }
+
+    public void setCurrencyName(String currencyName) {
+        this.currencyName = currencyName;
+    }
+
+    public String getJobLevelName() {
+        return jobLevelName;
+    }
+
+    public void setJobLevelName(String jobLevelName) {
+        this.jobLevelName = jobLevelName;
+    }
 
     public Integer getId() {
         return id;

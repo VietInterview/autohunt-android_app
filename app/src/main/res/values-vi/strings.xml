@@ -167,7 +167,7 @@
     <string name="above_100">Lớn hơn 100 người</string>
     <string name="above_500">Lớn hơn 500 người</string>
     <string name="average">Trung bình</string>
-    <string name="emailorphoneexist">Email hoặc phone đã tồn tại</string>
+    <string name="emailorphoneexist">Ứng viên này đã được CTV viên khác sử dụng và gửi đi. Bạn vui lòng chọn CV khác</string>
     <string name="cvnotfound">CV không tồn tại</string>
     <string name="cvalreadysubmitjob">CV đã được apply vào job</string>
     <string name="no_cv_upload">Bạn chưa upload CV nào. Hãy nhanh tay upload CV để kiếm thêm thu nhập</string>

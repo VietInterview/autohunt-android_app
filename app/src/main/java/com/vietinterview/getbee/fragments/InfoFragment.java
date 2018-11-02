@@ -94,9 +94,7 @@ public class InfoFragment extends BaseFragment {
             }
         });
         tvCarrer.setText(detailJobResponse.getCareerName());
-        if (detailJobResponse.getJobLevel() == 1)
-            tvjobLevel.setText("Trưởng phòng");
-        else tvjobLevel.setText("Nhân viên");
+        tvjobLevel.setText(detailJobResponse.getJobLevelName());
         if (!StringUtils.isEmpty(detailJobResponse.getListcityName()))
             tvlistcityName.setText(detailJobResponse.getListcityName());
         tvsubmitDate.setText(DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(detailJobResponse.getSubmitDate()) + ""));
@@ -108,10 +106,10 @@ public class InfoFragment extends BaseFragment {
             tvstatus.setText(getResources().getString(R.string.closed));
             tvstatus.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
         }
-        tvSalaryFromTo.setText(StringUtils.filterCurrencyString(detailJobResponse.getFromSalary()) + " USD - " + StringUtils.filterCurrencyString(detailJobResponse.getToSalary()) + " USD");
+        tvSalaryFromTo.setText(StringUtils.filterCurrencyString(detailJobResponse.getFromSalary()) + " " + detailJobResponse.getCurrencyName() + " - " + StringUtils.filterCurrencyString(detailJobResponse.getToSalary()) + " " + detailJobResponse.getCurrencyName());
         tvquantity.setText(detailJobResponse.getQuantity() + "");
         tvcountCv.setText(detailJobResponse.getCountCv() + "");
-        tvRewardCTV.setText(StringUtils.filterCurrencyString(detailJobResponse.getFee()) + " USD");
+        tvRewardCTV.setText(StringUtils.filterCurrencyString(detailJobResponse.getFee()) + " " + detailJobResponse.getCurrencyName());
         tvjobDescription.setText(Html.fromHtml(detailJobResponse.getJobDescription()));
     }
 

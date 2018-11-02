@@ -42,6 +42,17 @@ public class LstEmploymentHi {
     @SerializedName("toMonth")
     @Expose
     private Integer toMonth;
+    @SerializedName("currentJob")
+    @Expose
+    private Integer currentJob;
+
+    public Integer getCurrentJob() {
+        return currentJob;
+    }
+
+    public void setCurrentJob(Integer currentJob) {
+        this.currentJob = currentJob;
+    }
 
     public String getAchievement() {
         return achievement;

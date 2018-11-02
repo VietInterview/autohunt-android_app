@@ -72,7 +72,7 @@ public class CVSentFragment extends BaseFragment {
                     llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_yellow));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 2) {
                     btnStatus.setText(getResources().getString(R.string.sent));
-                    llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));
+                    llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_yellow));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 3) {
                     btnStatus.setText(getResources().getString(R.string.seen));
                     llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_yellow));
@@ -96,7 +96,7 @@ public class CVSentFragment extends BaseFragment {
                     llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_yellow));
                 } else {
                     btnStatus.setText(getResources().getString(R.string.not_accept));
-                    llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_yellow));
+                    llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_notyet_send));
                 }
                 mFlowLayout.addView(linearLayout);
             }

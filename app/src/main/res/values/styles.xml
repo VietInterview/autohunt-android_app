@@ -17,6 +17,7 @@
         <item name="android:itemBackground">@color/white</item>
         <item name="android:checkedButton">@drawable/checkbox_selector</item>
         <item name="android:textColor">@color/black</item>
+        <item name="android:windowActionBarOverlay">true</item>
     </style>
 
     <style name="AppTheme.MyTheme" parent="android:Theme">

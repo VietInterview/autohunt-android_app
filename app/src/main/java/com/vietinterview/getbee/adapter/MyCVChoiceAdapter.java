@@ -10,14 +10,13 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.DeleteCVRequest;
+import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.api.response.listcv.CvList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
@@ -35,13 +34,14 @@ import java.util.List;
  * created by tindle
  * created time 16/8/12 下午10:55
  */
-public class MyCVSubmitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MyCVChoiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private enum SwipedState {
         SHOWING_PRIMARY_CONTENT,
         SHOWING_SECONDARY_CONTENT
     }
 
+    private JobList jobList;
     private DeleteCVRequest deleteCVRequest;
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
@@ -55,10 +55,11 @@ public class MyCVSubmitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private BaseFragment baseFragment;
 
 
-    public MyCVSubmitAdapter(RecyclerView recyclerView, Context context, ArrayList<CvList> cvLists, BaseFragment homeFragment) {
+    public MyCVChoiceAdapter(RecyclerView recyclerView, Context context, JobList jobList, ArrayList<CvList> cvLists, BaseFragment homeFragment) {
         this.cvLists = cvLists;
         this.mContext = context;
         this.baseFragment = homeFragment;
+        this.jobList = jobList;
         mItemSwipedStates = new ArrayList<>();
         for (int i = 0; i < cvLists.size(); i++) {
             mItemSwipedStates.add(i, SwipedState.SHOWING_PRIMARY_CONTENT);
@@ -115,63 +116,15 @@ public class MyCVSubmitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvName)).setText(cvLists.get(position).getFullName());
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCarrer)).setText(cvLists.get(position).getCareerName());
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvJobTitle)).setText(cvLists.get(position).getJobTitle());
+            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvJobTitle)).setVisibility(cvLists.get(position).getJobTitle() != null ? View.VISIBLE : View.GONE);
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvDate)).setText(mContext.getResources().getString(R.string.update) + " " + DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(cvLists.get(position).getUpdatedDate()) + ""));
-            ((ViewPager) ((MyViewHolder) holder).mView).setCurrentItem(mItemSwipedStates.get(position).ordinal());
             ((RelativeLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailCVFragment().newInstance(null, cvLists.get(position).getId()), null);
+                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailCVFragment().newInstance(jobList, cvLists.get(position).getId()), null);
                 }
             });
-            if (cvLists.get(position).getStatus() == 0) {
-                ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_notyet_send));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.not_send));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
-            } else if (cvLists.get(position).getStatus() == 1) {
-                ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_yellow));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.sent));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
-            } else if (cvLists.get(position).getStatus() == 2) {
-                ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_yellow));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.sent));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
-            } else if (cvLists.get(position).getStatus() == 3) {
-                ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_yellow));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.seen));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
-            } else if (cvLists.get(position).getStatus() == 4) {
-                ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_notyet_send));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.not_accept));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
-            } else if (cvLists.get(position).getStatus() == 5) {
-                ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_red));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.invite_interview));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
-            } else if (cvLists.get(position).getStatus() == 6) {
-                ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_green));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.interviewed));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
-            } else if (cvLists.get(position).getStatus() == 7) {
-                ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_green));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.offered));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
-            } else if (cvLists.get(position).getStatus() == 8) {
-                ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_green));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.go_to_work));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
-            } else if (cvLists.get(position).getStatus() == 9) {
-                ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_green));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.contract));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
-            } else if (cvLists.get(position).getStatus() == 10) {
-                ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_notyet_send));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.not_accept));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
-            } else {
-                ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.borderbutton_notyet_send));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.not_accept));
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.white));
-            }
+            ((ViewPager) ((MyViewHolder) holder).mView).setCurrentItem(mItemSwipedStates.get(position).ordinal());
             if (position % 2 == 0) {
                 ((RelativeLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.row_not_white));
             } else {
@@ -186,7 +139,7 @@ public class MyCVSubmitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         @Override
                         public void onSuccess(Object data, List dataArrayList, int status, String message) {
                             baseFragment.hideCoverNetworkLoading();
-                            baseFragment.getEventBaseFragment().refreshMyCVSubmit();
+                            baseFragment.getEventBaseFragment().refreshMyCV();
                             notifyDataSetChanged();
                         }
 
@@ -194,7 +147,6 @@ public class MyCVSubmitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         public void onFail(int failCode, Object dataSuccess, Object dataFail, List dataArrayList, String message) {
                             baseFragment.hideCoverNetworkLoading();
                         }
-
                     });
                 }
             });

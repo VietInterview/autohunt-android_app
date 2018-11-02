@@ -48,6 +48,8 @@ public class ChoiceCVAdapter extends BaseAdapter {
             viewHolder.name = (TextView) view.findViewById(R.id.item_name);
             viewHolder.item_carrer = (TextView) view.findViewById(R.id.item_carrer);
             viewHolder.item_date = (TextView) view.findViewById(R.id.item_date);
+            viewHolder.item_Jobtitle = view.findViewById(R.id.item_Jobtitle);
+            viewHolder.item_Jobtitle.setText(careerResponse.getJobTitle());
             viewHolder.name.setText(careerResponse.getFullName());
             viewHolder.item_carrer.setText(careerResponse.getCareerName());
             viewHolder.item_date.setText("Cập nhật: " + DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(careerResponse.getUpdatedDate()) + ""));
@@ -70,6 +72,7 @@ public class ChoiceCVAdapter extends BaseAdapter {
         TextView name;
         TextView item_carrer;
         TextView item_date;
+        TextView item_Jobtitle;
         CheckableLinearLayout checkableLinearLayout;
     }
 

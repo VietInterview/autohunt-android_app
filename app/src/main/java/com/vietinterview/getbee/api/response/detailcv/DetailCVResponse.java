@@ -43,7 +43,7 @@ public class DetailCVResponse implements Parcelable {
     private Integer currencyId;
     @SerializedName("currencyName")
     @Expose
-    private Integer currencyName;
+    private String currencyName;
     @SerializedName("currentLevel")
     @Expose
     private CurrentLevel currentLevel;
@@ -176,7 +176,7 @@ public class DetailCVResponse implements Parcelable {
         if (in.readByte() == 0) {
             currencyName = null;
         } else {
-            currencyName = in.readInt();
+            currencyName = in.readString();
         }
         cvTitle = in.readString();
         if (in.readByte() == 0) {
@@ -344,11 +344,11 @@ public class DetailCVResponse implements Parcelable {
         this.currencyId = currencyId;
     }
 
-    public Integer getCurrencyName() {
+    public String getCurrencyName() {
         return currencyName;
     }
 
-    public void setCurrencyName(Integer currencyName) {
+    public void setCurrencyName(String currencyName) {
         this.currencyName = currencyName;
     }
 
@@ -648,7 +648,7 @@ public class DetailCVResponse implements Parcelable {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeInt(currencyName);
+            parcel.writeString(currencyName);
         }
         parcel.writeString(cvTitle);
         if (desiredSalary == null) {

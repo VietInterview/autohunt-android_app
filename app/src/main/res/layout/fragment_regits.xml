@@ -83,7 +83,7 @@
                 <com.vietinterview.getbee.customview.ClearableRegularEditText
                     android:id="@+id/edtName"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="6"
                     android:background="@null"
                     android:hint="@string/fullname"
@@ -127,7 +127,7 @@
                 <com.vietinterview.getbee.customview.ClearableRegularEditText
                     android:id="@+id/edtEmail"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="6"
                     android:background="@null"
                     android:hint="Email"
@@ -172,7 +172,7 @@
                 <com.vietinterview.getbee.customview.ClearableRegularEditText
                     android:id="@+id/edtPhone"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="6"
                     android:background="@null"
                     android:hint="@string/phone_number"

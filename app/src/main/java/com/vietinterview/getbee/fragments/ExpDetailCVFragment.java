@@ -76,7 +76,7 @@ public class ExpDetailCVFragment extends BaseFragment {
             lstEmploymentHis.add(detailCVResponse.getLstEmploymentHis().get(i));
             listDataChild.put(listDataGroup.get(i).getTitle(), lstEmploymentHis);
         }
-        exExpListViewAdapter = new ExExpListViewAdapter(getActivity(), listDataGroup, listDataChild);
+        exExpListViewAdapter = new ExExpListViewAdapter(getActivity(), listDataGroup, listDataChild, detailCVResponse.getCurrencyName());
         expandableListView.setAdapter(exExpListViewAdapter);
         exExpListViewAdapter.notifyDataSetChanged();
         if (detailCVResponse.getLstEmploymentHis().size() > 0) {

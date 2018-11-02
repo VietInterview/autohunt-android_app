@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.detailcv.LstEmploymentHi;
+import com.vietinterview.getbee.utils.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,11 +21,13 @@ public class ExExpListViewAdapter extends BaseExpandableListAdapter {
     private HashMap<String, List<LstEmploymentHi>> listDataChild;
     private LinearLayout llInfoChild;
     private LinearLayout llInfoGroup;
+    private String mCurrencyName;
 
-    public ExExpListViewAdapter(Context context, List<LstEmploymentHi> listDataGroup, HashMap<String, List<LstEmploymentHi>> listChildData) {
+    public ExExpListViewAdapter(Context context, List<LstEmploymentHi> listDataGroup, HashMap<String, List<LstEmploymentHi>> listChildData, String currencyName) {
         this.context = context;
         this.listDataGroup = listDataGroup;
         this.listDataChild = listChildData;
+        this.mCurrencyName = currencyName;
     }
 
     @Override
@@ -52,6 +55,12 @@ public class ExExpListViewAdapter extends BaseExpandableListAdapter {
         TextView tvSalary = convertView.findViewById(R.id.tvSalary);
         TextView tvJobDes = convertView.findViewById(R.id.tvJobDes);
         TextView tvAchievements = convertView.findViewById(R.id.tvAchievements);
+        TextView tvCurrentJob = convertView.findViewById(R.id.tvCurrentJob);
+        if (lstEmploymentHi.getCurrentJob() == null || lstEmploymentHi.getCurrentJob() == 0) {
+            tvCurrentJob.setVisibility(View.GONE);
+        } else {
+            tvCurrentJob.setVisibility(View.VISIBLE);
+        }
         tvCompanyName.setText(lstEmploymentHi.getCompanyName());
         if (lstEmploymentHi.getHumanResources() != null)
             tvQuantityEmploy.setText(genString(lstEmploymentHi.getHumanResources()));
@@ -61,7 +70,7 @@ public class ExExpListViewAdapter extends BaseExpandableListAdapter {
         String yearTo = String.valueOf(lstEmploymentHi.getToMonth()).substring(0, 4);
         String monthTo = String.valueOf(lstEmploymentHi.getToMonth()).substring(4, 6);
         tvWorkTime.setText(monthFrom + "/" + yearFrom + " - " + monthTo + "/" + yearTo);
-        tvSalary.setText(lstEmploymentHi.getSalary() + " USD");
+        tvSalary.setText(StringUtils.filterCurrencyString(lstEmploymentHi.getSalary()) + " " + mCurrencyName);
         tvJobDes.setText(lstEmploymentHi.getJobDescription());
         tvAchievements.setText(lstEmploymentHi.getAchievement());
         return convertView;

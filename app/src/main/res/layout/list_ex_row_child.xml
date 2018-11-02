@@ -120,6 +120,7 @@
                 android:textSize="18sp" />
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvCurrentJob"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"

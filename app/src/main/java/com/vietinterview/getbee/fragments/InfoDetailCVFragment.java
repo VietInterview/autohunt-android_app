@@ -13,6 +13,7 @@ import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 import com.vietinterview.getbee.callback.OnSwitchToOneListener;
 import com.vietinterview.getbee.utils.LayoutUtils;
+import com.vietinterview.getbee.utils.StringUtils;
 
 import butterknife.BindView;
 
@@ -160,7 +161,7 @@ public class InfoDetailCVFragment extends BaseFragment {
         tvAddWork.setText(detailCVResponse.getJobListcityName());
         tvEducation.setText(detailCVResponse.getEducationLevel().getName());
         tvExp.setText(detailCVResponse.getExperienceYear().getName());
-        tvSalary.setText(detailCVResponse.getDesiredSalary() + " USD");
+        tvSalary.setText(StringUtils.filterCurrencyString(detailCVResponse.getDesiredSalary()) + " " + detailCVResponse.getCurrencyName());
         tvTarget.setText(detailCVResponse.getCareerObjectives());
     }
 
