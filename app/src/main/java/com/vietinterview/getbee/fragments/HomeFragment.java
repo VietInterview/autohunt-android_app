@@ -94,6 +94,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     final int CONTEXT_MENU_VIEW = 1;
     final int CONTEXT_MENU_EDIT = 2;
     private View mView;
+    private String suffixesString;
 
     public static HomeFragment newInstance(String nameFragment) {
         HomeFragment fm = new HomeFragment();
@@ -112,6 +113,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbar(true);
         mView = root;
+        suffixesString = getActivity().getResources().getString(R.string.job_found);
         setHasOptionsMenu(true);
         setCustomToolbarVisible(true);
         getEventBaseFragment().setOnRefreshHomeListener(new OnRefreshHomeListener() {
@@ -231,7 +233,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 }
                 jobsList.addAll(data.getJobList());
                 titleHeader = mView.findViewById(R.id.titleHeader);
-                titleHeader.setText(data.getTotal() + " " + getActivity().getResources().getString(R.string.job_found));
+                titleHeader.setText(data.getTotal() + " " + suffixesString);
                 jobsAdapter.notifyDataSetChanged();
                 jobsAdapter.setLoaded();
             }

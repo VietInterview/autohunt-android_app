@@ -47,6 +47,7 @@ public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLay
     private int mCareerId;
     private int mCityId;
     private View mView;
+    private String suffixesString;
 
     public static MyCVApplyedFragment newInstance(int status, int carrerId, int cityId) {
         MyCVApplyedFragment fm = new MyCVApplyedFragment();
@@ -66,6 +67,7 @@ public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLay
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         mView = root;
+        suffixesString = getResources().getString(R.string.cv_found);
         getEventBaseFragment().setOnRefreshMyCVSubmitListener(new OnRefreshMyCVSubmitListener() {
             @Override
             public void onRefreshMyCVSubmit() {
@@ -108,7 +110,7 @@ public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLay
                 cvListsServer.clear();
                 cvListsServer.addAll(data.getCvList());
                 tvCountCV = mView.findViewById(R.id.tvCountCV);
-                tvCountCV.setText(data.getTotal() + " " + getResources().getString(R.string.cv_found));
+                tvCountCV.setText(data.getTotal() + " " + suffixesString);
                 if (page == 0) cvLists.clear();
                 else {
 ////                    jobsList.remove(jobsList.size() - 1);

@@ -47,6 +47,7 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
     private String mCarrerId = "0";
     private String mCityId = "0";
     private View mView;
+    private String suffixesString;
 
     public static JobsSavedFragment newInstance(String cityId, String carrerId) {
         JobsSavedFragment fm = new JobsSavedFragment();
@@ -65,6 +66,7 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         mView = root;
+        suffixesString = getResources().getString(R.string.job_saved);
         rcvSavedJob.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         rcvSavedJob.setLayoutManager(layoutManager);
@@ -164,7 +166,7 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
                 }
                 jobsList.addAll(data.getJobList());
                 titleHeader = mView.findViewById(R.id.titleHeader);
-                titleHeader.setText(data.getTotal() + " " + getResources().getString(R.string.job_saved));
+                titleHeader.setText(data.getTotal() + " " + suffixesString);
                 adapter.notifyDataSetChanged();
                 adapter.setLoaded();
             }
