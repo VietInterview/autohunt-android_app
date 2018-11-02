@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
@@ -17,6 +18,8 @@ public class ExExpListViewAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<LstEmploymentHi> listDataGroup;
     private HashMap<String, List<LstEmploymentHi>> listDataChild;
+    private LinearLayout llInfoChild;
+    private LinearLayout llInfoGroup;
 
     public ExExpListViewAdapter(Context context, List<LstEmploymentHi> listDataGroup, HashMap<String, List<LstEmploymentHi>> listChildData) {
         this.context = context;
@@ -41,6 +44,7 @@ public class ExExpListViewAdapter extends BaseExpandableListAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_ex_row_child, null);
         }
+        llInfoChild = convertView.findViewById(R.id.llInfoChild);
         TextView tvCompanyName = convertView.findViewById(R.id.tvCompanyName);
         TextView tvQuantityEmploy = convertView.findViewById(R.id.tvQuantityEmploy);
         TextView tvJobTitle = convertView.findViewById(R.id.tvJobTitle);
@@ -49,17 +53,43 @@ public class ExExpListViewAdapter extends BaseExpandableListAdapter {
         TextView tvJobDes = convertView.findViewById(R.id.tvJobDes);
         TextView tvAchievements = convertView.findViewById(R.id.tvAchievements);
         tvCompanyName.setText(lstEmploymentHi.getCompanyName());
-        tvQuantityEmploy.setText(lstEmploymentHi.getHumanResources() + "");
+        if (lstEmploymentHi.getHumanResources() != null)
+            tvQuantityEmploy.setText(genString(lstEmploymentHi.getHumanResources()));
         tvJobTitle.setText(lstEmploymentHi.getTitle());
         String yearFrom = String.valueOf(lstEmploymentHi.getFromMonth()).substring(0, 4);
         String monthFrom = String.valueOf(lstEmploymentHi.getFromMonth()).substring(4, 6);
         String yearTo = String.valueOf(lstEmploymentHi.getToMonth()).substring(0, 4);
         String monthTo = String.valueOf(lstEmploymentHi.getToMonth()).substring(4, 6);
         tvWorkTime.setText(monthFrom + "/" + yearFrom + " - " + monthTo + "/" + yearTo);
-        tvSalary.setText(lstEmploymentHi.getSalary() + "");
+        tvSalary.setText(lstEmploymentHi.getSalary() + " USD");
         tvJobDes.setText(lstEmploymentHi.getJobDescription());
         tvAchievements.setText(lstEmploymentHi.getAchievement());
         return convertView;
+    }
+
+    public String genString(int value) {
+        String valueString;
+        switch (value) {
+            case 1:
+                valueString = context.getResources().getString(R.string.below_50);
+                break;
+            case 2:
+                valueString = context.getResources().getString(R.string.from_50_to_100);
+                break;
+            case 3:
+                valueString = context.getResources().getString(R.string.above_100);
+                break;
+            case 4:
+                valueString = context.getResources().getString(R.string.above_500);
+                break;
+            case 5:
+                valueString = context.getResources().getString(R.string.average);
+                break;
+            default:
+                valueString = "";
+                break;
+        }
+        return valueString;
     }
 
     @Override
@@ -89,6 +119,7 @@ public class ExExpListViewAdapter extends BaseExpandableListAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_ex_row_group, null);
         }
+        llInfoGroup = convertView.findViewById(R.id.llInfoGroup);
         TextView tvJob = convertView.findViewById(R.id.tvJob);
         TextView tvCompany = convertView.findViewById(R.id.tvCompany);
         tvJob.setText(lstEmploymentHi.getTitle());
@@ -104,5 +135,13 @@ public class ExExpListViewAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    public LinearLayout getLlInfoChild() {
+        return llInfoChild;
+    }
+
+    public LinearLayout getLlInfoGroup() {
+        return llInfoGroup;
     }
 }

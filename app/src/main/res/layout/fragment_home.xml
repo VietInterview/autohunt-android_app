@@ -26,7 +26,7 @@
                 android:id="@+id/edtJobTitle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="center" 
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:hint="@string/input_search_key"

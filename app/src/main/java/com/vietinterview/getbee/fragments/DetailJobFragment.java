@@ -76,7 +76,9 @@ public class DetailJobFragment extends BaseFragment {
     private SaveUnsaveJobRequest saveUnsaveJobRequest;
     private GetDetailJobRequest getDetailJobRequest;
     private DetailJobResponse detailJobResponse;
-    ViewTreeObserver vto;
+    InfoFragment infoFragment;
+    StatisticalFragment statisticalFragment;
+    CVSentFragment cvSentFragment;
 
     public static DetailJobFragment newInstance(JobList jobList) {
         DetailJobFragment fm = new DetailJobFragment();
@@ -101,7 +103,6 @@ public class DetailJobFragment extends BaseFragment {
             public void onSetHeightView(int height) {
                 ViewGroup.LayoutParams params = viewPager.getLayoutParams();
                 params.height = height;
-                DebugLog.showLogCat(height + "");
                 viewPager.requestLayout();
             }
         });
@@ -116,14 +117,11 @@ public class DetailJobFragment extends BaseFragment {
             @Override
             public void onPageSelected(int position) {
                 if (position == 0) {
-                    getEventBaseFragment().setSwitchToOne(position);
-                    DebugLog.showLogCat(position + "");
+                    getEventBaseFragment().setSwitchToOne();
                 } else if (position == 1) {
-                    getEventBaseFragment().setSwitchToTwo(position);
-                    DebugLog.showLogCat(position + "");
+                    getEventBaseFragment().setSwitchToTwo();
                 } else if (position == 2) {
-                    getEventBaseFragment().setSwitchToThree(position);
-                    DebugLog.showLogCat(position + "");
+                    getEventBaseFragment().setSwitchToThree();
                 }
             }
 
@@ -325,16 +323,13 @@ public class DetailJobFragment extends BaseFragment {
         tabLayout.getTabAt(2).setCustomView(tabThree);
     }
 
-    InfoFragment infoFragment;
-    StatisticalFragment statisticalFragment;
-    CVSentFragment cvSentFragment;
-
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         adapter.addFrag(infoFragment, getResources().getString(R.string.info));
         adapter.addFrag(statisticalFragment, getResources().getString(R.string.statistic));
         adapter.addFrag(cvSentFragment, getResources().getString(R.string.cv_submited));
-        viewPager.setCurrentItem(0);viewPager.setOffscreenPageLimit(3);
+        viewPager.setCurrentItem(0);
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(adapter);
     }
 

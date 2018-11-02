@@ -5,25 +5,35 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ExLvListViewAdapter;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 import com.vietinterview.getbee.api.response.detailcv.LstEducationHi;
+import com.vietinterview.getbee.callback.OnSwitchToThreeListener;
+import com.vietinterview.getbee.utils.LayoutUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import butterknife.BindView;
 
 /**
  * Created by hiepnguyennghia on 10/23/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 public class LevelDetailCVFragment extends BaseFragment {
+    @BindView(R.id.llInfo)
+    LinearLayout llInfo;
+    @BindView(R.id.tvNodata)
+    TextView tvNodata;
     private ExLvListViewAdapter exStepLvListViewAdapter;
     private ExpandableListView exLvLevel;
     private List<LstEducationHi> listDataGroup;
-    private int lastExpandedPosition = -1;
+    private int lastExpandedPosition = 0;
     private HashMap<String, List<LstEducationHi>> listDataChild;
     DetailCVResponse detailCVResponse;
 
@@ -42,6 +52,17 @@ public class LevelDetailCVFragment extends BaseFragment {
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
+        if (detailCVResponse.getLstEducationHis().size() > 0) {
+            getEventBaseFragment().setOnSwitchToThreeListener(new OnSwitchToThreeListener() {
+                @Override
+                public void onSwitchToThree() {
+                    getEventBaseFragment().setHeightView(LayoutUtils.getViewHeight(exStepLvListViewAdapter.getLlInfoGroup()) * detailCVResponse.getLstEmploymentHis().size() + LayoutUtils.getViewHeight(exStepLvListViewAdapter.getLlInfoChild()) + LayoutUtils.getViewHeight(exStepLvListViewAdapter.getLlInfoGroup()));
+                }
+            });
+            tvNodata.setVisibility(View.GONE);
+        } else {
+            tvNodata.setVisibility(View.VISIBLE);
+        }
         exLvLevel = root.findViewById(R.id.exLvLevel);
         exLvLevel.setIndicatorBounds(exLvLevel.getRight() + 800, exLvLevel.getWidth());
         exLvLevel.setDivider(getResources().getDrawable(R.color.white));
@@ -52,16 +73,6 @@ public class LevelDetailCVFragment extends BaseFragment {
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
                 return false;
-            }
-        });
-        exLvLevel.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                if (lastExpandedPosition != -1 && groupPosition != lastExpandedPosition) {
-                    exLvLevel.collapseGroup(lastExpandedPosition);
-                }
-                lastExpandedPosition = groupPosition;
             }
         });
         listDataGroup = new ArrayList<>();
@@ -75,6 +86,26 @@ public class LevelDetailCVFragment extends BaseFragment {
             listDataChild.put(listDataGroup.get(i).getSchool(), lstEducationHis);
         }
         exStepLvListViewAdapter.notifyDataSetChanged();
+        if (detailCVResponse.getLstEducationHis().size() > 0) {
+            exLvLevel.expandGroup(lastExpandedPosition);
+            exLvLevel.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+
+                @Override
+                public void onGroupExpand(int groupPosition) {
+                    if (lastExpandedPosition != -1 && groupPosition != lastExpandedPosition) {
+                        exLvLevel.collapseGroup(lastExpandedPosition);
+                    }
+                    lastExpandedPosition = groupPosition;
+                    getEventBaseFragment().setHeightView(LayoutUtils.getViewHeight(exStepLvListViewAdapter.getLlInfoGroup()) * detailCVResponse.getLstEmploymentHis().size() + LayoutUtils.getViewHeight(exStepLvListViewAdapter.getLlInfoChild()) + LayoutUtils.getViewHeight(exStepLvListViewAdapter.getLlInfoGroup()));
+                }
+            });
+            exLvLevel.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+                @Override
+                public void onGroupCollapse(int i) {
+                    getEventBaseFragment().setHeightView(LayoutUtils.getViewHeight(exStepLvListViewAdapter.getLlInfoGroup()) * detailCVResponse.getLstEmploymentHis().size() + LayoutUtils.getViewHeight(exStepLvListViewAdapter.getLlInfoGroup()));
+                }
+            });
+        }
     }
 
     @Override

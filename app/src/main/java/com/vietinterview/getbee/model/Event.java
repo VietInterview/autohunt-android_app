@@ -11,7 +11,10 @@ import com.vietinterview.getbee.callback.OnRefreshMyCVSubmitListener;
 import com.vietinterview.getbee.callback.OnSetHeightViewListener;
 import com.vietinterview.getbee.callback.OnSetTextGreetingListener;
 import com.vietinterview.getbee.callback.OnShowLogoListener;
+import com.vietinterview.getbee.callback.OnSwitchToFiveListener;
+import com.vietinterview.getbee.callback.OnSwitchToFourListener;
 import com.vietinterview.getbee.callback.OnSwitchToOneListener;
+import com.vietinterview.getbee.callback.OnSwitchToSixListener;
 import com.vietinterview.getbee.callback.OnSwitchToThreeListener;
 import com.vietinterview.getbee.callback.OnSwitchToTwoListener;
 
@@ -31,6 +34,9 @@ public class Event implements Parcelable {
     private OnSwitchToOneListener onSwitchToOneListener;
     private OnSwitchToTwoListener onSwitchToTwoListener;
     private OnSwitchToThreeListener onSwitchToThreeListener;
+    private OnSwitchToFourListener onSwitchToFourListener;
+    private OnSwitchToFiveListener onSwitchToFiveListener;
+    private OnSwitchToSixListener onSwitchToSixListener;
 
     protected Event(Parcel in) {
     }
@@ -61,6 +67,18 @@ public class Event implements Parcelable {
 
     public void setOnSwitchToThreeListener(OnSwitchToThreeListener onSwitchToThreeListener) {
         this.onSwitchToThreeListener = onSwitchToThreeListener;
+    }
+
+    public void setOnSwitchToFourListener(OnSwitchToFourListener onSwitchToFourListener) {
+        this.onSwitchToFourListener = onSwitchToFourListener;
+    }
+
+    public void setOnSwitchToFiveListener(OnSwitchToFiveListener onSwitchToFiveListener) {
+        this.onSwitchToFiveListener = onSwitchToFiveListener;
+    }
+
+    public void setOnSwitchToSixListener(OnSwitchToSixListener onSwitchToSixListener) {
+        this.onSwitchToSixListener = onSwitchToSixListener;
     }
 
     public void setOnSetHeightViewListener(OnSetHeightViewListener onSetHeightViewListener) {
@@ -143,21 +161,39 @@ public class Event implements Parcelable {
         }
     }
 
-    public void setSwitchToOne(int position) {
+    public void setSwitchToOne() {
         if (this.onSwitchToOneListener != null) {
-            this.onSwitchToOneListener.onSwitchToOne(position);
+            this.onSwitchToOneListener.onSwitchToOne();
         }
     }
 
-    public void setSwitchToTwo(int position) {
+    public void setSwitchToTwo() {
         if (this.onSwitchToTwoListener != null) {
-            this.onSwitchToTwoListener.onSwitchToTwo(position);
+            this.onSwitchToTwoListener.onSwitchToTwo();
         }
     }
 
-    public void setSwitchToThree(int position) {
+    public void setSwitchToThree() {
         if (this.onSwitchToThreeListener != null) {
-            this.onSwitchToThreeListener.onSwitchToThree(position);
+            this.onSwitchToThreeListener.onSwitchToThree();
+        }
+    }
+
+    public void setSwitchToFour() {
+        if (this.onSwitchToFourListener != null) {
+            this.onSwitchToFourListener.onSwitchToFour();
+        }
+    }
+
+    public void setSwitchToFive() {
+        if (this.onSwitchToFiveListener != null) {
+            this.onSwitchToFiveListener.onSwitchToFive();
+        }
+    }
+
+    public void setSwitchToSix() {
+        if (this.onSwitchToSixListener != null) {
+            this.onSwitchToSixListener.onSwitchToSix();
         }
     }
 

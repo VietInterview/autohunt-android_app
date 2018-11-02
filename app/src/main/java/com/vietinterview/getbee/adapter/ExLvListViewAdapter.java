@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
@@ -17,6 +18,8 @@ public class ExLvListViewAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<LstEducationHi> listDataGroup;
     private HashMap<String, List<LstEducationHi>> listDataChild;
+    private LinearLayout llInfoChild;
+    private LinearLayout llInfoGroup;
 
     public ExLvListViewAdapter(Context context, List<LstEducationHi> listDataGroup, HashMap<String, List<LstEducationHi>> listChildData) {
         this.context = context;
@@ -41,6 +44,7 @@ public class ExLvListViewAdapter extends BaseExpandableListAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_lv_row_child, null);
         }
+        llInfoChild = convertView.findViewById(R.id.llInfoChild);
         TextView tvCertificate = convertView.findViewById(R.id.tvCertificate);
         TextView tvSchoolName = convertView.findViewById(R.id.tvSchoolName);
         TextView tvTime = convertView.findViewById(R.id.tvTime);
@@ -85,6 +89,7 @@ public class ExLvListViewAdapter extends BaseExpandableListAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_lv_row_group, null);
         }
+        llInfoGroup = convertView.findViewById(R.id.llInfoGroup);
         TextView tvSchoolName = convertView.findViewById(R.id.tvSchoolName);
         TextView tvTime = convertView.findViewById(R.id.tvTime);
         tvSchoolName.setText(lstEducationHi.getSchool());
@@ -104,5 +109,13 @@ public class ExLvListViewAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    public LinearLayout getLlInfoChild() {
+        return llInfoChild;
+    }
+
+    public LinearLayout getLlInfoGroup() {
+        return llInfoGroup;
     }
 }

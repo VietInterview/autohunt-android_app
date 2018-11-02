@@ -10,15 +10,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.adapter.MyCVAdapter;
 import com.vietinterview.getbee.adapter.MyCVSubmitAdapter;
+import com.vietinterview.getbee.api.request.BaseRequest;
 import com.vietinterview.getbee.api.request.SearchCVSubmitRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.listcv.CVResponse;
 import com.vietinterview.getbee.api.response.listcv.CvList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
-import com.vietinterview.getbee.callback.OnRefreshMyCVSavedListener;
 import com.vietinterview.getbee.callback.OnRefreshMyCVSubmitListener;
 import com.vietinterview.getbee.utils.DialogUtil;
 
@@ -38,7 +37,7 @@ public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLay
     SwipeRefreshLayout mSwipeRefreshLayout;
     private ArrayList<CvList> cvLists = new ArrayList<>();
     private ArrayList<CvList> cvListsServer = new ArrayList<>();
-    private MyCVSubmitAdapter adapter;
+    private MyCVSubmitAdapter myCVSubmitAdapter;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     private SearchCVSubmitRequest searchCVSubmitRequest;
@@ -47,6 +46,7 @@ public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLay
     CVResponse cvResponse;
     private int mCareerId;
     private int mCityId;
+    private View mView;
 
     public static MyCVApplyedFragment newInstance(int status, int carrerId, int cityId) {
         MyCVApplyedFragment fm = new MyCVApplyedFragment();
@@ -65,6 +65,7 @@ public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLay
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
+        mView = root;
         getEventBaseFragment().setOnRefreshMyCVSubmitListener(new OnRefreshMyCVSubmitListener() {
             @Override
             public void onRefreshMyCVSubmit() {
@@ -98,7 +99,7 @@ public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLay
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
             showCoverNetworkLoading();
         searchCVSubmitRequest = new SearchCVSubmitRequest(page, status, carrerId, cityId);
-        searchCVSubmitRequest.callRequest(getActivity(), new ApiObjectCallBack<CVResponse,ErrorResponse>() {
+        searchCVSubmitRequest.callRequest(getActivity(), new ApiObjectCallBack<CVResponse, ErrorResponse>() {
             @Override
             public void onSuccess(CVResponse data, List<CVResponse> dataArrayList, int status, String message) {
                 hideCoverNetworkLoading();
@@ -106,21 +107,22 @@ public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLay
                 cvResponse = data;
                 cvListsServer.clear();
                 cvListsServer.addAll(data.getCvList());
+                tvCountCV = mView.findViewById(R.id.tvCountCV);
                 tvCountCV.setText(data.getTotal() + " " + getResources().getString(R.string.cv_found));
                 if (page == 0) cvLists.clear();
                 else {
 ////                    jobsList.remove(jobsList.size() - 1);
-                    adapter.notifyItemRemoved(cvLists.size());
+                    myCVSubmitAdapter.notifyItemRemoved(cvLists.size());
                 }
                 cvLists.addAll(data.getCvList());
-                adapter = new MyCVSubmitAdapter(recyclerView, getActivity(), cvLists, MyCVApplyedFragment.this);
-                recyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-                adapter.setLoaded();
+                myCVSubmitAdapter = new MyCVSubmitAdapter(recyclerView, getActivity(), cvLists, MyCVApplyedFragment.this);
+                recyclerView.setAdapter(myCVSubmitAdapter);
+                myCVSubmitAdapter.notifyDataSetChanged();
+                myCVSubmitAdapter.setLoaded();
             }
 
             @Override
-            public void onFail(int failCode, CVResponse data,ErrorResponse errorResponse, List<CVResponse> dataArrayList, String message) {
+            public void onFail(int failCode, CVResponse data, ErrorResponse errorResponse, List<CVResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 mSwipeRefreshLayout.setRefreshing(false);
                 DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
@@ -160,7 +162,14 @@ public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLay
         if (cvListsServer.size() >= 10) {
             mPage++;
             getCVSubmit(mPage, mStatus, mCareerId, mCityId);
-            adapter.setOnLoadMoreListener(MyCVApplyedFragment.this);
+            myCVSubmitAdapter.setOnLoadMoreListener(MyCVApplyedFragment.this);
         }
+    }
+
+    @Override
+    public ArrayList<BaseRequest> getArrayBaseRequest() {
+        ArrayList<BaseRequest> baseRequests = new ArrayList<>();
+        baseRequests.add(searchCVSubmitRequest);
+        return baseRequests;
     }
 }

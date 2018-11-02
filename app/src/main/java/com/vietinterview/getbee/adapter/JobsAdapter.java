@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,7 +47,6 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private boolean isLoading;
     FragmentActivity mActivity;
     private SaveUnsaveJobRequest saveUnsaveJobRequest;
-
 
     public JobsAdapter(RecyclerView recyclerView, ArrayList<JobList> data, BaseFragment homeFragment, FragmentActivity activity) {
         this.dataSet = data;
@@ -101,6 +101,7 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .priority(Priority.HIGH);
             Glide.with(mActivity).load(dataSet.get(listPosition).getCompanyImg()).apply(options).into(myViewHolder.imgBussiness);
+
             myViewHolder.tvjobTitle.setText(StringUtils.nullStrToEmpty(dataSet.get(listPosition).getJobTitle()));
             myViewHolder.tvCompanyName.setText(dataSet.get(listPosition).getCompanyName());
             myViewHolder.tvCarrer.setText(dataSet.get(listPosition).getCareerName());
@@ -137,7 +138,7 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         public void onSuccess(AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, int status, String message) {
                             mHomeFragment.hideCoverNetworkLoading();
                             if (status == 200) {
-                                mHomeFragment.getEventBaseFragment().refreshHome();
+//                                mHomeFragment.getEventBaseFragment().refreshHome();
                                 if (data.getStatus() == 0) {
                                     Toast.makeText(mHomeFragment.getActivity(), mHomeFragment.getResources().getString(R.string.cancel_save_noti), Toast.LENGTH_SHORT).show();
                                     myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_save));
@@ -172,6 +173,7 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ImageView imgBussiness;
         ImageView imgStatus;
         CardView card_view;
+        LinearLayout llHeader;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -184,6 +186,7 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             this.imgBussiness = (ImageView) itemView.findViewById(R.id.imgBussiness);
             this.imgStatus = (ImageView) itemView.findViewById(R.id.imgStatus);
             this.card_view = (CardView) itemView.findViewById(R.id.card_view);
+            this.llHeader = itemView.findViewById(R.id.llHeader);
         }
     }
 

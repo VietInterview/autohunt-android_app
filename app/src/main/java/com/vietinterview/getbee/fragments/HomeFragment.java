@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.JobsAdapter;
+import com.vietinterview.getbee.api.request.BaseRequest;
 import com.vietinterview.getbee.api.request.GetSearchJobsRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
@@ -75,7 +76,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     SwipeRefreshLayout mSwipeRefreshLayout;
     private boolean visibleSearch = false;
     private boolean visibleCondition = false;
-    private JobsAdapter adapter;
+    private JobsAdapter jobsAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView recyclerView;
     private ArrayList<JobList> jobsList = new ArrayList<>();
@@ -90,6 +91,9 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private String strSearch = "";
     private Menu menu;
     private MenuItem mItem;
+    final int CONTEXT_MENU_VIEW = 1;
+    final int CONTEXT_MENU_EDIT = 2;
+    private View mView;
 
     public static HomeFragment newInstance(String nameFragment) {
         HomeFragment fm = new HomeFragment();
@@ -107,6 +111,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbar(true);
+        mView = root;
         setHasOptionsMenu(true);
         setCustomToolbarVisible(true);
         getEventBaseFragment().setOnRefreshHomeListener(new OnRefreshHomeListener() {
@@ -143,8 +148,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 }
             }
         });
-        adapter = new JobsAdapter(recyclerView, jobsList, HomeFragment.this, getActivity());
-        recyclerView.setAdapter(adapter);
+        jobsAdapter = new JobsAdapter(recyclerView, jobsList, HomeFragment.this, getActivity());
+        recyclerView.setAdapter(jobsAdapter);
 //        this.registerForContextMenu(llDatePub);
         edtJobTitle.addTextChangedListener(new TextWatcher() {
             @Override
@@ -180,7 +185,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
 
-        adapter.setOnLoadMoreListener(HomeFragment.this);
+        jobsAdapter.setOnLoadMoreListener(HomeFragment.this);
     }
 
     @Override
@@ -211,7 +216,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             showCoverNetworkLoading();
 
         getSearchJobsRequest = new GetSearchJobsRequest(careerId, cityId, ApiConstant.LIMIT, jobtile, page);
-        getSearchJobsRequest.callRequest(getActivity(), new ApiObjectCallBack<JobsResponse,ErrorResponse>() {
+        getSearchJobsRequest.callRequest(getActivity(), new ApiObjectCallBack<JobsResponse, ErrorResponse>() {
 
             @Override
             public void onSuccess(JobsResponse data, List<JobsResponse> dataArrayList, int status, String message) {
@@ -222,16 +227,17 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 if (page == 0) jobsList.clear();
                 else {
 //                    jobsList.remove(jobsList.size() - 1);
-                    adapter.notifyItemRemoved(jobsList.size());
+                    jobsAdapter.notifyItemRemoved(jobsList.size());
                 }
                 jobsList.addAll(data.getJobList());
+                titleHeader = mView.findViewById(R.id.titleHeader);
                 titleHeader.setText(data.getTotal() + " " + getActivity().getResources().getString(R.string.job_found));
-                adapter.notifyDataSetChanged();
-                adapter.setLoaded();
+                jobsAdapter.notifyDataSetChanged();
+                jobsAdapter.setLoaded();
             }
 
             @Override
-            public void onFail(int failCode, JobsResponse data,ErrorResponse errorResponse, List<JobsResponse> dataArrayList, String message) {
+            public void onFail(int failCode, JobsResponse data, ErrorResponse errorResponse, List<JobsResponse> dataArrayList, String message) {
                 if (mSwipeRefreshLayout != null)
                     mSwipeRefreshLayout.setRefreshing(false);
                 hideCoverNetworkLoading();
@@ -288,12 +294,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         }
     }
 
-    final int CONTEXT_MENU_VIEW = 1;
-    final int CONTEXT_MENU_EDIT = 2;
-
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenu.ContextMenuInfo menuInfo) {
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         menu.setHeaderTitle("Chọn ngày đăng tuyển");
         menu.add(Menu.NONE, CONTEXT_MENU_VIEW, Menu.NONE, "Mới nhất - Cũ nhất");
         menu.add(Menu.NONE, CONTEXT_MENU_EDIT, Menu.NONE, "Cũ nhất - Mới nhất");
@@ -364,7 +366,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         if (jobsListServer.size() >= 10) {
             mPage++;
             getSearchJob(mCarrerId, mCityId, strSearch, mPage);
-            adapter.setOnLoadMoreListener(HomeFragment.this);
+            jobsAdapter.setOnLoadMoreListener(HomeFragment.this);
         }
     }
 
@@ -413,5 +415,12 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @Override
     protected void processCustomToolbar() {
         loadMenuLeft();
+    }
+
+    @Override
+    public ArrayList<BaseRequest> getArrayBaseRequest() {
+        ArrayList<BaseRequest> baseRequests = new ArrayList<>();
+        baseRequests.add(getSearchJobsRequest);
+        return baseRequests;
     }
 }

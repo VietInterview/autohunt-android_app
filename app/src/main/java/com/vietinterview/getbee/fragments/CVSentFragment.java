@@ -49,11 +49,8 @@ public class CVSentFragment extends BaseFragment {
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         getEventBaseFragment().setOnSwitchToThreeListener(new OnSwitchToThreeListener() {
             @Override
-            public void onSwitchToThree(int position) {
-                if (position == 2) {
-                    DebugLog.showLogCat(position + "");
-                    getEventBaseFragment().setHeightView(LayoutUtils.getViewHeight(llInfo));
-                }
+            public void onSwitchToThree() {
+                getEventBaseFragment().setHeightView(LayoutUtils.getViewHeight(llInfo));
             }
         });
         if (detailJobResponse.getLstJobApply() != null) {
@@ -61,18 +58,20 @@ public class CVSentFragment extends BaseFragment {
             mFlowLayout.removeAllViews();
             for (int i = 0; i < detailJobResponse.getLstJobApply().size(); i++) {
                 LinearLayout linearLayout = (LinearLayout) LayoutUtils.inflate(mFlowLayout, R.layout.cv_sent_item_view, false);
-                final int mPosition = i;
                 TextView tvName = (TextView) linearLayout.findViewById(R.id.tvName);
                 TextView tvDate = (TextView) linearLayout.findViewById(R.id.tvDate);
                 NunitoTextView btnStatus = (NunitoTextView) linearLayout.findViewById(R.id.tvStatus);
                 LinearLayout llStatus = (LinearLayout) linearLayout.findViewById(R.id.llStatus);
                 tvName.setText(detailJobResponse.getLstJobApply().get(i).getFullName());
                 tvDate.setText(DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(detailJobResponse.getLstJobApply().get(i).getCreatedDate()) + ""));
-                if (detailJobResponse.getLstJobApply().get(i).getStatus() == 1) {
-                    btnStatus.setText(getResources().getString(R.string.save_job));
+                if (detailJobResponse.getLstJobApply().get(i).getStatus() == 0) {
+                    btnStatus.setText(getResources().getString(R.string.not_send));
+                    llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_notyet_send));
+                } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 1) {
+                    btnStatus.setText(getResources().getString(R.string.sent));
                     llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_yellow));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 2) {
-                    btnStatus.setText(getResources().getString(R.string.approved));
+                    btnStatus.setText(getResources().getString(R.string.sent));
                     llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));
                 } else if (detailJobResponse.getLstJobApply().get(i).getStatus() == 3) {
                     btnStatus.setText(getResources().getString(R.string.seen));
@@ -96,7 +95,7 @@ public class CVSentFragment extends BaseFragment {
                     btnStatus.setText(getResources().getString(R.string.contract));
                     llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_yellow));
                 } else {
-                    btnStatus.setText(getResources().getString(R.string.cv_submited));
+                    btnStatus.setText(getResources().getString(R.string.not_accept));
                     llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_yellow));
                 }
                 mFlowLayout.addView(linearLayout);

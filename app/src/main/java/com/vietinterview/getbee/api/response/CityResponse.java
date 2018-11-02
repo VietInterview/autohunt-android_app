@@ -13,6 +13,11 @@ public class CityResponse {
     @Expose
     private String name;
 
+    public CityResponse(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Integer getId() {
         return id;
     }

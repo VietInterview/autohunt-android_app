@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.activities.MainActivity;
+import com.vietinterview.getbee.api.request.BaseJsonRequest;
 import com.vietinterview.getbee.api.request.RegistRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
@@ -30,6 +31,7 @@ import com.vietinterview.getbee.customview.NunitoBoldTextView;
 import com.vietinterview.getbee.customview.NunitoEditText;
 import com.vietinterview.getbee.customview.NunitoTextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -284,8 +286,8 @@ public class RegitsFragment extends BaseFragment {
                     @Override
                     public void onFail(int failCode, ErrorResponse data, ErrorResponse dataFail, List<ErrorResponse> dataArrayList, String message) {
                         hideCoverNetworkLoading();
-                        if (data != null) {
-                            if (data.getErrorKey().equalsIgnoreCase("userexists"))
+                        if (dataFail != null) {
+                            if (dataFail.getErrorKey().equalsIgnoreCase("userexists"))
                                 DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.email_esxit));
                         } else {
                             if (failCode == 201) {
@@ -340,5 +342,12 @@ public class RegitsFragment extends BaseFragment {
     @Override
     protected void onRestoreState(Bundle bundle) {
 
+    }
+
+    @Override
+    public ArrayList<BaseJsonRequest> getArrayJsonRequest() {
+        ArrayList<BaseJsonRequest> baseJsonRequests = new ArrayList<>();
+        baseJsonRequests.add(registRequest);
+        return baseJsonRequests;
     }
 }

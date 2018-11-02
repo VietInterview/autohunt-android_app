@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.MyJobsSavedAdapter;
+import com.vietinterview.getbee.api.request.BaseRequest;
 import com.vietinterview.getbee.api.request.GetSavedSearchJobsRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
@@ -45,6 +46,7 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
     int mPage = 0;
     private String mCarrerId = "0";
     private String mCityId = "0";
+    private View mView;
 
     public static JobsSavedFragment newInstance(String cityId, String carrerId) {
         JobsSavedFragment fm = new JobsSavedFragment();
@@ -62,6 +64,7 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
+        mView = root;
         rcvSavedJob.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         rcvSavedJob.setLayoutManager(layoutManager);
@@ -160,6 +163,7 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
                     adapter.notifyItemRemoved(jobsList.size());
                 }
                 jobsList.addAll(data.getJobList());
+                titleHeader = mView.findViewById(R.id.titleHeader);
                 titleHeader.setText(data.getTotal() + " " + getResources().getString(R.string.job_saved));
                 adapter.notifyDataSetChanged();
                 adapter.setLoaded();
@@ -174,5 +178,12 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
             }
 
         });
+    }
+
+    @Override
+    public ArrayList<BaseRequest> getArrayBaseRequest() {
+        ArrayList<BaseRequest> baseRequests = new ArrayList<>();
+        baseRequests.add(getSavedSearchJobsRequest);
+        return baseRequests;
     }
 }

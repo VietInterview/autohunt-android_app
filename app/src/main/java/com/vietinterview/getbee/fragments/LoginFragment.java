@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.activities.MainActivity;
+import com.vietinterview.getbee.api.request.BaseJsonRequest;
 import com.vietinterview.getbee.api.request.LoginRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.login.LoginResponse;
@@ -32,6 +33,7 @@ import com.vietinterview.getbee.model.UserInfoBean;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.customview.NunitoEditText;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -205,7 +207,7 @@ public class LoginFragment extends BaseFragment {
         } else {
             showCoverNetworkLoading();
             loginRequest = new LoginRequest(edtEmail.getText().toString().trim(), edtPass.getText().toString().trim());
-            loginRequest.callRequest(getActivity(), new ApiObjectCallBack<LoginResponse,ErrorResponse>() {
+            loginRequest.callRequest(getActivity(), new ApiObjectCallBack<LoginResponse, ErrorResponse>() {
                 @Override
                 public void onSuccess(LoginResponse data, List<LoginResponse> dataArrayList, int status, String message) {
                     if (status == 200) {
@@ -224,7 +226,7 @@ public class LoginFragment extends BaseFragment {
                 }
 
                 @Override
-                public void onFail(int failCode, LoginResponse data,ErrorResponse errorResponse, List<LoginResponse> dataArrayList, String message) {
+                public void onFail(int failCode, LoginResponse data, ErrorResponse errorResponse, List<LoginResponse> dataArrayList, String message) {
                     hideCoverNetworkLoading();
                     mNotifydialog = new Dialog(getActivity());
                     mNotifydialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -267,5 +269,12 @@ public class LoginFragment extends BaseFragment {
     @Override
     protected void onRestoreState(Bundle bundle) {
 
+    }
+
+    @Override
+    public ArrayList<BaseJsonRequest> getArrayJsonRequest() {
+        ArrayList<BaseJsonRequest> baseJsonRequests = new ArrayList<>();
+        baseJsonRequests.add(loginRequest);
+        return baseJsonRequests;
     }
 }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
+import com.vietinterview.getbee.callback.OnSwitchToSixListener;
 import com.vietinterview.getbee.customview.FlowLayout;
 import com.vietinterview.getbee.utils.LayoutUtils;
 
@@ -23,6 +24,12 @@ public class SkillDetailCVFragment extends BaseFragment {
     TextView tvSkillPrimary;
     @BindView(R.id.container)
     FlowLayout mFlowLayout;
+    @BindView(R.id.llInfo)
+    LinearLayout llInfo;
+    @BindView(R.id.tvNodata)
+    TextView tvNodata;
+    @BindView(R.id.llContent)
+    LinearLayout llContent;
     DetailCVResponse detailCVResponse;
 
     public static SkillDetailCVFragment newInstance(DetailCVResponse detailCVResponse) {
@@ -40,6 +47,12 @@ public class SkillDetailCVFragment extends BaseFragment {
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
+        getEventBaseFragment().setOnSwitchToSixListener(new OnSwitchToSixListener() {
+            @Override
+            public void onSwitchToSix() {
+                getEventBaseFragment().setHeightView(LayoutUtils.getViewHeight(llInfo));
+            }
+        });
         if (detailCVResponse.getCvSkill() != null) {
             tvSkillPrimary.setText(detailCVResponse.getCvSkill().getPrimarySkill());
             mFlowLayout.removeAllViews();
@@ -49,6 +62,11 @@ public class SkillDetailCVFragment extends BaseFragment {
                 tvSkillOther.setText(detailCVResponse.getCvSkill().getLstOtherSkillName().get(i));
                 mFlowLayout.addView(linearLayout);
             }
+            tvNodata.setVisibility(View.GONE);
+            llContent.setVisibility(View.VISIBLE);
+        } else {
+            tvNodata.setVisibility(View.VISIBLE);
+            llContent.setVisibility(View.GONE);
         }
 
     }

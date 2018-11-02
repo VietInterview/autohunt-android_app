@@ -64,11 +64,8 @@ public class StatisticalFragment extends BaseFragment {
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         getEventBaseFragment().setOnSwitchToTwoListener(new OnSwitchToTwoListener() {
             @Override
-            public void onSwitchToTwo(int position) {
-                DebugLog.showLogCat(position + "");
-                if (position == 1) {
-                    getEventBaseFragment().setHeightView(LayoutUtils.getViewHeight(llInfo));
-                }
+            public void onSwitchToTwo() {
+                getEventBaseFragment().setHeightView(LayoutUtils.getViewHeight(llInfo));
             }
         });
         tvcountCv.setText(detailJobResponse.getCountCv() != null ? detailJobResponse.getCountCv() + "" : "0");

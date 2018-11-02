@@ -33,7 +33,7 @@
     <string name="language">Ngoại ngữ</string>
     <string name="skill">Kỹ năng</string>
     <string name="detail_job">Chi tiết công việc</string>
-    <string name="save_job">Đã nộp</string>
+    <string name="save_job">Lưu công việc</string>
     <string name="saved_job">Đã lưu việc</string>
     <string name="hiring">Đang tuyển</string>
     <string name="closed">Đã đóng</string>
@@ -65,7 +65,7 @@
     <string name="not_accept">Từ chối</string>
     <string name="invite_interview">Mời PV</string>
     <string name="interviewed">Đã PV</string>
-    <string name="offered">Đã Offer</string>
+    <string name="offered">Được tuyển dụng</string>
     <string name="go_to_work">Đi làm</string>
     <string name="contract">Ký hợp đồng</string>
     <string name="default_key">Mặc định</string>
@@ -160,4 +160,15 @@
     <string name="office_information">Tin học văn phòng</string>
     <string name="other_soft">Phần mềm khác</string>
     <string name="hunt_send_cv_noti">CV của bạn đã được upload thành công và đang được chờ xử lý trước khi gửi đến NTD, thời gian xử lý tối đa là 24 giờ. Chúng tôi sẽ thông báo tới bạn ngay khi hoàn thành</string>
+    <string name="sent">Đã gửi</string>
+    <string name="no_data">Không có thông tin</string>
+    <string name="below_50">Dưới 50 người</string>
+    <string name="from_50_to_100">Từ 50-100 người</string>
+    <string name="above_100">Lớn hơn 100 người</string>
+    <string name="above_500">Lớn hơn 500 người</string>
+    <string name="average">Trung bình</string>
+    <string name="emailorphoneexist">Email hoặc phone đã tồn tại</string>
+    <string name="cvnotfound">CV không tồn tại</string>
+    <string name="cvalreadysubmitjob">CV đã được apply vào job</string>
+    <string name="no_cv_upload">Bạn chưa upload CV nào. Hãy nhanh tay upload CV để kiếm thêm thu nhập</string>
 </resources>

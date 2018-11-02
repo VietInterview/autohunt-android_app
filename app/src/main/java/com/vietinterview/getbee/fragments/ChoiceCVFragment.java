@@ -27,6 +27,7 @@ import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ChoiceCVAdapter;
 import com.vietinterview.getbee.adapter.MyCVAdapter;
 import com.vietinterview.getbee.adapter.NotChoiceCVAdapter;
+import com.vietinterview.getbee.api.request.BaseRequest;
 import com.vietinterview.getbee.api.request.GetListCareerRequest;
 import com.vietinterview.getbee.api.request.SearchCVSaveRequest;
 import com.vietinterview.getbee.api.request.SearchMyCVRequest;
@@ -72,7 +73,8 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
     private ProgressBar progressBar;
     private List<CvList> cvLists = new ArrayList<>();
     private ArrayList<CvList> cvListsServer = new ArrayList<>();
-    CVResponse mCvResponse;
+    private CVResponse mCvResponse;
+    private View mView;
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -102,6 +104,7 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbar(true);
+        mView = root;
         setCustomToolbarVisible(true);
 //        setHasOptionsMenu(true);
         getEventBaseFragment().doFillBackground(getResources().getString(R.string.choice_cv));
@@ -147,41 +150,6 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
 
     }
 
-//    public void getCVSaved(final int page) {
-//        if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
-//            showCoverNetworkLoading();
-//        searchCVSaveRequest = new SearchCVSaveRequest(page);
-//        searchCVSaveRequest.callRequest(getActivity(), new ApiObjectCallBack<CVResponse>() {
-//            @Override
-//            public void onSuccess(CVResponse data, List<CVResponse> dataArrayList, int status, String message) {
-//                hideCoverNetworkLoading();
-//                tvCount.setText(data.getTotal() + " " + getResources().getString(R.string.cv_found));
-//                mSwipeRefreshLayout.setRefreshing(false);
-//                mCvResponse = data;
-//                cvListsServer.clear();
-//                cvListsServer.addAll(data.getCvList());
-//                if (page == 0) cvLists.clear();
-//                cvLists.addAll(data.getCvList());
-//                choiceCVAdapter = new ChoiceCVAdapter(getActivity(), cvLists);
-//                notChoiceCVAdapter = new NotChoiceCVAdapter(ChoiceCVFragment.this, getActivity(), cvLists, mJobList);
-//                if (isEdit) {
-//                    listView.setAdapter(choiceCVAdapter);
-//                } else {
-//                    listView.setAdapter(notChoiceCVAdapter);
-//                }
-//                choiceCVAdapter.notifyDataSetChanged();
-//                notChoiceCVAdapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onFail(int failCode, CVResponse data, List<CVResponse> dataArrayList, String message) {
-//                hideCoverNetworkLoading();
-//                mSwipeRefreshLayout.setRefreshing(false);
-//                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
-//            }
-//        });
-//    }
-
     public void searchMyCV(final int carrerId, final int cityId, final int page) {
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
             showCoverNetworkLoading();
@@ -189,7 +157,9 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
         searchMyCVRequest.callRequest(getActivity(), new ApiObjectCallBack<CVResponse, ErrorResponse>() {
             @Override
             public void onSuccess(CVResponse data, List<CVResponse> dataArrayList, int status, String message) {
+                progressBar.setVisibility(View.GONE);
                 hideCoverNetworkLoading();
+                tvCount = mView.findViewById(R.id.tvCount);
                 tvCount.setText(data.getTotal() + " " + getResources().getString(R.string.cv_found));
                 mSwipeRefreshLayout.setRefreshing(false);
                 mCvResponse = data;
@@ -211,6 +181,7 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
             @Override
             public void onFail(int failCode, CVResponse data, ErrorResponse errorResponse, List<CVResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
+                progressBar.setVisibility(View.GONE);
                 mSwipeRefreshLayout.setRefreshing(false);
                 DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
             }
@@ -321,5 +292,12 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
     public void onPause() {
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
         super.onPause();
+    }
+
+    @Override
+    public ArrayList<BaseRequest> getArrayBaseRequest() {
+        ArrayList<BaseRequest> baseRequests = new ArrayList<>();
+        baseRequests.add(searchMyCVRequest);
+        return baseRequests;
     }
 }

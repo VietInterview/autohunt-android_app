@@ -1,13 +1,18 @@
 package com.vietinterview.getbee.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
+import com.vietinterview.getbee.callback.OnSwitchToOneListener;
+import com.vietinterview.getbee.utils.LayoutUtils;
 
 import butterknife.BindView;
 
@@ -46,7 +51,40 @@ public class InfoDetailCVFragment extends BaseFragment {
     TextView tvSalary;
     @BindView(R.id.tvTarget)
     TextView tvTarget;
+    @BindView(R.id.llPhone)
+    LinearLayout llPhone;
+    @BindView(R.id.llEmail)
+    LinearLayout llEmail;
+    @BindView(R.id.llSex)
+    LinearLayout llSex;
+    @BindView(R.id.llAdd)
+    LinearLayout llAdd;
+    @BindView(R.id.llCity)
+    LinearLayout llCity;
+    @BindView(R.id.llSignle)
+    LinearLayout llSignle;
+    @BindView(R.id.llPositionWish)
+    LinearLayout llPositionWish;
+    @BindView(R.id.llLevelNow)
+    LinearLayout llLevelNow;
+    @BindView(R.id.llLevelWish)
+    LinearLayout llLevelWish;
+    @BindView(R.id.llCarrer)
+    LinearLayout llCarrer;
+    @BindView(R.id.llAddWork)
+    LinearLayout llAddWork;
+    @BindView(R.id.llEducation)
+    LinearLayout llEducation;
+    @BindView(R.id.llExp)
+    LinearLayout llExp;
+    @BindView(R.id.llSalary)
+    LinearLayout llSalary;
+    @BindView(R.id.llTarget)
+    LinearLayout llTarget;
+    @BindView(R.id.llInfo)
+    LinearLayout llInfo;
     DetailCVResponse detailCVResponse;
+    ViewTreeObserver vto;
 
     public static InfoDetailCVFragment newInstance(DetailCVResponse detailCVResponse) {
         InfoDetailCVFragment fm = new InfoDetailCVFragment();
@@ -63,6 +101,40 @@ public class InfoDetailCVFragment extends BaseFragment {
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
+        vto = llInfo.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    llInfo.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                } else {
+                    llInfo.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+                int height = llInfo.getMeasuredHeight();
+                getEventBaseFragment().setHeightView(height);
+            }
+        });
+        getEventBaseFragment().setOnSwitchToOneListener(new OnSwitchToOneListener() {
+            @Override
+            public void onSwitchToOne() {
+                getEventBaseFragment().setHeightView(LayoutUtils.getViewHeight(llInfo));
+            }
+        });
+        llPhone.setVisibility(detailCVResponse.getPhone() != null ? View.VISIBLE : View.GONE);
+        llEmail.setVisibility(detailCVResponse.getEmail() != null ? View.VISIBLE : View.GONE);
+        llSex.setVisibility(detailCVResponse.getSex() != null ? View.VISIBLE : View.GONE);
+        llAdd.setVisibility(detailCVResponse.getAddress() != null ? View.VISIBLE : View.GONE);
+        llCity.setVisibility(detailCVResponse.getCity() != null ? View.VISIBLE : View.GONE);
+        llSignle.setVisibility(detailCVResponse.getMaritalStatus() != null ? View.VISIBLE : View.GONE);
+        llPositionWish.setVisibility(detailCVResponse.getCvTitle() != null ? View.VISIBLE : View.GONE);
+        llLevelNow.setVisibility(detailCVResponse.getCurrentLevel() != null ? View.VISIBLE : View.GONE);
+        llLevelWish.setVisibility(detailCVResponse.getDesiredLevel() != null ? View.VISIBLE : View.GONE);
+        llCarrer.setVisibility(detailCVResponse.getCareerName() != null ? View.VISIBLE : View.GONE);
+        llAddWork.setVisibility(detailCVResponse.getJobListcityName() != null ? View.VISIBLE : View.GONE);
+        llEducation.setVisibility(detailCVResponse.getEducationLevel() != null ? View.VISIBLE : View.GONE);
+        llExp.setVisibility(detailCVResponse.getExperienceYear() != null ? View.VISIBLE : View.GONE);
+        llSalary.setVisibility(detailCVResponse.getDesiredSalary() != null ? View.VISIBLE : View.GONE);
+        llTarget.setVisibility(detailCVResponse.getCareerObjectives() != null ? View.VISIBLE : View.GONE);
         tvPhone.setText(detailCVResponse.getPhone());
         tvEmail.setText(detailCVResponse.getEmail());
         if (detailCVResponse.getSex() != null) {
@@ -88,7 +160,7 @@ public class InfoDetailCVFragment extends BaseFragment {
         tvAddWork.setText(detailCVResponse.getJobListcityName());
         tvEducation.setText(detailCVResponse.getEducationLevel().getName());
         tvExp.setText(detailCVResponse.getExperienceYear().getName());
-        tvSalary.setText(detailCVResponse.getDesiredSalary() + "");
+        tvSalary.setText(detailCVResponse.getDesiredSalary() + " USD");
         tvTarget.setText(detailCVResponse.getCareerObjectives());
     }
 

@@ -5,5 +5,5 @@ package com.vietinterview.getbee.callback;
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 public interface OnSwitchToThreeListener {
-    void onSwitchToThree(int position);
+    void onSwitchToThree();
 }

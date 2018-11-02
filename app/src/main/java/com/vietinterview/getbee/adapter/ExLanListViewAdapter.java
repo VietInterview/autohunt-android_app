@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
@@ -17,6 +18,8 @@ public class ExLanListViewAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<LstLanguage> listDataGroup;
     private HashMap<String, List<LstLanguage>> listDataChild;
+    private LinearLayout llInfoChild;
+    private LinearLayout llInfoGroup;
 
     public ExLanListViewAdapter(Context context, List<LstLanguage> listDataGroup, HashMap<String, List<LstLanguage>> listChildData) {
         this.context = context;
@@ -41,6 +44,7 @@ public class ExLanListViewAdapter extends BaseExpandableListAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_lan_row_child, null);
         }
+        llInfoChild = convertView.findViewById(R.id.llInfoChild);
         TextView tvListen = convertView.findViewById(R.id.tvListen);
         TextView tvSpeak = convertView.findViewById(R.id.tvSpeak);
         TextView tvRead = convertView.findViewById(R.id.tvRead);
@@ -106,6 +110,7 @@ public class ExLanListViewAdapter extends BaseExpandableListAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_lan_row_group, null);
         }
+        llInfoGroup = convertView.findViewById(R.id.llInfoGroup);
         TextView tvLanguage = convertView.findViewById(R.id.tvLanguage);
         tvLanguage.setText(lstLanguage.getLanguageName());
         if (isExpanded)
@@ -123,5 +128,13 @@ public class ExLanListViewAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    public LinearLayout getLlInfoChild() {
+        return llInfoChild;
+    }
+
+    public LinearLayout getLlInfoGroup() {
+        return llInfoGroup;
     }
 }

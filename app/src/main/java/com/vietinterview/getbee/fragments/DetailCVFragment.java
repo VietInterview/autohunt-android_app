@@ -1,12 +1,15 @@
 package com.vietinterview.getbee.fragments;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ViewPagerAdapter;
+import com.vietinterview.getbee.api.request.BaseJsonRequest;
+import com.vietinterview.getbee.api.request.BaseRequest;
 import com.vietinterview.getbee.api.request.GetDetailCVRequest;
 import com.vietinterview.getbee.api.request.SubmitCVRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
@@ -30,9 +35,11 @@ import com.vietinterview.getbee.api.response.SubmitCVResponse;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.callback.OnSetHeightViewListener;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -51,11 +58,14 @@ public class DetailCVFragment extends BaseFragment {
     ImageView imgAva;
     @BindView(R.id.llFooter)
     LinearLayout llFooter;
+    @BindView(R.id.viewpager)
+    ViewPager viewPager;
     private TabLayout tabLayout;
-    private ViewPager viewPager;
     private JobList mJobList;
     private Dialog mNotifydialog;
     private GetDetailCVRequest getDetailCVRequest;
+    private SubmitCVRequest submitCVRequest;
+    private DetailCVResponse detailCVResponse;
     private int mCvId;
 
     public static DetailCVFragment newInstance(JobList jobList, int cvId) {
@@ -77,7 +87,14 @@ public class DetailCVFragment extends BaseFragment {
         setCustomToolbarVisible(false);
         setProcessOnBackPess(true);
         getEventBaseFragment().doFillBackground("");
-        viewPager = (ViewPager) root.findViewById(R.id.viewpager);
+        getEventBaseFragment().setOnSetHeightViewListener(new OnSetHeightViewListener() {
+            @Override
+            public void onSetHeightView(int height) {
+                ViewGroup.LayoutParams params = viewPager.getLayoutParams();
+                params.height = height;
+                viewPager.requestLayout();
+            }
+        });
         tabLayout = (TabLayout) root.findViewById(R.id.tabs);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.yellow_highlight));
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -89,8 +106,17 @@ public class DetailCVFragment extends BaseFragment {
             @Override
             public void onPageSelected(int position) {
                 if (position == 0) {
+                    getEventBaseFragment().setSwitchToOne();
                 } else if (position == 1) {
+                    getEventBaseFragment().setSwitchToTwo();
                 } else if (position == 2) {
+                    getEventBaseFragment().setSwitchToThree();
+                } else if (position == 3) {
+                    getEventBaseFragment().setSwitchToFour();
+                } else if (position == 4) {
+                    getEventBaseFragment().setSwitchToFive();
+                } else if (position == 5) {
+                    getEventBaseFragment().setSwitchToSix();
                 }
             }
 
@@ -150,7 +176,8 @@ public class DetailCVFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 showCoverNetworkLoading();
-                new SubmitCVRequest(mCvId, mJobList.getId(), 1).callRequest(getActivity(), new ApiObjectCallBack<SubmitCVResponse, ErrorResponse>() {
+                submitCVRequest = new SubmitCVRequest(mCvId, mJobList.getId(), 1);
+                submitCVRequest.callRequest(getActivity(), new ApiObjectCallBack<SubmitCVResponse, ErrorResponse>() {
                     @Override
                     public void onSuccess(SubmitCVResponse data, List<SubmitCVResponse> dataArrayList, int status, String message) {
                         mNotifydialog.dismiss();
@@ -168,7 +195,13 @@ public class DetailCVFragment extends BaseFragment {
                     public void onFail(int failCode, SubmitCVResponse data, ErrorResponse errorResponse, List<SubmitCVResponse> dataArrayList, String message) {
                         mNotifydialog.dismiss();
                         hideCoverNetworkLoading();
-                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), errorResponse.getTitle());
+                        if (errorResponse.getErrorKey().equalsIgnoreCase("emailOrPhoneExist")) {
+                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.emailorphoneexist));
+                        } else if (errorResponse.getErrorKey().equalsIgnoreCase("cvNotFound")) {
+                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.cvnotfound));
+                        } else if (errorResponse.getErrorKey().equalsIgnoreCase("CvAlreadySubmitJob")) {
+                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.cvalreadysubmitjob));
+                        }
                     }
                 });
 
@@ -178,7 +211,8 @@ public class DetailCVFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 showCoverNetworkLoading();
-                new SubmitCVRequest(mCvId, mJobList.getId(), 2).callRequest(getActivity(), new ApiObjectCallBack<SubmitCVResponse, ErrorResponse>() {
+                submitCVRequest = new SubmitCVRequest(mCvId, mJobList.getId(), 2);
+                submitCVRequest.callRequest(getActivity(), new ApiObjectCallBack<SubmitCVResponse, ErrorResponse>() {
                     @Override
                     public void onSuccess(SubmitCVResponse data, List<SubmitCVResponse> dataArrayList, int status, String message) {
                         mNotifydialog.dismiss();
@@ -196,7 +230,13 @@ public class DetailCVFragment extends BaseFragment {
                     public void onFail(int failCode, SubmitCVResponse data, ErrorResponse errorResponse, List<SubmitCVResponse> dataArrayList, String message) {
                         mNotifydialog.dismiss();
                         hideCoverNetworkLoading();
-                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), errorResponse.getTitle());
+                        if (errorResponse.getErrorKey().equalsIgnoreCase("emailOrPhoneExist")) {
+                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.emailorphoneexist));
+                        } else if (errorResponse.getErrorKey().equalsIgnoreCase("cvNotFound")) {
+                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.cvnotfound));
+                        } else if (errorResponse.getErrorKey().equalsIgnoreCase("CvAlreadySubmitJob")) {
+                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.cvalreadysubmitjob));
+                        }
                     }
                 });
 
@@ -207,34 +247,44 @@ public class DetailCVFragment extends BaseFragment {
     }
 
     private void setupTabIcons() {
+        WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
         TextView tabOne = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
         tabOne.setText(getResources().getString(R.string.info));
         tabOne.setTextColor(getResources().getColor(R.color.black));
+        tabOne.setWidth(size.x / 4);
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
         tabTwo.setText(getResources().getString(R.string.exp));
         tabTwo.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
+        tabTwo.setWidth(size.x / 4);
         tabLayout.getTabAt(1).setCustomView(tabTwo);
 
         TextView tabThree = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
         tabThree.setText(getResources().getString(R.string.level));
         tabThree.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
+        tabThree.setWidth(size.x / 4);
         tabLayout.getTabAt(2).setCustomView(tabThree);
 
         TextView tabFour = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
         tabFour.setText(getResources().getString(R.string.language));
         tabFour.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
+        tabFour.setWidth(size.x / 4);
         tabLayout.getTabAt(3).setCustomView(tabFour);
 
         TextView tabFive = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
         tabFive.setText(getResources().getString(R.string.conputer_skill_tit));
         tabFive.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
+        tabFive.setWidth(size.x / 4);
         tabLayout.getTabAt(4).setCustomView(tabFive);
 
         TextView tabSix = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
         tabSix.setText(getResources().getString(R.string.skill));
         tabSix.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
+        tabSix.setWidth(size.x / 4);
         tabLayout.getTabAt(5).setCustomView(tabSix);
     }
 
@@ -247,11 +297,9 @@ public class DetailCVFragment extends BaseFragment {
         adapter.addFrag(new ComputerSkillDetailCVFragment().newInstance(detailCVResponse), getResources().getString(R.string.conputer_skill_tit));
         adapter.addFrag(new SkillDetailCVFragment().newInstance(detailCVResponse), getResources().getString(R.string.skill));
         viewPager.setCurrentItem(0);
-        viewPager.setOffscreenPageLimit(0);
+        viewPager.setOffscreenPageLimit(5);
         viewPager.setAdapter(adapter);
     }
-
-    DetailCVResponse detailCVResponse;
 
     public void getDetailCV(int id) {
         showCoverNetworkLoading();
@@ -329,5 +377,19 @@ public class DetailCVFragment extends BaseFragment {
     @Override
     protected void processOnBackPress() {
         FragmentUtil.popBackStack(this);
+    }
+
+    @Override
+    public ArrayList<BaseRequest> getArrayBaseRequest() {
+        ArrayList<BaseRequest> baseRequests = new ArrayList<>();
+        baseRequests.add(getDetailCVRequest);
+        return baseRequests;
+    }
+
+    @Override
+    public ArrayList<BaseJsonRequest> getArrayJsonRequest() {
+        ArrayList<BaseJsonRequest> baseJsonRequests = new ArrayList<>();
+        baseJsonRequests.add(submitCVRequest);
+        return baseJsonRequests;
     }
 }

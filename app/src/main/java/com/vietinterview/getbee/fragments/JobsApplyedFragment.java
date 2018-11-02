@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.MyJobsAppliedAdapter;
+import com.vietinterview.getbee.api.request.BaseRequest;
 import com.vietinterview.getbee.api.request.GetApplyedSearchJobsRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
@@ -33,24 +34,21 @@ import butterknife.BindView;
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
-    //    @BindView(R.id.fab)
-//    FloatingActionButton fab;
     @BindView(R.id.titleHeader)
     TextView titleHeader;
     @BindView(R.id.rcvApplyedJob)
     RecyclerView rcvApplyedJob;
+    @BindView(R.id.swipe_container)
+    SwipeRefreshLayout mSwipeRefreshLayout;
     public MyJobsAppliedAdapter adapter;
-    public static View.OnClickListener myOnClickListener;
     private RecyclerView.LayoutManager layoutManager;
-    //    private static RecyclerView rcvApplyedJob;
     private ArrayList<JobList> jobsList = new ArrayList<>();
     private ArrayList<JobList> jobsListServer = new ArrayList<>();
     private GetApplyedSearchJobsRequest getApplyedSearchJobsRequest;
-    @BindView(R.id.swipe_container)
-    SwipeRefreshLayout mSwipeRefreshLayout;
-    int mPage = 0;
+    private int mPage = 0;
     private String mCarrerId = "0";
     private String mCityId = "0";
+    private View mView;
 
     public static JobsApplyedFragment newInstance(String cityId, String carrerId) {
         JobsApplyedFragment fm = new JobsApplyedFragment();
@@ -68,7 +66,7 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-        myOnClickListener = new JobsApplyedFragment.MyOnClickListener(getActivity());
+        mView = root;
         rcvApplyedJob.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         rcvApplyedJob.setLayoutManager(layoutManager);
@@ -167,6 +165,7 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
                     adapter.notifyItemRemoved(jobsList.size());
                 }
                 jobsList.addAll(data.getJobList());
+                titleHeader = mView.findViewById(R.id.titleHeader);
                 titleHeader.setText(data.getTotal() + " " + getResources().getString(R.string.job_applyed));
                 adapter.notifyDataSetChanged();
                 adapter.setLoaded();
@@ -203,5 +202,12 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
         public void onClick(View v) {
 //            FragmentUtil.pushFragment(fragmentActivity,JobsApplyedFragment.this, new DetailJobFragment(), null);
         }
+    }
+
+    @Override
+    public ArrayList<BaseRequest> getArrayBaseRequest() {
+        ArrayList<BaseRequest> baseRequests = new ArrayList<>();
+        baseRequests.add(getApplyedSearchJobsRequest);
+        return baseRequests;
     }
 }

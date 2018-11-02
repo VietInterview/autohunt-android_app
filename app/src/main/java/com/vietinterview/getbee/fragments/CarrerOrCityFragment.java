@@ -17,11 +17,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.CarrerAdapter;
 import com.vietinterview.getbee.adapter.CityAdapter;
+import com.vietinterview.getbee.api.request.BaseRequest;
 import com.vietinterview.getbee.api.request.GetListCareerRequest;
 import com.vietinterview.getbee.api.request.GetListCityRequest;
 import com.vietinterview.getbee.api.response.CareerResponse;
@@ -30,7 +30,6 @@ import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.customview.NunitoEditText;
 import com.vietinterview.getbee.customview.NunitoTextView;
-import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
@@ -61,8 +60,8 @@ public class CarrerOrCityFragment extends BaseFragment {
     boolean mIsCity;
     String mId;
     String mName;
-    List<CareerResponse> careerResponses;
-    List<CityResponse> cityResponses;
+    List<CareerResponse> careerResponses = new ArrayList<>();
+    List<CityResponse> cityResponses = new ArrayList<>();
     List<CareerResponse> careerResponsesFilter;
     List<CityResponse> cityResponsesFilter;
 
@@ -113,7 +112,7 @@ public class CarrerOrCityFragment extends BaseFragment {
                     }
                 } else {
                     if (careerResponses != null) {
-                        careerResponsesFilter = filter(careerResponses, charSequence.toString().trim());
+                        careerResponsesFilter = filterCarrer(careerResponses, charSequence.toString().trim());
                         if (careerResponsesFilter.size() == 0) {
                             listView.setVisibility(View.GONE);
                         } else {
@@ -131,7 +130,7 @@ public class CarrerOrCityFragment extends BaseFragment {
         });
     }
 
-    private List<CareerResponse> filter(List<CareerResponse> careerResponses, String query) {
+    private List<CareerResponse> filterCarrer(List<CareerResponse> careerResponses, String query) {
         final List<CareerResponse> careerResponses1 = new ArrayList<>();
         for (CareerResponse careerResponse : careerResponses) {
             final String name = careerResponse.getName().toLowerCase();
@@ -174,18 +173,19 @@ public class CarrerOrCityFragment extends BaseFragment {
     public void getListCarrer() {
         showCoverNetworkLoading();
         getListCareerRequest = new GetListCareerRequest();
-        getListCareerRequest.callRequest(getActivity(), new ApiObjectCallBack<CareerResponse,ErrorResponse>() {
+        getListCareerRequest.callRequest(getActivity(), new ApiObjectCallBack<CareerResponse, ErrorResponse>() {
 
             @Override
             public void onSuccess(CareerResponse data, List<CareerResponse> dataArrayList, int status, String message) {
                 hideCoverNetworkLoading();
-                careerResponses = dataArrayList;
-                carrerAdapter = new CarrerAdapter(getActivity(), dataArrayList);
+                careerResponses.add(new CareerResponse(0, getResources().getString(R.string.all_carrer)));
+                careerResponses.addAll(dataArrayList);
+                carrerAdapter = new CarrerAdapter(getActivity(), careerResponses);
                 listView.setAdapter(carrerAdapter);
             }
 
             @Override
-            public void onFail(int failCode, CareerResponse data,ErrorResponse errorResponse, List<CareerResponse> dataArrayList, String message) {
+            public void onFail(int failCode, CareerResponse data, ErrorResponse errorResponse, List<CareerResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
             }
@@ -280,17 +280,18 @@ public class CarrerOrCityFragment extends BaseFragment {
     public void getListCity() {
         showCoverNetworkLoading();
         getListCityRequest = new GetListCityRequest();
-        getListCityRequest.callRequest(getActivity(), new ApiObjectCallBack<CityResponse,ErrorResponse>() {
+        getListCityRequest.callRequest(getActivity(), new ApiObjectCallBack<CityResponse, ErrorResponse>() {
             @Override
             public void onSuccess(CityResponse data, List<CityResponse> dataArrayList, int status, String message) {
                 hideCoverNetworkLoading();
-                cityResponses = dataArrayList;
-                cityAdapter = new CityAdapter(getActivity(), dataArrayList);
+                cityResponses.add(new CityResponse(0, getResources().getString(R.string.all_city)));
+                cityResponses.addAll(dataArrayList);
+                cityAdapter = new CityAdapter(getActivity(), cityResponses);
                 listView.setAdapter(cityAdapter);
             }
 
             @Override
-            public void onFail(int failCode, CityResponse data,ErrorResponse errorResponse, List<CityResponse> dataArrayList, String message) {
+            public void onFail(int failCode, CityResponse data, ErrorResponse errorResponse, List<CityResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
             }
@@ -331,5 +332,13 @@ public class CarrerOrCityFragment extends BaseFragment {
     @Override
     protected Drawable getIconLeft() {
         return getResources().getDrawable(R.drawable.ic_back_svg);
+    }
+
+    @Override
+    public ArrayList<BaseRequest> getArrayBaseRequest() {
+        ArrayList<BaseRequest> baseRequests = new ArrayList<>();
+        baseRequests.add(getListCareerRequest);
+        baseRequests.add(getListCityRequest);
+        return baseRequests;
     }
 }

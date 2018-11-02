@@ -83,18 +83,14 @@ public class InfoFragment extends BaseFragment {
                 } else {
                     llInfo.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 }
-                int width = llInfo.getMeasuredWidth();
                 int height = llInfo.getMeasuredHeight();
                 getEventBaseFragment().setHeightView(height);
             }
         });
         getEventBaseFragment().setOnSwitchToOneListener(new OnSwitchToOneListener() {
             @Override
-            public void onSwitchToOne(int position) {
-                DebugLog.showLogCat(position + "");
-                if (position == 0) {
-                    getEventBaseFragment().setHeightView(LayoutUtils.getViewHeight(llInfo));
-                }
+            public void onSwitchToOne() {
+                getEventBaseFragment().setHeightView(LayoutUtils.getViewHeight(llInfo));
             }
         });
         tvCarrer.setText(detailJobResponse.getCareerName());
@@ -144,7 +140,6 @@ public class InfoFragment extends BaseFragment {
                         llInfo.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     }
                     int height = llInfo.getMeasuredHeight();
-                    DebugLog.showLogCat(height + "");
                     getEventBaseFragment().setHeightView(height);
                 }
             });
@@ -161,7 +156,6 @@ public class InfoFragment extends BaseFragment {
                         llInfo.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     }
                     int height = llInfo.getMeasuredHeight();
-                    DebugLog.showLogCat(height + "");
                     getEventBaseFragment().setHeightView(height);
                 }
             });

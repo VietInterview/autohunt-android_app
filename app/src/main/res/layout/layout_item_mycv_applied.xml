@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+<com.vietinterview.getbee.customview.NonSwipeableViewPager xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/viewPager"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
+    android:layout_height="110dp"
     android:overScrollMode="never">
 
     <RelativeLayout
@@ -41,10 +41,25 @@
             android:textSize="16sp" />
 
         <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvDate"
+            android:id="@+id/tvJobTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvCarrer"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@+id/llStatus"
+            android:gravity="left"
+            android:singleLine="true"
+            android:textColor="#505059"
+            android:textSize="16sp" />
+
+        <com.vietinterview.getbee.customview.NunitoTextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvJobTitle"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="16dp"
@@ -99,4 +114,4 @@
             android:textColor="@color/white" />
 
     </LinearLayout>
-</android.support.v4.view.ViewPager>
+</com.vietinterview.getbee.customview.NonSwipeableViewPager>

@@ -44,6 +44,7 @@ public class MyCVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         SHOWING_SECONDARY_CONTENT
     }
 
+    private DeleteCVRequest deleteCVRequest;
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
     private ArrayList<CvList> cvLists;
@@ -132,7 +133,8 @@ public class MyCVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 @Override
                 public void onClick(View view) {
                     baseFragment.showCoverNetworkLoading();
-                    new DeleteCVRequest(cvLists.get(position).getId()).callRequest(mContext, new ApiObjectCallBack() {
+                    deleteCVRequest = new DeleteCVRequest(cvLists.get(position).getId());
+                    deleteCVRequest.callRequest(mContext, new ApiObjectCallBack() {
                         @Override
                         public void onSuccess(Object data, List dataArrayList, int status, String message) {
                             baseFragment.hideCoverNetworkLoading();
@@ -147,6 +149,7 @@ public class MyCVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     });
                 }
             });
+            baseFragment.getArrayBaseRequest().add(deleteCVRequest);
             ((ViewPager) ((MyViewHolder) holder).mView).setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 int previousPagePosition = 0;
 

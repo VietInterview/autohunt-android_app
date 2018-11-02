@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,6 +20,8 @@ public class ExComSkillListViewAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<String> listDataGroup;
     private HashMap<String, List<LstComputerSkill>> listDataChild;
+    private FrameLayout llInfoChild;
+    private LinearLayout llInfoGroup;
 
     public ExComSkillListViewAdapter(Context context, List<String> listDataGroup, HashMap<String, List<LstComputerSkill>> listChildData) {
         this.context = context;
@@ -43,6 +46,7 @@ public class ExComSkillListViewAdapter extends BaseExpandableListAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_com_row_child, null);
         }
+        llInfoChild = convertView.findViewById(R.id.llInfoChild);
         TextView tvOtherSoft = convertView.findViewById(R.id.tvOtherSoft);
         LinearLayout llInfo = convertView.findViewById(R.id.llInfo);
         LinearLayout llOther = convertView.findViewById(R.id.llOther);
@@ -119,6 +123,7 @@ public class ExComSkillListViewAdapter extends BaseExpandableListAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_lan_row_group, null);
         }
+        llInfoGroup = convertView.findViewById(R.id.llInfoGroup);
         TextView tvLanguage = convertView.findViewById(R.id.tvLanguage);
         tvLanguage.setText(listDataGroup.get(groupPosition));
         if (isExpanded)
@@ -136,5 +141,13 @@ public class ExComSkillListViewAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    public FrameLayout getLlInfoChild() {
+        return llInfoChild;
+    }
+
+    public LinearLayout getLlInfoGroup() {
+        return llInfoGroup;
     }
 }

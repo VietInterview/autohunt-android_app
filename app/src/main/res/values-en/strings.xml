@@ -160,5 +160,15 @@
     <string name="office_information">Office information</string>
     <string name="other_soft">Other software</string>
     <string name="hunt_send_cv_noti">Your CV has been uploaded successfully and is pending before sending to the consumer, processing time is up to 24 hours. We will notify you as soon as it is completed</string>
-
+    <string name="sent">Sent</string>
+    <string name="no_data">Have no information</string>
+    <string name="below_50">Above 50 employees</string>
+    <string name="from_50_to_100">From 50 to 100 employees</string>
+    <string name="above_100">Above 100 employees</string>
+    <string name="above_500">Above 500 employees</string>
+    <string name="average">Medium</string>
+    <string name="emailorphoneexist">Email or phone already exist</string>
+    <string name="cvnotfound">CV does not exist</string>
+    <string name="cvalreadysubmitjob">CV has been applied to the job</string>
+    <string name="no_cv_upload">You have not uploaded any CV yet. Quickly upload your resume to earn more income</string>
 </resources>
