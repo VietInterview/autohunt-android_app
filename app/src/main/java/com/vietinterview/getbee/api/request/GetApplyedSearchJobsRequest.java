@@ -39,7 +39,12 @@ public class GetApplyedSearchJobsRequest extends BaseRequest<JobsResponse, Error
     }
 
     @Override
-    public List<JobsResponse> getListResponseClass() {
+    public List<JobsResponse> getListResponseSuccessClass() {
+        return null;
+    }
+
+    @Override
+    public List<ErrorResponse> getListResponseFailClass() {
         return null;
     }
 

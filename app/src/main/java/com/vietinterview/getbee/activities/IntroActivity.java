@@ -7,6 +7,7 @@ import android.view.WindowManager;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.SlidingImageAdapter;
 import com.vietinterview.getbee.constant.AppConstant;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -28,9 +29,10 @@ public class IntroActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        if (SharedPrefUtils.getBoolean(AppConstant.FIRST, true))
+        DebugLog.showLogCat(SharedPrefUtils.getBoolean(AppConstant.FIRST, true) + "");
+        if (SharedPrefUtils.getBoolean(AppConstant.FIRST, true)) {
             init();
-        else {
+        } else {
             Intent mainIntent = new Intent(this, MainActivity.class);
             mainIntent.putExtra("isLogin", true);
             startActivity(mainIntent);
@@ -45,7 +47,6 @@ public class IntroActivity extends BaseActivity {
 
     private void init() {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        SharedPrefUtils.putBoolean(AppConstant.FIRST, false);
         for (int i = 0; i < IMAGES.length; i++)
             ImagesArray.add(IMAGES[i]);
         for (int i = 0; i < String.length; i++)

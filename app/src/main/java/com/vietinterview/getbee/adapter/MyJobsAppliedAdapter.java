@@ -138,9 +138,9 @@ public class MyJobsAppliedAdapter extends RecyclerView.Adapter<RecyclerView.View
                         jobsApplyedFragment.showCoverNetworkLoading();
                         Integer collStatus = dataSet.get(listPosition).getCollStatus() == null ? 1 : (Integer) dataSet.get(listPosition).getCollStatus() == 0 ? 1 : 0;
                         saveUnsaveJobRequest = new SaveUnsaveJobRequest(dataSet.get(listPosition).getId(), collStatus);
-                        saveUnsaveJobRequest.callRequest(mActivity, new ApiObjectCallBack<AddRemoveJobResponse,ErrorResponse>() {
+                        saveUnsaveJobRequest.callRequest(mActivity, new ApiObjectCallBack<AddRemoveJobResponse, ErrorResponse>() {
                             @Override
-                            public void onSuccess(AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, int status, String message) {
+                            public void onSuccess(int status, AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, String message) {
                                 jobsApplyedFragment.hideCoverNetworkLoading();
                                 if (status == 200) {
                                     if (data.getStatus() == 0) {
@@ -154,7 +154,7 @@ public class MyJobsAppliedAdapter extends RecyclerView.Adapter<RecyclerView.View
                             }
 
                             @Override
-                            public void onFail(int failCode, AddRemoveJobResponse data,ErrorResponse errorResponse, List<AddRemoveJobResponse> dataArrayList, String message) {
+                            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
                                 jobsApplyedFragment.hideCoverNetworkLoading();
                             }
                         });

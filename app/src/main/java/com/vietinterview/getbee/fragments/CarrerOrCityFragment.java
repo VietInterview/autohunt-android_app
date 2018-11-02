@@ -176,7 +176,7 @@ public class CarrerOrCityFragment extends BaseFragment {
         getListCareerRequest.callRequest(getActivity(), new ApiObjectCallBack<CareerResponse, ErrorResponse>() {
 
             @Override
-            public void onSuccess(CareerResponse data, List<CareerResponse> dataArrayList, int status, String message) {
+            public void onSuccess(int status, CareerResponse data, List<CareerResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 careerResponses.add(new CareerResponse(0, getResources().getString(R.string.all_carrer)));
                 careerResponses.addAll(dataArrayList);
@@ -185,7 +185,7 @@ public class CarrerOrCityFragment extends BaseFragment {
             }
 
             @Override
-            public void onFail(int failCode, CareerResponse data, ErrorResponse errorResponse, List<CareerResponse> dataArrayList, String message) {
+            public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
             }
@@ -282,7 +282,7 @@ public class CarrerOrCityFragment extends BaseFragment {
         getListCityRequest = new GetListCityRequest();
         getListCityRequest.callRequest(getActivity(), new ApiObjectCallBack<CityResponse, ErrorResponse>() {
             @Override
-            public void onSuccess(CityResponse data, List<CityResponse> dataArrayList, int status, String message) {
+            public void onSuccess(int status, CityResponse data, List<CityResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 cityResponses.add(new CityResponse(0, getResources().getString(R.string.all_city)));
                 cityResponses.addAll(dataArrayList);
@@ -291,7 +291,7 @@ public class CarrerOrCityFragment extends BaseFragment {
             }
 
             @Override
-            public void onFail(int failCode, CityResponse data, ErrorResponse errorResponse, List<CityResponse> dataArrayList, String message) {
+            public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
             }

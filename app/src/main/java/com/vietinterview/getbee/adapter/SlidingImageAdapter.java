@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.activities.BaseActivity;
 import com.vietinterview.getbee.activities.MainActivity;
+import com.vietinterview.getbee.constant.AppConstant;
+import com.vietinterview.getbee.utils.SharedPrefUtils;
 
 import java.util.ArrayList;
 
@@ -62,6 +64,7 @@ public class SlidingImageAdapter extends PagerAdapter {
                 baseActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                 Intent mainIntent = new Intent(baseActivity, MainActivity.class);
                 mainIntent.putExtra("isLogin", true);
+                SharedPrefUtils.putBoolean(AppConstant.FIRST, false);
                 baseActivity.startActivity(mainIntent);
                 baseActivity.finish();
             }
@@ -73,6 +76,7 @@ public class SlidingImageAdapter extends PagerAdapter {
                 Intent mainIntent = new Intent(baseActivity, MainActivity.class);
                 mainIntent.putExtra("isLogin", false);
                 baseActivity.startActivity(mainIntent);
+                SharedPrefUtils.putBoolean(AppConstant.FIRST, false);
                 baseActivity.finish();
             }
         });

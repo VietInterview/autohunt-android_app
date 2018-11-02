@@ -124,7 +124,7 @@ public class MyCVChoiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailCVFragment().newInstance(jobList, cvLists.get(position).getId()), null);
                 }
             });
-            ((ViewPager) ((MyViewHolder) holder).mView).setCurrentItem(mItemSwipedStates.get(position).ordinal());
+//            ((ViewPager) ((MyViewHolder) holder).mView).setCurrentItem(mItemSwipedStates.get(position).ordinal());
             if (position % 2 == 0) {
                 ((RelativeLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.row_not_white));
             } else {
@@ -137,14 +137,14 @@ public class MyCVChoiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     deleteCVRequest = new DeleteCVRequest(cvLists.get(position).getId());
                     deleteCVRequest.callRequest(mContext, new ApiObjectCallBack() {
                         @Override
-                        public void onSuccess(Object data, List dataArrayList, int status, String message) {
+                        public void onSuccess(int status, Object data, List dataArrayList, String message) {
                             baseFragment.hideCoverNetworkLoading();
                             baseFragment.getEventBaseFragment().refreshMyCV();
                             notifyDataSetChanged();
                         }
 
                         @Override
-                        public void onFail(int failCode, Object dataSuccess, Object dataFail, List dataArrayList, String message) {
+                        public void onFail(int status, Object dataFail, List listDataFail, String message) {
                             baseFragment.hideCoverNetworkLoading();
                         }
                     });

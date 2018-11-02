@@ -179,28 +179,32 @@ public class DetailCVFragment extends BaseFragment {
                 submitCVRequest = new SubmitCVRequest(mCvId, mJobList.getId(), 1);
                 submitCVRequest.callRequest(getActivity(), new ApiObjectCallBack<SubmitCVResponse, ErrorResponse>() {
                     @Override
-                    public void onSuccess(SubmitCVResponse data, List<SubmitCVResponse> dataArrayList, int status, String message) {
-                        mNotifydialog.dismiss();
-                        hideCoverNetworkLoading();
-                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.hunt_send_cv_noti), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                FragmentUtil.popEntireFragmentBackStack(DetailCVFragment.this);
-                                FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(mJobList), null);
-                            }
-                        });
+                    public void onSuccess(int status, SubmitCVResponse data, List<SubmitCVResponse> dataArrayList, String message) {
+                        if (isAdded()) {
+                            mNotifydialog.dismiss();
+                            hideCoverNetworkLoading();
+                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.hunt_send_cv_noti), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    FragmentUtil.popEntireFragmentBackStack(DetailCVFragment.this);
+                                    FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(mJobList), null);
+                                }
+                            });
+                        }
                     }
 
                     @Override
-                    public void onFail(int failCode, SubmitCVResponse data, ErrorResponse errorResponse, List<SubmitCVResponse> dataArrayList, String message) {
+                    public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
                         mNotifydialog.dismiss();
-                        hideCoverNetworkLoading();
-                        if (errorResponse.getErrorKey().equalsIgnoreCase("emailOrPhoneExist")) {
-                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.emailorphoneexist));
-                        } else if (errorResponse.getErrorKey().equalsIgnoreCase("cvNotFound")) {
-                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.cvnotfound));
-                        } else if (errorResponse.getErrorKey().equalsIgnoreCase("CvAlreadySubmitJob")) {
-                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.cvalreadysubmitjob));
+                        if (isAdded()) {
+                            hideCoverNetworkLoading();
+                            if (errorResponse.getErrorKey().equalsIgnoreCase("emailOrPhoneExist")) {
+                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.emailorphoneexist));
+                            } else if (errorResponse.getErrorKey().equalsIgnoreCase("cvNotFound")) {
+                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.cvnotfound));
+                            } else if (errorResponse.getErrorKey().equalsIgnoreCase("CvAlreadySubmitJob")) {
+                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.cvalreadysubmitjob));
+                            }
                         }
                     }
                 });
@@ -214,28 +218,32 @@ public class DetailCVFragment extends BaseFragment {
                 submitCVRequest = new SubmitCVRequest(mCvId, mJobList.getId(), 2);
                 submitCVRequest.callRequest(getActivity(), new ApiObjectCallBack<SubmitCVResponse, ErrorResponse>() {
                     @Override
-                    public void onSuccess(SubmitCVResponse data, List<SubmitCVResponse> dataArrayList, int status, String message) {
-                        mNotifydialog.dismiss();
-                        hideCoverNetworkLoading();
-                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.hunt_send_cv_noti), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                FragmentUtil.popEntireFragmentBackStack(DetailCVFragment.this);
-                                FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(mJobList), null);
-                            }
-                        });
+                    public void onSuccess(int status, SubmitCVResponse data, List<SubmitCVResponse> dataArrayList, String message) {
+                        if (isAdded()) {
+                            mNotifydialog.dismiss();
+                            hideCoverNetworkLoading();
+                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.hunt_send_cv_noti), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    FragmentUtil.popEntireFragmentBackStack(DetailCVFragment.this);
+                                    FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(mJobList), null);
+                                }
+                            });
+                        }
                     }
 
                     @Override
-                    public void onFail(int failCode, SubmitCVResponse data, ErrorResponse errorResponse, List<SubmitCVResponse> dataArrayList, String message) {
+                    public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
                         mNotifydialog.dismiss();
-                        hideCoverNetworkLoading();
-                        if (errorResponse.getErrorKey().equalsIgnoreCase("emailOrPhoneExist")) {
-                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.emailorphoneexist));
-                        } else if (errorResponse.getErrorKey().equalsIgnoreCase("cvNotFound")) {
-                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.cvnotfound));
-                        } else if (errorResponse.getErrorKey().equalsIgnoreCase("CvAlreadySubmitJob")) {
-                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.cvalreadysubmitjob));
+                        if (isAdded()) {
+                            hideCoverNetworkLoading();
+                            if (errorResponse.getErrorKey().equalsIgnoreCase("emailOrPhoneExist")) {
+                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.emailorphoneexist));
+                            } else if (errorResponse.getErrorKey().equalsIgnoreCase("cvNotFound")) {
+                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.cvnotfound));
+                            } else if (errorResponse.getErrorKey().equalsIgnoreCase("CvAlreadySubmitJob")) {
+                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.cvalreadysubmitjob));
+                            }
                         }
                     }
                 });
@@ -306,50 +314,54 @@ public class DetailCVFragment extends BaseFragment {
         getDetailCVRequest = new GetDetailCVRequest(id);
         getDetailCVRequest.callRequest(getActivity(), new ApiObjectCallBack<DetailCVResponse, ErrorResponse>() {
             @Override
-            public void onSuccess(DetailCVResponse data, List<DetailCVResponse> dataArrayList, int status, String message) {
+            public void onSuccess(int status, DetailCVResponse data, List<DetailCVResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
-                detailCVResponse = data;
-                tvFullName.setText(detailCVResponse.getFullName());
-                String year = String.valueOf(detailCVResponse.getBirthday()).substring(0, 4);
-                String month = String.valueOf(detailCVResponse.getBirthday()).substring(4, 6);
-                String day = String.valueOf(detailCVResponse.getBirthday()).substring(6, 8);
-                tvBirthDay.setText(day + "/" + month + "/" + year);
-                RequestOptions options = new RequestOptions()
-                        .fitCenter()
-                        .error(R.drawable.ic_ava_null)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .priority(Priority.HIGH);
-                Glide.with(getActivity()).load(detailCVResponse.getPictureUrl()).apply(options).into(imgAva);
-                setupViewPager(viewPager);
-                tabLayout.setupWithViewPager(viewPager);
-                setupTabIcons();
-                tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                    @Override
-                    public void onTabSelected(TabLayout.Tab tab) {
-                        ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
-                    }
+                if (isAdded()) {
+                    detailCVResponse = data;
+                    tvFullName.setText(detailCVResponse.getFullName());
+                    String year = String.valueOf(detailCVResponse.getBirthday()).substring(0, 4);
+                    String month = String.valueOf(detailCVResponse.getBirthday()).substring(4, 6);
+                    String day = String.valueOf(detailCVResponse.getBirthday()).substring(6, 8);
+                    tvBirthDay.setText(day + "/" + month + "/" + year);
+                    RequestOptions options = new RequestOptions()
+                            .fitCenter()
+                            .error(R.drawable.ic_ava_null)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .priority(Priority.HIGH);
+                    Glide.with(getActivity()).load(detailCVResponse.getPictureUrl()).apply(options).into(imgAva);
+                    setupViewPager(viewPager);
+                    tabLayout.setupWithViewPager(viewPager);
+                    setupTabIcons();
+                    tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                        @Override
+                        public void onTabSelected(TabLayout.Tab tab) {
+                            ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
+                        }
 
-                    @Override
-                    public void onTabUnselected(TabLayout.Tab tab) {
-                        ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.background_icon_not_focus));
-                    }
+                        @Override
+                        public void onTabUnselected(TabLayout.Tab tab) {
+                            ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.background_icon_not_focus));
+                        }
 
-                    @Override
-                    public void onTabReselected(TabLayout.Tab tab) {
+                        @Override
+                        public void onTabReselected(TabLayout.Tab tab) {
 
-                    }
-                });
+                        }
+                    });
+                }
             }
 
             @Override
-            public void onFail(int failCode, DetailCVResponse data, ErrorResponse errorResponse, List<DetailCVResponse> dataArrayList, String message) {
+            public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
-                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        FragmentUtil.popBackStack(DetailCVFragment.this);
-                    }
-                });
+                if (isAdded()) {
+                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            FragmentUtil.popBackStack(DetailCVFragment.this);
+                        }
+                    });
+                }
             }
         });
     }

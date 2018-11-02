@@ -109,34 +109,38 @@ public class MyCVSavedFragment extends BaseFragment implements SwipeRefreshLayou
         searchCVSaveRequest = new SearchCVSaveRequest(page);
         searchCVSaveRequest.callRequest(getActivity(), new ApiObjectCallBack<CVResponse, ErrorResponse>() {
             @Override
-            public void onSuccess(CVResponse data, List<CVResponse> dataArrayList, int status, String message) {
+            public void onSuccess(int status, CVResponse data, List<CVResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
-                mSwipeRefreshLayout.setRefreshing(false);
-                cvListsServer.clear();
-                cvListsServer.addAll(data.getCvList());
-                tvCountCV = mView.findViewById(R.id.tvCountCV);
-                if (data.getTotal() == 0) {
-                    tvCountCV.setText(getResources().getString(R.string.no_cv_upload));
-                } else
-                    tvCountCV.setText(data.getTotal() + " " + suffixesString);
-                if (page == 0) cvLists.clear();
-                else {
+                if (isAdded()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    cvListsServer.clear();
+                    cvListsServer.addAll(data.getCvList());
+                    tvCountCV = mView.findViewById(R.id.tvCountCV);
+                    if (data.getTotal() == 0) {
+                        tvCountCV.setText(getResources().getString(R.string.no_cv_upload));
+                    } else
+                        tvCountCV.setText(data.getTotal() + " " + suffixesString);
+                    if (page == 0) cvLists.clear();
+                    else {
 ////                    jobsList.remove(jobsList.size() - 1);
-                    myCVAdapter.notifyItemRemoved(cvLists.size());
+                        myCVAdapter.notifyItemRemoved(cvLists.size());
+                    }
+                    cvLists.addAll(data.getCvList());
+                    myCVAdapter = new MyCVAdapter(recyclerView, getActivity(), cvLists, MyCVSavedFragment.this);
+                    myCVAdapter.setOnLoadMoreListener(MyCVSavedFragment.this);
+                    recyclerView.setAdapter(myCVAdapter);
+                    myCVAdapter.notifyDataSetChanged();
+                    myCVAdapter.setLoaded();
                 }
-                cvLists.addAll(data.getCvList());
-                myCVAdapter = new MyCVAdapter(recyclerView, getActivity(), cvLists, MyCVSavedFragment.this);
-                myCVAdapter.setOnLoadMoreListener(MyCVSavedFragment.this);
-                recyclerView.setAdapter(myCVAdapter);
-                myCVAdapter.notifyDataSetChanged();
-                myCVAdapter.setLoaded();
             }
 
             @Override
-            public void onFail(int failCode, CVResponse data, ErrorResponse errorResponse, List<CVResponse> dataArrayList, String message) {
+            public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
-                mSwipeRefreshLayout.setRefreshing(false);
-                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+                if (isAdded()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+                }
             }
         });
     }
@@ -147,30 +151,34 @@ public class MyCVSavedFragment extends BaseFragment implements SwipeRefreshLayou
         searchMyCVRequest = new SearchMyCVRequest(page, carrerId, cityId);
         searchMyCVRequest.callRequest(getActivity(), new ApiObjectCallBack<CVResponse, ErrorResponse>() {
             @Override
-            public void onSuccess(CVResponse data, List<CVResponse> dataArrayList, int status, String message) {
+            public void onSuccess(int status, CVResponse data, List<CVResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
-                mSwipeRefreshLayout.setRefreshing(false);
-                cvListsServer.clear();
-                cvListsServer.addAll(data.getCvList());
-                tvCountCV.setText(data.getTotal() + " " + getResources().getString(R.string.cv_saved_found));
-                if (page == 0) cvLists.clear();
-                else {
+                if (isAdded()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    cvListsServer.clear();
+                    cvListsServer.addAll(data.getCvList());
+                    tvCountCV.setText(data.getTotal() + " " + getResources().getString(R.string.cv_saved_found));
+                    if (page == 0) cvLists.clear();
+                    else {
 //                    jobsList.remove(jobsList.size() - 1);
-                    myCVAdapter.notifyItemRemoved(cvLists.size());
+                        myCVAdapter.notifyItemRemoved(cvLists.size());
+                    }
+                    cvLists.addAll(data.getCvList());
+                    myCVAdapter = new MyCVAdapter(recyclerView, getActivity(), cvLists, MyCVSavedFragment.this);
+                    myCVAdapter.setOnLoadMoreListener(MyCVSavedFragment.this);
+                    recyclerView.setAdapter(myCVAdapter);
+                    myCVAdapter.notifyDataSetChanged();
+                    myCVAdapter.setLoaded();
                 }
-                cvLists.addAll(data.getCvList());
-                myCVAdapter = new MyCVAdapter(recyclerView, getActivity(), cvLists, MyCVSavedFragment.this);
-                myCVAdapter.setOnLoadMoreListener(MyCVSavedFragment.this);
-                recyclerView.setAdapter(myCVAdapter);
-                myCVAdapter.notifyDataSetChanged();
-                myCVAdapter.setLoaded();
             }
 
             @Override
-            public void onFail(int failCode, CVResponse data, ErrorResponse errorResponse, List<CVResponse> dataArrayList, String message) {
+            public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
-                mSwipeRefreshLayout.setRefreshing(false);
-                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+                if (isAdded()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+                }
             }
         });
     }

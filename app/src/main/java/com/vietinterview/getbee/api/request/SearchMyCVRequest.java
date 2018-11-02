@@ -35,7 +35,12 @@ public class SearchMyCVRequest extends BaseRequest<CVResponse,ErrorResponse> {
     }
 
     @Override
-    public List<CVResponse> getListResponseClass() {
+    public List<CVResponse> getListResponseSuccessClass() {
+        return null;
+    }
+
+    @Override
+    public List<ErrorResponse> getListResponseFailClass() {
         return null;
     }
 

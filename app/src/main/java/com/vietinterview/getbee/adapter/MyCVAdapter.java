@@ -136,14 +136,14 @@ public class MyCVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     deleteCVRequest = new DeleteCVRequest(cvLists.get(position).getId());
                     deleteCVRequest.callRequest(mContext, new ApiObjectCallBack() {
                         @Override
-                        public void onSuccess(Object data, List dataArrayList, int status, String message) {
+                        public void onSuccess(int status, Object data, List dataArrayList, String message) {
                             baseFragment.hideCoverNetworkLoading();
                             baseFragment.getEventBaseFragment().refreshMyCV();
                             notifyDataSetChanged();
                         }
 
                         @Override
-                        public void onFail(int failCode, Object dataSuccess, Object dataFail, List dataArrayList, String message) {
+                        public void onFail(int status, Object dataFail, List listDataFail, String message) {
                             baseFragment.hideCoverNetworkLoading();
                         }
                     });

@@ -39,6 +39,11 @@ public class LoginRequest extends BaseJsonRequest<LoginResponse, ErrorResponse> 
     }
 
     @Override
+    public List<ErrorResponse> getListResponseFailClass() {
+        return null;
+    }
+
+    @Override
     public Type getType() {
         return null;
     }

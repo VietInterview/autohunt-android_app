@@ -29,8 +29,13 @@ public class GetListCareerRequest extends BaseRequest<CareerResponse, ErrorRespo
     }
 
     @Override
-    public List<CareerResponse> getListResponseClass() {
+    public List<CareerResponse> getListResponseSuccessClass() {
         return careerResponses;
+    }
+
+    @Override
+    public List<ErrorResponse> getListResponseFailClass() {
+        return null;
     }
 
     @Override

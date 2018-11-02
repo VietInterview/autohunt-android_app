@@ -37,6 +37,7 @@ public abstract class BaseRequest<T, V> {
     private JsonHttpResponseHandler mJsonHttpResponseHandler;
     private ApiObjectCallBack<T, V> mApiObjectCallBack;
     private List<T> tList;
+    private List<V> vList;
     private Context mContext;
 
     public void callRequest(Context context, ApiObjectCallBack<T, V> tApiObjectCallBack) {
@@ -54,10 +55,10 @@ public abstract class BaseRequest<T, V> {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 if (response != null) {
                     DebugLog.jsonFormat("response " + getAbsoluteUrl(), response);
-                    mApiObjectCallBack.onSuccess(GsonUtils.fromJson(response.toString(), getResponseSuccessClass()), null, statusCode, "");
+                    mApiObjectCallBack.onSuccess(statusCode, GsonUtils.fromJson(response.toString(), getResponseSuccessClass()), null, "");
                 } else {
                     DebugLog.showLogCat(statusCode + "");
-                    mApiObjectCallBack.onFail(statusCode, null, null, null, mContext.getResources().getString(R.string.error_please_try));
+                    mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
                 }
             }
 
@@ -65,31 +66,31 @@ public abstract class BaseRequest<T, V> {
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 if (response != null) {
                     DebugLog.jsonFormat("response " + getAbsoluteUrl(), response);
-                    tList = getListResponseClass();
+                    tList = getListResponseSuccessClass();
                     tList = GsonUtils.fromJson(response.toString(), getType());
-                    mApiObjectCallBack.onSuccess(null, tList, statusCode, "");
+                    mApiObjectCallBack.onSuccess(statusCode, null, tList, "");
                 } else {
                     DebugLog.showLogCat(statusCode + "");
-                    mApiObjectCallBack.onFail(statusCode, null, null, null, mContext.getResources().getString(R.string.error_please_try));
+                    mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
                 }
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 DebugLog.showLogCat(responseString);
-                mApiObjectCallBack.onSuccess(null, null, statusCode, responseString);
+                mApiObjectCallBack.onSuccess(statusCode, null, null, responseString);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 if (errorResponse != null) {
                     DebugLog.jsonFormat("response " + getAbsoluteUrl(), errorResponse);
-                    tList = getListResponseClass();
-                    tList = GsonUtils.fromJson(errorResponse.toString(), getType());
-                    mApiObjectCallBack.onFail(statusCode, null, null, tList, throwable.getMessage());
+                    vList = getListResponseFailClass();
+                    vList = GsonUtils.fromJson(errorResponse.toString(), getType());
+                    mApiObjectCallBack.onFail(statusCode, null, vList, throwable.getMessage());
                 } else {
                     DebugLog.showLogCat(statusCode + "");
-                    mApiObjectCallBack.onFail(statusCode, null, null, null, throwable.getMessage());
+                    mApiObjectCallBack.onFail(statusCode, null, null, throwable.getMessage());
                 }
             }
 
@@ -97,16 +98,16 @@ public abstract class BaseRequest<T, V> {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 DebugLog.showLogCat(statusCode + " " + throwable.getMessage());
                 if (errorResponse != null)
-                    mApiObjectCallBack.onFail(statusCode, null, GsonUtils.fromJson(errorResponse.toString(), getResponseFailClass()), null, throwable.getMessage());
+                    mApiObjectCallBack.onFail(statusCode, GsonUtils.fromJson(errorResponse.toString(), getResponseFailClass()), null, throwable.getMessage());
                 else {
-                    mApiObjectCallBack.onFail(statusCode, null, null, null, throwable.getMessage());
+                    mApiObjectCallBack.onFail(statusCode, null, null, throwable.getMessage());
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 DebugLog.showLogCat(throwable.toString());
-                mApiObjectCallBack.onFail(statusCode, null, null, null, mContext.getResources().getString(R.string.error_please_try));
+                mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
             }
         };
         DebugLog.showLogCat(getAbsoluteUrl() + "\n" + putParams() + "\n" + getAccessToken());
@@ -151,13 +152,13 @@ public abstract class BaseRequest<T, V> {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                     DebugLog.showLogCat(responseBody.toString());
-                    mApiObjectCallBack.onSuccess(null, null, statusCode, responseBody.toString());
+                    mApiObjectCallBack.onSuccess(statusCode, null, null, responseBody.toString());
                 }
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                     DebugLog.showLogCat(error.getMessage());
-                    mApiObjectCallBack.onFail(statusCode, null, null, null, error.getMessage());
+                    mApiObjectCallBack.onFail(statusCode, null, null, error.getMessage());
                 }
             });
         }
@@ -171,7 +172,9 @@ public abstract class BaseRequest<T, V> {
 
     abstract public Class<V> getResponseFailClass();
 
-    abstract public List<T> getListResponseClass();
+    abstract public List<T> getListResponseSuccessClass();
+
+    abstract public List<V> getListResponseFailClass();
 
     abstract public Type getType();
 

@@ -27,8 +27,13 @@ public class GetListCityRequest extends BaseRequest<CityResponse, ErrorResponse>
     }
 
     @Override
-    public List<CityResponse> getListResponseClass() {
+    public List<CityResponse> getListResponseSuccessClass() {
         return new ArrayList<CityResponse>();
+    }
+
+    @Override
+    public List<ErrorResponse> getListResponseFailClass() {
+        return null;
     }
 
     @Override

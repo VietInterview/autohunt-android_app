@@ -147,84 +147,82 @@ public class DetailJobFragment extends BaseFragment {
         getDetailJobRequest = new GetDetailJobRequest(jobId);
         getDetailJobRequest.callRequest(getActivity(), new ApiObjectCallBack<DetailJobResponse, ErrorResponse>() {
             @Override
-            public void onSuccess(DetailJobResponse data, List<DetailJobResponse> dataArrayList, int status, String message) {
+            public void onSuccess(int status, DetailJobResponse data, List<DetailJobResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 detailJobResponse = data;
-                tvcompanyName.setText(data.getCompanyName());
-                tvjobTitle.setText(data.getJobTitle());
-                RequestOptions options = new RequestOptions()
-                        .fitCenter()
-                        .error(R.drawable.ic_company_null)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .priority(Priority.HIGH);
-                Glide.with(getActivity()).load(data.getCompanyImg()).apply(options).into(imgCompany);
-                if (data.getStatus() == 1) {
-                    tvstatus.setText(getResources().getString(R.string.hiring));
-                    llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));
-                } else {
-                    tvstatus.setText(getResources().getString(R.string.closed));
-                    llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_notyet_send));
-                }
+                if (isAdded()) {
+                    tvcompanyName.setText(data.getCompanyName());
+                    tvjobTitle.setText(data.getJobTitle());
+                    RequestOptions options = new RequestOptions().fitCenter().error(R.drawable.ic_company_null).diskCacheStrategy(DiskCacheStrategy.ALL).priority(Priority.HIGH);
+                    Glide.with(getActivity()).load(data.getCompanyImg()).apply(options).into(imgCompany);
+                    if (data.getStatus() == 1) {
+                        tvstatus.setText(getResources().getString(R.string.hiring));
+                        llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));
+                    } else {
+                        tvstatus.setText(getResources().getString(R.string.closed));
+                        llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_notyet_send));
+                    }
 
-                if (data.getCollStatus() != null) {
-                    Integer collStatus = data.getCollStatus();
-                    if (collStatus == 0) {
+                    if (data.getCollStatus() != null) {
+                        Integer collStatus = data.getCollStatus();
+                        if (collStatus == 0) {
+                            Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
+                            img.setBounds(0, 0, 40, 50);
+                            saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+                            saveUnsaveJob.setText(getResources().getString(R.string.save_job));
+                            saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
+                            saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_unsave_button));
+                        } else if (collStatus == 1) {
+                            Drawable img = getContext().getResources().getDrawable(R.drawable.ic_saved);
+                            img.setBounds(0, 0, 40, 50);
+                            saveUnsaveJob.setText(getResources().getString(R.string.saved_job));
+                            saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+                            saveUnsaveJob.setTextColor(getResources().getColor(R.color.red));
+                            saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_save_button));
+                        } else {
+                            Drawable img = getContext().getResources().getDrawable(R.drawable.ic_tick_white);
+                            img.setBounds(0, 0, 50, 50);
+                            saveUnsaveJob.setText(getResources().getString(R.string.cv_applyed_tit));
+                            saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+                            saveUnsaveJob.setTextColor(getResources().getColor(R.color.white));
+                            saveUnsaveJob.setEnabled(false);
+                            saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));
+                        }
+                    } else {
                         Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
                         img.setBounds(0, 0, 40, 50);
                         saveUnsaveJob.setCompoundDrawables(img, null, null, null);
                         saveUnsaveJob.setText(getResources().getString(R.string.save_job));
                         saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
                         saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_unsave_button));
-                    } else if (collStatus == 1) {
-                        Drawable img = getContext().getResources().getDrawable(R.drawable.ic_saved);
-                        img.setBounds(0, 0, 40, 50);
-                        saveUnsaveJob.setText(getResources().getString(R.string.saved_job));
-                        saveUnsaveJob.setCompoundDrawables(img, null, null, null);
-                        saveUnsaveJob.setTextColor(getResources().getColor(R.color.red));
-                        saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_save_button));
-                    } else {
-                        Drawable img = getContext().getResources().getDrawable(R.drawable.ic_tick_white);
-                        img.setBounds(0, 0, 50, 50);
-                        saveUnsaveJob.setText(getResources().getString(R.string.cv_applyed_tit));
-                        saveUnsaveJob.setCompoundDrawables(img, null, null, null);
-                        saveUnsaveJob.setTextColor(getResources().getColor(R.color.white));
-                        saveUnsaveJob.setEnabled(false);
-                        saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));
                     }
-                } else {
-                    Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
-                    img.setBounds(0, 0, 40, 50);
-                    saveUnsaveJob.setCompoundDrawables(img, null, null, null);
-                    saveUnsaveJob.setText(getResources().getString(R.string.save_job));
-                    saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
-                    saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_unsave_button));
+                    infoFragment = new InfoFragment().newInstance(detailJobResponse);
+                    statisticalFragment = new StatisticalFragment().newInstance(detailJobResponse);
+                    cvSentFragment = new CVSentFragment().newInstance(detailJobResponse);
+                    setupViewPager(viewPager);
+                    tabLayout.setupWithViewPager(viewPager);
+                    setupTabIcons();
+                    tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                        @Override
+                        public void onTabSelected(TabLayout.Tab tab) {
+                            ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
+                        }
+
+                        @Override
+                        public void onTabUnselected(TabLayout.Tab tab) {
+                            ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.background_icon_not_focus));
+                        }
+
+                        @Override
+                        public void onTabReselected(TabLayout.Tab tab) {
+
+                        }
+                    });
                 }
-                infoFragment = new InfoFragment().newInstance(detailJobResponse);
-                statisticalFragment = new StatisticalFragment().newInstance(detailJobResponse);
-                cvSentFragment = new CVSentFragment().newInstance(detailJobResponse);
-                setupViewPager(viewPager);
-                tabLayout.setupWithViewPager(viewPager);
-                setupTabIcons();
-                tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                    @Override
-                    public void onTabSelected(TabLayout.Tab tab) {
-                        ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
-                    }
-
-                    @Override
-                    public void onTabUnselected(TabLayout.Tab tab) {
-                        ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.background_icon_not_focus));
-                    }
-
-                    @Override
-                    public void onTabReselected(TabLayout.Tab tab) {
-
-                    }
-                });
             }
 
             @Override
-            public void onFail(int failCode, DetailJobResponse data, ErrorResponse errorResponse, List<DetailJobResponse> dataArrayList, String message) {
+            public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message, new DialogInterface.OnClickListener() {
                     @Override
@@ -243,38 +241,40 @@ public class DetailJobFragment extends BaseFragment {
         saveUnsaveJobRequest = new SaveUnsaveJobRequest(mJobList.getId(), collStatus);
         saveUnsaveJobRequest.callRequest(getActivity(), new ApiObjectCallBack<AddRemoveJobResponse, ErrorResponse>() {
             @Override
-            public void onSuccess(AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, int status, String message) {
+            public void onSuccess(int status, AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
-                if (status == 200) {
-                    mJobList.setCollStatus(data.getStatus());
-                    if (data.getStatus() == 0) {
-                        Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
-                        img.setBounds(0, 0, 40, 50);
-                        saveUnsaveJob.setCompoundDrawables(img, null, null, null);
-                        saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
-                        saveUnsaveJob.setText(getResources().getString(R.string.save_job));
-                        saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_unsave_button));
-                    } else if (data.getStatus() == 1) {
-                        Drawable img = getContext().getResources().getDrawable(R.drawable.ic_saved);
-                        img.setBounds(0, 0, 40, 50);
-                        saveUnsaveJob.setCompoundDrawables(img, null, null, null);
-                        saveUnsaveJob.setText(getResources().getString(R.string.saved_job));
-                        saveUnsaveJob.setTextColor(getResources().getColor(R.color.red));
-                        saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_save_button));
-                    } else {
-                        Drawable img = getContext().getResources().getDrawable(R.drawable.ic_tick_white);
-                        img.setBounds(0, 0, 40, 50);
-                        saveUnsaveJob.setText(getResources().getString(R.string.cv_applyed_tit));
-                        saveUnsaveJob.setEnabled(false);
-                        saveUnsaveJob.setCompoundDrawables(img, null, null, null);
-                        saveUnsaveJob.setTextColor(getResources().getColor(R.color.white));
-                        saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));
+                if (isAdded()) {
+                    if (status == 200) {
+                        mJobList.setCollStatus(data.getStatus());
+                        if (data.getStatus() == 0) {
+                            Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
+                            img.setBounds(0, 0, 40, 50);
+                            saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+                            saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
+                            saveUnsaveJob.setText(getResources().getString(R.string.save_job));
+                            saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_unsave_button));
+                        } else if (data.getStatus() == 1) {
+                            Drawable img = getContext().getResources().getDrawable(R.drawable.ic_saved);
+                            img.setBounds(0, 0, 40, 50);
+                            saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+                            saveUnsaveJob.setText(getResources().getString(R.string.saved_job));
+                            saveUnsaveJob.setTextColor(getResources().getColor(R.color.red));
+                            saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_save_button));
+                        } else {
+                            Drawable img = getContext().getResources().getDrawable(R.drawable.ic_tick_white);
+                            img.setBounds(0, 0, 40, 50);
+                            saveUnsaveJob.setText(getResources().getString(R.string.cv_applyed_tit));
+                            saveUnsaveJob.setEnabled(false);
+                            saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+                            saveUnsaveJob.setTextColor(getResources().getColor(R.color.white));
+                            saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));
+                        }
                     }
                 }
             }
 
             @Override
-            public void onFail(int failCode, AddRemoveJobResponse data, ErrorResponse errorResponse, List<AddRemoveJobResponse> dataArrayList, String message) {
+            public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
             }
         });

@@ -31,7 +31,12 @@ public class GetDetailJobRequest extends BaseRequest<DetailJobResponse, ErrorRes
     }
 
     @Override
-    public List<DetailJobResponse> getListResponseClass() {
+    public List<DetailJobResponse> getListResponseSuccessClass() {
+        return null;
+    }
+
+    @Override
+    public List<ErrorResponse> getListResponseFailClass() {
         return null;
     }
 

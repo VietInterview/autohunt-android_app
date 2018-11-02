@@ -253,7 +253,7 @@ public class RegitsFragment extends BaseFragment {
                 registRequest.callRequest(getActivity(), new ApiObjectCallBack<ErrorResponse, ErrorResponse>() {
 
                     @Override
-                    public void onSuccess(ErrorResponse data, List<ErrorResponse> dataArrayList, int status, String message) {
+                    public void onSuccess(int status, ErrorResponse data, List<ErrorResponse> dataArrayList, String message) {
                         hideCoverNetworkLoading();
                         if (status == 201) {
                             mNotifydialog = new Dialog(getActivity());
@@ -284,7 +284,7 @@ public class RegitsFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void onFail(int failCode, ErrorResponse data, ErrorResponse dataFail, List<ErrorResponse> dataArrayList, String message) {
+                    public void onFail(int failCode, ErrorResponse dataFail, List<ErrorResponse> dataArrayList, String message) {
                         hideCoverNetworkLoading();
                         if (dataFail != null) {
                             if (dataFail.getErrorKey().equalsIgnoreCase("userexists"))

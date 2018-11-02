@@ -44,6 +44,11 @@ public class RegistRequest extends BaseJsonRequest<ErrorResponse, ErrorResponse>
         return null;
     }
 
+    @Override
+    public List<ErrorResponse> getListResponseFailClass() {
+        return null;
+    }
+
 
     @Override
     public Type getType() {

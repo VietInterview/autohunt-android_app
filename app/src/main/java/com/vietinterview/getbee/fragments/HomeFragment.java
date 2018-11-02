@@ -134,19 +134,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0) {
-//                    llHeader.setVisibility(View.GONE);
-//                    fab.hide();
-//                    llHeader.animate().translationY(llHeader.getHeight())
-//                            .setInterpolator(new AccelerateInterpolator(2)).start();
-//                    llHeader.animate().translationY(-llHeader.getHeight())
-//                            .setInterpolator(new AccelerateInterpolator(1));
                 } else {
-//                    llHeader.setVisibility(View.VISIBLE);
-//                    fab.show();
-//                    llHeader.animate().translationY(0).setInterpolator(new
-//                            DecelerateInterpolator(2)).start();
-//                    llHeader.animate().translationY(0).setInterpolator
-//                            (new DecelerateInterpolator(1)).start();
                 }
             }
         });
@@ -207,12 +195,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             getSearchJob(mCarrerId, mCityId, strSearch, mPage);
     }
 
-//    @OnClick(R.id.fab)
-//    public void onFabClick() {
-//        startActivity(new Intent(getActivity(), CreateNewCVActivity.class));
-//        FragmentUtil.pushFragment(getActivity(), this, new CreateNewCVFragment(), null);
-//    }
-
     public void getSearchJob(String careerId, String cityId, String jobtile, final int page) {
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
             showCoverNetworkLoading();
@@ -221,29 +203,33 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         getSearchJobsRequest.callRequest(getActivity(), new ApiObjectCallBack<JobsResponse, ErrorResponse>() {
 
             @Override
-            public void onSuccess(JobsResponse data, List<JobsResponse> dataArrayList, int status, String message) {
-                jobsListServer.clear();
-                jobsListServer.addAll(data.getJobList());
-                mSwipeRefreshLayout.setRefreshing(false);
-                hideCoverNetworkLoading();
-                if (page == 0) jobsList.clear();
-                else {
+            public void onSuccess(int status, JobsResponse data, List<JobsResponse> dataArrayList, String message) {
+                if (isAdded()) {
+                    jobsListServer.clear();
+                    jobsListServer.addAll(data.getJobList());
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    hideCoverNetworkLoading();
+                    if (page == 0) jobsList.clear();
+                    else {
 //                    jobsList.remove(jobsList.size() - 1);
-                    jobsAdapter.notifyItemRemoved(jobsList.size());
+                        jobsAdapter.notifyItemRemoved(jobsList.size());
+                    }
+                    jobsList.addAll(data.getJobList());
+                    titleHeader = mView.findViewById(R.id.titleHeader);
+                    titleHeader.setText(data.getTotal() + " " + suffixesString);
+                    jobsAdapter.notifyDataSetChanged();
+                    jobsAdapter.setLoaded();
                 }
-                jobsList.addAll(data.getJobList());
-                titleHeader = mView.findViewById(R.id.titleHeader);
-                titleHeader.setText(data.getTotal() + " " + suffixesString);
-                jobsAdapter.notifyDataSetChanged();
-                jobsAdapter.setLoaded();
             }
 
             @Override
-            public void onFail(int failCode, JobsResponse data, ErrorResponse errorResponse, List<JobsResponse> dataArrayList, String message) {
-                if (mSwipeRefreshLayout != null)
-                    mSwipeRefreshLayout.setRefreshing(false);
-                hideCoverNetworkLoading();
-                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+            public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
+                if (isAdded()) {
+                    if (mSwipeRefreshLayout != null)
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    hideCoverNetworkLoading();
+                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+                }
             }
         });
     }
@@ -259,12 +245,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         mIsCity = true;
         FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(true, mCityId, mCityName), null);
     }
-
-    //    @OnClick(R.id.llDatePub)
-//    public void onPubDateClick() {
-//        this.registerForContextMenu(llDatePub);
-//        getActivity().openContextMenu(llDatePub);
-//    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

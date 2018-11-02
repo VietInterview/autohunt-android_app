@@ -48,15 +48,10 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
     TextView tvCount;
     private MyCVChoiceAdapter myCVChoiceAdapter;
     private SearchMyCVRequest searchMyCVRequest;
-    private boolean isEdit = false;
-    private Menu menu;
     private JobList mJobList;
     private int mPage = 0;
-    private ProgressBar progressBar;
     private ArrayList<CvList> cvLists = new ArrayList<>();
     private ArrayList<CvList> cvListsServer = new ArrayList<>();
-    private CVResponse mCvResponse;
-    private View mView;
     private String suffixesString;
 
     public static ChoiceCVFragment newInstance(JobList jobList) {
@@ -80,10 +75,8 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbar(true);
-        mView = root;
         suffixesString = getResources().getString(R.string.cv_found);
         setCustomToolbarVisible(true);
-//        setHasOptionsMenu(true);
         getEventBaseFragment().doFillBackground(getResources().getString(R.string.choice_cv));
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -109,33 +102,36 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
         searchMyCVRequest = new SearchMyCVRequest(page, carrerId, cityId);
         searchMyCVRequest.callRequest(getActivity(), new ApiObjectCallBack<CVResponse, ErrorResponse>() {
             @Override
-            public void onSuccess(CVResponse data, List<CVResponse> dataArrayList, int status, String message) {
+            public void onSuccess(int status, CVResponse data, List<CVResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
-                mSwipeRefreshLayout.setRefreshing(false);
-                cvListsServer.clear();
-                cvListsServer.addAll(data.getCvList());
-                tvCount.setText(data.getTotal() + " " + suffixesString);
-                if (page == 0) cvLists.clear();
-                else {
+                if (isAdded()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    cvListsServer.clear();
+                    cvListsServer.addAll(data.getCvList());
+                    tvCount.setText(data.getTotal() + " " + suffixesString);
+                    if (page == 0) cvLists.clear();
+                    else {
 //                    jobsList.remove(jobsList.size() - 1);
-                    myCVChoiceAdapter.notifyItemRemoved(cvLists.size());
+                        myCVChoiceAdapter.notifyItemRemoved(cvLists.size());
+                    }
+                    cvLists.addAll(data.getCvList());
+                    if (page == 0) {
+                        myCVChoiceAdapter = new MyCVChoiceAdapter(recyclerView, getActivity(), mJobList, cvLists, ChoiceCVFragment.this);
+                        myCVChoiceAdapter.setOnLoadMoreListener(ChoiceCVFragment.this);
+                        recyclerView.setAdapter(myCVChoiceAdapter);
+                    }
+                    myCVChoiceAdapter.notifyDataSetChanged();
+                    myCVChoiceAdapter.setLoaded();
                 }
-                cvLists.addAll(data.getCvList());
-                if (page == 0) {
-                    myCVChoiceAdapter = new MyCVChoiceAdapter(recyclerView, getActivity(), mJobList, cvLists, ChoiceCVFragment.this);
-                    myCVChoiceAdapter.setOnLoadMoreListener(ChoiceCVFragment.this);
-                    recyclerView.setAdapter(myCVChoiceAdapter);
-                }
-                myCVChoiceAdapter.notifyDataSetChanged();
-                myCVChoiceAdapter.setLoaded();
             }
 
             @Override
-            public void onFail(int failCode, CVResponse data, ErrorResponse errorResponse, List<CVResponse> dataArrayList, String message) {
+            public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
-                progressBar.setVisibility(View.GONE);
-                mSwipeRefreshLayout.setRefreshing(false);
-                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+                if (isAdded()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+                }
             }
         });
     }
@@ -158,13 +154,6 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
     @Override
     protected void onRestore() {
 
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_choice_cv, menu);
-        this.menu = menu;
     }
 
     @Override

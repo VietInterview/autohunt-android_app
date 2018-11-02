@@ -7,6 +7,7 @@ import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,8 +32,14 @@ public class GetDetailCVRequest extends BaseRequest<DetailCVResponse, ErrorRespo
     }
 
     @Override
-    public List<DetailCVResponse> getListResponseClass() {
+    public List<DetailCVResponse> getListResponseSuccessClass() {
         return null;
+    }
+
+    @Override
+    public List<ErrorResponse> getListResponseFailClass() {
+        List<ErrorResponse> errorResponses = new ArrayList<>();
+        return errorResponses;
     }
 
     @Override

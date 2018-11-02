@@ -42,6 +42,11 @@ public class SubmitCVRequest extends BaseJsonRequest<SubmitCVResponse, ErrorResp
     }
 
     @Override
+    public List<ErrorResponse> getListResponseFailClass() {
+        return null;
+    }
+
+    @Override
     public Type getType() {
         return null;
     }

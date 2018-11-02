@@ -209,7 +209,7 @@ public class LoginFragment extends BaseFragment {
             loginRequest = new LoginRequest(edtEmail.getText().toString().trim(), edtPass.getText().toString().trim());
             loginRequest.callRequest(getActivity(), new ApiObjectCallBack<LoginResponse, ErrorResponse>() {
                 @Override
-                public void onSuccess(LoginResponse data, List<LoginResponse> dataArrayList, int status, String message) {
+                public void onSuccess(int status, LoginResponse data, List<LoginResponse> dataArrayList, String message) {
                     if (status == 200) {
                         UserInfoBean userInfoBean = new UserInfoBean();
                         userInfoBean.nickname = edtEmail.getText().toString().trim();
@@ -226,7 +226,7 @@ public class LoginFragment extends BaseFragment {
                 }
 
                 @Override
-                public void onFail(int failCode, LoginResponse data, ErrorResponse errorResponse, List<LoginResponse> dataArrayList, String message) {
+                public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
                     hideCoverNetworkLoading();
                     mNotifydialog = new Dialog(getActivity());
                     mNotifydialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

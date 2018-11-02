@@ -142,7 +142,7 @@ public class MyJobsSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         saveUnsaveJobRequest = new SaveUnsaveJobRequest(dataSet.get(listPosition).getId(), collStatus);
                         saveUnsaveJobRequest.callRequest(mActivity, new ApiObjectCallBack<AddRemoveJobResponse, ErrorResponse>() {
                             @Override
-                            public void onSuccess(AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, int status, String message) {
+                            public void onSuccess(int status, AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, String message) {
                                 jobsSavedFragment.hideCoverNetworkLoading();
                                 if (status == 200) {
                                     dataSet.remove(dataSet.get(listPosition));
@@ -159,7 +159,7 @@ public class MyJobsSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                             }
 
                             @Override
-                            public void onFail(int failCode, AddRemoveJobResponse data, ErrorResponse dataFail, List<AddRemoveJobResponse> dataArrayList, String message) {
+                            public void onFail(int failCode, ErrorResponse dataFail, List<ErrorResponse> dataArrayList, String message) {
                                 jobsSavedFragment.hideCoverNetworkLoading();
                                 DialogUtil.showDialog(jobsSavedFragment.getActivity(), jobsSavedFragment.getActivity().getResources().getString(R.string.noti_title), message);
                             }

@@ -154,29 +154,33 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
         getSavedSearchJobsRequest.callRequest(getActivity(), new ApiObjectCallBack<JobsResponse, ErrorResponse>() {
 
             @Override
-            public void onSuccess(JobsResponse data, List<JobsResponse> dataArrayList, int status, String message) {
-                jobsListServer.clear();
-                jobsListServer.addAll(data.getJobList());
-                mSwipeRefreshLayout.setRefreshing(false);
-                hideCoverNetworkLoading();
-                if (page == 0) jobsList.clear();
-                else {
+            public void onSuccess(int status, JobsResponse data, List<JobsResponse> dataArrayList, String message) {
+                if (isAdded()) {
+                    jobsListServer.clear();
+                    jobsListServer.addAll(data.getJobList());
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    hideCoverNetworkLoading();
+                    if (page == 0) jobsList.clear();
+                    else {
 //                    jobsList.remove(jobsList.size() - 1);
-                    adapter.notifyItemRemoved(jobsList.size());
+                        adapter.notifyItemRemoved(jobsList.size());
+                    }
+                    jobsList.addAll(data.getJobList());
+                    titleHeader = mView.findViewById(R.id.titleHeader);
+                    titleHeader.setText(data.getTotal() + " " + suffixesString);
+                    adapter.notifyDataSetChanged();
+                    adapter.setLoaded();
                 }
-                jobsList.addAll(data.getJobList());
-                titleHeader = mView.findViewById(R.id.titleHeader);
-                titleHeader.setText(data.getTotal() + " " + suffixesString);
-                adapter.notifyDataSetChanged();
-                adapter.setLoaded();
             }
 
             @Override
-            public void onFail(int failCode, JobsResponse data, ErrorResponse dataFail, List<JobsResponse> dataArrayList, String message) {
-                if (mSwipeRefreshLayout != null)
-                    mSwipeRefreshLayout.setRefreshing(false);
-                hideCoverNetworkLoading();
-                DialogUtil.showDialog(getActivity(), "Thông báo", message);
+            public void onFail(int failCode, ErrorResponse dataFail, List<ErrorResponse> dataArrayList, String message) {
+                if (isAdded()) {
+                    if (mSwipeRefreshLayout != null)
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    hideCoverNetworkLoading();
+                    DialogUtil.showDialog(getActivity(), "Thông báo", message);
+                }
             }
 
         });

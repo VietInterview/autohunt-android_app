@@ -40,6 +40,11 @@ public class SaveUnsaveJobRequest extends BaseJsonRequest<AddRemoveJobResponse, 
     }
 
     @Override
+    public List<ErrorResponse> getListResponseFailClass() {
+        return null;
+    }
+
+    @Override
     public Type getType() {
         return null;
     }
