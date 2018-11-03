@@ -13,7 +13,8 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/activity_vertical_margin">
 
         <com.vietinterview.getbee.customview.NunitoTextView
             android:id="@+id/tvNodata"
@@ -59,7 +60,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginHorizontal="16dp"
                 android:orientation="vertical"
                 android:padding="4dp">
@@ -76,8 +77,9 @@
                 <com.vietinterview.getbee.customview.FlowLayout
                     android:id="@+id/container"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="450dp"
                     android:orientation="vertical"
+                    android:scrollbars="vertical"
                     app:horizontalSpacing="5dp"
                     app:verticalSpacing="5dp" />
             </LinearLayout>

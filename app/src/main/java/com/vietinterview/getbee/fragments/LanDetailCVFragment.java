@@ -13,6 +13,7 @@ import com.vietinterview.getbee.adapter.ExLanListViewAdapter;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 import com.vietinterview.getbee.api.response.detailcv.LstLanguage;
 import com.vietinterview.getbee.callback.OnSwitchToFourListener;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.LayoutUtils;
 
 import java.util.ArrayList;
@@ -57,6 +58,7 @@ public class LanDetailCVFragment extends BaseFragment {
                 @Override
                 public void onSwitchToFour() {
                     getEventBaseFragment().setHeightView(LayoutUtils.getViewHeight(exStepLanListViewAdapter.getLlInfoGroup()) * detailCVResponse.getLstEmploymentHis().size() + LayoutUtils.getViewHeight(exStepLanListViewAdapter.getLlInfoChild()) + LayoutUtils.getViewHeight(exStepLanListViewAdapter.getLlInfoGroup()));
+                    exLvLanguage.collapseGroup(lastExpandedPositionlangeuage);
                 }
             });
             tvNodata.setVisibility(View.GONE);
@@ -94,8 +96,7 @@ public class LanDetailCVFragment extends BaseFragment {
             exLvLanguage.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
                 @Override
                 public void onGroupCollapse(int i) {
-                    getEventBaseFragment().setHeightView(LayoutUtils.getViewHeight(exStepLanListViewAdapter.getLlInfoGroup()) * detailCVResponse.getLstEmploymentHis().size() + LayoutUtils.getViewHeight(exStepLanListViewAdapter.getLlInfoGroup()));
-
+                    getEventBaseFragment().setHeightView(LayoutUtils.getViewHeight(exStepLanListViewAdapter.getLlInfoGroup()) * detailCVResponse.getLstEmploymentHis().size() + LayoutUtils.getViewHeight(exStepLanListViewAdapter.getLlInfoGroup()) + 128);
                 }
             });
         }

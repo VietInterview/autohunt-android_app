@@ -34,8 +34,6 @@ import butterknife.BindView;
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
-    @BindView(R.id.titleHeader)
-    TextView titleHeader;
     @BindView(R.id.rcvApplyedJob)
     RecyclerView rcvApplyedJob;
     @BindView(R.id.swipe_container)
@@ -49,7 +47,6 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
     private String mCarrerId = "0";
     private String mCityId = "0";
     private View mView;
-    private String suffixesString;
 
     public static JobsApplyedFragment newInstance(String cityId, String carrerId) {
         JobsApplyedFragment fm = new JobsApplyedFragment();
@@ -68,47 +65,15 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         mView = root;
-        suffixesString = getResources().getString(R.string.job_applyed);
         rcvApplyedJob.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         rcvApplyedJob.setLayoutManager(layoutManager);
         rcvApplyedJob.setItemAnimator(new DefaultItemAnimator());
-        rcvApplyedJob.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            @Override
-            public void onScrolled(RecyclerView rcvApplyedJob, int dx, int dy) {
-                super.onScrolled(rcvApplyedJob, dx, dy);
-                if (dy > 0) {
-//                    titleHeader.setVisibility(View.GONE);
-//                    fab.hide();
-                } else {
-//                    titleHeader.setVisibility(View.VISIBLE);
-//                    fab.show();
-                }
-            }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView rcvApplyedJob, int newState) {
-                super.onScrollStateChanged(rcvApplyedJob, newState);
-
-                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
-                    // Do something
-                } else if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
-                    // Do something
-                } else {
-                    // Do something
-                }
-            }
-        });
-        adapter = new MyJobsAppliedAdapter(rcvApplyedJob, jobsList, this, getActivity(), false);
-        rcvApplyedJob.setAdapter(adapter);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
                 android.R.color.holo_green_dark,
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
-
-        adapter.setOnLoadMoreListener(this);
     }
 
     @Override
@@ -167,9 +132,12 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
 //                    jobsList.remove(jobsList.size() - 1);
                         adapter.notifyItemRemoved(jobsList.size());
                     }
+                    if (page == 0) {
+                        adapter = new MyJobsAppliedAdapter(rcvApplyedJob, jobsList, data.getTotal(), JobsApplyedFragment.this, getActivity(), false);
+                        rcvApplyedJob.setAdapter(adapter);
+                    }
+                    adapter.setOnLoadMoreListener(JobsApplyedFragment.this);
                     jobsList.addAll(data.getJobList());
-                    titleHeader = mView.findViewById(R.id.titleHeader);
-                    titleHeader.setText(data.getTotal() + " " + suffixesString);
                     adapter.notifyDataSetChanged();
                     adapter.setLoaded();
                 }
@@ -189,7 +157,7 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
 
     @Override
     public void onLoadMore() {
-        if (jobsListServer.size() >= 10) {
+        if (jobsListServer.size() >= ApiConstant.LIMIT) {
             mPage++;
             getApplyedSearchJob(mCarrerId, mCityId, "", mPage);
             adapter.setOnLoadMoreListener(JobsApplyedFragment.this);

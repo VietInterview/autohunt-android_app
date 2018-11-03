@@ -12,7 +12,7 @@ public class ApiConstant {
     public static final boolean IS_DEBUG_BUILD_TYPE = BuildConfig.BUILD_TYPE.equals("debug");
 
     public static final int REQUEST_TIMEOUT = 10;
-    public static final int LIMIT = 10;
+    public static final int LIMIT = 30;
 
     //Server KH
     public final static String REAL_URL = "https://api.dev.getbee.vn/";

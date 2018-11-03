@@ -47,11 +47,13 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private boolean isLoading;
     FragmentActivity mActivity;
     private SaveUnsaveJobRequest saveUnsaveJobRequest;
+    int total;
 
-    public JobsAdapter(RecyclerView recyclerView, ArrayList<JobList> data, BaseFragment homeFragment, FragmentActivity activity) {
+    public JobsAdapter(RecyclerView recyclerView, ArrayList<JobList> data, int total, BaseFragment homeFragment, FragmentActivity activity) {
         this.dataSet = data;
         this.mHomeFragment = homeFragment;
         this.mActivity = activity;
+        this.total = total;
         final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -101,7 +103,12 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .priority(Priority.HIGH);
             Glide.with(mActivity).load(dataSet.get(listPosition).getCompanyImg()).apply(options).into(myViewHolder.imgBussiness);
-
+            if (listPosition == 0) {
+                myViewHolder.llHeader.setVisibility(View.VISIBLE);
+                myViewHolder.titleHeader.setText(this.total + " " + mActivity.getResources().getString(R.string.job_found));
+            } else {
+                myViewHolder.llHeader.setVisibility(View.GONE);
+            }
             myViewHolder.tvjobTitle.setText(StringUtils.nullStrToEmpty(dataSet.get(listPosition).getJobTitle()));
             myViewHolder.tvCompanyName.setText(dataSet.get(listPosition).getCompanyName());
             myViewHolder.tvCarrer.setText(dataSet.get(listPosition).getCareerName());
@@ -174,6 +181,7 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ImageView imgStatus;
         CardView card_view;
         LinearLayout llHeader;
+        TextView titleHeader;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -187,6 +195,7 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             this.imgStatus = (ImageView) itemView.findViewById(R.id.imgStatus);
             this.card_view = (CardView) itemView.findViewById(R.id.card_view);
             this.llHeader = itemView.findViewById(R.id.llHeader);
+            this.titleHeader = itemView.findViewById(R.id.titleHeader);
         }
     }
 

@@ -24,6 +24,7 @@ import com.vietinterview.getbee.api.response.listcv.CVResponse;
 import com.vietinterview.getbee.api.response.listcv.CvList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
+import com.vietinterview.getbee.constant.ApiConstant;
 import com.vietinterview.getbee.customview.NunitoBoldButton;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
@@ -44,15 +45,12 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
     NunitoBoldButton btnDelete;
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    @BindView(R.id.tvCount)
-    TextView tvCount;
     private MyCVChoiceAdapter myCVChoiceAdapter;
     private SearchMyCVRequest searchMyCVRequest;
     private JobList mJobList;
     private int mPage = 0;
     private ArrayList<CvList> cvLists = new ArrayList<>();
     private ArrayList<CvList> cvListsServer = new ArrayList<>();
-    private String suffixesString;
 
     public static ChoiceCVFragment newInstance(JobList jobList) {
         ChoiceCVFragment fm = new ChoiceCVFragment();
@@ -75,7 +73,6 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbar(true);
-        suffixesString = getResources().getString(R.string.cv_found);
         setCustomToolbarVisible(true);
         getEventBaseFragment().doFillBackground(getResources().getString(R.string.choice_cv));
         recyclerView.setHasFixedSize(true);
@@ -108,7 +105,6 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
                     mSwipeRefreshLayout.setRefreshing(false);
                     cvListsServer.clear();
                     cvListsServer.addAll(data.getCvList());
-                    tvCount.setText(data.getTotal() + " " + suffixesString);
                     if (page == 0) cvLists.clear();
                     else {
 //                    jobsList.remove(jobsList.size() - 1);
@@ -116,7 +112,7 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
                     }
                     cvLists.addAll(data.getCvList());
                     if (page == 0) {
-                        myCVChoiceAdapter = new MyCVChoiceAdapter(recyclerView, getActivity(), mJobList, cvLists, ChoiceCVFragment.this);
+                        myCVChoiceAdapter = new MyCVChoiceAdapter(recyclerView, getActivity(),data.getTotal(), mJobList, cvLists, ChoiceCVFragment.this);
                         myCVChoiceAdapter.setOnLoadMoreListener(ChoiceCVFragment.this);
                         recyclerView.setAdapter(myCVChoiceAdapter);
                     }
@@ -186,7 +182,7 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
 
     @Override
     public void onLoadMore() {
-        if (cvListsServer.size() >= 10) {
+        if (cvListsServer.size() >= ApiConstant.LIMIT) {
             mPage++;
             searchMyCV(0, 0, mPage);
             myCVChoiceAdapter.setOnLoadMoreListener(ChoiceCVFragment.this);

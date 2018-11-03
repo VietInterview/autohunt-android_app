@@ -70,6 +70,8 @@ public class DetailJobFragment extends BaseFragment {
     ImageView imgCompany;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
+    @BindView(R.id.llParent)
+    LinearLayout llParent;
     private TabLayout tabLayout;
     private Dialog mNotifydialog;
     private JobList mJobList;
@@ -143,6 +145,7 @@ public class DetailJobFragment extends BaseFragment {
     }
 
     public void getDetailJob(int jobId) {
+        llParent.setVisibility(View.GONE);
         showCoverNetworkLoading();
         getDetailJobRequest = new GetDetailJobRequest(jobId);
         getDetailJobRequest.callRequest(getActivity(), new ApiObjectCallBack<DetailJobResponse, ErrorResponse>() {
@@ -151,6 +154,7 @@ public class DetailJobFragment extends BaseFragment {
                 hideCoverNetworkLoading();
                 detailJobResponse = data;
                 if (isAdded()) {
+                    llParent.setVisibility(View.VISIBLE);
                     tvcompanyName.setText(data.getCompanyName());
                     tvjobTitle.setText(data.getJobTitle());
                     RequestOptions options = new RequestOptions().fitCenter().error(R.drawable.ic_company_null).diskCacheStrategy(DiskCacheStrategy.ALL).priority(Priority.HIGH);
@@ -223,13 +227,16 @@ public class DetailJobFragment extends BaseFragment {
 
             @Override
             public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
-                hideCoverNetworkLoading();
-                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        FragmentUtil.popBackStack(DetailJobFragment.this);
-                    }
-                });
+                if (isAdded()) {
+                    llParent.setVisibility(View.GONE);
+                    hideCoverNetworkLoading();
+                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            FragmentUtil.popBackStack(DetailJobFragment.this);
+                        }
+                    });
+                }
             }
         });
     }

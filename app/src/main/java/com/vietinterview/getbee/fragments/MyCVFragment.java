@@ -129,7 +129,7 @@ public class MyCVFragment extends BaseFragment {
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabTwo.setText(getResources().getString(R.string.cv_applyed_tit));
+        tabTwo.setText(getResources().getString(R.string.cv_submited));
         tabTwo.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
         tabLayout.getTabAt(1).setCustomView(tabTwo);
     }

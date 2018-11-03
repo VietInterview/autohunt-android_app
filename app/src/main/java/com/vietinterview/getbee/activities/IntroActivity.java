@@ -29,7 +29,6 @@ public class IntroActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        DebugLog.showLogCat(SharedPrefUtils.getBoolean(AppConstant.FIRST, true) + "");
         if (SharedPrefUtils.getBoolean(AppConstant.FIRST, true)) {
             init();
         } else {

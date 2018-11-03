@@ -47,12 +47,14 @@ public class MyJobsSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private FragmentActivity mActivity;
     private SaveUnsaveJobRequest saveUnsaveJobRequest;
     private boolean mIsJobSaved;
+    private int mTotal;
 
 
-    public MyJobsSavedAdapter(RecyclerView recyclerView, ArrayList<JobList> data, JobsSavedFragment jobsSavedFragment, FragmentActivity activity, boolean isJobSaved) {
+    public MyJobsSavedAdapter(RecyclerView recyclerView, ArrayList<JobList> data, int total, JobsSavedFragment jobsSavedFragment, FragmentActivity activity, boolean isJobSaved) {
         this.dataSet = data;
         this.jobsSavedFragment = jobsSavedFragment;
         this.mActivity = activity;
+        this.mTotal = total;
         this.mIsJobSaved = isJobSaved;
         final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -69,6 +71,10 @@ public class MyJobsSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 }
             }
         });
+    }
+
+    public void setmTotal(int mTotal) {
+        this.mTotal = mTotal;
     }
 
     public void setLoaded() {
@@ -103,6 +109,8 @@ public class MyJobsSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .priority(Priority.HIGH);
             Glide.with(mActivity).load(dataSet.get(listPosition).getCompanyImg()).apply(options).into(myViewHolder.imgBussiness);
+            myViewHolder.llHeader.setVisibility(listPosition == 0 ? View.VISIBLE : View.GONE);
+            myViewHolder.titleHeader.setText(this.mTotal + " " + mActivity.getResources().getString(R.string.job_saved));
             myViewHolder.tvjobTitle.setText(StringUtils.nullStrToEmpty(dataSet.get(listPosition).getJobTitle()));
             myViewHolder.tvCompanyName.setText(dataSet.get(listPosition).getCompanyName());
             myViewHolder.tvCarrer.setText(dataSet.get(listPosition).getCareerName());
@@ -146,7 +154,7 @@ public class MyJobsSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                                 jobsSavedFragment.hideCoverNetworkLoading();
                                 if (status == 200) {
                                     dataSet.remove(dataSet.get(listPosition));
-                                    jobsSavedFragment.getTitleHeader().setText(dataSet.size() + " " + jobsSavedFragment.getResources().getString(R.string.job_saved));
+                                    setmTotal(dataSet.size());
                                     notifyDataSetChanged();
                                     if (data.getStatus() == 0) {
                                         Toast.makeText(jobsSavedFragment.getActivity(), jobsSavedFragment.getResources().getString(R.string.cancel_save_noti), Toast.LENGTH_SHORT).show();
@@ -198,6 +206,8 @@ public class MyJobsSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         ImageView imgBussiness;
         ImageView imgStatus;
         CardView card_view;
+        LinearLayout llHeader;
+        TextView titleHeader;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -210,6 +220,8 @@ public class MyJobsSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             this.imgBussiness = (ImageView) itemView.findViewById(R.id.imgBussiness);
             this.imgStatus = (ImageView) itemView.findViewById(R.id.imgStatus);
             this.card_view = (CardView) itemView.findViewById(R.id.card_view);
+            this.llHeader = itemView.findViewById(R.id.llHeader);
+            this.titleHeader = itemView.findViewById(R.id.titleHeader);
         }
     }
 }

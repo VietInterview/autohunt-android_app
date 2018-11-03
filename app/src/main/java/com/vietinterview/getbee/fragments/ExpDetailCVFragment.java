@@ -58,6 +58,7 @@ public class ExpDetailCVFragment extends BaseFragment {
                 @Override
                 public void onSwitchToTwo() {
                     getEventBaseFragment().setHeightView(LayoutUtils.getViewHeight(exExpListViewAdapter.getLlInfoGroup()) * detailCVResponse.getLstEmploymentHis().size() + LayoutUtils.getViewHeight(exExpListViewAdapter.getLlInfoChild()) + LayoutUtils.getViewHeight(exExpListViewAdapter.getLlInfoGroup()));
+                    expandableListView.collapseGroup(lastExpandedPosition);
                 }
             });
             tvNodata.setVisibility(View.GONE);

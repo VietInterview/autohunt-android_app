@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -55,11 +56,12 @@ public class MyCVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private OnLoadMoreListener onLoadMoreListener;
     private boolean isLoading;
     private BaseFragment baseFragment;
+    private int mTotal;
 
-
-    public MyCVAdapter(RecyclerView recyclerView, Context context, ArrayList<CvList> cvLists, BaseFragment homeFragment) {
+    public MyCVAdapter(RecyclerView recyclerView, Context context, int total, ArrayList<CvList> cvLists, BaseFragment homeFragment) {
         this.cvLists = cvLists;
         this.mContext = context;
+        this.mTotal = total;
         this.baseFragment = homeFragment;
         mItemSwipedStates = new ArrayList<>();
         for (int i = 0; i < cvLists.size(); i++) {
@@ -93,7 +95,7 @@ public class MyCVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_ITEM) {
-            ViewPager v = (ViewPager) LayoutInflater.from(parent.getContext())
+            LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.layout_item_mycv, parent, false);
             ViewPagerAdapter adapter = new ViewPagerAdapter();
             ((ViewPager) v.findViewById(R.id.viewPager)).setAdapter(adapter);
@@ -111,11 +113,17 @@ public class MyCVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return null;
     }
 
+    public void setmTotal(int mTotal) {
+        this.mTotal = mTotal;
+    }
+
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof MyViewHolder) {
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvName)).setText(cvLists.get(position).getFullName());
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCarrer)).setText(cvLists.get(position).getCareerName());
+            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setText(this.mTotal == 0 ? mContext.getResources().getString(R.string.no_cv_upload) : this.mTotal + " " + mContext.getResources().getString(R.string.cv_found));
+            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setVisibility(position == 0 ? View.VISIBLE : View.GONE);
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvDate)).setText(mContext.getResources().getString(R.string.update) + " " + DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(cvLists.get(position).getUpdatedDate()) + ""));
             ((RelativeLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -123,7 +131,8 @@ public class MyCVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailCVFragment().newInstance(null, cvLists.get(position).getId()), null);
                 }
             });
-            ((ViewPager) ((MyViewHolder) holder).mView).setCurrentItem(mItemSwipedStates.get(position).ordinal());
+            ((ViewPager) ((MyViewHolder) holder).mView.findViewById(R.id.viewPager)).setCurrentItem(mItemSwipedStates.get(position).ordinal());
+//            ((ViewPager) ((MyViewHolder) holder).mView).setCurrentItem(mItemSwipedStates.get(position).ordinal());
             if (position % 2 == 0) {
                 ((RelativeLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.row_not_white));
             } else {
@@ -138,6 +147,8 @@ public class MyCVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         @Override
                         public void onSuccess(int status, Object data, List dataArrayList, String message) {
                             baseFragment.hideCoverNetworkLoading();
+//                            cvLists.remove(cvLists.get(position));
+//                            setmTotal(cvLists.size());
                             baseFragment.getEventBaseFragment().refreshMyCV();
                             notifyDataSetChanged();
                         }
@@ -150,7 +161,7 @@ public class MyCVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
             });
             baseFragment.getArrayBaseRequest().add(deleteCVRequest);
-            ((ViewPager) ((MyViewHolder) holder).mView).setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            ((ViewPager) ((MyViewHolder) holder).mView.findViewById(R.id.viewPager)).setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 int previousPagePosition = 0;
 
                 @Override

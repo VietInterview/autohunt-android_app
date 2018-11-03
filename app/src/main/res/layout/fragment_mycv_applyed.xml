@@ -9,13 +9,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.vietinterview.getbee.customview.NunitoTextView
-        android:id="@+id/tvCountCV"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:textColor="#B1B1BA" />
-
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_container"
         android:layout_width="match_parent"

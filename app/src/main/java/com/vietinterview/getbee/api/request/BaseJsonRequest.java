@@ -112,38 +112,38 @@ public abstract class BaseJsonRequest<T, V> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        TrustManagerManipulator.allowAllSSL();
+//        TrustManagerManipulator.allowAllSSL();
 
-        KeyStore trustStore = null;
-        try {
-            trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-        } catch (KeyStoreException e) {
-            e.printStackTrace();
-        }
-        try {
-            trustStore.load(null, null);
-        } catch (CertificateException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        MySSLSocketFactory socketFactory = null;
-        try {
-            socketFactory = new MySSLSocketFactory(trustStore);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (KeyStoreException e) {
-            e.printStackTrace();
-        } catch (UnrecoverableKeyException e) {
-            e.printStackTrace();
-        }
-        socketFactory.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-
-        client.setSSLSocketFactory(socketFactory);
+//        KeyStore trustStore = null;
+//        try {
+//            trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
+//        } catch (KeyStoreException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            trustStore.load(null, null);
+//        } catch (CertificateException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        }
+//        MySSLSocketFactory socketFactory = null;
+//        try {
+//            socketFactory = new MySSLSocketFactory(trustStore);
+//        } catch (NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        } catch (KeyManagementException e) {
+//            e.printStackTrace();
+//        } catch (KeyStoreException e) {
+//            e.printStackTrace();
+//        } catch (UnrecoverableKeyException e) {
+//            e.printStackTrace();
+//        }
+//        socketFactory.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+//
+//        client.setSSLSocketFactory(socketFactory);
         client.addHeader("Content-Type", "application/json");
         client.setResponseTimeout(ApiConstant.REQUEST_TIMEOUT);
         if (getAccessToken() != null) {

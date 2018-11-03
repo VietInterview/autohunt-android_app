@@ -11,6 +11,7 @@ import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 import com.vietinterview.getbee.callback.OnSwitchToSixListener;
 import com.vietinterview.getbee.customview.FlowLayout;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.LayoutUtils;
 
 import butterknife.BindView;
@@ -55,7 +56,6 @@ public class SkillDetailCVFragment extends BaseFragment {
         });
         if (detailCVResponse.getCvSkill() != null) {
             tvSkillPrimary.setText(detailCVResponse.getCvSkill().getPrimarySkill());
-            mFlowLayout.removeAllViews();
             for (int i = 0; i < detailCVResponse.getCvSkill().getLstOtherSkillName().size(); i++) {
                 LinearLayout linearLayout = (LinearLayout) LayoutUtils.inflate(mFlowLayout, R.layout.other_skill_item_view, false);
                 TextView tvSkillOther = (TextView) linearLayout.findViewById(R.id.tvSkillOther);

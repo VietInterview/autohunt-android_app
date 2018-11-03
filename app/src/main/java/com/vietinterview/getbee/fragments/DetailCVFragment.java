@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +17,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -36,6 +39,8 @@ import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnSetHeightViewListener;
+import com.vietinterview.getbee.customview.TouchDetectableScrollView;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
@@ -60,6 +65,10 @@ public class DetailCVFragment extends BaseFragment {
     LinearLayout llFooter;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
+    //    @BindView(R.id.scrollViewContent)
+//    TouchDetectableScrollView scrollViewContent;
+//    @BindView(R.id.llToolbar)
+//    LinearLayout llToolbar;
     private TabLayout tabLayout;
     private JobList mJobList;
     private Dialog mNotifydialog;
@@ -126,6 +135,17 @@ public class DetailCVFragment extends BaseFragment {
             }
         });
         if (mJobList == null) llFooter.setVisibility(View.GONE);
+//        scrollViewContent.setMyScrollChangeListener(new TouchDetectableScrollView.OnMyScrollChangeListener() {
+//            @Override
+//            public void onScrollUp() {
+////                fab.show();
+//            }
+//
+//            @Override
+//            public void onScrollDown() {
+////                fab.hide();
+//            }
+//        });
     }
 
     @Override
@@ -310,6 +330,7 @@ public class DetailCVFragment extends BaseFragment {
     }
 
     public void getDetailCV(int id) {
+//        scrollViewContent.setVisibility(View.GONE);
         showCoverNetworkLoading();
         getDetailCVRequest = new GetDetailCVRequest(id);
         getDetailCVRequest.callRequest(getActivity(), new ApiObjectCallBack<DetailCVResponse, ErrorResponse>() {
@@ -317,6 +338,7 @@ public class DetailCVFragment extends BaseFragment {
             public void onSuccess(int status, DetailCVResponse data, List<DetailCVResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 if (isAdded()) {
+//                    scrollViewContent.setVisibility(View.VISIBLE);
                     detailCVResponse = data;
                     tvFullName.setText(detailCVResponse.getFullName());
                     String year = String.valueOf(detailCVResponse.getBirthday()).substring(0, 4);

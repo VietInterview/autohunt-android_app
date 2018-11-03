@@ -57,6 +57,7 @@ public class LevelDetailCVFragment extends BaseFragment {
                 @Override
                 public void onSwitchToThree() {
                     getEventBaseFragment().setHeightView(LayoutUtils.getViewHeight(exStepLvListViewAdapter.getLlInfoGroup()) * detailCVResponse.getLstEmploymentHis().size() + LayoutUtils.getViewHeight(exStepLvListViewAdapter.getLlInfoChild()) + LayoutUtils.getViewHeight(exStepLvListViewAdapter.getLlInfoGroup()));
+                    exLvLevel.collapseGroup(lastExpandedPosition);
                 }
             });
             tvNodata.setVisibility(View.GONE);

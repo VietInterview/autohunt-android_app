@@ -53,11 +53,12 @@ public class MyCVSubmitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private OnLoadMoreListener onLoadMoreListener;
     private boolean isLoading;
     private BaseFragment baseFragment;
+    private int mTotal;
 
-
-    public MyCVSubmitAdapter(RecyclerView recyclerView, Context context, ArrayList<CvList> cvLists, BaseFragment homeFragment) {
+    public MyCVSubmitAdapter(RecyclerView recyclerView, Context context, int total, ArrayList<CvList> cvLists, BaseFragment homeFragment) {
         this.cvLists = cvLists;
         this.mContext = context;
+        this.mTotal = total;
         this.baseFragment = homeFragment;
         mItemSwipedStates = new ArrayList<>();
         for (int i = 0; i < cvLists.size(); i++) {
@@ -91,7 +92,7 @@ public class MyCVSubmitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_ITEM) {
-            ViewPager v = (ViewPager) LayoutInflater.from(parent.getContext())
+            LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.layout_item_mycv_applied, parent, false);
             ViewPagerAdapter adapter = new ViewPagerAdapter();
             ((ViewPager) v.findViewById(R.id.viewPager)).setAdapter(adapter);
@@ -115,8 +116,11 @@ public class MyCVSubmitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvName)).setText(cvLists.get(position).getFullName());
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCarrer)).setText(cvLists.get(position).getCareerName());
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvJobTitle)).setText(cvLists.get(position).getJobTitle());
+            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setText(this.mTotal + " " + mContext.getResources().getString(R.string.cv_found));
+            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setVisibility(position == 0 ? View.VISIBLE : View.GONE);
+
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvDate)).setText(mContext.getResources().getString(R.string.update) + " " + DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(cvLists.get(position).getUpdatedDate()) + ""));
-            ((ViewPager) ((MyViewHolder) holder).mView).setCurrentItem(mItemSwipedStates.get(position).ordinal());
+//            ((ViewPager) ((MyViewHolder) holder).mView).setCurrentItem(mItemSwipedStates.get(position).ordinal());
             ((RelativeLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -198,7 +202,7 @@ public class MyCVSubmitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }
             });
             baseFragment.getArrayBaseRequest().add(deleteCVRequest);
-            ((ViewPager) ((MyViewHolder) holder).mView).setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            ((ViewPager) ((MyViewHolder) holder).mView.findViewById(R.id.viewPager)).setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 int previousPagePosition = 0;
 
                 @Override

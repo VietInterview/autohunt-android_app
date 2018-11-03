@@ -10,6 +10,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -53,11 +54,12 @@ public class MyCVChoiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private OnLoadMoreListener onLoadMoreListener;
     private boolean isLoading;
     private BaseFragment baseFragment;
+    private int mTotal;
 
-
-    public MyCVChoiceAdapter(RecyclerView recyclerView, Context context, JobList jobList, ArrayList<CvList> cvLists, BaseFragment homeFragment) {
+    public MyCVChoiceAdapter(RecyclerView recyclerView, Context context, int total, JobList jobList, ArrayList<CvList> cvLists, BaseFragment homeFragment) {
         this.cvLists = cvLists;
         this.mContext = context;
+        this.mTotal = total;
         this.baseFragment = homeFragment;
         this.jobList = jobList;
         mItemSwipedStates = new ArrayList<>();
@@ -92,7 +94,7 @@ public class MyCVChoiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_ITEM) {
-            ViewPager v = (ViewPager) LayoutInflater.from(parent.getContext())
+            LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.layout_item_mycv_applied, parent, false);
             ViewPagerAdapter adapter = new ViewPagerAdapter();
             ((ViewPager) v.findViewById(R.id.viewPager)).setAdapter(adapter);
@@ -110,11 +112,17 @@ public class MyCVChoiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return null;
     }
 
+    public void setmTotal(int mTotal) {
+        this.mTotal = mTotal;
+    }
+
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof MyViewHolder) {
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvName)).setText(cvLists.get(position).getFullName());
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCarrer)).setText(cvLists.get(position).getCareerName());
+            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setVisibility(position == 0 ? View.VISIBLE : View.GONE);
+            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setText(this.mTotal + " " + mContext.getResources().getString(R.string.cv_found));
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvJobTitle)).setText(cvLists.get(position).getJobTitle());
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvJobTitle)).setVisibility(cvLists.get(position).getJobTitle() != null ? View.VISIBLE : View.GONE);
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvDate)).setText(mContext.getResources().getString(R.string.update) + " " + DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(cvLists.get(position).getUpdatedDate()) + ""));
@@ -151,32 +159,32 @@ public class MyCVChoiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }
             });
             baseFragment.getArrayBaseRequest().add(deleteCVRequest);
-            ((ViewPager) ((MyViewHolder) holder).mView).setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                int previousPagePosition = 0;
-
-                @Override
-                public void onPageScrolled(int pagePosition, float positionOffset, int positionOffsetPixels) {
-                    if (pagePosition == previousPagePosition)
-                        return;
-                    switch (pagePosition) {
-                        case 0:
-                            mItemSwipedStates.set(position, SwipedState.SHOWING_PRIMARY_CONTENT);
-                            break;
-                        case 1:
-                            mItemSwipedStates.set(position, SwipedState.SHOWING_SECONDARY_CONTENT);
-                            break;
-                    }
-                    previousPagePosition = pagePosition;
-                }
-
-                @Override
-                public void onPageSelected(int pagePosition) {
-                }
-
-                @Override
-                public void onPageScrollStateChanged(int state) {
-                }
-            });
+//            ((ViewPager) ((MyViewHolder) holder).mView).setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//                int previousPagePosition = 0;
+//
+//                @Override
+//                public void onPageScrolled(int pagePosition, float positionOffset, int positionOffsetPixels) {
+//                    if (pagePosition == previousPagePosition)
+//                        return;
+//                    switch (pagePosition) {
+//                        case 0:
+//                            mItemSwipedStates.set(position, SwipedState.SHOWING_PRIMARY_CONTENT);
+//                            break;
+//                        case 1:
+//                            mItemSwipedStates.set(position, SwipedState.SHOWING_SECONDARY_CONTENT);
+//                            break;
+//                    }
+//                    previousPagePosition = pagePosition;
+//                }
+//
+//                @Override
+//                public void onPageSelected(int pagePosition) {
+//                }
+//
+//                @Override
+//                public void onPageScrollStateChanged(int state) {
+//                }
+//            });
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.progressBar.setIndeterminate(true);

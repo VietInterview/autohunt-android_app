@@ -59,6 +59,7 @@ public class ComputerSkillDetailCVFragment extends BaseFragment {
                 @Override
                 public void onSwitchToFive() {
                     getEventBaseFragment().setHeightView(LayoutUtils.getViewHeight(exComSkillListViewAdapter.getLlInfoGroup()) * detailCVResponse.getLstEmploymentHis().size() + LayoutUtils.getViewHeight(exComSkillListViewAdapter.getLlInfoChild()) + LayoutUtils.getViewHeight(exComSkillListViewAdapter.getLlInfoGroup()));
+                    exLvLanguage.collapseGroup(lastExpandedPositionlangeuage);
                 }
             });
             tvNodata.setVisibility(View.GONE);

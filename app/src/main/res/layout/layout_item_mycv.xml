@@ -1,102 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/viewPager"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
-    android:overScrollMode="never">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/primaryContentCardView"
+    <com.vietinterview.getbee.customview.NunitoTextView
+        android:id="@+id/tvCountCV"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textColor="#B1B1BA" />
 
-        <com.vietinterview.getbee.customview.NunitoBoldTextView
-            android:id="@+id/tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_toLeftOf="@+id/llStatus"
-            android:gravity="left"
-            android:singleLine="true"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:overScrollMode="never">
 
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvCarrer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvName"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="8dp"
-            android:layout_toLeftOf="@+id/llStatus"
-            android:gravity="left"
-            android:singleLine="true"
-            android:textColor="#505059"
-            android:textSize="16sp" />
+        <RelativeLayout
+            android:id="@+id/primaryContentCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvCarrer"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_toLeftOf="@+id/llStatus"
-            android:gravity="left"
-            android:singleLine="true"
-            android:textColor="#B1B1BA"
-            android:textSize="16sp" />
-
-        <LinearLayout
-            android:id="@+id/llStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="24dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:layout_marginRight="16dp"
-            android:background="@drawable/borderbutton_notyet_send"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingHorizontal="8dp">
-
-            <com.vietinterview.getbee.customview.NunitoTextView
-                android:id="@+id/tvStatus"
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_toLeftOf="@+id/llStatus"
+                android:gravity="left"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvCarrer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvName"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_toLeftOf="@+id/llStatus"
+                android:gravity="left"
+                android:singleLine="true"
+                android:textColor="#505059"
+                android:textSize="16sp" />
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvCarrer"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_toLeftOf="@+id/llStatus"
+                android:gravity="left"
+                android:singleLine="true"
+                android:textColor="#B1B1BA"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/llStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/borderbutton_notyet_send"
                 android:gravity="center"
-                android:text="@string/not_send"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:orientation="vertical"
+                android:paddingHorizontal="8dp">
+
+                <com.vietinterview.getbee.customview.NunitoTextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/not_send"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/secondaryContentFrameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center|right"
+            android:orientation="horizontal">
+
+            <com.vietinterview.getbee.customview.NunitoRegularButton
+                android:id="@+id/btnDeleteCV"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:background="@color/red"
+                android:drawableTop="@drawable/ic_trash"
+                android:drawablePadding="-30dp"
+                android:paddingTop="20dp"
+                android:text="@string/delete"
+                android:textColor="@color/white" />
+
         </LinearLayout>
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/secondaryContentFrameLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center|right"
-        android:orientation="horizontal">
-
-        <com.vietinterview.getbee.customview.NunitoRegularButton
-            android:id="@+id/btnDeleteCV"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:background="@color/red"
-            android:drawableTop="@drawable/ic_trash"
-            android:drawablePadding="-30dp"
-            android:paddingTop="20dp"
-            android:text="@string/delete"
-            android:textColor="@color/white" />
-
-    </LinearLayout>
-</android.support.v4.view.ViewPager>
+    </android.support.v4.view.ViewPager>
+</LinearLayout>

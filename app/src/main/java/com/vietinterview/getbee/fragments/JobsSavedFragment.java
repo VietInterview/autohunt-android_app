@@ -32,8 +32,6 @@ import butterknife.BindView;
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
-    @BindView(R.id.titleHeader)
-    TextView titleHeader;
     @BindView(R.id.rcvSavedJob)
     RecyclerView rcvSavedJob;
     private RecyclerView.LayoutManager layoutManager;
@@ -47,7 +45,6 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
     private String mCarrerId = "0";
     private String mCityId = "0";
     private View mView;
-    private String suffixesString;
 
     public static JobsSavedFragment newInstance(String cityId, String carrerId) {
         JobsSavedFragment fm = new JobsSavedFragment();
@@ -66,7 +63,6 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         mView = root;
-        suffixesString = getResources().getString(R.string.job_saved);
         rcvSavedJob.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         rcvSavedJob.setLayoutManager(layoutManager);
@@ -85,15 +81,11 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
                 }
             }
         });
-        adapter = new MyJobsSavedAdapter(rcvSavedJob, jobsList, this, getActivity(), true);
-        rcvSavedJob.setAdapter(adapter);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
                 android.R.color.holo_green_dark,
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
-
-        adapter.setOnLoadMoreListener(this);
     }
 
     @Override
@@ -135,15 +127,11 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
 
     @Override
     public void onLoadMore() {
-        if (jobsListServer.size() >= 10) {
+        if (jobsListServer.size() >= ApiConstant.LIMIT) {
             mPage++;
             getSavedSearchJob(mCarrerId, mCityId, "", mPage);
             adapter.setOnLoadMoreListener(JobsSavedFragment.this);
         }
-    }
-
-    public TextView getTitleHeader() {
-        return titleHeader;
     }
 
     public void getSavedSearchJob(String careerId, String cityId, String jobtile, final int page) {
@@ -165,9 +153,12 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
 //                    jobsList.remove(jobsList.size() - 1);
                         adapter.notifyItemRemoved(jobsList.size());
                     }
+                    if (page == 0) {
+                        adapter = new MyJobsSavedAdapter(rcvSavedJob, jobsList, data.getTotal(), JobsSavedFragment.this, getActivity(), true);
+                        rcvSavedJob.setAdapter(adapter);
+                    }
+                    adapter.setOnLoadMoreListener(JobsSavedFragment.this);
                     jobsList.addAll(data.getJobList());
-                    titleHeader = mView.findViewById(R.id.titleHeader);
-                    titleHeader.setText(data.getTotal() + " " + suffixesString);
                     adapter.notifyDataSetChanged();
                     adapter.setLoaded();
                 }

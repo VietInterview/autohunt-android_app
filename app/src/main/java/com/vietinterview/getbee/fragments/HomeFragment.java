@@ -138,8 +138,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 }
             }
         });
-        jobsAdapter = new JobsAdapter(recyclerView, jobsList, HomeFragment.this, getActivity());
-        recyclerView.setAdapter(jobsAdapter);
 //        this.registerForContextMenu(llDatePub);
         edtJobTitle.addTextChangedListener(new TextWatcher() {
             @Override
@@ -174,8 +172,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 android.R.color.holo_green_dark,
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
-
-        jobsAdapter.setOnLoadMoreListener(HomeFragment.this);
     }
 
     @Override
@@ -214,6 +210,11 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 //                    jobsList.remove(jobsList.size() - 1);
                         jobsAdapter.notifyItemRemoved(jobsList.size());
                     }
+                    if (page == 0) {
+                        jobsAdapter = new JobsAdapter(recyclerView, jobsList, data.getTotal(), HomeFragment.this, getActivity());
+                        recyclerView.setAdapter(jobsAdapter);
+                    }
+                    jobsAdapter.setOnLoadMoreListener(HomeFragment.this);
                     jobsList.addAll(data.getJobList());
                     titleHeader = mView.findViewById(R.id.titleHeader);
                     titleHeader.setText(data.getTotal() + " " + suffixesString);
@@ -345,7 +346,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onLoadMore() {
-        if (jobsListServer.size() >= 10) {
+        if (jobsListServer.size() >= ApiConstant.LIMIT) {
             mPage++;
             getSearchJob(mCarrerId, mCityId, strSearch, mPage);
             jobsAdapter.setOnLoadMoreListener(HomeFragment.this);

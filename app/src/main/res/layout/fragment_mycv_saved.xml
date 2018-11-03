@@ -4,17 +4,17 @@
     Created by Hiep Nguyen Nghia.
     Copyright © 2018 Vietinterview. All rights reserved.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <com.vietinterview.getbee.customview.NunitoTextView
-        android:id="@+id/tvCountCV"
+        android:id="@+id/tvNodata"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="#B1B1BA" />
+        android:text="@string/no_cv_upload" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_container"
@@ -27,4 +27,4 @@
             android:layout_height="match_parent"
             android:scrollbars="vertical" />
     </android.support.v4.widget.SwipeRefreshLayout>
-</LinearLayout>
+</FrameLayout>

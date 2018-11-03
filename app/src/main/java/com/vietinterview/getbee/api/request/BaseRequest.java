@@ -111,37 +111,37 @@ public abstract class BaseRequest<T, V> {
             }
         };
         DebugLog.showLogCat(getAbsoluteUrl() + "\n" + putParams() + "\n" + getAccessToken());
-        TrustManagerManipulator.allowAllSSL();
+//        TrustManagerManipulator.allowAllSSL();
 
-        KeyStore trustStore = null;
-        try {
-            trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-        } catch (KeyStoreException e) {
-            e.printStackTrace();
-        }
-        try {
-            trustStore.load(null, null);
-        } catch (CertificateException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        MySSLSocketFactory socketFactory = null;
-        try {
-            socketFactory = new MySSLSocketFactory(trustStore);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (KeyStoreException e) {
-            e.printStackTrace();
-        } catch (UnrecoverableKeyException e) {
-            e.printStackTrace();
-        }
-        socketFactory.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-        client.setSSLSocketFactory(socketFactory);
+//        KeyStore trustStore = null;
+//        try {
+//            trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
+//        } catch (KeyStoreException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            trustStore.load(null, null);
+//        } catch (CertificateException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        }
+//        MySSLSocketFactory socketFactory = null;
+//        try {
+//            socketFactory = new MySSLSocketFactory(trustStore);
+//        } catch (NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        } catch (KeyManagementException e) {
+//            e.printStackTrace();
+//        } catch (KeyStoreException e) {
+//            e.printStackTrace();
+//        } catch (UnrecoverableKeyException e) {
+//            e.printStackTrace();
+//        }
+//        socketFactory.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+//        client.setSSLSocketFactory(socketFactory);
 
         if (getMethod() == ApiConstant.POST) {
             client.post(getAbsoluteUrl(), putParams(), mJsonHttpResponseHandler);

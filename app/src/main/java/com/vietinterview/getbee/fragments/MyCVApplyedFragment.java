@@ -19,6 +19,7 @@ import com.vietinterview.getbee.api.response.listcv.CvList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.callback.OnRefreshMyCVSubmitListener;
+import com.vietinterview.getbee.constant.ApiConstant;
 import com.vietinterview.getbee.utils.DialogUtil;
 
 import java.util.ArrayList;
@@ -31,8 +32,6 @@ import butterknife.BindView;
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
-    @BindView(R.id.tvCountCV)
-    TextView tvCountCV;
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout mSwipeRefreshLayout;
     private ArrayList<CvList> cvLists = new ArrayList<>();
@@ -46,8 +45,6 @@ public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLay
     CVResponse cvResponse;
     private int mCareerId;
     private int mCityId;
-    private View mView;
-    private String suffixesString;
 
     public static MyCVApplyedFragment newInstance(int status, int carrerId, int cityId) {
         MyCVApplyedFragment fm = new MyCVApplyedFragment();
@@ -66,8 +63,6 @@ public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLay
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-        mView = root;
-        suffixesString = getResources().getString(R.string.cv_found);
         getEventBaseFragment().setOnRefreshMyCVSubmitListener(new OnRefreshMyCVSubmitListener() {
             @Override
             public void onRefreshMyCVSubmit() {
@@ -110,16 +105,17 @@ public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLay
                     cvResponse = data;
                     cvListsServer.clear();
                     cvListsServer.addAll(data.getCvList());
-                    tvCountCV = mView.findViewById(R.id.tvCountCV);
-                    tvCountCV.setText(data.getTotal() + " " + suffixesString);
                     if (page == 0) cvLists.clear();
                     else {
 ////                    jobsList.remove(jobsList.size() - 1);
                         myCVSubmitAdapter.notifyItemRemoved(cvLists.size());
                     }
                     cvLists.addAll(data.getCvList());
-                    myCVSubmitAdapter = new MyCVSubmitAdapter(recyclerView, getActivity(), cvLists, MyCVApplyedFragment.this);
-                    recyclerView.setAdapter(myCVSubmitAdapter);
+                    if (page == 0) {
+                        myCVSubmitAdapter = new MyCVSubmitAdapter(recyclerView, getActivity(),data.getTotal(), cvLists, MyCVApplyedFragment.this);
+                        recyclerView.setAdapter(myCVSubmitAdapter);
+                    }
+                    myCVSubmitAdapter.setOnLoadMoreListener(MyCVApplyedFragment.this);
                     myCVSubmitAdapter.notifyDataSetChanged();
                     myCVSubmitAdapter.setLoaded();
                 }
@@ -165,7 +161,7 @@ public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLay
 
     @Override
     public void onLoadMore() {
-        if (cvListsServer.size() >= 10) {
+        if (cvListsServer.size() >= ApiConstant.LIMIT) {
             mPage++;
             getCVSubmit(mPage, mStatus, mCareerId, mCityId);
             myCVSubmitAdapter.setOnLoadMoreListener(MyCVApplyedFragment.this);

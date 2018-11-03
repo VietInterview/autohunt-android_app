@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,12 +46,14 @@ public class MyJobsAppliedAdapter extends RecyclerView.Adapter<RecyclerView.View
     private FragmentActivity mActivity;
     private SaveUnsaveJobRequest saveUnsaveJobRequest;
     private boolean mIsJobSaved;
+    private int mTotal;
 
 
-    public MyJobsAppliedAdapter(RecyclerView recyclerView, ArrayList<JobList> data, JobsApplyedFragment jobsApplyedFragment1, FragmentActivity activity, boolean isJobSaved) {
+    public MyJobsAppliedAdapter(RecyclerView recyclerView, ArrayList<JobList> data, int total, JobsApplyedFragment jobsApplyedFragment1, FragmentActivity activity, boolean isJobSaved) {
         this.dataSet = data;
         this.jobsApplyedFragment = jobsApplyedFragment1;
         this.mActivity = activity;
+        this.mTotal = total;
         this.mIsJobSaved = isJobSaved;
         final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -101,6 +104,8 @@ public class MyJobsAppliedAdapter extends RecyclerView.Adapter<RecyclerView.View
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .priority(Priority.HIGH);
             Glide.with(mActivity).load(dataSet.get(listPosition).getCompanyImg()).apply(options).into(myViewHolder.imgBussiness);
+            myViewHolder.llHeader.setVisibility(listPosition == 0 ? View.VISIBLE : View.GONE);
+            myViewHolder.titleHeader.setText(this.mTotal + " " + mActivity.getResources().getString(R.string.job_applyed));
             myViewHolder.tvjobTitle.setText(StringUtils.nullStrToEmpty(dataSet.get(listPosition).getJobTitle()));
             myViewHolder.tvCompanyName.setText(dataSet.get(listPosition).getCompanyName());
             myViewHolder.tvCarrer.setText(dataSet.get(listPosition).getCareerName());
@@ -192,6 +197,8 @@ public class MyJobsAppliedAdapter extends RecyclerView.Adapter<RecyclerView.View
         ImageView imgBussiness;
         ImageView imgStatus;
         CardView card_view;
+        LinearLayout llHeader;
+        TextView titleHeader;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -204,6 +211,8 @@ public class MyJobsAppliedAdapter extends RecyclerView.Adapter<RecyclerView.View
             this.imgBussiness = (ImageView) itemView.findViewById(R.id.imgBussiness);
             this.imgStatus = (ImageView) itemView.findViewById(R.id.imgStatus);
             this.card_view = (CardView) itemView.findViewById(R.id.card_view);
+            this.llHeader = itemView.findViewById(R.id.llHeader);
+            this.titleHeader = itemView.findViewById(R.id.titleHeader);
         }
     }
 }
