@@ -38,7 +38,7 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
     RecyclerView rcvApplyedJob;
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    public MyJobsAppliedAdapter adapter;
+    private MyJobsAppliedAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<JobList> jobsList = new ArrayList<>();
     private ArrayList<JobList> jobsListServer = new ArrayList<>();
@@ -46,7 +46,6 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
     private int mPage = 0;
     private String mCarrerId = "0";
     private String mCityId = "0";
-    private View mView;
 
     public static JobsApplyedFragment newInstance(String cityId, String carrerId) {
         JobsApplyedFragment fm = new JobsApplyedFragment();
@@ -64,7 +63,6 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-        mView = root;
         rcvApplyedJob.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         rcvApplyedJob.setLayoutManager(layoutManager);
@@ -116,7 +114,6 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
     public void getApplyedSearchJob(String careerId, String cityId, String jobtile, final int page) {
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
             showCoverNetworkLoading();
-
         getApplyedSearchJobsRequest = new GetApplyedSearchJobsRequest(careerId, cityId, String.valueOf(ApiConstant.LIMIT), jobtile, page);
         getApplyedSearchJobsRequest.callRequest(getActivity(), new ApiObjectCallBack<JobsResponse, ErrorResponse>() {
 
@@ -128,16 +125,13 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
                     mSwipeRefreshLayout.setRefreshing(false);
                     hideCoverNetworkLoading();
                     if (page == 0) jobsList.clear();
-                    else {
-//                    jobsList.remove(jobsList.size() - 1);
-                        adapter.notifyItemRemoved(jobsList.size());
-                    }
+                    else adapter.notifyItemRemoved(jobsList.size());
+                    jobsList.addAll(data.getJobList());
                     if (page == 0) {
                         adapter = new MyJobsAppliedAdapter(rcvApplyedJob, jobsList, data.getTotal(), JobsApplyedFragment.this, getActivity(), false);
                         rcvApplyedJob.setAdapter(adapter);
                     }
                     adapter.setOnLoadMoreListener(JobsApplyedFragment.this);
-                    jobsList.addAll(data.getJobList());
                     adapter.notifyDataSetChanged();
                     adapter.setLoaded();
                 }
@@ -146,8 +140,7 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
             @Override
             public void onFail(int failCode, ErrorResponse dataFail, List<ErrorResponse> dataArrayList, String message) {
                 if (isAdded()) {
-                    if (mSwipeRefreshLayout != null)
-                        mSwipeRefreshLayout.setRefreshing(false);
+                    mSwipeRefreshLayout.setRefreshing(false);
                     hideCoverNetworkLoading();
                     DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
                 }
@@ -160,7 +153,6 @@ public class JobsApplyedFragment extends BaseFragment implements SwipeRefreshLay
         if (jobsListServer.size() >= ApiConstant.LIMIT) {
             mPage++;
             getApplyedSearchJob(mCarrerId, mCityId, "", mPage);
-            adapter.setOnLoadMoreListener(JobsApplyedFragment.this);
         }
     }
 

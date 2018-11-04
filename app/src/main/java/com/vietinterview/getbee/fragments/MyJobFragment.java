@@ -44,8 +44,10 @@ public class MyJobFragment extends BaseFragment {
     TextView tvCarrerName;
     @BindView(R.id.tvCityName)
     TextView tvCityName;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+    @BindView(R.id.tabs)
+    TabLayout tabLayout;
+    @BindView(R.id.viewpager)
+    ViewPager viewPager;
     private Menu menu;
     private boolean visibleFilter = false;
     private boolean mIsCity = false;
@@ -64,8 +66,6 @@ public class MyJobFragment extends BaseFragment {
         getEventBaseFragment().doFillBackground(getResources().getString(R.string.my_job));
         setCustomToolbar(true);
         setHasOptionsMenu(true);
-        viewPager = (ViewPager) root.findViewById(R.id.viewpager);
-        tabLayout = (TabLayout) root.findViewById(R.id.tabs);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.underline_tablyaout));
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -88,10 +88,7 @@ public class MyJobFragment extends BaseFragment {
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
-        TabLayout.Tab tab = tabLayout.getTabAt(0);
-        ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
-        tab.select();
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
@@ -138,7 +135,6 @@ public class MyJobFragment extends BaseFragment {
         viewPager.setCurrentItem(0);
         viewPager.setAdapter(adapter);
     }
-
 
     @OnClick(R.id.llCarrer)
     public void onllCarrerClick() {

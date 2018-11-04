@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.badoualy.stepperindicator.StepperIndicator;
 import com.vietinterview.getbee.R;
@@ -13,10 +12,7 @@ import com.vietinterview.getbee.adapter.ViewPagerAdapter;
 import com.vietinterview.getbee.callback.OnChangeStepExpListener;
 import com.vietinterview.getbee.customview.NonSwipeableViewPager;
 
-import net.skoumal.fragmentback.BackFragment;
-
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by hiepnguyennghia on 10/17/18.
@@ -112,20 +108,4 @@ public class CreateNewCVFragment extends BaseFragment {
     protected void processCustomToolbar() {
         getActivity().finish();
     }
-
-//    @Override
-//    public boolean onBackPressed() {
-//        if (mStep > 0) {
-//            mStep = mStep - 1;
-//            mViewPager.setCurrentItem(mStep);
-//        } else {
-//            getActivity().finish();
-//        }
-//        return true;
-//    }
-//
-//    @Override
-//    public int getBackPriority() {
-//        return NORMAL_BACK_PRIORITY;
-//    }
 }

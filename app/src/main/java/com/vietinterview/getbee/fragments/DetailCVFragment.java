@@ -36,6 +36,7 @@ import com.vietinterview.getbee.api.request.SubmitCVRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.SubmitCVResponse;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
+import com.vietinterview.getbee.api.response.detailjob.DetailJobResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnSetHeightViewListener;
@@ -65,22 +66,18 @@ public class DetailCVFragment extends BaseFragment {
     LinearLayout llFooter;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
-    //    @BindView(R.id.scrollViewContent)
-//    TouchDetectableScrollView scrollViewContent;
-//    @BindView(R.id.llToolbar)
-//    LinearLayout llToolbar;
     private TabLayout tabLayout;
-    private JobList mJobList;
+    private DetailJobResponse detailJobResponse;
     private Dialog mNotifydialog;
     private GetDetailCVRequest getDetailCVRequest;
     private SubmitCVRequest submitCVRequest;
     private DetailCVResponse detailCVResponse;
     private int mCvId;
 
-    public static DetailCVFragment newInstance(JobList jobList, int cvId) {
+    public static DetailCVFragment newInstance(DetailJobResponse detailJobResponse, int cvId) {
         DetailCVFragment fm = new DetailCVFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("jobList", jobList);
+        bundle.putParcelable("detailJobResponse", detailJobResponse);
         bundle.putInt("cvId", cvId);
         fm.setArguments(bundle);
         return fm;
@@ -134,23 +131,12 @@ public class DetailCVFragment extends BaseFragment {
 
             }
         });
-        if (mJobList == null) llFooter.setVisibility(View.GONE);
-//        scrollViewContent.setMyScrollChangeListener(new TouchDetectableScrollView.OnMyScrollChangeListener() {
-//            @Override
-//            public void onScrollUp() {
-////                fab.show();
-//            }
-//
-//            @Override
-//            public void onScrollDown() {
-////                fab.hide();
-//            }
-//        });
+        if (detailJobResponse == null) llFooter.setVisibility(View.GONE);
     }
 
     @Override
     protected void getArgument(Bundle bundle) {
-        mJobList = bundle.getParcelable("jobList");
+        detailJobResponse = bundle.getParcelable("detailJobResponse");
         mCvId = bundle.getInt("cvId");
     }
 
@@ -196,7 +182,7 @@ public class DetailCVFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 showCoverNetworkLoading();
-                submitCVRequest = new SubmitCVRequest(mCvId, mJobList.getId(), 1);
+                submitCVRequest = new SubmitCVRequest(mCvId, detailJobResponse.getId(), 1);
                 submitCVRequest.callRequest(getActivity(), new ApiObjectCallBack<SubmitCVResponse, ErrorResponse>() {
                     @Override
                     public void onSuccess(int status, SubmitCVResponse data, List<SubmitCVResponse> dataArrayList, String message) {
@@ -207,7 +193,7 @@ public class DetailCVFragment extends BaseFragment {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     FragmentUtil.popEntireFragmentBackStack(DetailCVFragment.this);
-                                    FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(mJobList), null);
+                                    FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(detailJobResponse), null);
                                 }
                             });
                         }
@@ -235,7 +221,7 @@ public class DetailCVFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 showCoverNetworkLoading();
-                submitCVRequest = new SubmitCVRequest(mCvId, mJobList.getId(), 2);
+                submitCVRequest = new SubmitCVRequest(mCvId, detailJobResponse.getId(), 2);
                 submitCVRequest.callRequest(getActivity(), new ApiObjectCallBack<SubmitCVResponse, ErrorResponse>() {
                     @Override
                     public void onSuccess(int status, SubmitCVResponse data, List<SubmitCVResponse> dataArrayList, String message) {
@@ -246,7 +232,7 @@ public class DetailCVFragment extends BaseFragment {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     FragmentUtil.popEntireFragmentBackStack(DetailCVFragment.this);
-                                    FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(mJobList), null);
+                                    FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(detailJobResponse), null);
                                 }
                             });
                         }

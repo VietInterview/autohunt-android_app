@@ -80,11 +80,12 @@ public class ComputerSkillDetailCVFragment extends BaseFragment {
             lstComputerSkills.add(detailCVResponse.getLstComputerSkill().get(0));
             listDataChild.put(listDataGroup.get(0), lstComputerSkills);
 
-            listDataGroup.add(getResources().getString(R.string.other_soft));
-            List<LstComputerSkill> otherSoftList = new ArrayList<>();
-            otherSoftList.add(detailCVResponse.getLstComputerSkill().get(0));
-            listDataChild.put(listDataGroup.get(1), otherSoftList);
-
+            if (detailCVResponse.getLstComputerSkill().get(0).getOther() != null) {
+                listDataGroup.add(getResources().getString(R.string.other_soft));
+                List<LstComputerSkill> otherSoftList = new ArrayList<>();
+                otherSoftList.add(detailCVResponse.getLstComputerSkill().get(0));
+                listDataChild.put(listDataGroup.get(1), otherSoftList);
+            }
             exComSkillListViewAdapter.notifyDataSetChanged();
         }
         if (detailCVResponse.getLstComputerSkill().size() > 0) {

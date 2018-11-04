@@ -8,10 +8,6 @@ import android.widget.TextView;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.callback.OnFillBackgroundListener;
 import com.vietinterview.getbee.callback.OnShowLogoListener;
-import com.vietinterview.getbee.fragments.CreateNewCVFragment;
-import com.vietinterview.getbee.utils.FragmentUtil;
-
-import net.skoumal.fragmentback.BackFragmentHelper;
 
 import butterknife.BindView;
 
@@ -63,12 +59,5 @@ public class CreateNewCVActivity extends BaseActivity {
     @Override
     public void initData() {
 
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (!BackFragmentHelper.fireOnBackPressedEvent(this)) {
-            super.onBackPressed();
-        }
     }
 }

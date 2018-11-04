@@ -74,18 +74,27 @@ public class DetailJobFragment extends BaseFragment {
     LinearLayout llParent;
     private TabLayout tabLayout;
     private Dialog mNotifydialog;
-    private JobList mJobList;
+//    private JobList mJobList;
     private SaveUnsaveJobRequest saveUnsaveJobRequest;
     private GetDetailJobRequest getDetailJobRequest;
     private DetailJobResponse detailJobResponse;
     InfoFragment infoFragment;
     StatisticalFragment statisticalFragment;
     CVSentFragment cvSentFragment;
+    DetailJobResponse mDetailJobResponse;
 
-    public static DetailJobFragment newInstance(JobList jobList) {
+//    public static DetailJobFragment newInstance(JobList jobList) {
+//        DetailJobFragment fm = new DetailJobFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelable("jobList", jobList);
+//        fm.setArguments(bundle);
+//        return fm;
+//    }
+
+    public static DetailJobFragment newInstance(DetailJobResponse detailJobResponse) {
         DetailJobFragment fm = new DetailJobFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("jobList", jobList);
+        bundle.putParcelable("detailJobResponse", detailJobResponse);
         fm.setArguments(bundle);
         return fm;
     }
@@ -99,7 +108,6 @@ public class DetailJobFragment extends BaseFragment {
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         getEventBaseFragment().doFillBackground(getResources().getString(R.string.detail_job));
         setCustomToolbar(true);
-//        setHasOptionsMenu(true);
         getEventBaseFragment().setOnSetHeightViewListener(new OnSetHeightViewListener() {
             @Override
             public void onSetHeightView(int height) {
@@ -136,123 +144,99 @@ public class DetailJobFragment extends BaseFragment {
 
     @Override
     protected void getArgument(Bundle bundle) {
-        mJobList = bundle.getParcelable("jobList");
+//        mJobList = bundle.getParcelable("jobList");
+        mDetailJobResponse = bundle.getParcelable("detailJobResponse");
     }
 
     @Override
     protected void initData() {
-        getDetailJob(mJobList.getId());
-    }
-
-    public void getDetailJob(int jobId) {
-        llParent.setVisibility(View.GONE);
-        showCoverNetworkLoading();
-        getDetailJobRequest = new GetDetailJobRequest(jobId);
-        getDetailJobRequest.callRequest(getActivity(), new ApiObjectCallBack<DetailJobResponse, ErrorResponse>() {
-            @Override
-            public void onSuccess(int status, DetailJobResponse data, List<DetailJobResponse> dataArrayList, String message) {
-                hideCoverNetworkLoading();
-                detailJobResponse = data;
-                if (isAdded()) {
-                    llParent.setVisibility(View.VISIBLE);
-                    tvcompanyName.setText(data.getCompanyName());
-                    tvjobTitle.setText(data.getJobTitle());
-                    RequestOptions options = new RequestOptions().fitCenter().error(R.drawable.ic_company_null).diskCacheStrategy(DiskCacheStrategy.ALL).priority(Priority.HIGH);
-                    Glide.with(getActivity()).load(data.getCompanyImg()).apply(options).into(imgCompany);
-                    if (data.getStatus() == 1) {
-                        tvstatus.setText(getResources().getString(R.string.hiring));
-                        llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));
-                    } else {
-                        tvstatus.setText(getResources().getString(R.string.closed));
-                        llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_notyet_send));
-                    }
-
-                    if (data.getCollStatus() != null) {
-                        Integer collStatus = data.getCollStatus();
-                        if (collStatus == 0) {
-                            Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
-                            img.setBounds(0, 0, 40, 50);
-                            saveUnsaveJob.setCompoundDrawables(img, null, null, null);
-                            saveUnsaveJob.setText(getResources().getString(R.string.save_job));
-                            saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
-                            saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_unsave_button));
-                        } else if (collStatus == 1) {
-                            Drawable img = getContext().getResources().getDrawable(R.drawable.ic_saved);
-                            img.setBounds(0, 0, 40, 50);
-                            saveUnsaveJob.setText(getResources().getString(R.string.saved_job));
-                            saveUnsaveJob.setCompoundDrawables(img, null, null, null);
-                            saveUnsaveJob.setTextColor(getResources().getColor(R.color.red));
-                            saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_save_button));
-                        } else {
-                            Drawable img = getContext().getResources().getDrawable(R.drawable.ic_tick_white);
-                            img.setBounds(0, 0, 50, 50);
-                            saveUnsaveJob.setText(getResources().getString(R.string.cv_applyed_tit));
-                            saveUnsaveJob.setCompoundDrawables(img, null, null, null);
-                            saveUnsaveJob.setTextColor(getResources().getColor(R.color.white));
-                            saveUnsaveJob.setEnabled(false);
-                            saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));
-                        }
-                    } else {
-                        Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
-                        img.setBounds(0, 0, 40, 50);
-                        saveUnsaveJob.setCompoundDrawables(img, null, null, null);
-                        saveUnsaveJob.setText(getResources().getString(R.string.save_job));
-                        saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
-                        saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_unsave_button));
-                    }
-                    infoFragment = new InfoFragment().newInstance(detailJobResponse);
-                    statisticalFragment = new StatisticalFragment().newInstance(detailJobResponse);
-                    cvSentFragment = new CVSentFragment().newInstance(detailJobResponse);
-                    setupViewPager(viewPager);
-                    tabLayout.setupWithViewPager(viewPager);
-                    setupTabIcons();
-                    tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                        @Override
-                        public void onTabSelected(TabLayout.Tab tab) {
-                            ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
-                        }
-
-                        @Override
-                        public void onTabUnselected(TabLayout.Tab tab) {
-                            ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.background_icon_not_focus));
-                        }
-
-                        @Override
-                        public void onTabReselected(TabLayout.Tab tab) {
-
-                        }
-                    });
-                }
+//        if (mJobList != null)
+//            getDetailJob(mJobList.getId());
+//        else {
+            llParent.setVisibility(View.VISIBLE);
+            tvcompanyName.setText(mDetailJobResponse.getCompanyName());
+            tvjobTitle.setText(mDetailJobResponse.getJobTitle());
+            RequestOptions options = new RequestOptions().fitCenter().error(R.drawable.ic_company_null).diskCacheStrategy(DiskCacheStrategy.ALL).priority(Priority.HIGH);
+            Glide.with(getActivity()).load(mDetailJobResponse.getCompanyImg()).apply(options).into(imgCompany);
+            if (mDetailJobResponse.getStatus() == 1) {
+                tvstatus.setText(getResources().getString(R.string.hiring));
+                llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));
+            } else {
+                tvstatus.setText(getResources().getString(R.string.closed));
+                llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_notyet_send));
             }
 
-            @Override
-            public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
-                if (isAdded()) {
-                    llParent.setVisibility(View.GONE);
-                    hideCoverNetworkLoading();
-                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            FragmentUtil.popBackStack(DetailJobFragment.this);
-                        }
-                    });
+            if (mDetailJobResponse.getCollStatus() != null) {
+                Integer collStatus = mDetailJobResponse.getCollStatus();
+                if (collStatus == 0) {
+                    Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
+                    img.setBounds(0, 0, 40, 50);
+                    saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+                    saveUnsaveJob.setText(getResources().getString(R.string.save_job));
+                    saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
+                    saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_unsave_button));
+                } else if (collStatus == 1) {
+                    Drawable img = getContext().getResources().getDrawable(R.drawable.ic_saved);
+                    img.setBounds(0, 0, 40, 50);
+                    saveUnsaveJob.setText(getResources().getString(R.string.saved_job));
+                    saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+                    saveUnsaveJob.setTextColor(getResources().getColor(R.color.red));
+                    saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_save_button));
+                } else {
+                    Drawable img = getContext().getResources().getDrawable(R.drawable.ic_tick_white);
+                    img.setBounds(0, 0, 50, 50);
+                    saveUnsaveJob.setText(getResources().getString(R.string.cv_applyed_tit));
+                    saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+                    saveUnsaveJob.setTextColor(getResources().getColor(R.color.white));
+                    saveUnsaveJob.setEnabled(false);
+                    saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));
                 }
+            } else {
+                Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
+                img.setBounds(0, 0, 40, 50);
+                saveUnsaveJob.setCompoundDrawables(img, null, null, null);
+                saveUnsaveJob.setText(getResources().getString(R.string.save_job));
+                saveUnsaveJob.setTextColor(getResources().getColor(R.color.gray_not_focus));
+                saveUnsaveJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_radius_unsave_button));
             }
-        });
+            infoFragment = new InfoFragment().newInstance(mDetailJobResponse);
+            statisticalFragment = new StatisticalFragment().newInstance(mDetailJobResponse);
+            cvSentFragment = new CVSentFragment().newInstance(mDetailJobResponse);
+            setupViewPager(viewPager);
+            tabLayout.setupWithViewPager(viewPager);
+            setupTabIcons();
+            tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+                    ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.background_icon_not_focus));
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
+//        }
     }
+
 
     @OnClick(R.id.saveUnsaveJob)
     public void onSaveUnsaveJobClick() {
         showCoverNetworkLoading();
-        int collStatus = mJobList.getCollStatus() == null ? 1 : (int) mJobList.getCollStatus() != 0 ? 0 : 1;
-        saveUnsaveJobRequest = new SaveUnsaveJobRequest(mJobList.getId(), collStatus);
+        int collStatus = mDetailJobResponse.getCollStatus() == null ? 1 : (int) mDetailJobResponse.getCollStatus() != 0 ? 0 : 1;
+        saveUnsaveJobRequest = new SaveUnsaveJobRequest(mDetailJobResponse.getId(), collStatus);
         saveUnsaveJobRequest.callRequest(getActivity(), new ApiObjectCallBack<AddRemoveJobResponse, ErrorResponse>() {
             @Override
             public void onSuccess(int status, AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 if (isAdded()) {
                     if (status == 200) {
-                        mJobList.setCollStatus(data.getStatus());
+                        mDetailJobResponse.setCollStatus(data.getStatus());
                         if (data.getStatus() == 0) {
                             Drawable img = getContext().getResources().getDrawable(R.drawable.ic_save);
                             img.setBounds(0, 0, 40, 50);
@@ -290,7 +274,7 @@ public class DetailJobFragment extends BaseFragment {
 
     @OnClick(R.id.btnApplyCV)
     public void onApplyCVClick() {
-        FragmentUtil.pushFragment(getActivity(), this, new ChoiceCVFragment().newInstance(mJobList), null);
+        FragmentUtil.pushFragment(getActivity(), this, new ChoiceCVFragment().newInstance(mDetailJobResponse), null);
     }
 
     @Override

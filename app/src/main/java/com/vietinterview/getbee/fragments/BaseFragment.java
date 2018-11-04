@@ -233,14 +233,12 @@ public abstract class BaseFragment extends Fragment {
     public void cancelAllRequest(ArrayList<BaseJsonRequest> callArrayList, ArrayList<BaseRequest> baseRequests) {
         if (callArrayList != null) {
             for (int i = 0; i < callArrayList.size(); i++) {
-                DebugLog.showLogCat("Cancel Json Request");
                 if (callArrayList.get(i) != null)
                     callArrayList.get(i).cancelRequest();
             }
         }
         if (baseRequests != null) {
             for (int i = 0; i < baseRequests.size(); i++) {
-                DebugLog.showLogCat("Cancel Base Request");
                 if (baseRequests.get(i) != null)
                     baseRequests.get(i).cancelRequest();
             }

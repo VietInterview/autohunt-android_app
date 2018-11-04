@@ -22,6 +22,12 @@
             android:paddingRight="@dimen/activity_vertical_margin"
             android:visibility="gone">
 
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="0px"
+                android:focusable="true"
+                android:focusableInTouchMode="true" />
+
             <com.vietinterview.getbee.customview.ClearableRegularEditText
                 android:id="@+id/edtJobTitle"
                 android:layout_width="0dp"
@@ -133,63 +139,6 @@
                 android:layout_height="1dp"
                 android:layout_alignParentBottom="true"
                 android:background="@color/gray_not_focus" />
-
-            <!--<LinearLayout-->
-            <!--android:id="@+id/llDatePub"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="60dp"-->
-            <!--android:background="@color/white"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:paddingLeft="@dimen/activity_vertical_margin"-->
-            <!--android:paddingRight="@dimen/activity_vertical_margin">-->
-
-            <!--<com.vietinterview.getbee.customview.NunitoTextView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@android:color/transparent"-->
-            <!--android:hint="Ngày đăng tuyển" />-->
-
-            <!--<com.vietinterview.getbee.customview.NunitoTextView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_marginRight="@dimen/activity_vertical_margin"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="right|center"-->
-            <!--android:text="Mới nhất" />-->
-
-            <!--<ImageView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_weight="0.1"-->
-            <!--android:src="@drawable/ic_arrow_right" />-->
-            <!--</LinearLayout>-->
-
-            <!--<View-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="1dp"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:background="@color/gray_not_focus" />-->
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/activity_vertical_margin"
-            android:visibility="gone">
-
-            <com.vietinterview.getbee.customview.NunitoTextView
-                android:id="@+id/titleHeader"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="#B1B1BA" />
-
         </LinearLayout>
 
         <android.support.v4.widget.SwipeRefreshLayout

@@ -1,5 +1,6 @@
 package com.vietinterview.getbee.adapter;
 
+import android.content.DialogInterface;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,15 +19,18 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.api.request.GetDetailJobRequest;
 import com.vietinterview.getbee.api.request.SaveUnsaveJobRequest;
 import com.vietinterview.getbee.api.response.AddRemoveJobResponse;
 import com.vietinterview.getbee.api.response.ErrorResponse;
+import com.vietinterview.getbee.api.response.detailjob.DetailJobResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.fragments.DetailJobFragment;
 import com.vietinterview.getbee.fragments.JobsApplyedFragment;
 import com.vietinterview.getbee.utils.DateUtil;
+import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.StringUtils;
 
@@ -44,6 +48,7 @@ public class MyJobsAppliedAdapter extends RecyclerView.Adapter<RecyclerView.View
     private OnLoadMoreListener onLoadMoreListener;
     private boolean isLoading;
     private FragmentActivity mActivity;
+    private GetDetailJobRequest getDetailJobRequest;
     private SaveUnsaveJobRequest saveUnsaveJobRequest;
     private boolean mIsJobSaved;
     private int mTotal;
@@ -115,7 +120,30 @@ public class MyJobsAppliedAdapter extends RecyclerView.Adapter<RecyclerView.View
             myViewHolder.card_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentUtil.pushFragment(mActivity, jobsApplyedFragment, new DetailJobFragment().newInstance(dataSet.get(listPosition)), null);
+                    jobsApplyedFragment.showCoverNetworkLoading();
+                    getDetailJobRequest = new GetDetailJobRequest(dataSet.get(listPosition).getId());
+                    getDetailJobRequest.callRequest(jobsApplyedFragment.getActivity(), new ApiObjectCallBack<DetailJobResponse, ErrorResponse>() {
+                        @Override
+                        public void onSuccess(int status, DetailJobResponse data, List<DetailJobResponse> dataArrayList, String message) {
+                            jobsApplyedFragment.hideCoverNetworkLoading();
+                            if (jobsApplyedFragment.isAdded()) {
+                                FragmentUtil.pushFragment(mActivity, jobsApplyedFragment, new DetailJobFragment().newInstance(data), null);
+                            }
+                        }
+
+                        @Override
+                        public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
+                            if (jobsApplyedFragment.isAdded()) {
+                                jobsApplyedFragment.hideCoverNetworkLoading();
+                                DialogUtil.showDialog(jobsApplyedFragment.getActivity(), jobsApplyedFragment.getResources().getString(R.string.noti_title), message, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        FragmentUtil.popBackStack(jobsApplyedFragment);
+                                    }
+                                });
+                            }
+                        }
+                    });
                 }
             });
             if (mIsJobSaved)

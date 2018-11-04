@@ -1,6 +1,8 @@
 package com.vietinterview.getbee.adapter;
 
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,15 +22,21 @@ import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.api.request.GetDetailJobRequest;
 import com.vietinterview.getbee.api.request.SaveUnsaveJobRequest;
 import com.vietinterview.getbee.api.response.AddRemoveJobResponse;
 import com.vietinterview.getbee.api.response.ErrorResponse;
+import com.vietinterview.getbee.api.response.detailjob.DetailJobResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.fragments.BaseFragment;
+import com.vietinterview.getbee.fragments.CVSentFragment;
 import com.vietinterview.getbee.fragments.DetailJobFragment;
+import com.vietinterview.getbee.fragments.InfoFragment;
+import com.vietinterview.getbee.fragments.StatisticalFragment;
 import com.vietinterview.getbee.utils.DateUtil;
+import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.StringUtils;
 
@@ -47,6 +55,7 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private boolean isLoading;
     FragmentActivity mActivity;
     private SaveUnsaveJobRequest saveUnsaveJobRequest;
+    private GetDetailJobRequest getDetailJobRequest;
     int total;
 
     public JobsAdapter(RecyclerView recyclerView, ArrayList<JobList> data, int total, BaseFragment homeFragment, FragmentActivity activity) {
@@ -118,7 +127,30 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             myViewHolder.card_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentUtil.pushFragment(mActivity, mHomeFragment, new DetailJobFragment().newInstance(dataSet.get(listPosition)), null);
+                    mHomeFragment.showCoverNetworkLoading();
+                    getDetailJobRequest = new GetDetailJobRequest(dataSet.get(listPosition).getId());
+                    getDetailJobRequest.callRequest(mHomeFragment.getActivity(), new ApiObjectCallBack<DetailJobResponse, ErrorResponse>() {
+                        @Override
+                        public void onSuccess(int status, DetailJobResponse data, List<DetailJobResponse> dataArrayList, String message) {
+                            mHomeFragment.hideCoverNetworkLoading();
+                            if (mHomeFragment.isAdded()) {
+                                FragmentUtil.pushFragment(mActivity, mHomeFragment, new DetailJobFragment().newInstance(data), null);
+                            }
+                        }
+
+                        @Override
+                        public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
+                            if (mHomeFragment.isAdded()) {
+                                mHomeFragment.hideCoverNetworkLoading();
+                                DialogUtil.showDialog(mHomeFragment.getActivity(), mHomeFragment.getResources().getString(R.string.noti_title), message, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        FragmentUtil.popBackStack(mHomeFragment);
+                                    }
+                                });
+                            }
+                        }
+                    });
                 }
             });
             if (dataSet.get(listPosition).getCollStatus() != null) {
@@ -145,7 +177,7 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         public void onSuccess(int status, AddRemoveJobResponse data, List<AddRemoveJobResponse> dataArrayList, String message) {
                             mHomeFragment.hideCoverNetworkLoading();
                             if (status == 200) {
-//                                mHomeFragment.getEventBaseFragment().refreshHome();
+                                dataSet.get(listPosition).setCollStatus(data.getStatus());
                                 if (data.getStatus() == 0) {
                                     Toast.makeText(mHomeFragment.getActivity(), mHomeFragment.getResources().getString(R.string.cancel_save_noti), Toast.LENGTH_SHORT).show();
                                     myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_save));

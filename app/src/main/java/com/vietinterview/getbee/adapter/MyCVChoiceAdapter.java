@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.DeleteCVRequest;
+import com.vietinterview.getbee.api.response.detailjob.DetailJobResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.api.response.listcv.CvList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
@@ -42,7 +43,7 @@ public class MyCVChoiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         SHOWING_SECONDARY_CONTENT
     }
 
-    private JobList jobList;
+    private DetailJobResponse detailJobResponse;
     private DeleteCVRequest deleteCVRequest;
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
@@ -56,12 +57,12 @@ public class MyCVChoiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private BaseFragment baseFragment;
     private int mTotal;
 
-    public MyCVChoiceAdapter(RecyclerView recyclerView, Context context, int total, JobList jobList, ArrayList<CvList> cvLists, BaseFragment homeFragment) {
+    public MyCVChoiceAdapter(RecyclerView recyclerView, Context context, int total, DetailJobResponse detailJobResponse, ArrayList<CvList> cvLists, BaseFragment homeFragment) {
         this.cvLists = cvLists;
         this.mContext = context;
         this.mTotal = total;
         this.baseFragment = homeFragment;
-        this.jobList = jobList;
+        this.detailJobResponse = detailJobResponse;
         mItemSwipedStates = new ArrayList<>();
         for (int i = 0; i < cvLists.size(); i++) {
             mItemSwipedStates.add(i, SwipedState.SHOWING_PRIMARY_CONTENT);
@@ -129,7 +130,7 @@ public class MyCVChoiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             ((RelativeLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailCVFragment().newInstance(jobList, cvLists.get(position).getId()), null);
+                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailCVFragment().newInstance(detailJobResponse, cvLists.get(position).getId()), null);
                 }
             });
 //            ((ViewPager) ((MyViewHolder) holder).mView).setCurrentItem(mItemSwipedStates.get(position).ordinal());

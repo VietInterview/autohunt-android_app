@@ -313,19 +313,19 @@ public class CarrerOrCityFragment extends BaseFragment {
 
     @Override
     protected void processCustomToolbar() {
-        Intent intent = new Intent(getActivity(), CarrerOrCityFragment.class);
-        intent.putExtra(mIsCity ? "cityId" : "carrerId", mId);
-        intent.putExtra(mIsCity ? "cityName" : "carrerName", mName);
-        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+//        Intent intent = new Intent(getActivity(), CarrerOrCityFragment.class);
+//        intent.putExtra(mIsCity ? "cityId" : "carrerId", mId);
+//        intent.putExtra(mIsCity ? "cityName" : "carrerName", mName);
+//        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
         FragmentUtil.popBackStack(this);
     }
 
     @Override
     protected void processOnBackPress() {
-        Intent intent = new Intent(getActivity(), CarrerOrCityFragment.class);
-        intent.putExtra(mIsCity ? "cityId" : "carrerId", mId);
-        intent.putExtra(mIsCity ? "cityName" : "carrerName", mName);
-        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+//        Intent intent = new Intent(getActivity(), CarrerOrCityFragment.class);
+//        intent.putExtra(mIsCity ? "cityId" : "carrerId", mId);
+//        intent.putExtra(mIsCity ? "cityName" : "carrerName", mName);
+//        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
         FragmentUtil.popBackStack(this);
     }
 

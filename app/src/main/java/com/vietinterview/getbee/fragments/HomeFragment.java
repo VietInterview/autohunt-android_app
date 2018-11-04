@@ -64,10 +64,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     TextView tvCarrerName;
     @BindView(R.id.tvCityName)
     TextView tvCityName;
-    @BindView(R.id.titleHeader)
-    TextView titleHeader;
-    @BindView(R.id.llHeader)
-    LinearLayout llHeader;
     @BindView(R.id.fab)
     FloatingActionButton fab;
     @BindView(R.id.edtJobTitle)
@@ -83,6 +79,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private ArrayList<JobList> jobsListServer = new ArrayList<>();
     private GetSearchJobsRequest getSearchJobsRequest;
     private int mPage = 0;
+    private int mTotal;
     private boolean mIsCity = false;
     private String mCarrerId = "0";
     private String mCarrerName = "";
@@ -138,25 +135,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 }
             }
         });
-//        this.registerForContextMenu(llDatePub);
-        edtJobTitle.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mPage = 0;
-                strSearch = charSequence.toString();
-                getSearchJob(mCarrerId, mCityId, charSequence.toString(), mPage);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
         edtJobTitle.setImeOptions(EditorInfo.IME_ACTION_DONE);
         edtJobTitle.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -174,6 +152,25 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 android.R.color.holo_blue_dark);
     }
 
+    TextWatcher textWatcher = new TextWatcher() {
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            mPage = 0;
+            strSearch = s.toString();
+            getSearchJob(mCarrerId, mCityId, strSearch.toString(), mPage);
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+    };
+
     @Override
     public void onRefresh() {
         mPage = 0;
@@ -187,8 +184,18 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     protected void initData() {
-        if (!visibleSearch)
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        edtJobTitle.addTextChangedListener(textWatcher);
+        if (jobsList.size() == 0)
             getSearchJob(mCarrerId, mCityId, strSearch, mPage);
+        else {
+            jobsAdapter = new JobsAdapter(recyclerView, jobsList, mTotal, HomeFragment.this, getActivity());
+            recyclerView.setAdapter(jobsAdapter);
+        }
     }
 
     public void getSearchJob(String careerId, String cityId, String jobtile, final int page) {
@@ -206,18 +213,14 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                     mSwipeRefreshLayout.setRefreshing(false);
                     hideCoverNetworkLoading();
                     if (page == 0) jobsList.clear();
-                    else {
-//                    jobsList.remove(jobsList.size() - 1);
-                        jobsAdapter.notifyItemRemoved(jobsList.size());
-                    }
+                    else jobsAdapter.notifyItemRemoved(jobsList.size());
+                    mTotal = data.getTotal();
+                    jobsList.addAll(data.getJobList());
                     if (page == 0) {
-                        jobsAdapter = new JobsAdapter(recyclerView, jobsList, data.getTotal(), HomeFragment.this, getActivity());
+                        jobsAdapter = new JobsAdapter(recyclerView, jobsList, mTotal, HomeFragment.this, getActivity());
                         recyclerView.setAdapter(jobsAdapter);
                     }
                     jobsAdapter.setOnLoadMoreListener(HomeFragment.this);
-                    jobsList.addAll(data.getJobList());
-                    titleHeader = mView.findViewById(R.id.titleHeader);
-                    titleHeader.setText(data.getTotal() + " " + suffixesString);
                     jobsAdapter.notifyDataSetChanged();
                     jobsAdapter.setLoaded();
                 }
@@ -251,6 +254,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == AppConstant.FRAGMENT_CODE) {
+                jobsList.clear();
                 if (mIsCity) {
                     mCityId = String.valueOf(data.getIntExtra("cityId", 0));
                     mCityName = data.getStringExtra("cityName");
@@ -327,6 +331,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         bundle.putBoolean(AppConstant.VISIBLE_CONDITION, visibleCondition);
         bundle.putString("mCityName", mCityName);
         bundle.putString("mCarrerName", mCarrerName);
+        bundle.putParcelableArrayList("jobsList", jobsList);
     }
 
     @Override
@@ -335,6 +340,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         visibleSearch = bundle.getBoolean(AppConstant.VISIBLE_SEARCH);
         mCarrerName = bundle.getString("mCarrerName");
         mCityName = bundle.getString("mCityName");
+        jobsList = bundle.getParcelableArrayList("jobsList");
     }
 
 

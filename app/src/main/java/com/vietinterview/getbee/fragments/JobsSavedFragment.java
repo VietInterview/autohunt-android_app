@@ -34,17 +34,16 @@ import butterknife.BindView;
 public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
     @BindView(R.id.rcvSavedJob)
     RecyclerView rcvSavedJob;
+    @BindView(R.id.swipe_container)
+    SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView.LayoutManager layoutManager;
-    public MyJobsSavedAdapter adapter;
+    private MyJobsSavedAdapter adapter;
     private ArrayList<JobList> jobsList = new ArrayList<>();
     private ArrayList<JobList> jobsListServer = new ArrayList<>();
     private GetSavedSearchJobsRequest getSavedSearchJobsRequest;
-    @BindView(R.id.swipe_container)
-    SwipeRefreshLayout mSwipeRefreshLayout;
-    int mPage = 0;
+    private int mPage = 0;
     private String mCarrerId = "0";
     private String mCityId = "0";
-    private View mView;
 
     public static JobsSavedFragment newInstance(String cityId, String carrerId) {
         JobsSavedFragment fm = new JobsSavedFragment();
@@ -62,25 +61,10 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-        mView = root;
         rcvSavedJob.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         rcvSavedJob.setLayoutManager(layoutManager);
         rcvSavedJob.setItemAnimator(new DefaultItemAnimator());
-        rcvSavedJob.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            @Override
-            public void onScrolled(RecyclerView rcvSavedJob, int dx, int dy) {
-                super.onScrolled(rcvSavedJob, dx, dy);
-                if (dy > 0) {
-//                    titleHeader.setVisibility(View.GONE);
-//                    fab.hide();
-                } else {
-//                    titleHeader.setVisibility(View.VISIBLE);
-//                    fab.show();
-                }
-            }
-        });
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
                 android.R.color.holo_green_dark,
@@ -130,14 +114,12 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
         if (jobsListServer.size() >= ApiConstant.LIMIT) {
             mPage++;
             getSavedSearchJob(mCarrerId, mCityId, "", mPage);
-            adapter.setOnLoadMoreListener(JobsSavedFragment.this);
         }
     }
 
     public void getSavedSearchJob(String careerId, String cityId, String jobtile, final int page) {
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
             showCoverNetworkLoading();
-
         getSavedSearchJobsRequest = new GetSavedSearchJobsRequest(careerId, cityId, String.valueOf(ApiConstant.LIMIT), jobtile, page);
         getSavedSearchJobsRequest.callRequest(getActivity(), new ApiObjectCallBack<JobsResponse, ErrorResponse>() {
 
@@ -149,16 +131,13 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
                     mSwipeRefreshLayout.setRefreshing(false);
                     hideCoverNetworkLoading();
                     if (page == 0) jobsList.clear();
-                    else {
-//                    jobsList.remove(jobsList.size() - 1);
-                        adapter.notifyItemRemoved(jobsList.size());
-                    }
+                    else adapter.notifyItemRemoved(jobsList.size());
+                    jobsList.addAll(data.getJobList());
                     if (page == 0) {
                         adapter = new MyJobsSavedAdapter(rcvSavedJob, jobsList, data.getTotal(), JobsSavedFragment.this, getActivity(), true);
                         rcvSavedJob.setAdapter(adapter);
                     }
                     adapter.setOnLoadMoreListener(JobsSavedFragment.this);
-                    jobsList.addAll(data.getJobList());
                     adapter.notifyDataSetChanged();
                     adapter.setLoaded();
                 }
@@ -167,8 +146,7 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
             @Override
             public void onFail(int failCode, ErrorResponse dataFail, List<ErrorResponse> dataArrayList, String message) {
                 if (isAdded()) {
-                    if (mSwipeRefreshLayout != null)
-                        mSwipeRefreshLayout.setRefreshing(false);
+                    mSwipeRefreshLayout.setRefreshing(false);
                     hideCoverNetworkLoading();
                     DialogUtil.showDialog(getActivity(), "Thông báo", message);
                 }

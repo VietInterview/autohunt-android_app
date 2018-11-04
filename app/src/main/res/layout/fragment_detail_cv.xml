@@ -26,6 +26,7 @@
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/llFooter"
             android:animateLayoutChanges="true">
 
             <android.support.design.widget.AppBarLayout
@@ -62,7 +63,6 @@
                 android:id="@+id/scrollViewContent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/llFooter"
                 android:layout_below="@+id/appbar"
                 android:background="@android:color/transparent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">

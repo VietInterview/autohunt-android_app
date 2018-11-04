@@ -19,6 +19,7 @@ import com.vietinterview.getbee.adapter.MyCVChoiceAdapter;
 import com.vietinterview.getbee.api.request.BaseRequest;
 import com.vietinterview.getbee.api.request.SearchMyCVRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
+import com.vietinterview.getbee.api.response.detailjob.DetailJobResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.api.response.listcv.CVResponse;
 import com.vietinterview.getbee.api.response.listcv.CvList;
@@ -47,22 +48,22 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
     SwipeRefreshLayout mSwipeRefreshLayout;
     private MyCVChoiceAdapter myCVChoiceAdapter;
     private SearchMyCVRequest searchMyCVRequest;
-    private JobList mJobList;
+    private DetailJobResponse detailJobResponse;
     private int mPage = 0;
     private ArrayList<CvList> cvLists = new ArrayList<>();
     private ArrayList<CvList> cvListsServer = new ArrayList<>();
 
-    public static ChoiceCVFragment newInstance(JobList jobList) {
+    public static ChoiceCVFragment newInstance(DetailJobResponse detailJobResponse) {
         ChoiceCVFragment fm = new ChoiceCVFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("jobList", jobList);
+        bundle.putParcelable("detailJobResponse", detailJobResponse);
         fm.setArguments(bundle);
         return fm;
     }
 
     @Override
     protected void getArgument(Bundle bundle) {
-        mJobList = bundle.getParcelable("jobList");
+        detailJobResponse = bundle.getParcelable("detailJobResponse");
     }
 
     @Override
@@ -106,13 +107,10 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
                     cvListsServer.clear();
                     cvListsServer.addAll(data.getCvList());
                     if (page == 0) cvLists.clear();
-                    else {
-//                    jobsList.remove(jobsList.size() - 1);
-                        myCVChoiceAdapter.notifyItemRemoved(cvLists.size());
-                    }
+                    else myCVChoiceAdapter.notifyItemRemoved(cvLists.size());
                     cvLists.addAll(data.getCvList());
                     if (page == 0) {
-                        myCVChoiceAdapter = new MyCVChoiceAdapter(recyclerView, getActivity(),data.getTotal(), mJobList, cvLists, ChoiceCVFragment.this);
+                        myCVChoiceAdapter = new MyCVChoiceAdapter(recyclerView, getActivity(), data.getTotal(), detailJobResponse, cvLists, ChoiceCVFragment.this);
                         myCVChoiceAdapter.setOnLoadMoreListener(ChoiceCVFragment.this);
                         recyclerView.setAdapter(myCVChoiceAdapter);
                     }
