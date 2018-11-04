@@ -189,6 +189,8 @@ public class DetailCVFragment extends BaseFragment {
                         if (isAdded()) {
                             mNotifydialog.dismiss();
                             hideCoverNetworkLoading();
+                            detailJobResponse.setCollStatus(2);
+                            getEventBaseFragment().refreshHome();
                             DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.hunt_send_cv_noti), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -228,6 +230,8 @@ public class DetailCVFragment extends BaseFragment {
                         if (isAdded()) {
                             mNotifydialog.dismiss();
                             hideCoverNetworkLoading();
+                            detailJobResponse.setCollStatus(2);
+                            getEventBaseFragment().refreshHome();
                             DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.hunt_send_cv_noti), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
