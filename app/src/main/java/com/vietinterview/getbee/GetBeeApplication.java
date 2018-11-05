@@ -39,9 +39,7 @@ public class GetBeeApplication extends Application {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-
         sDefSystemLanguage = newConfig.locale.getLanguage();
-        DebugLog.showLogCat(sDefSystemLanguage);
     }
 
     public static SharedPrefUtils getSharedPreferences() {

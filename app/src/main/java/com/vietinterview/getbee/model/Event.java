@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.vietinterview.getbee.callback.OnChangeStepExpListener;
+import com.vietinterview.getbee.callback.OnCloseSwipeListener;
 import com.vietinterview.getbee.callback.OnFillBackgroundListener;
 import com.vietinterview.getbee.callback.OnRefreshHomeListener;
 import com.vietinterview.getbee.callback.OnRefreshMyCVSavedListener;
@@ -37,6 +38,7 @@ public class Event implements Parcelable {
     private OnSwitchToFourListener onSwitchToFourListener;
     private OnSwitchToFiveListener onSwitchToFiveListener;
     private OnSwitchToSixListener onSwitchToSixListener;
+    private OnCloseSwipeListener onCloseSwipeListener;
 
     protected Event(Parcel in) {
     }
@@ -56,6 +58,10 @@ public class Event implements Parcelable {
             return new Event[size];
         }
     };
+
+    public void setOnCloseSwipeListener(OnCloseSwipeListener onCloseSwipeListener) {
+        this.onCloseSwipeListener = onCloseSwipeListener;
+    }
 
     public void setOnSwitchToOneListener(OnSwitchToOneListener onSwitchToOneListener) {
         this.onSwitchToOneListener = onSwitchToOneListener;
@@ -194,6 +200,12 @@ public class Event implements Parcelable {
     public void setSwitchToSix() {
         if (this.onSwitchToSixListener != null) {
             this.onSwitchToSixListener.onSwitchToSix();
+        }
+    }
+
+    public void closeSwipe() {
+        if (this.onCloseSwipeListener != null) {
+            this.onCloseSwipeListener.onCloseSwipe();
         }
     }
 

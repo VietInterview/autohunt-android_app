@@ -127,11 +127,11 @@ public class InfoDetailCVFragment extends BaseFragment {
         llAdd.setVisibility(detailCVResponse.getAddress() != null ? View.VISIBLE : View.GONE);
         llCity.setVisibility(detailCVResponse.getCity() != null ? View.VISIBLE : View.GONE);
         llSignle.setVisibility(detailCVResponse.getMaritalStatus() != null ? View.VISIBLE : View.GONE);
-        llPositionWish.setVisibility(detailCVResponse.getCvTitle() != null ? View.VISIBLE : View.GONE);
+        llPositionWish.setVisibility(detailCVResponse.getDesiredPosition() != null ? View.VISIBLE : View.GONE);
         llLevelNow.setVisibility(detailCVResponse.getCurrentLevel() != null ? View.VISIBLE : View.GONE);
         llLevelWish.setVisibility(detailCVResponse.getDesiredLevel() != null ? View.VISIBLE : View.GONE);
-        llCarrer.setVisibility(detailCVResponse.getCareerName() != null ? View.VISIBLE : View.GONE);
-        llAddWork.setVisibility(detailCVResponse.getJobListcityName() != null ? View.VISIBLE : View.GONE);
+        llCarrer.setVisibility(detailCVResponse.getLstCareer().size() > 0 ? View.VISIBLE : View.GONE);
+        llAddWork.setVisibility(detailCVResponse.getLstJobCity().size() > 0 ? View.VISIBLE : View.GONE);
         llEducation.setVisibility(detailCVResponse.getEducationLevel() != null ? View.VISIBLE : View.GONE);
         llExp.setVisibility(detailCVResponse.getExperienceYear() != null ? View.VISIBLE : View.GONE);
         llSalary.setVisibility(detailCVResponse.getDesiredSalary() != null ? View.VISIBLE : View.GONE);
@@ -154,11 +154,27 @@ public class InfoDetailCVFragment extends BaseFragment {
                 tvSignle.setText(getResources().getString(R.string.have_married));
             }
         }
-        tvPositionWish.setText(detailCVResponse.getCvTitle());
+        tvPositionWish.setText(detailCVResponse.getDesiredPosition());
         tvLevelNow.setText(detailCVResponse.getCurrentLevel().getName());
         tvLevelWish.setText(detailCVResponse.getDesiredLevel().getName());
-        tvCarrer.setText(detailCVResponse.getCareerName());
-        tvAddWork.setText(detailCVResponse.getJobListcityName());
+        StringBuilder s0 = new StringBuilder("");
+        for (int i = 0; i < detailCVResponse.getLstCareer().size(); i++) {
+            if (i != detailCVResponse.getLstCareer().size() - 1) {
+                s0.append(detailCVResponse.getLstCareer().get(i).getName() + ", ");
+            } else {
+                s0.append(detailCVResponse.getLstCareer().get(i).getName() + "");
+            }
+        }
+        tvCarrer.setText(s0.toString());
+        StringBuilder s = new StringBuilder("");
+        for (int i = 0; i < detailCVResponse.getLstJobCity().size(); i++) {
+            if (i != detailCVResponse.getLstJobCity().size() - 1) {
+                s.append(detailCVResponse.getLstJobCity().get(i).getName() + ", ");
+            } else {
+                s.append(detailCVResponse.getLstJobCity().get(i).getName() + "");
+            }
+        }
+        tvAddWork.setText(s.toString());
         tvEducation.setText(detailCVResponse.getEducationLevel().getName());
         tvExp.setText(detailCVResponse.getExperienceYear().getName());
         tvSalary.setText(StringUtils.filterCurrencyString(detailCVResponse.getDesiredSalary()) + " " + detailCVResponse.getCurrencyName());

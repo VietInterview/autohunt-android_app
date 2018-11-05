@@ -37,4 +37,7 @@ public class ApiConstant {
     public final static String DELETE_MY_CV = BASE_URL + "svccollaborator/api/cvs/delete";
     public final static String GET_DETAIL_CV = BASE_URL + "svccollaborator/api/cvs/getCvById";
     public final static String SUBMIT_CV = BASE_URL + "svccollaborator/api/cvs/submitCvVesionMobile";
+    public final static String GET_MY_PROFILE = BASE_URL + "svccollaborator/api/getProfiles";
+    public final static String UPDATE_MY_PROFILE = BASE_URL + "svccollaborator/api/saveProfile";
+    public final static String CHANGE_PASSWORD = BASE_URL + "api/account/change-password";
 }

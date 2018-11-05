@@ -22,6 +22,7 @@ import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.constant.ApiConstant;
 import com.vietinterview.getbee.utils.DialogUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,7 @@ import butterknife.BindView;
  * Created by hiepnguyennghia on 10/12/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
+public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener, Serializable {
     @BindView(R.id.rcvSavedJob)
     RecyclerView rcvSavedJob;
     @BindView(R.id.swipe_container)

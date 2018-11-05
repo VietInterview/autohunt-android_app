@@ -39,6 +39,7 @@ import com.vietinterview.getbee.api.response.detailjob.DetailJobResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnSetHeightViewListener;
+import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
@@ -107,12 +108,13 @@ public class DetailJobFragment extends BaseFragment {
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         getEventBaseFragment().doFillBackground(getResources().getString(R.string.detail_job));
+        GlobalDefine.currentFragment = this;
         setCustomToolbar(true);
         getEventBaseFragment().setOnSetHeightViewListener(new OnSetHeightViewListener() {
             @Override
             public void onSetHeightView(int height) {
                 ViewGroup.LayoutParams params = viewPager.getLayoutParams();
-                params.height = height;
+                params.height = height + 300;
                 viewPager.requestLayout();
             }
         });

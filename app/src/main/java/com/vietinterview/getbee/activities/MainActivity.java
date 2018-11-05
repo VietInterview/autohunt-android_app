@@ -24,9 +24,14 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.api.request.GetMyProfileRequest;
+import com.vietinterview.getbee.api.response.ErrorResponse;
+import com.vietinterview.getbee.api.response.myprofile.MyProfileResponse;
+import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnFillBackgroundListener;
 import com.vietinterview.getbee.callback.OnSetTextGreetingListener;
 import com.vietinterview.getbee.callback.OnShowLogoListener;
+import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.customview.CircularTextView;
 import com.vietinterview.getbee.customview.CustomTypefaceSpan;
 import com.vietinterview.getbee.fragments.HomeFragment;
@@ -35,7 +40,10 @@ import com.vietinterview.getbee.fragments.MyCVFragment;
 import com.vietinterview.getbee.fragments.MyJobFragment;
 import com.vietinterview.getbee.fragments.MyProfileFragment;
 import com.vietinterview.getbee.fragments.RegitsFragment;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -54,9 +62,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public CoordinatorLayout mainview;
     TextView tvGreeting;
     public ActionBarDrawerToggle toggle;
-
+    GetMyProfileRequest getMyProfileRequest;
     CircularTextView slideshow;
     CircularTextView gallery;
+    MyProfileResponse myProfileResponse;
 
     @Override
     public int setContentViewId() {
@@ -97,15 +106,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
             }
         });
-        if (AccountManager.getUserInfoBean() != null) {
-            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-            navigationView.setCheckedItem(R.id.nav_home);
-            tvGreeting.setText(getResources().getString(R.string.greeting) + AccountManager.getUserInfoBean().name + "!");
-            FragmentUtil.replaceFragment(this, new HomeFragment(), null);
-        } else {
-            boolean isLogin = getIntent().getBooleanExtra("isLogin", true);
-            FragmentUtil.replaceFragment(MainActivity.this, isLogin ? new LoginFragment() : new RegitsFragment(), null);
-        }
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.app_name, R.string.app_name) {
             public void onDrawerClosed(View view) {
                 supportInvalidateOptionsMenu();
@@ -154,6 +154,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onClick(View v) {
                 AccountManager.logout();
+                myProfileResponse = null;
                 drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 FragmentUtil.replaceFragment(MainActivity.this, new LoginFragment(), null);
                 drawer.closeDrawer(GravityCompat.START);
@@ -206,10 +207,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void onResume() {
         super.onResume();
+        if (AccountManager.getUserInfoBean() != null) {
+            if (GlobalDefine.currentFragment == null) {
+                getMyProfile(false);
+            } else if (GlobalDefine.currentFragment instanceof HomeFragment) {
+                getMyProfile(false);
+            }
+        } else {
+            boolean isLogin = getIntent().getBooleanExtra("isLogin", true);
+            FragmentUtil.replaceFragment(MainActivity.this, isLogin ? new LoginFragment() : new RegitsFragment(), null);
+        }
     }
 
     @Override
-    public void onBackPressed() {// first ask your fragments to handle back-pressed event
+    public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -222,17 +233,54 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         int id = item.getItemId();
         if (id == R.id.nav_home) {
             FragmentUtil.replaceFragment(this, new HomeFragment(), null);
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
         } else if (id == R.id.nav_job) {
             FragmentUtil.replaceFragment(this, new MyJobFragment(), null);
+
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
         } else if (id == R.id.nav_cv) {
             FragmentUtil.replaceFragment(this, new MyCVFragment(), null);
-        } else if (id == R.id.nav_profile) {
-            FragmentUtil.replaceFragment(this, new MyProfileFragment().newInstance("MyProfileFragment"), null);
-        }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+        } else if (id == R.id.nav_profile) {
+            if (myProfileResponse == null) {
+                getMyProfile(true);
+            } else {
+                FragmentUtil.replaceFragment(MainActivity.this, new MyProfileFragment().newInstance(myProfileResponse), null);
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        }
         return true;
     }
 
+    public void getMyProfile(final boolean isGoToProfile) {
+        getMyProfileRequest = new GetMyProfileRequest();
+        getMyProfileRequest.callRequest(MainActivity.this, new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
+            @Override
+            public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
+                if (isGoToProfile) {
+                    myProfileResponse = dataSuccess;
+                    FragmentUtil.replaceFragment(MainActivity.this, new MyProfileFragment().newInstance(myProfileResponse), null);
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                } else {
+                    AccountManager.getUserInfoBean().name = dataSuccess.getFullNameColl();
+                    myProfileResponse = dataSuccess;
+                    drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                    navigationView.setCheckedItem(R.id.nav_home);
+                    tvGreeting.setText(getResources().getString(R.string.greeting) + AccountManager.getUserInfoBean().name + "!");
+                    FragmentUtil.replaceFragment(MainActivity.this, new HomeFragment(), null);
+                }
+            }
+
+            @Override
+            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+
+            }
+        });
+    }
 }

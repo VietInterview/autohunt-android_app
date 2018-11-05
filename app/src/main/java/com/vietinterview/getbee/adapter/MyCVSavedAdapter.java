@@ -22,6 +22,7 @@ import com.vietinterview.getbee.api.request.DeleteCVRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.listcv.CvList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.callback.OnCloseSwipeListener;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.customview.NunitoRegularButton;
 import com.vietinterview.getbee.fragments.BaseFragment;
@@ -38,7 +39,7 @@ import java.util.List;
  * created by tindle
  * created time 16/8/12 下午10:55
  */
-public class MyCVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MyCVSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private enum SwipedState {
         SHOWING_PRIMARY_CONTENT,
@@ -58,7 +59,7 @@ public class MyCVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private BaseFragment baseFragment;
     private int mTotal;
 
-    public MyCVAdapter(RecyclerView recyclerView, Context context, int total, ArrayList<CvList> cvLists, BaseFragment homeFragment) {
+    public MyCVSavedAdapter(RecyclerView recyclerView, Context context, int total, ArrayList<CvList> cvLists, BaseFragment homeFragment) {
         this.cvLists = cvLists;
         this.mContext = context;
         this.mTotal = total;
@@ -131,8 +132,13 @@ public class MyCVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailCVFragment().newInstance(null, cvLists.get(position).getId()), null);
                 }
             });
+//            baseFragment.getEventBaseFragment().setOnCloseSwipeListener(new OnCloseSwipeListener() {
+//                @Override
+//                public void onCloseSwipe() {
+//                    ((ViewPager) ((MyViewHolder) holder).mView.findViewById(R.id.viewPager)).setCurrentItem(0);
+//                }
+//            });
             ((ViewPager) ((MyViewHolder) holder).mView.findViewById(R.id.viewPager)).setCurrentItem(mItemSwipedStates.get(position).ordinal());
-//            ((ViewPager) ((MyViewHolder) holder).mView).setCurrentItem(mItemSwipedStates.get(position).ordinal());
             if (position % 2 == 0) {
                 ((RelativeLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.row_not_white));
             } else {

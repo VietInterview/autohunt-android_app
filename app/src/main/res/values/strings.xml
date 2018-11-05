@@ -171,4 +171,12 @@
     <string name="cvnotfound">CV không tồn tại</string>
     <string name="cvalreadysubmitjob">CV đã được apply vào job</string>
     <string name="no_cv_upload">Bạn chưa upload CV nào. Hãy nhanh tay upload CV để kiếm thêm thu nhập</string>
+    <string name="save_profile_success">Lưu thông tin thành công</string>
+    <string name="please_input_old_pass">Xin hãy nhập mật khẩu cũ</string>
+    <string name="please_input_new_pass">Xin hãy nhập mật khẩu mới</string>
+    <string name="please_input_retype_pass">Xin hãy nhập lại mật khẩu mới</string>
+    <string name="compare_new_retype_pass">Mật khẩu mới và mật khẩu nhập lại không giống nhau.</string>
+    <string name="compare_old_new_pass">Mật khẩu mới và cũ không được giống nhau</string>
+    <string name="change_password_success">Thay đổi mật khẩu thành công</string>
+    <string name="change_password_fail">Thay đổi mật khẩu thất bại</string>
 </resources>

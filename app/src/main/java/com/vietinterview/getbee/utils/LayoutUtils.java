@@ -23,12 +23,9 @@ public class LayoutUtils {
     }
 
     public static int getViewHeight(View view) {
-        WindowManager wm =
-                (WindowManager) view.getContext().getSystemService(Context.WINDOW_SERVICE);
+        WindowManager wm = (WindowManager) view.getContext().getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
-
         int deviceWidth;
-
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             Point size = new Point();
             display.getSize(size);
@@ -36,10 +33,9 @@ public class LayoutUtils {
         } else {
             deviceWidth = display.getWidth();
         }
-
         int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(deviceWidth, View.MeasureSpec.AT_MOST);
         int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
         view.measure(widthMeasureSpec, heightMeasureSpec);
-        return view.getMeasuredHeight(); //        view.getMeasuredWidth();
+        return view.getMeasuredHeight();
     }
 }

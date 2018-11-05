@@ -36,6 +36,7 @@ import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.callback.OnRefreshHomeListener;
 import com.vietinterview.getbee.constant.ApiConstant;
 import com.vietinterview.getbee.constant.AppConstant;
+import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.customview.ClearableRegularEditText;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
@@ -154,7 +155,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             mPage = 0;
             strSearch = s.toString();
-            getSearchJob(mCarrerId, mCityId, strSearch.toString(), mPage);
+            getSearchJob(mCarrerId, mCityId, strSearch, mPage);
         }
 
         @Override
@@ -185,6 +186,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @Override
     public void onResume() {
         super.onResume();
+        GlobalDefine.currentFragment = this;
         edtJobTitle.addTextChangedListener(textWatcher);
         if (jobsList.size() == 0)
             getSearchJob(mCarrerId, mCityId, strSearch, mPage);
@@ -222,6 +224,10 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                     if (page == 0) jobsList.clear();
                     mTotal = data.getTotal();
                     jobsList.addAll(data.getJobList());
+                    if (jobsAdapter == null) {
+                        jobsAdapter = new JobsAdapter(recyclerView, jobsList, mTotal, HomeFragment.this, getActivity());
+                        recyclerView.setAdapter(jobsAdapter);
+                    }
                     jobsAdapter.setOnLoadMoreListener(HomeFragment.this);
                     jobsAdapter.notifyDataSetChanged();
                 }

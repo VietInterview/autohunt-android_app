@@ -97,7 +97,7 @@ public class DetailCVFragment extends BaseFragment {
             @Override
             public void onSetHeightView(int height) {
                 ViewGroup.LayoutParams params = viewPager.getLayoutParams();
-                params.height = height;
+                params.height = height + 300;
                 viewPager.requestLayout();
             }
         });

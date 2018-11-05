@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ViewPagerAdapter;
 import com.vietinterview.getbee.constant.AppConstant;
+import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
@@ -64,6 +65,7 @@ public class MyJobFragment extends BaseFragment {
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         getEventBaseFragment().doFillBackground(getResources().getString(R.string.my_job));
+        GlobalDefine.currentFragment = this;
         setCustomToolbar(true);
         setHasOptionsMenu(true);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.underline_tablyaout));

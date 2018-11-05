@@ -25,9 +25,11 @@ import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.api.request.BaseJsonRequest;
+import com.vietinterview.getbee.api.request.GetMyProfileRequest;
 import com.vietinterview.getbee.api.request.LoginRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.login.LoginResponse;
+import com.vietinterview.getbee.api.response.myprofile.MyProfileResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.model.UserInfoBean;
 import com.vietinterview.getbee.utils.FragmentUtil;
@@ -193,6 +195,24 @@ public class LoginFragment extends BaseFragment {
         mForgotPassdialog.show();
     }
 
+    GetMyProfileRequest getMyProfileRequest;
+
+    public void getMyProfile() {
+        getMyProfileRequest = new GetMyProfileRequest();
+        getMyProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
+            @Override
+            public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
+                AccountManager.getUserInfoBean().name = dataSuccess.getFullNameColl();
+                getEventBaseFragment().setTextGreeting(AccountManager.getUserInfoBean().name);
+            }
+
+            @Override
+            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+
+            }
+        });
+    }
+
     @OnClick(R.id.btnLogin)
     public void onbtnLoginClick() {
         if (edtEmail.getText().toString().equalsIgnoreCase("")) {
@@ -213,10 +233,9 @@ public class LoginFragment extends BaseFragment {
                     if (status == 200) {
                         UserInfoBean userInfoBean = new UserInfoBean();
                         userInfoBean.nickname = edtEmail.getText().toString().trim();
-                        userInfoBean.name = edtEmail.getText().toString().trim().split("[$&<@%*]")[0];
                         userInfoBean.access_token = data.getApiToken();
                         AccountManager.setUserInfoBean(userInfoBean);
-                        getEventBaseFragment().setTextGreeting(AccountManager.getUserInfoBean().name);
+                        getMyProfile();
                         if (getActivity() instanceof MainActivity) {
                             ((MainActivity) getActivity()).drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                         }

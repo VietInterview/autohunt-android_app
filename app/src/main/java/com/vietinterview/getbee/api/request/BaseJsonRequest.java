@@ -100,12 +100,12 @@ public abstract class BaseJsonRequest<T, V> {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 DebugLog.showLogCat(throwable.toString() + " - " + statusCode);
-                mApiObjectCallBack.onFail(statusCode, null, null, responseString);
+                mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
             }
         };
         StringEntity entity = null;
         try {
-            entity = new StringEntity(putJsonParams().toString());
+            entity = new StringEntity(putJsonParams().toString(), "UTF-8");
             DebugLog.jsonFormat(getAbsoluteUrl(), putJsonParams().toString() + " \n" + getAccessToken());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -144,12 +144,12 @@ public abstract class BaseJsonRequest<T, V> {
 //        socketFactory.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 //
 //        client.setSSLSocketFactory(socketFactory);
-        client.addHeader("Content-Type", "application/json");
+        client.addHeader("Content-Type", "application/json;charset=UTF-8");
         client.setResponseTimeout(ApiConstant.REQUEST_TIMEOUT);
         if (getAccessToken() != null) {
             client.addHeader("Authorization", "Bearer " + getAccessToken());
         }
-        client.post(mContext, getAbsoluteUrl(), entity, "application/json", mJsonHttpResponseHandler);
+        client.post(mContext, getAbsoluteUrl(), entity, "application/json;charset=UTF-8", mJsonHttpResponseHandler);
     }
 
     public void cancelRequest() {

@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ViewPagerAdapter;
 import com.vietinterview.getbee.constant.AppConstant;
+import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
 import butterknife.BindView;
@@ -65,6 +66,7 @@ public class MyCVFragment extends BaseFragment {
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         getEventBaseFragment().doFillBackground(getResources().getString(R.string.mycv));
+        GlobalDefine.currentFragment = this;
         setCustomToolbar(true);
         setCustomToolbarVisible(true);
         setHasOptionsMenu(true);
@@ -82,6 +84,7 @@ public class MyCVFragment extends BaseFragment {
                     llStatus.setVisibility(View.GONE);
                 } else if (position == 1) {
                     llStatus.setVisibility(View.VISIBLE);
+                    getEventBaseFragment().refreshMyCV();
                 }
             }
 

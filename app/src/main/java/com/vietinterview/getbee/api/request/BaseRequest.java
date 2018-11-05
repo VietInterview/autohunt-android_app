@@ -46,7 +46,7 @@ public abstract class BaseRequest<T, V> {
         client.setConnectTimeout(ApiConstant.REQUEST_TIMEOUT);
         client.setResponseTimeout(ApiConstant.REQUEST_TIMEOUT);
         if (getAccessToken() != null) {
-            client.addHeader("Content-Type", "application/json");
+            client.addHeader("Content-Type", "application/json;charset=UTF-8");
             client.addHeader("Authorization", "Bearer " + getAccessToken());
         }
         mApiObjectCallBack = tApiObjectCallBack;
@@ -90,7 +90,7 @@ public abstract class BaseRequest<T, V> {
                     mApiObjectCallBack.onFail(statusCode, null, vList, throwable.getMessage());
                 } else {
                     DebugLog.showLogCat(statusCode + "");
-                    mApiObjectCallBack.onFail(statusCode, null, null, throwable.getMessage());
+                    mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
                 }
             }
 
@@ -100,7 +100,7 @@ public abstract class BaseRequest<T, V> {
                 if (errorResponse != null)
                     mApiObjectCallBack.onFail(statusCode, GsonUtils.fromJson(errorResponse.toString(), getResponseFailClass()), null, throwable.getMessage());
                 else {
-                    mApiObjectCallBack.onFail(statusCode, null, null, throwable.getMessage());
+                    mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
                 }
             }
 
@@ -110,7 +110,7 @@ public abstract class BaseRequest<T, V> {
                 mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
             }
         };
-        DebugLog.showLogCat(getAbsoluteUrl() + "\n" + putParams() + "\n" + getAccessToken());
+        DebugLog.showLogCat(getAbsoluteUrl() + "\n" + putParams() + "\nBearer " + getAccessToken());
 //        TrustManagerManipulator.allowAllSSL();
 
 //        KeyStore trustStore = null;

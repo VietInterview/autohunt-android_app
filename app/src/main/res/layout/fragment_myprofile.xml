@@ -36,7 +36,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/fullname"
-                    android:text="Nguyễn Nghĩa Hiệp"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     app:hintAnimationEnabled="true"
@@ -44,6 +43,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <RelativeLayout
+                android:id="@+id/rlChangePass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -188,17 +188,18 @@
 
                 <com.vietinterview.getbee.customview.NunitoTextView
                     android:id="@+id/tvHunt"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/tvTitleHunt"
                     android:layout_alignParentBottom="true"
+                    android:layout_toLeftOf="@+id/imgArrow"
                     android:paddingHorizontal="19dp"
                     android:paddingVertical="8dp"
-                    android:text="IT, Phần mềm"
                     android:textColor="#191830"
                     android:textSize="20sp" />
 
                 <ImageView
+                    android:id="@+id/imgArrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

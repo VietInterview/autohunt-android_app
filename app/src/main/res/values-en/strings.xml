@@ -171,4 +171,12 @@
     <string name="cvnotfound">CV does not exist</string>
     <string name="cvalreadysubmitjob">CV has been applied to the job</string>
     <string name="no_cv_upload">You have not uploaded any CV yet. Quickly upload your resume to earn more income</string>
+    <string name="save_profile_success">Save infomation success</string>
+    <string name="please_input_old_pass">Please enter old password</string>
+    <string name="please_input_new_pass">Please enter a new password</string>
+    <string name="please_input_retype_pass">Please Re-enter a new password</string>
+    <string name="compare_new_retype_pass">New password and re-password must be the same.</string>
+    <string name="compare_old_new_pass">New and old passwords are not the same</string>
+    <string name="change_password_success">Change password sucessfull</string>
+    <string name="change_password_fail">Change password fail</string>
 </resources>

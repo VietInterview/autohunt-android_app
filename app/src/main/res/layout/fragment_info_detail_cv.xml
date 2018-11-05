@@ -3,402 +3,407 @@
 <!--
     Created by Hiep Nguyen Nghia.
     Copyright © 2018 Vietinterview. All rights reserved.
---><!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:nestedScrollingEnabled="true">-->
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/llInfo"
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:nestedScrollingEnabled="true">
 
-    <LinearLayout
-        android:id="@+id/llPhone"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/llInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:nestedScrollingEnabled="true"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_vertical_margin">
+        android:orientation="vertical">
 
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvTitlePhone"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/llPhone"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="@string/phone_number"
-            android:textColor="#505059"
-            android:textSize="18sp" />
+            android:nestedScrollingEnabled="true"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_vertical_margin">
 
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvPhone"
-            android:layout_width="wrap_content"
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvTitlePhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/phone_number"
+                android:textColor="#505059"
+                android:textSize="18sp" />
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="0989421150"
+                android:textColor="#B1B1BA"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llEmail"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="0989421150"
-            android:textColor="#B1B1BA"
-            android:textSize="18sp" />
+            android:orientation="vertical"
+            android:padding="@dimen/activity_vertical_margin">
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvTitleEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="Email"
+                android:textColor="#505059"
+                android:textSize="18sp" />
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="hiep.nguyen@vietinterview.com"
+                android:textColor="#B1B1BA"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llSex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_vertical_margin">
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvTitleGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/sex"
+                android:textColor="#505059"
+                android:textSize="18sp" />
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="Nam"
+                android:textColor="#B1B1BA"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llAdd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_vertical_margin">
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvTitleAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/address"
+                android:textColor="#505059"
+                android:textSize="18sp" />
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvTitleAdd"
+                android:layout_alignParentBottom="true"
+                android:text="B2907, Xuân Mai Tower, Quận Hà Đông, Hà Nội"
+                android:textColor="#B1B1BA"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_vertical_margin">
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvTitleCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/city_province"
+                android:textColor="#505059"
+                android:textSize="18sp" />
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="Hà Nội"
+                android:textColor="#B1B1BA"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llSignle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_vertical_margin">
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvTitleSignle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/married"
+                android:textColor="#505059"
+                android:textSize="18sp" />
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvSignle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:textColor="#B1B1BA"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llPositionWish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_vertical_margin">
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvTitlePositionWish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/position_wish"
+                android:textColor="#505059"
+                android:textSize="18sp" />
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvPositionWish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="Chuyên gia"
+                android:textColor="#B1B1BA"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llLevelNow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_vertical_margin">
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvTitleLevelNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/level_current"
+                android:textColor="#505059"
+                android:textSize="18sp" />
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvLevelNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="Quản lý"
+                android:textColor="#B1B1BA"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llLevelWish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_vertical_margin">
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvTitleLevelWish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/level_wish"
+                android:textColor="#505059"
+                android:textSize="18sp" />
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvLevelWish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="Chuyên gia"
+                android:textColor="#B1B1BA"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llCarrer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_vertical_margin">
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvTitleCarrer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/carrer"
+                android:textColor="#505059"
+                android:textSize="18sp" />
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvCarrer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="IT - Phần mềm, CNTT, Viễn thông"
+                android:textColor="#B1B1BA"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llAddWork"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_vertical_margin">
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvTitleAddWork"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/location_work"
+                android:textColor="#505059"
+                android:textSize="18sp" />
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvAddWork"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="Hà Nội"
+                android:textColor="#B1B1BA"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llEducation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_vertical_margin">
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvTitleEducation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/level"
+                android:textColor="#505059"
+                android:textSize="18sp" />
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvEducation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="Đại Học"
+                android:textColor="#B1B1BA"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llExp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_vertical_margin">
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvTitleExp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/exp_years"
+                android:textColor="#505059"
+                android:textSize="18sp" />
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvExp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="10 năm"
+                android:textColor="#B1B1BA"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llSalary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_vertical_margin">
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvTitleSalary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/salary_wish"
+                android:textColor="#505059"
+                android:textSize="18sp" />
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvSalary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="1,2000 USD"
+                android:textColor="#B1B1BA"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llTarget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_vertical_margin">
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvTitleTarget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/target"
+                android:textColor="#505059"
+                android:textSize="18sp" />
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvTarget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="không có dữ liệu"
+                android:textColor="#B1B1BA"
+                android:textSize="18sp" />
+        </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_vertical_margin">
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvTitleEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="Email"
-            android:textColor="#505059"
-            android:textSize="18sp" />
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="hiep.nguyen@vietinterview.com"
-            android:textColor="#B1B1BA"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llSex"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_vertical_margin">
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvTitleGender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="@string/sex"
-            android:textColor="#505059"
-            android:textSize="18sp" />
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvGender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="Nam"
-            android:textColor="#B1B1BA"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llAdd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_vertical_margin">
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvTitleAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="@string/address"
-            android:textColor="#505059"
-            android:textSize="18sp" />
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvTitleAdd"
-            android:layout_alignParentBottom="true"
-            android:text="B2907, Xuân Mai Tower, Quận Hà Đông, Hà Nội"
-            android:textColor="#B1B1BA"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llCity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_vertical_margin">
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvTitleCity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="@string/city_province"
-            android:textColor="#505059"
-            android:textSize="18sp" />
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvCity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="Hà Nội"
-            android:textColor="#B1B1BA"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llSignle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_vertical_margin">
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvTitleSignle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="@string/married"
-            android:textColor="#505059"
-            android:textSize="18sp" />
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvSignle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:textColor="#B1B1BA"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llPositionWish"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_vertical_margin">
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvTitlePositionWish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="@string/position_wish"
-            android:textColor="#505059"
-            android:textSize="18sp" />
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvPositionWish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="Chuyên gia"
-            android:textColor="#B1B1BA"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llLevelNow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_vertical_margin">
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvTitleLevelNow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="@string/level_current"
-            android:textColor="#505059"
-            android:textSize="18sp" />
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvLevelNow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="Quản lý"
-            android:textColor="#B1B1BA"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llLevelWish"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_vertical_margin">
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvTitleLevelWish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="@string/level_wish"
-            android:textColor="#505059"
-            android:textSize="18sp" />
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvLevelWish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="Chuyên gia"
-            android:textColor="#B1B1BA"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llCarrer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_vertical_margin">
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvTitleCarrer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="@string/carrer"
-            android:textColor="#505059"
-            android:textSize="18sp" />
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvCarrer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="IT - Phần mềm, CNTT, Viễn thông"
-            android:textColor="#B1B1BA"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llAddWork"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_vertical_margin">
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvTitleAddWork"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="@string/location_work"
-            android:textColor="#505059"
-            android:textSize="18sp" />
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvAddWork"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="Hà Nội"
-            android:textColor="#B1B1BA"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llEducation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_vertical_margin">
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvTitleEducation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="@string/level"
-            android:textColor="#505059"
-            android:textSize="18sp" />
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvEducation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="Đại Học"
-            android:textColor="#B1B1BA"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llExp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_vertical_margin">
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvTitleExp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="@string/exp_years"
-            android:textColor="#505059"
-            android:textSize="18sp" />
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvExp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="10 năm"
-            android:textColor="#B1B1BA"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llSalary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_vertical_margin">
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvTitleSalary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="@string/salary_wish"
-            android:textColor="#505059"
-            android:textSize="18sp" />
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvSalary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="1,2000 USD"
-            android:textColor="#B1B1BA"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llTarget"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_vertical_margin">
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvTitleTarget"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="@string/target"
-            android:textColor="#505059"
-            android:textSize="18sp" />
-
-        <com.vietinterview.getbee.customview.NunitoTextView
-            android:id="@+id/tvTarget"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="không có dữ liệu"
-            android:textColor="#B1B1BA"
-            android:textSize="18sp" />
-    </LinearLayout>
-</LinearLayout><!--</ScrollView>-->
+</ScrollView>
