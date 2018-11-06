@@ -103,7 +103,7 @@
     <string name="login">Đăng nhập</string>
     <string name="login_with_acc">Đăng nhập bằng tài khoản của bạn</string>
     <string name="forgot_pass">Bạn quên mật khẩu?</string>
-    <string name="not_have_acc">Bạn chưa có tài khoản?</string>
+    <string name="not_have_acc">Bạn chưa có tài khoản? </string>
     <string name="regist"> Đăng Ký</string>
     <string name="fullname">Họ và tên</string>
     <string name="pass">Mật khẩu</string>

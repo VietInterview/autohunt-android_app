@@ -3,8 +3,11 @@ package com.vietinterview.getbee.fragments;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,13 +27,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.adapter.JobsAdapter;
 import com.vietinterview.getbee.api.request.BaseRequest;
+import com.vietinterview.getbee.api.request.GetMyProfileRequest;
 import com.vietinterview.getbee.api.request.GetSearchJobsRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.api.response.jobs.JobsResponse;
+import com.vietinterview.getbee.api.response.myprofile.MyProfileResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.callback.OnRefreshHomeListener;
@@ -122,16 +129,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (dy > 0) {
-                } else {
-                }
-            }
-        });
         edtJobTitle.setImeOptions(EditorInfo.IME_ACTION_DONE);
         edtJobTitle.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -183,6 +180,14 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     protected void initData() {
     }
 
+    int lastFirstVisiblePosition = 0;
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        lastFirstVisiblePosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -192,6 +197,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             getSearchJob(mCarrerId, mCityId, strSearch, mPage);
         else {
             recyclerView.setAdapter(jobsAdapter);
+            ((LinearLayoutManager) recyclerView.getLayoutManager()).scrollToPosition(lastFirstVisiblePosition);
+
         }
     }
 
@@ -205,6 +212,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             @Override
             public void onSuccess(int status, JobsResponse data, List<JobsResponse> dataArrayList, String message) {
                 if (isAdded()) {
+                    if (AccountManager.getUserInfoBean().getName() == null)
+                        getMyProfile();
                     jobsListServer.clear();
                     jobsListServer.addAll(data.getJobList());
                     mSwipeRefreshLayout.setRefreshing(false);
@@ -245,16 +254,36 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         });
     }
 
+    GetMyProfileRequest getMyProfileRequest;
+
+    public void getMyProfile() {
+        showCoverNetworkLoading();
+        getMyProfileRequest = new GetMyProfileRequest();
+        getMyProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
+            @Override
+            public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
+                hideCoverNetworkLoading();
+                AccountManager.getUserInfoBean().setName(dataSuccess.getFullNameColl());
+                getAct().getTvGreeting().setText(getResources().getString(R.string.greeting) + AccountManager.getUserInfoBean().getName() + "!");
+            }
+
+            @Override
+            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+
+            }
+        });
+    }
+
     @OnClick(R.id.llCarrer)
     public void onllCarrerClick() {
         mIsCity = false;
-        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(false, mCarrerId, mCarrerName), null);
+        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(false, mCarrerId, mCarrerName, true), null);
     }
 
     @OnClick(R.id.llAdd)
     public void onllAddClick() {
         mIsCity = true;
-        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(true, mCityId, mCityName), null);
+        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(true, mCityId, mCityName, true), null);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

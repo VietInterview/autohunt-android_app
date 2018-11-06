@@ -1,6 +1,7 @@
 package com.vietinterview.getbee.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -19,7 +20,9 @@ import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.DeleteCVRequest;
+import com.vietinterview.getbee.api.request.GetDetailCVRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
+import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 import com.vietinterview.getbee.api.response.listcv.CvList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnCloseSwipeListener;
@@ -29,6 +32,7 @@ import com.vietinterview.getbee.fragments.BaseFragment;
 import com.vietinterview.getbee.fragments.DetailCVFragment;
 import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.DebugLog;
+import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
 import java.util.ArrayList;
@@ -55,6 +59,7 @@ public class MyCVSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private int visibleThreshold = 5;
     private int lastVisibleItem, totalItemCount;
     private OnLoadMoreListener onLoadMoreListener;
+    private GetDetailCVRequest getDetailCVRequest;
     private boolean isLoading;
     private BaseFragment baseFragment;
     private int mTotal;
@@ -129,7 +134,7 @@ public class MyCVSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             ((RelativeLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailCVFragment().newInstance(null, cvLists.get(position).getId()), null);
+                    getDetailCV(cvLists.get(position).getId());
                 }
             });
 //            baseFragment.getEventBaseFragment().setOnCloseSwipeListener(new OnCloseSwipeListener() {
@@ -204,10 +209,31 @@ public class MyCVSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return cvLists.size();
     }
 
-    public void addItem(CvList cvList) {
-        cvLists.add(cvList);
-        mItemSwipedStates.add(SwipedState.SHOWING_PRIMARY_CONTENT);
-        notifyItemInserted(cvLists.size());
+    public void getDetailCV(int id) {
+        baseFragment.showCoverNetworkLoading();
+        getDetailCVRequest = new GetDetailCVRequest(id);
+        getDetailCVRequest.callRequest(baseFragment.getActivity(), new ApiObjectCallBack<DetailCVResponse, ErrorResponse>() {
+            @Override
+            public void onSuccess(int status, DetailCVResponse data, List<DetailCVResponse> dataArrayList, String message) {
+                baseFragment.hideCoverNetworkLoading();
+                if (baseFragment.isAdded()) {
+                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailCVFragment().newInstance(null, data), null);
+                }
+            }
+
+            @Override
+            public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
+                baseFragment.hideCoverNetworkLoading();
+                if (baseFragment.isAdded()) {
+                    DialogUtil.showDialog(baseFragment.getActivity(), baseFragment.getResources().getString(R.string.noti_title), message, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            FragmentUtil.popBackStack(baseFragment);
+                        }
+                    });
+                }
+            }
+        });
     }
 
 

@@ -106,7 +106,7 @@ public abstract class BaseJsonRequest<T, V> {
         StringEntity entity = null;
         try {
             entity = new StringEntity(putJsonParams().toString(), "UTF-8");
-            DebugLog.jsonFormat(getAbsoluteUrl(), putJsonParams().toString() + " \n" + getAccessToken());
+            DebugLog.jsonFormat(getAbsoluteUrl(), putJsonParams().toString());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (JSONException e) {

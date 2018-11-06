@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,11 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.api.request.BaseJsonRequest;
 import com.vietinterview.getbee.api.request.BaseRequest;
 import com.vietinterview.getbee.api.request.GetMyProfileRequest;
 import com.vietinterview.getbee.api.request.LoginRequest;
 import com.vietinterview.getbee.api.request.SaveMyProfileRequest;
+import com.vietinterview.getbee.api.response.CareerResponse;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.myprofile.DesideratedCareer;
 import com.vietinterview.getbee.api.response.myprofile.MyProfileResponse;
@@ -54,10 +58,11 @@ public class MyProfileFragment extends BaseFragment {
     NunitoTextInputEditText edtCarrer;
     @BindView(R.id.tvHunt)
     TextView tvHunt;
-    private String mCarrerId = "0";
+    //    private String mCarrerId = "0";
     private String mCarrerName = "";
     MyProfileResponse mMyProfileResponse;
     SaveMyProfileRequest saveMyProfileRequest;
+    GetMyProfileRequest getMyProfileRequest;
 
     public static MyProfileFragment newInstance(MyProfileResponse myProfileResponse) {
         MyProfileFragment fm = new MyProfileFragment();
@@ -78,20 +83,6 @@ public class MyProfileFragment extends BaseFragment {
         GlobalDefine.currentFragment = this;
         setCustomToolbarVisible(true);
         setHasOptionsMenu(true);
-        edtFullName.setText(mMyProfileResponse.getFullNameColl());
-        edtPhone.setText(mMyProfileResponse.getPhoneColl());
-        edtEmail.setText(mMyProfileResponse.getEmailColl());
-        edtAdd.setText(mMyProfileResponse.getAddressColl());
-        edtCarrer.setText(mMyProfileResponse.getCareerColl());
-        if (mMyProfileResponse.getDesideratedCareer() != null) {
-            if (mMyProfileResponse.getDesideratedCareer().size() > 0) {
-                mCarrerName = mMyProfileResponse.getDesideratedCareer().get(0).getName();
-                mCarrerId = String.valueOf(mMyProfileResponse.getDesideratedCareer().get(0).getId());
-                tvHunt.setText(mCarrerName);
-            }
-        } else {
-            tvHunt.setText(mCarrerName);
-        }
     }
 
     @Override
@@ -101,6 +92,32 @@ public class MyProfileFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        if (mMyProfileResponse == null)
+            getMyProfile();
+        else {
+            edtFullName.setText(mMyProfileResponse.getFullNameColl());
+            edtPhone.setText(mMyProfileResponse.getPhoneColl());
+            edtEmail.setText(mMyProfileResponse.getEmailColl());
+            edtAdd.setText(mMyProfileResponse.getAddressColl());
+            edtCarrer.setText(mMyProfileResponse.getCareerColl());
+            if (mMyProfileResponse.getDesideratedCareer() != null) {
+                if (mMyProfileResponse.getDesideratedCareer().size() > 0) {
+                    StringBuilder s0 = new StringBuilder("");
+                    for (int i = 0; i < mMyProfileResponse.getDesideratedCareer().size(); i++) {
+                        if (i != mMyProfileResponse.getDesideratedCareer().size() - 1) {
+                            s0.append(mMyProfileResponse.getDesideratedCareer().get(i).getName() + ", ");
+                        } else {
+                            s0.append(mMyProfileResponse.getDesideratedCareer().get(i).getName() + "");
+                        }
+                    }
+                    mCarrerName = s0.toString();
+//                    mCarrerId = String.valueOf(mMyProfileResponse.getDesideratedCareer().get(0).getId());
+                    tvHunt.setText(mCarrerName);
+                }
+            } else {
+                tvHunt.setText(mCarrerName);
+            }
+        }
     }
 
     @OnClick(R.id.rlChangePass)
@@ -108,15 +125,57 @@ public class MyProfileFragment extends BaseFragment {
         FragmentUtil.pushFragment(getActivity(), MyProfileFragment.this, new ChangePasswordFragment(), null);
     }
 
+    public void getMyProfile() {
+        showCoverNetworkLoading();
+        getMyProfileRequest = new GetMyProfileRequest();
+        getMyProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
+            @Override
+            public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
+                hideCoverNetworkLoading();
+                mMyProfileResponse = dataSuccess;
+                edtFullName.setText(mMyProfileResponse.getFullNameColl());
+                edtPhone.setText(mMyProfileResponse.getPhoneColl());
+                edtEmail.setText(mMyProfileResponse.getEmailColl());
+                edtAdd.setText(mMyProfileResponse.getAddressColl());
+                edtCarrer.setText(mMyProfileResponse.getCareerColl());
+                if (mMyProfileResponse.getDesideratedCareer() != null) {
+                    if (mMyProfileResponse.getDesideratedCareer().size() > 0) {
+                        StringBuilder s0 = new StringBuilder("");
+                        for (int i = 0; i < mMyProfileResponse.getDesideratedCareer().size(); i++) {
+                            if (i != mMyProfileResponse.getDesideratedCareer().size() - 1) {
+                                s0.append(mMyProfileResponse.getDesideratedCareer().get(i).getName() + ", ");
+                            } else {
+                                s0.append(mMyProfileResponse.getDesideratedCareer().get(i).getName() + "");
+                            }
+                        }
+                        mCarrerName = s0.toString();
+//                        mCarrerId = String.valueOf(mMyProfileResponse.getDesideratedCareer().get(0).getId());
+                        tvHunt.setText(mCarrerName);
+                    }
+                } else {
+                    tvHunt.setText(mCarrerName);
+                }
+            }
+
+            @Override
+            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+
+            }
+        });
+    }
+
     public void saveProfile() {
-        Carrer carrer = new Carrer(Integer.parseInt(mCarrerId), mCarrerName);
+        showCoverNetworkLoading();
         ArrayList<Carrer> carrers = new ArrayList<>();
-        carrers.add(carrer);
+        for (int i = 0; i < careerResponses.size(); i++) {
+            carrers.add(new Carrer(careerResponses.get(i).getId(), careerResponses.get(i).getName()));
+        }
         saveMyProfileRequest = new SaveMyProfileRequest(edtFullName.getText().toString().trim(), edtAdd.getText().toString().trim(), edtCarrer.getText().toString().trim(), carrers, edtEmail.getText().toString().trim(), edtPhone.getText().toString().trim());
         saveMyProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
             @Override
             public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
                 if (isAdded()) {
+                    hideCoverNetworkLoading();
                     mMyProfileResponse.setFullNameColl(dataSuccess.getFullNameColl());
                     mMyProfileResponse.setAddressColl(dataSuccess.getAddressColl());
                     mMyProfileResponse.setPhoneColl(dataSuccess.getPhoneColl());
@@ -130,8 +189,16 @@ public class MyProfileFragment extends BaseFragment {
                     edtCarrer.setText(mMyProfileResponse.getCareerColl());
                     if (mMyProfileResponse.getDesideratedCareer() != null) {
                         if (mMyProfileResponse.getDesideratedCareer().size() > 0) {
-                            mCarrerName = mMyProfileResponse.getDesideratedCareer().get(0).getName();
-                            mCarrerId = String.valueOf(mMyProfileResponse.getDesideratedCareer().get(0).getId());
+                            StringBuilder s0 = new StringBuilder("");
+                            for (int i = 0; i < mMyProfileResponse.getDesideratedCareer().size(); i++) {
+                                if (i != mMyProfileResponse.getDesideratedCareer().size() - 1) {
+                                    s0.append(mMyProfileResponse.getDesideratedCareer().get(i).getName() + ", ");
+                                } else {
+                                    s0.append(mMyProfileResponse.getDesideratedCareer().get(i).getName() + "");
+                                }
+                            }
+                            mCarrerName = s0.toString();
+//                            mCarrerId = String.valueOf(mMyProfileResponse.getDesideratedCareer().get(0).getId());
                             tvHunt.setText(mCarrerName);
                         }
                     } else {
@@ -144,6 +211,7 @@ public class MyProfileFragment extends BaseFragment {
             @Override
             public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
                 if (isAdded()) {
+                    hideCoverNetworkLoading();
                     Toast.makeText(getActivity(), getResources().getString(R.string.change_password_fail), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -172,7 +240,7 @@ public class MyProfileFragment extends BaseFragment {
 
     @OnClick(R.id.rlChooseJob)
     public void onChooseJobClick() {
-        FragmentUtil.pushFragment(getActivity(), MyProfileFragment.this, new CarrerOrCityFragment().newInstance(false, mCarrerId, mCarrerName), null);
+        FragmentUtil.pushFragment(getActivity(), MyProfileFragment.this, new CarrerOrCityFragment().newInstance(false, "0", mCarrerName, false), null);
     }
 
     @Override
@@ -212,24 +280,35 @@ public class MyProfileFragment extends BaseFragment {
         return super.onOptionsItemSelected(item);
     }
 
+    ArrayList<CareerResponse> careerResponses = new ArrayList<>();
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == AppConstant.FRAGMENT_CODE) {
-                mCarrerId = String.valueOf(data.getIntExtra("carrerId", 0));
-                mCarrerName = data.getStringExtra("carrerName");
+//                mCarrerId = String.valueOf(data.getIntExtra("carrerId", 0));
+//                mCarrerName = data.getStringExtra("carrerName");
+                careerResponses = data.getParcelableArrayListExtra("arrListCarrer");
                 if (mMyProfileResponse.getDesideratedCareer() != null) {
-                    if (mMyProfileResponse.getDesideratedCareer().size() > 0) {
-                        mMyProfileResponse.getDesideratedCareer().get(0).setId(Integer.parseInt(mCarrerId));
-                        mMyProfileResponse.getDesideratedCareer().get(0).setName(mCarrerName);
-                    } else {
-                        List<DesideratedCareer> desideratedCareers = new ArrayList<>();
-                        desideratedCareers.add(new DesideratedCareer(Integer.parseInt(mCarrerId), mCarrerName));
-                        mMyProfileResponse.setDesideratedCareer(desideratedCareers);
+//                    if (mMyProfileResponse.getDesideratedCareer().size() > 0) {
+//                        mMyProfileResponse.getDesideratedCareer().get(0).setId(Integer.parseInt(mCarrerId));
+//                        mMyProfileResponse.getDesideratedCareer().get(0).setName(mCarrerName);
+//                        mMyProfileResponse.setDesideratedCareer(careerResponses);
+//                    } else {
+//                        List<DesideratedCareer> desideratedCareers = new ArrayList<>();
+//                        desideratedCareers.add(new DesideratedCareer(Integer.parseInt(mCarrerId), mCarrerName));
+//                        mMyProfileResponse.setDesideratedCareer(careerResponses);
+//                    }
+                    List<DesideratedCareer> desideratedCareers = new ArrayList<>();
+                    for (int i = 0; i < careerResponses.size(); i++) {
+                        desideratedCareers.add(new DesideratedCareer(careerResponses.get(i).getId(), careerResponses.get(i).getName()));
                     }
+                    mMyProfileResponse.setDesideratedCareer(desideratedCareers);
                 } else {
                     List<DesideratedCareer> desideratedCareers = new ArrayList<>();
-                    desideratedCareers.add(new DesideratedCareer(Integer.parseInt(mCarrerId), mCarrerName));
+                    for (int i = 0; i < careerResponses.size(); i++) {
+                        desideratedCareers.add(new DesideratedCareer(careerResponses.get(i).getId(), careerResponses.get(i).getName()));
+                    }
                     mMyProfileResponse.setDesideratedCareer(desideratedCareers);
                 }
                 tvHunt.setText(mCarrerName);

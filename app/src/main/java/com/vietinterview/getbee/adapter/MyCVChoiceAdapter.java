@@ -1,7 +1,9 @@
 package com.vietinterview.getbee.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,8 +17,15 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.DeleteCVRequest;
+import com.vietinterview.getbee.api.request.GetDetailCVRequest;
+import com.vietinterview.getbee.api.response.ErrorResponse;
+import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 import com.vietinterview.getbee.api.response.detailjob.DetailJobResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.api.response.listcv.CvList;
@@ -26,6 +35,7 @@ import com.vietinterview.getbee.customview.NunitoRegularButton;
 import com.vietinterview.getbee.fragments.BaseFragment;
 import com.vietinterview.getbee.fragments.DetailCVFragment;
 import com.vietinterview.getbee.utils.DateUtil;
+import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
 import java.util.ArrayList;
@@ -56,6 +66,7 @@ public class MyCVChoiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private boolean isLoading;
     private BaseFragment baseFragment;
     private int mTotal;
+    private GetDetailCVRequest getDetailCVRequest;
 
     public MyCVChoiceAdapter(RecyclerView recyclerView, Context context, int total, DetailJobResponse detailJobResponse, ArrayList<CvList> cvLists, BaseFragment homeFragment) {
         this.cvLists = cvLists;
@@ -130,7 +141,7 @@ public class MyCVChoiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             ((RelativeLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailCVFragment().newInstance(detailJobResponse, cvLists.get(position).getId()), null);
+                    getDetailCV(cvLists.get(position).getId());
                 }
             });
 //            ((ViewPager) ((MyViewHolder) holder).mView).setCurrentItem(mItemSwipedStates.get(position).ordinal());
@@ -203,6 +214,33 @@ public class MyCVChoiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         notifyItemInserted(cvLists.size());
     }
 
+    public void getDetailCV(int id) {
+        baseFragment.showCoverNetworkLoading();
+        getDetailCVRequest = new GetDetailCVRequest(id);
+        getDetailCVRequest.callRequest(baseFragment.getActivity(), new ApiObjectCallBack<DetailCVResponse, ErrorResponse>() {
+            @Override
+            public void onSuccess(int status, DetailCVResponse data, List<DetailCVResponse> dataArrayList, String message) {
+                baseFragment.hideCoverNetworkLoading();
+                if (baseFragment.isAdded()) {
+                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailCVFragment().newInstance(detailJobResponse, data), null);
+
+                }
+            }
+
+            @Override
+            public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
+                baseFragment.hideCoverNetworkLoading();
+                if (baseFragment.isAdded()) {
+                    DialogUtil.showDialog(baseFragment.getActivity(), baseFragment.getResources().getString(R.string.noti_title), message, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            FragmentUtil.popBackStack(baseFragment);
+                        }
+                    });
+                }
+            }
+        });
+    }
 
     class ViewPagerAdapter extends PagerAdapter {
 

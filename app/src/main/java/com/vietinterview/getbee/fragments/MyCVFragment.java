@@ -150,7 +150,7 @@ public class MyCVFragment extends BaseFragment {
         mIsCity = false;
         mIsStatus = false;
         visibleFilter = true;
-        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(false, mCarrerId, mCarrerName), null);
+        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(false, mCarrerId, mCarrerName, true), null);
     }
 
     @OnClick(R.id.llAdd)
@@ -158,7 +158,7 @@ public class MyCVFragment extends BaseFragment {
         mIsCity = true;
         mIsStatus = false;
         visibleFilter = true;
-        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(true, mCityId, mCityName), null);
+        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(true, mCityId, mCityName, true), null);
     }
 
     @OnClick(R.id.llStatus)

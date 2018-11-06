@@ -201,6 +201,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginTop="10dp"
+                android:layout_marginRight="4dp"
                 android:gravity="center"
                 android:text="@string/not_have_acc"
                 android:textColor="@color/black"

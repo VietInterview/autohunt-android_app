@@ -2,6 +2,9 @@ package com.vietinterview.getbee.fragments;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -59,7 +62,54 @@ public class ChangePasswordFragment extends BaseFragment {
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbar(true);
         setHasOptionsMenu(true);
-//        tv_hello.setText(nameFragment);
+        edtOldPass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                imgOldPass.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        edtNewPass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                imgNewPass.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        edtRetype.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                imgReTypePass.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     @Override
@@ -73,13 +123,24 @@ public class ChangePasswordFragment extends BaseFragment {
     }
 
     public void changePassWord() {
+        showCoverNetworkLoading();
         changePasswordRequest = new ChangePasswordRequest(edtOldPass.getText().toString().trim(), edtNewPass.getText().toString().trim());
         changePasswordRequest.callRequest(getActivity(), new ApiObjectCallBack<Object, ErrorChangePassResponse>() {
             @Override
             public void onSuccess(int status, Object dataSuccess, List<Object> listDataSuccess, String message) {
                 if (isAdded()) {
+                    hideCoverNetworkLoading();
                     if (status == 200) {
-                        Toast.makeText(getActivity(), getResources().getString(R.string.change_password_success), Toast.LENGTH_SHORT).show();
+                        myItemShouldBeEnabled = true;
+                        FragmentUtil.popBackStack(ChangePasswordFragment.this);
+                        View toastView = getLayoutInflater().inflate(R.layout.activity_toast_custom_view, null);
+                        TextView textView = toastView.findViewById(R.id.customToastText);
+                        textView.setText(getResources().getString(R.string.change_password_success));
+                        Toast toast = new Toast(getActivity());
+                        toast.setView(toastView);
+                        toast.setDuration(Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
                     }
                 }
             }
@@ -87,10 +148,28 @@ public class ChangePasswordFragment extends BaseFragment {
             @Override
             public void onFail(int status, ErrorChangePassResponse dataFail, List<ErrorChangePassResponse> listDataFail, String message) {
                 if (isAdded()) {
+                    hideCoverNetworkLoading();
                     if (status == 200) {
-                        Toast.makeText(getActivity(), getResources().getString(R.string.change_password_success), Toast.LENGTH_SHORT).show();
+                        myItemShouldBeEnabled = true;
+                        View toastView = getLayoutInflater().inflate(R.layout.activity_toast_custom_view, null);
+                        TextView textView = toastView.findViewById(R.id.customToastText);
+                        textView.setText(getResources().getString(R.string.change_password_success));
+                        Toast toast = new Toast(getActivity());
+                        toast.setView(toastView);
+                        toast.setDuration(Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                        FragmentUtil.popBackStack(ChangePasswordFragment.this);
                     } else {
-                        Toast.makeText(getActivity(), dataFail.getTitle(), Toast.LENGTH_SHORT).show();
+                        myItemShouldBeEnabled = true;
+                        View toastView = getLayoutInflater().inflate(R.layout.activity_toast_custom_view, null);
+                        TextView textView = toastView.findViewById(R.id.customToastText);
+                        textView.setText(dataFail.getTitle());
+                        Toast toast = new Toast(getActivity());
+                        toast.setView(toastView);
+                        toast.setDuration(Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
                     }
                 }
             }
@@ -146,6 +225,21 @@ public class ChangePasswordFragment extends BaseFragment {
     }
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.save);
+
+        if (myItemShouldBeEnabled) {
+            item.setEnabled(true);
+            item.getIcon().setAlpha(255);
+        } else {
+            item.setEnabled(false);
+            item.getIcon().setAlpha(130);
+        }
+    }
+
+    boolean myItemShouldBeEnabled = true;
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.save) {
@@ -166,6 +260,7 @@ public class ChangePasswordFragment extends BaseFragment {
             } else if (StringUtils.isEquals(edtOldPass.getText().toString().trim(), edtNewPass.getText().toString().trim())) {
                 Toast.makeText(getActivity(), getResources().getString(R.string.compare_old_new_pass), Toast.LENGTH_SHORT).show();
             } else {
+                myItemShouldBeEnabled = false;
                 changePassWord();
             }
             return true;

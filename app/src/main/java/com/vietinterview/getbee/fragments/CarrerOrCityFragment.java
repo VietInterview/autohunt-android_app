@@ -64,13 +64,15 @@ public class CarrerOrCityFragment extends BaseFragment {
     List<CityResponse> cityResponses = new ArrayList<>();
     List<CareerResponse> careerResponsesFilter;
     List<CityResponse> cityResponsesFilter;
+    boolean mIsSignleChoice;
 
-    public static CarrerOrCityFragment newInstance(boolean isCity, String Id, String Name) {
+    public static CarrerOrCityFragment newInstance(boolean isCity, String Id, String Name, boolean isSignleChoice) {
         CarrerOrCityFragment fm = new CarrerOrCityFragment();
         Bundle bundle = new Bundle();
         bundle.putBoolean("isCity", isCity);
         bundle.putString(isCity ? "cityId" : "carrerId", Id);
         bundle.putString(isCity ? "cityName" : "carrerName", Name);
+        bundle.putBoolean("isSignleChoice", isSignleChoice);
         fm.setArguments(bundle);
         return fm;
     }
@@ -157,6 +159,7 @@ public class CarrerOrCityFragment extends BaseFragment {
         mIsCity = bundle.getBoolean("isCity");
         mId = bundle.getString(mIsCity ? "cityId" : "carrerId");
         mName = bundle.getString(mIsCity ? "cityName" : "carrerName");
+        mIsSignleChoice = bundle.getBoolean("isSignleChoice");
     }
 
     @Override
@@ -165,7 +168,9 @@ public class CarrerOrCityFragment extends BaseFragment {
             getListCity();
             listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         } else {
-            listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            if (mIsSignleChoice)
+                listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            else listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
             getListCarrer();
         }
     }
@@ -192,7 +197,7 @@ public class CarrerOrCityFragment extends BaseFragment {
         });
     }
 
-    private CareerResponse getSelectedItemsCarrer() {
+    private CareerResponse getSelectedItemCarrer() {
         SparseBooleanArray checkedItems = listView.getCheckedItemPositions();
         CareerResponse careerResponse = null;
         if (checkedItems.size() > 0)
@@ -200,7 +205,22 @@ public class CarrerOrCityFragment extends BaseFragment {
         return careerResponse;
     }
 
-    private CityResponse getSelectedItemsCity() {
+    private ArrayList<CareerResponse> getSelectedItemsCarrer() {
+        ArrayList<CareerResponse> result = new ArrayList<>();
+        SparseBooleanArray checkedItems = listView.getCheckedItemPositions();
+
+        for (int i = 0; i < listView.getCount(); ++i) {
+            if (checkedItems.size() > 0) {
+                if (checkedItems.valueAt(i)) {
+                    result.add((CareerResponse) listView.getItemAtPosition(checkedItems.keyAt(i)));
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private CityResponse getSelectedItemCity() {
         SparseBooleanArray checkedItems = listView.getCheckedItemPositions();
         CityResponse cityResponse = null;
         if (checkedItems.size() > 0)
@@ -248,18 +268,26 @@ public class CarrerOrCityFragment extends BaseFragment {
                 public void onClick(View view) {
                     Intent intent = new Intent(getActivity(), CarrerOrCityFragment.class);
                     if (mIsCity) {
-                        if (getSelectedItemsCity() != null) {
-                            intent.putExtra("cityId", getSelectedItemsCity().getId());
-                            intent.putExtra("cityName", getSelectedItemsCity().getName());
+                        if (getSelectedItemCity() != null) {
+                            intent.putExtra("cityId", getSelectedItemCity().getId());
+                            intent.putExtra("cityName", getSelectedItemCity().getName());
                             getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
                             FragmentUtil.popBackStack(CarrerOrCityFragment.this);
                         }
                     } else {
-                        if (getSelectedItemsCarrer() != null) {
-                            intent.putExtra("carrerId", getSelectedItemsCarrer().getId());
-                            intent.putExtra("carrerName", getSelectedItemsCarrer().getName());
-                            getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
-                            FragmentUtil.popBackStack(CarrerOrCityFragment.this);
+                        if (!mIsSignleChoice) {
+                            if (getSelectedItemsCarrer() != null) {
+                                intent.putParcelableArrayListExtra("arrListCarrer", getSelectedItemsCarrer());
+                                getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+                                FragmentUtil.popBackStack(CarrerOrCityFragment.this);
+                            }
+                        } else {
+                            if (getSelectedItemCarrer() != null) {
+                                intent.putExtra("carrerId", getSelectedItemCarrer().getId());
+                                intent.putExtra("carrerName", getSelectedItemCarrer().getName());
+                                getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+                                FragmentUtil.popBackStack(CarrerOrCityFragment.this);
+                            }
                         }
                     }
                 }

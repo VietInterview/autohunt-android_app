@@ -99,6 +99,25 @@ public class MyJobsAppliedAdapter extends RecyclerView.Adapter<RecyclerView.View
         return null;
     }
 
+    public String genString(int value) {
+        String valueString;
+        switch (value) {
+            case 1:
+                valueString = "VND";
+                break;
+            case 2:
+                valueString = "USD";
+                break;
+            case 3:
+                valueString = "JPY";
+                break;
+            default:
+                valueString = "";
+                break;
+        }
+        return valueString;
+    }
+
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int listPosition) {
         if (holder instanceof MyViewHolder) {
@@ -116,7 +135,7 @@ public class MyJobsAppliedAdapter extends RecyclerView.Adapter<RecyclerView.View
             myViewHolder.tvCarrer.setText(dataSet.get(listPosition).getCareerName());
             myViewHolder.tvListCity.setText(dataSet.get(listPosition).getListcityName());
             myViewHolder.tvExpireDate.setText(DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(dataSet.get(listPosition).getExpireDate()) + ""));
-            myViewHolder.tvFee.setText(StringUtils.filterCurrencyString(dataSet.get(listPosition).getFee()) + " USD");
+            myViewHolder.tvFee.setText(StringUtils.filterCurrencyString(dataSet.get(listPosition).getFee()) + " " + genString(dataSet.get(listPosition).getCurrency()));
             myViewHolder.card_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

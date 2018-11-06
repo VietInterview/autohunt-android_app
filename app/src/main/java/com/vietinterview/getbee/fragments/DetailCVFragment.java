@@ -74,11 +74,11 @@ public class DetailCVFragment extends BaseFragment {
     private DetailCVResponse detailCVResponse;
     private int mCvId;
 
-    public static DetailCVFragment newInstance(DetailJobResponse detailJobResponse, int cvId) {
+    public static DetailCVFragment newInstance(DetailJobResponse detailJobResponse, DetailCVResponse detailCVResponse) {
         DetailCVFragment fm = new DetailCVFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable("detailJobResponse", detailJobResponse);
-        bundle.putInt("cvId", cvId);
+        bundle.putParcelable("detailCVResponse", detailCVResponse);
         fm.setArguments(bundle);
         return fm;
     }
@@ -137,12 +137,42 @@ public class DetailCVFragment extends BaseFragment {
     @Override
     protected void getArgument(Bundle bundle) {
         detailJobResponse = bundle.getParcelable("detailJobResponse");
-        mCvId = bundle.getInt("cvId");
+        detailCVResponse = bundle.getParcelable("detailCVResponse");
     }
 
     @Override
     protected void initData() {
-        getDetailCV(mCvId);
+//        getDetailCV(mCvId);
+        tvFullName.setText(detailCVResponse.getFullName());
+        String year = String.valueOf(detailCVResponse.getBirthday()).substring(0, 4);
+        String month = String.valueOf(detailCVResponse.getBirthday()).substring(4, 6);
+        String day = String.valueOf(detailCVResponse.getBirthday()).substring(6, 8);
+        tvBirthDay.setText(day + "/" + month + "/" + year);
+        RequestOptions options = new RequestOptions()
+                .fitCenter()
+                .error(R.drawable.ic_ava_null)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .priority(Priority.HIGH);
+        Glide.with(getActivity()).load(detailCVResponse.getPictureUrl()).apply(options).into(imgAva);
+        setupViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
+        setupTabIcons();
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.background_icon_not_focus));
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     @OnClick(R.id.imglogo)
@@ -320,7 +350,6 @@ public class DetailCVFragment extends BaseFragment {
     }
 
     public void getDetailCV(int id) {
-//        scrollViewContent.setVisibility(View.GONE);
         showCoverNetworkLoading();
         getDetailCVRequest = new GetDetailCVRequest(id);
         getDetailCVRequest.callRequest(getActivity(), new ApiObjectCallBack<DetailCVResponse, ErrorResponse>() {
@@ -328,7 +357,6 @@ public class DetailCVFragment extends BaseFragment {
             public void onSuccess(int status, DetailCVResponse data, List<DetailCVResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 if (isAdded()) {
-//                    scrollViewContent.setVisibility(View.VISIBLE);
                     detailCVResponse = data;
                     tvFullName.setText(detailCVResponse.getFullName());
                     String year = String.valueOf(detailCVResponse.getBirthday()).substring(0, 4);

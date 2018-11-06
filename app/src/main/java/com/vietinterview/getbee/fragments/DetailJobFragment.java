@@ -28,15 +28,18 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.adapter.MyCVChoiceAdapter;
 import com.vietinterview.getbee.adapter.ViewPagerAdapter;
 import com.vietinterview.getbee.api.request.BaseJsonRequest;
 import com.vietinterview.getbee.api.request.BaseRequest;
 import com.vietinterview.getbee.api.request.GetDetailJobRequest;
 import com.vietinterview.getbee.api.request.SaveUnsaveJobRequest;
+import com.vietinterview.getbee.api.request.SearchMyCVRequest;
 import com.vietinterview.getbee.api.response.AddRemoveJobResponse;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.detailjob.DetailJobResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
+import com.vietinterview.getbee.api.response.listcv.CVResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnSetHeightViewListener;
 import com.vietinterview.getbee.constant.GlobalDefine;
@@ -77,8 +80,7 @@ public class DetailJobFragment extends BaseFragment {
     private Dialog mNotifydialog;
     //    private JobList mJobList;
     private SaveUnsaveJobRequest saveUnsaveJobRequest;
-    private GetDetailJobRequest getDetailJobRequest;
-    private DetailJobResponse detailJobResponse;
+    private SearchMyCVRequest searchMyCVRequest;
     InfoFragment infoFragment;
     StatisticalFragment statisticalFragment;
     CVSentFragment cvSentFragment;
@@ -277,7 +279,30 @@ public class DetailJobFragment extends BaseFragment {
 
     @OnClick(R.id.btnApplyCV)
     public void onApplyCVClick() {
-        FragmentUtil.pushFragment(getActivity(), this, new ChoiceCVFragment().newInstance(mDetailJobResponse), null);
+//        FragmentUtil.pushFragment(getActivity(), this, new ChoiceCVFragment().newInstance(mDetailJobResponse), null);
+        searchMyCV(0, 0, 0);
+    }
+
+    public void searchMyCV(final int carrerId, final int cityId, final int page) {
+        showCoverNetworkLoading();
+        searchMyCVRequest = new SearchMyCVRequest(page, carrerId, cityId);
+        searchMyCVRequest.callRequest(getActivity(), new ApiObjectCallBack<CVResponse, ErrorResponse>() {
+            @Override
+            public void onSuccess(int status, CVResponse data, List<CVResponse> dataArrayList, String message) {
+                hideCoverNetworkLoading();
+                if (isAdded()) {
+                    FragmentUtil.pushFragment(getActivity(), DetailJobFragment.this, new ChoiceCVFragment().newInstance(mDetailJobResponse, data), null);
+                }
+            }
+
+            @Override
+            public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
+                hideCoverNetworkLoading();
+                if (isAdded()) {
+                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+                }
+            }
+        });
     }
 
     @Override
@@ -381,7 +406,7 @@ public class DetailJobFragment extends BaseFragment {
     @Override
     public ArrayList<BaseRequest> getArrayBaseRequest() {
         ArrayList<BaseRequest> baseRequests = new ArrayList<>();
-        baseRequests.add(getDetailJobRequest);
+        baseRequests.add(searchMyCVRequest);
         return baseRequests;
     }
 }

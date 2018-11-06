@@ -186,7 +186,7 @@ public abstract class BaseFragment extends Fragment {
                         if (getFragmentManager().getBackStackEntryCount() > 0) {
                             processOnBackPress();
                         } else {
-                            getActivity().finish();
+//                            getActivity().finish();
                         }
                         return true;
                     }

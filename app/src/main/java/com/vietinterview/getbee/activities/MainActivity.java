@@ -31,17 +31,20 @@ import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnFillBackgroundListener;
 import com.vietinterview.getbee.callback.OnSetTextGreetingListener;
 import com.vietinterview.getbee.callback.OnShowLogoListener;
+import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.customview.CircularTextView;
 import com.vietinterview.getbee.customview.CustomTypefaceSpan;
 import com.vietinterview.getbee.fragments.HomeFragment;
+import com.vietinterview.getbee.fragments.IntroFragment;
 import com.vietinterview.getbee.fragments.LoginFragment;
 import com.vietinterview.getbee.fragments.MyCVFragment;
 import com.vietinterview.getbee.fragments.MyJobFragment;
 import com.vietinterview.getbee.fragments.MyProfileFragment;
-import com.vietinterview.getbee.fragments.RegitsFragment;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.utils.SharedPrefUtils;
+import com.vietinterview.getbee.utils.UiUtil;
 
 import java.util.List;
 
@@ -60,6 +63,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public DrawerLayout drawer;
     @BindView(R.id.mainview)
     public CoordinatorLayout mainview;
+    @BindView(R.id.coverNetworkLoading)
+    View coverNetworkLoading;
     TextView tvGreeting;
     public ActionBarDrawerToggle toggle;
     GetMyProfileRequest getMyProfileRequest;
@@ -88,6 +93,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         });
         View headerView = navigationView.getHeaderView(0);
         tvGreeting = (TextView) headerView.findViewById(R.id.tvGreeting);
+        if (AccountManager.getUserInfoBean() != null)
+            if (AccountManager.getUserInfoBean().getName() != null)
+                tvGreeting.setText(getResources().getString(R.string.greeting) + AccountManager.getUserInfoBean().getName() + "!");
         getEventBaseActivity().setOnSetTextGreetingListener(new OnSetTextGreetingListener() {
             @Override
             public void onSetTextGreeting(String name) {
@@ -171,6 +179,22 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void initData() {
+        boolean isFirst = SharedPrefUtils.getBoolean(AppConstant.FIRST, true);
+        if (isFirst) {
+            FragmentUtil.replaceFragment(MainActivity.this, new IntroFragment(), null);
+        } else {
+            if (AccountManager.getUserInfoBean() != null) {
+                if (GlobalDefine.currentFragment == null || GlobalDefine.currentFragment instanceof HomeFragment) {
+                    drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                    navigationView.setCheckedItem(R.id.nav_home);
+                    FragmentUtil.replaceFragment(this, new HomeFragment(), null);
+                } else {
+                    DebugLog.showLogCat("other");
+                }
+            } else {
+                FragmentUtil.replaceFragment(MainActivity.this, new LoginFragment(), null);
+            }
+        }
     }
 
     public TextView getTvGreeting() {
@@ -207,16 +231,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void onResume() {
         super.onResume();
-        if (AccountManager.getUserInfoBean() != null) {
-            if (GlobalDefine.currentFragment == null) {
-                getMyProfile(false);
-            } else if (GlobalDefine.currentFragment instanceof HomeFragment) {
-                getMyProfile(false);
-            }
-        } else {
-            boolean isLogin = getIntent().getBooleanExtra("isLogin", true);
-            FragmentUtil.replaceFragment(MainActivity.this, isLogin ? new LoginFragment() : new RegitsFragment(), null);
-        }
+    }
+
+    public void showCoverNetworkLoading() {
+        UiUtil.showView(coverNetworkLoading);
+    }
+
+    public void hideCoverNetworkLoading() {
+        UiUtil.hideView(coverNetworkLoading, true);
     }
 
     @Override
@@ -237,44 +259,32 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             drawer.closeDrawer(GravityCompat.START);
         } else if (id == R.id.nav_job) {
             FragmentUtil.replaceFragment(this, new MyJobFragment(), null);
-
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
         } else if (id == R.id.nav_cv) {
             FragmentUtil.replaceFragment(this, new MyCVFragment(), null);
-
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
         } else if (id == R.id.nav_profile) {
-            if (myProfileResponse == null) {
-                getMyProfile(true);
-            } else {
-                FragmentUtil.replaceFragment(MainActivity.this, new MyProfileFragment().newInstance(myProfileResponse), null);
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-            }
+//            getMyProfile();
+            FragmentUtil.replaceFragment(MainActivity.this, new MyProfileFragment(), null);
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
         }
         return true;
     }
 
-    public void getMyProfile(final boolean isGoToProfile) {
+    public void getMyProfile() {
+        showCoverNetworkLoading();
         getMyProfileRequest = new GetMyProfileRequest();
         getMyProfileRequest.callRequest(MainActivity.this, new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
             @Override
             public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
-                if (isGoToProfile) {
-                    myProfileResponse = dataSuccess;
-                    FragmentUtil.replaceFragment(MainActivity.this, new MyProfileFragment().newInstance(myProfileResponse), null);
-                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                    drawer.closeDrawer(GravityCompat.START);
-                } else {
-                    AccountManager.getUserInfoBean().name = dataSuccess.getFullNameColl();
-                    myProfileResponse = dataSuccess;
-                    drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                    navigationView.setCheckedItem(R.id.nav_home);
-                    tvGreeting.setText(getResources().getString(R.string.greeting) + AccountManager.getUserInfoBean().name + "!");
-                    FragmentUtil.replaceFragment(MainActivity.this, new HomeFragment(), null);
-                }
+                hideCoverNetworkLoading();
+                myProfileResponse = dataSuccess;
+                FragmentUtil.replaceFragment(MainActivity.this, new MyProfileFragment().newInstance(myProfileResponse), null);
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
             }
 
             @Override

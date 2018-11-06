@@ -113,6 +113,13 @@ public class UserInfoBean implements Parcelable {
     public String others;
     public String coin;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     protected UserInfoBean(Parcel in) {
         id = in.readInt();

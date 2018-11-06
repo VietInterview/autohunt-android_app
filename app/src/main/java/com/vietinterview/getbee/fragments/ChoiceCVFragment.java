@@ -42,15 +42,17 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
     SwipeRefreshLayout mSwipeRefreshLayout;
     private MyCVChoiceAdapter myCVChoiceAdapter;
     private SearchMyCVRequest searchMyCVRequest;
+    private CVResponse mCvResponse;
     private DetailJobResponse detailJobResponse;
     private int mPage = 0;
     private ArrayList<CvList> cvLists = new ArrayList<>();
     private ArrayList<CvList> cvListsServer = new ArrayList<>();
 
-    public static ChoiceCVFragment newInstance(DetailJobResponse detailJobResponse) {
+    public static ChoiceCVFragment newInstance(DetailJobResponse detailJobResponse, CVResponse cvResponse) {
         ChoiceCVFragment fm = new ChoiceCVFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable("detailJobResponse", detailJobResponse);
+        bundle.putParcelable("cvResponse", cvResponse);
         fm.setArguments(bundle);
         return fm;
     }
@@ -58,6 +60,7 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
     @Override
     protected void getArgument(Bundle bundle) {
         detailJobResponse = bundle.getParcelable("detailJobResponse");
+        mCvResponse = bundle.getParcelable("cvResponse");
     }
 
     @Override
@@ -74,7 +77,7 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         mPage = 0;
-        searchMyCV(0, 0, mPage);
+//        searchMyCV(0, 0, mPage);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
                 android.R.color.holo_green_dark,
@@ -85,7 +88,13 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
 
     @Override
     protected void initData() {
-
+        cvListsServer.clear();
+        cvListsServer.addAll(mCvResponse.getCvList());
+        cvLists.clear();
+        cvLists.addAll(mCvResponse.getCvList());
+        myCVChoiceAdapter = new MyCVChoiceAdapter(recyclerView, getActivity(), mCvResponse.getTotal(), detailJobResponse, cvLists, ChoiceCVFragment.this);
+        myCVChoiceAdapter.setOnLoadMoreListener(ChoiceCVFragment.this);
+        recyclerView.setAdapter(myCVChoiceAdapter);
     }
 
     public void searchMyCV(final int carrerId, final int cityId, final int page) {

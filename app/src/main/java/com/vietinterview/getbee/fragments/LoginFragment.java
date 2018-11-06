@@ -195,6 +195,7 @@ public class LoginFragment extends BaseFragment {
         mForgotPassdialog.show();
     }
 
+    UserInfoBean userInfoBean;
     GetMyProfileRequest getMyProfileRequest;
 
     public void getMyProfile() {
@@ -202,7 +203,8 @@ public class LoginFragment extends BaseFragment {
         getMyProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
             @Override
             public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
-                AccountManager.getUserInfoBean().name = dataSuccess.getFullNameColl();
+                userInfoBean.name = dataSuccess.getFullNameColl();
+                AccountManager.setUserInfoBean(userInfoBean);
                 getEventBaseFragment().setTextGreeting(AccountManager.getUserInfoBean().name);
             }
 
@@ -231,7 +233,7 @@ public class LoginFragment extends BaseFragment {
                 @Override
                 public void onSuccess(int status, LoginResponse data, List<LoginResponse> dataArrayList, String message) {
                     if (status == 200) {
-                        UserInfoBean userInfoBean = new UserInfoBean();
+                        userInfoBean = new UserInfoBean();
                         userInfoBean.nickname = edtEmail.getText().toString().trim();
                         userInfoBean.access_token = data.getApiToken();
                         AccountManager.setUserInfoBean(userInfoBean);
@@ -240,7 +242,7 @@ public class LoginFragment extends BaseFragment {
                             ((MainActivity) getActivity()).drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                         }
                         getAct().navigationView.setCheckedItem(R.id.nav_home);
-                        FragmentUtil.replaceFragment(getActivity(), new HomeFragment().newInstance(""), null);
+                        FragmentUtil.replaceFragment(getActivity(), new HomeFragment(), null);
                     }
                 }
 

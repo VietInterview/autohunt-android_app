@@ -14,9 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.activities.BaseActivity;
 import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.constant.AppConstant;
+import com.vietinterview.getbee.fragments.BaseFragment;
+import com.vietinterview.getbee.fragments.LoginFragment;
+import com.vietinterview.getbee.fragments.RegitsFragment;
+import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
 
 import java.util.ArrayList;
@@ -29,13 +32,13 @@ public class SlidingImageAdapter extends PagerAdapter {
     ArrayList<String> introString;
     private LayoutInflater inflater;
     private Context context;
-    BaseActivity baseActivity;
+    BaseFragment baseFragment;
 
-    public SlidingImageAdapter(Context context, ArrayList<Integer> IMAGES, ArrayList<String> introString, BaseActivity baseActivity) {
+    public SlidingImageAdapter(Context context, ArrayList<Integer> IMAGES, ArrayList<String> introString, BaseFragment baseFragment) {
         this.context = context;
         this.IMAGES = IMAGES;
         this.introString = introString;
-        this.baseActivity = baseActivity;
+        this.baseFragment = baseFragment;
         inflater = LayoutInflater.from(context);
     }
 
@@ -61,23 +64,17 @@ public class SlidingImageAdapter extends PagerAdapter {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                baseActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                Intent mainIntent = new Intent(baseActivity, MainActivity.class);
-                mainIntent.putExtra("isLogin", true);
+                FragmentUtil.replaceFragment(baseFragment.getActivity(), new LoginFragment(), null);
                 SharedPrefUtils.putBoolean(AppConstant.FIRST, false);
-                baseActivity.startActivity(mainIntent);
-                baseActivity.finish();
+                baseFragment.getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             }
         });
         btnRegist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                baseActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                Intent mainIntent = new Intent(baseActivity, MainActivity.class);
-                mainIntent.putExtra("isLogin", false);
-                baseActivity.startActivity(mainIntent);
+                FragmentUtil.replaceFragment(baseFragment.getActivity(), new RegitsFragment(), null);
                 SharedPrefUtils.putBoolean(AppConstant.FIRST, false);
-                baseActivity.finish();
+                baseFragment.getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             }
         });
         LinearLayout llFooter = (LinearLayout) imageLayout.findViewById(R.id.llFooter);

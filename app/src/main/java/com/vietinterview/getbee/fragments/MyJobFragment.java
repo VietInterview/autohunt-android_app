@@ -142,14 +142,14 @@ public class MyJobFragment extends BaseFragment {
     public void onllCarrerClick() {
         mIsCity = false;
         visibleFilter = true;
-        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(false, mCarrerId, mCarrerName), null);
+        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(false, mCarrerId, mCarrerName, true), null);
     }
 
     @OnClick(R.id.llAdd)
     public void onllAddClick() {
         mIsCity = true;
         visibleFilter = true;
-        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(true, mCityId, mCityName), null);
+        FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(true, mCityId, mCityName, true), null);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
