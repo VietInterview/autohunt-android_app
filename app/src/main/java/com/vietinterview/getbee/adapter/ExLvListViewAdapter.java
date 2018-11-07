@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.detailcv.LstEducationHi;
+import com.vietinterview.getbee.utils.DateUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -52,11 +53,7 @@ public class ExLvListViewAdapter extends BaseExpandableListAdapter {
         TextView tvGraduationType = convertView.findViewById(R.id.tvGraduationType);
         tvCertificate.setText(lstEducationHi.getSubject());
         tvSchoolName.setText(lstEducationHi.getSchool());
-        String yearFrom = String.valueOf(lstEducationHi.getFromMonth()).substring(0, 4);
-        String monthFrom = String.valueOf(lstEducationHi.getFromMonth()).substring(4, 6);
-        String yearTo = String.valueOf(lstEducationHi.getToMonth()).substring(0, 4);
-        String monthTo = String.valueOf(lstEducationHi.getToMonth()).substring(4, 6);
-        tvTime.setText(monthFrom + "/" + yearFrom + " - " + monthTo + "/" + yearTo);
+        tvTime.setText(DateUtil.convertToMyFormatVacant(lstEducationHi.getFromMonth() + "") + " - " + DateUtil.convertToMyFormatVacant(lstEducationHi.getToMonth() + ""));
         tvSpecialize.setText(lstEducationHi.getCareer());
         tvGraduationType.setText(lstEducationHi.getGraduationTypeName());
         return convertView;
@@ -93,11 +90,7 @@ public class ExLvListViewAdapter extends BaseExpandableListAdapter {
         TextView tvSchoolName = convertView.findViewById(R.id.tvSchoolName);
         TextView tvTime = convertView.findViewById(R.id.tvTime);
         tvSchoolName.setText(lstEducationHi.getSchool());
-        String yearFrom = String.valueOf(lstEducationHi.getFromMonth()).substring(0, 4);
-        String monthFrom = String.valueOf(lstEducationHi.getFromMonth()).substring(4, 6);
-        String yearTo = String.valueOf(lstEducationHi.getToMonth()).substring(0, 4);
-        String monthTo = String.valueOf(lstEducationHi.getToMonth()).substring(4, 6);
-        tvTime.setText(monthFrom + "/" + yearFrom + " - " + monthTo + "/" + yearTo);
+        tvTime.setText(DateUtil.convertToMyFormatVacant(lstEducationHi.getFromMonth() + "") + " - " + DateUtil.convertToMyFormatVacant(lstEducationHi.getToMonth() + ""));
         return convertView;
     }
 

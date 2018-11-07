@@ -112,6 +112,7 @@ public class DetailJobFragment extends BaseFragment {
         getEventBaseFragment().doFillBackground(getResources().getString(R.string.detail_job));
         GlobalDefine.currentFragment = this;
         setCustomToolbar(true);
+        setCustomToolbarVisible(true);
         getEventBaseFragment().setOnSetHeightViewListener(new OnSetHeightViewListener() {
             @Override
             public void onSetHeightView(int height) {

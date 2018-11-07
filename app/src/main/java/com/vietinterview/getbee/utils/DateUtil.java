@@ -71,6 +71,30 @@ public class DateUtil {
         return converted_date;
     }
 
+    public synchronized static String convertToMyFormatFull(String Date) {
+        String converted_date = "";
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.US);
+            Date date = sdf.parse(Date);
+
+            SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
+            converted_date = sdf2.format(date.getTime());
+        } catch (Exception e) {
+        }
+        return converted_date;
+    }
+    public synchronized static String convertToMyFormatVacant(String Date) {
+        String converted_date = "";
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM", Locale.US);
+            Date date = sdf.parse(Date);
+
+            SimpleDateFormat sdf2 = new SimpleDateFormat("MM/yyyy");
+            converted_date = sdf2.format(date.getTime());
+        } catch (Exception e) {
+        }
+        return converted_date;
+    }
     public static final String FORMAT_DATE_ISO = "yyyy-MM-dd HH:mm:ss";
 
     /**

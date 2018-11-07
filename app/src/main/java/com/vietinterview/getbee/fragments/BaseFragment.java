@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -329,7 +330,9 @@ public abstract class BaseFragment extends Fragment {
         act = (MainActivity) getActivity();
         if (isCustom) {
             if (act.getSupportActionBar() != null) {
+                act.getSupportActionBar().show();
                 Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
+                toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
                 toolbar.setNavigationIcon(getIconLeft());
                 toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                     @Override
@@ -344,6 +347,7 @@ public abstract class BaseFragment extends Fragment {
             }
         } else {
             if (act.getSupportActionBar() != null) {
+                act.getSupportActionBar().hide();
                 Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
                 toolbar.setNavigationIcon(null);
             }
@@ -354,7 +358,9 @@ public abstract class BaseFragment extends Fragment {
         act = (MainActivity) getActivity();
         if (isVisible) {
             if (act.getSupportActionBar() != null) {
+                act.getSupportActionBar().show();
                 Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
+                toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
                 toolbar.setVisibility(View.VISIBLE);
                 toolbar.setNavigationIcon(getIconLeft());
                 toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -370,6 +376,7 @@ public abstract class BaseFragment extends Fragment {
             }
         } else {
             if (act.getSupportActionBar() != null) {
+                act.getSupportActionBar().hide();
                 Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
                 toolbar.setVisibility(View.GONE);
             }

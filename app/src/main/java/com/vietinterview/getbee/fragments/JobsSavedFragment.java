@@ -149,7 +149,7 @@ public class JobsSavedFragment extends BaseFragment implements SwipeRefreshLayou
                 if (isAdded()) {
                     mSwipeRefreshLayout.setRefreshing(false);
                     hideCoverNetworkLoading();
-                    DialogUtil.showDialog(getActivity(), "Thông báo", message);
+                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
                 }
             }
 

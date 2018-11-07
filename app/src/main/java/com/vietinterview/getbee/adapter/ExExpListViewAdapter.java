@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.detailcv.LstEmploymentHi;
+import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.StringUtils;
 
 import java.util.HashMap;
@@ -65,11 +66,7 @@ public class ExExpListViewAdapter extends BaseExpandableListAdapter {
         if (lstEmploymentHi.getHumanResources() != null)
             tvQuantityEmploy.setText(genString(lstEmploymentHi.getHumanResources()));
         tvJobTitle.setText(lstEmploymentHi.getTitle());
-        String yearFrom = String.valueOf(lstEmploymentHi.getFromMonth()).substring(0, 4);
-        String monthFrom = String.valueOf(lstEmploymentHi.getFromMonth()).substring(4, 6);
-        String yearTo = String.valueOf(lstEmploymentHi.getToMonth()).substring(0, 4);
-        String monthTo = String.valueOf(lstEmploymentHi.getToMonth()).substring(4, 6);
-        tvWorkTime.setText(monthFrom + "/" + yearFrom + " - " + monthTo + "/" + yearTo);
+        tvWorkTime.setText(DateUtil.convertToMyFormatVacant(lstEmploymentHi.getFromMonth() + "") + " - " + DateUtil.convertToMyFormatVacant(lstEmploymentHi.getToMonth() + ""));
         tvSalary.setText(StringUtils.filterCurrencyString(lstEmploymentHi.getSalary()) + " " + mCurrencyName);
         tvJobDes.setText(lstEmploymentHi.getJobDescription());
         tvAchievements.setText(lstEmploymentHi.getAchievement());

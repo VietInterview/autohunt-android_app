@@ -9,18 +9,14 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -37,11 +33,9 @@ import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.SubmitCVResponse;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 import com.vietinterview.getbee.api.response.detailjob.DetailJobResponse;
-import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnSetHeightViewListener;
-import com.vietinterview.getbee.customview.TouchDetectableScrollView;
-import com.vietinterview.getbee.utils.DebugLog;
+import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
@@ -142,12 +136,8 @@ public class DetailCVFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-//        getDetailCV(mCvId);
         tvFullName.setText(detailCVResponse.getFullName());
-        String year = String.valueOf(detailCVResponse.getBirthday()).substring(0, 4);
-        String month = String.valueOf(detailCVResponse.getBirthday()).substring(4, 6);
-        String day = String.valueOf(detailCVResponse.getBirthday()).substring(6, 8);
-        tvBirthDay.setText(day + "/" + month + "/" + year);
+        tvBirthDay.setText(DateUtil.convertToMyFormatFull(detailCVResponse.getBirthday() + ""));
         RequestOptions options = new RequestOptions()
                 .fitCenter()
                 .error(R.drawable.ic_ava_null)

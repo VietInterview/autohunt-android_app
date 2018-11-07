@@ -14,10 +14,12 @@
         android:background="#EDF1F8"
         android:orientation="vertical">
 
-        <ScrollView
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/llFooter">
+            android:layout_above="@+id/llFooter"
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -132,7 +134,7 @@
                     android:paddingRight="@dimen/activity_vertical_margin"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
             </RelativeLayout>
-        </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
 
         <LinearLayout
             android:id="@+id/llFooter"
@@ -143,21 +145,16 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <com.vietinterview.getbee.customview.NunitoBoldButton
-                    android:id="@+id/saveUnsaveJob"
-                    android:layout_width="149dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/border_radius_unsave_button"
-                    android:drawableLeft="@drawable/ic_save"
-                    android:drawablePadding="-16dp"
-                    android:paddingLeft="16dp"
-                    android:textColor="#B1B1BA" />
-            </FrameLayout>
+            <com.vietinterview.getbee.customview.NunitoBoldButton
+                android:id="@+id/saveUnsaveJob"
+                android:layout_width="149dp"
+                android:layout_height="40dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/border_radius_unsave_button"
+                android:drawableLeft="@drawable/ic_save"
+                android:drawablePadding="-16dp"
+                android:paddingLeft="16dp"
+                android:textColor="#B1B1BA" />
 
             <com.vietinterview.getbee.customview.NunitoBoldButton
                 android:id="@+id/btnApplyCV"
