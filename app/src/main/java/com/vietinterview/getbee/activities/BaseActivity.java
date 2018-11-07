@@ -43,7 +43,6 @@ public abstract class BaseActivity extends LocalizationActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setLanguage(SharedPrefUtils.getString(AppConstant.LANGUAGE, "vi"));
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         onPreSetContentView(savedInstanceState);
         super.onCreate(savedInstanceState);

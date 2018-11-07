@@ -63,14 +63,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public DrawerLayout drawer;
     @BindView(R.id.mainview)
     public CoordinatorLayout mainview;
-    @BindView(R.id.coverNetworkLoading)
-    View coverNetworkLoading;
     TextView tvGreeting;
     public ActionBarDrawerToggle toggle;
-    GetMyProfileRequest getMyProfileRequest;
     CircularTextView slideshow;
     CircularTextView gallery;
-    MyProfileResponse myProfileResponse;
 
     @Override
     public int setContentViewId() {
@@ -79,6 +75,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void initView() {
+        setLanguage(SharedPrefUtils.getString(AppConstant.LANGUAGE, "vi"));
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -91,6 +88,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 imglogo.setVisibility(View.GONE);
             }
         });
+        boolean isFirst = SharedPrefUtils.getBoolean(AppConstant.FIRST, true);
+        if (isFirst) {
+            FragmentUtil.replaceFragment(MainActivity.this, new IntroFragment(), null);
+        } else {
+            if (AccountManager.getUserInfoBean() != null) {
+                if (GlobalDefine.currentFragment == null || GlobalDefine.currentFragment instanceof HomeFragment) {
+                    drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                    navigationView.setCheckedItem(R.id.nav_home);
+                    FragmentUtil.replaceFragment(this, new HomeFragment(), null);
+                }
+            } else {
+                FragmentUtil.replaceFragment(MainActivity.this, new LoginFragment(), null);
+            }
+        }
         View headerView = navigationView.getHeaderView(0);
         tvGreeting = (TextView) headerView.findViewById(R.id.tvGreeting);
         if (AccountManager.getUserInfoBean() != null)
@@ -162,7 +173,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onClick(View v) {
                 AccountManager.logout();
-                myProfileResponse = null;
                 drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 FragmentUtil.replaceFragment(MainActivity.this, new LoginFragment(), null);
                 drawer.closeDrawer(GravityCompat.START);
@@ -179,22 +189,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void initData() {
-        boolean isFirst = SharedPrefUtils.getBoolean(AppConstant.FIRST, true);
-        if (isFirst) {
-            FragmentUtil.replaceFragment(MainActivity.this, new IntroFragment(), null);
-        } else {
-            if (AccountManager.getUserInfoBean() != null) {
-                if (GlobalDefine.currentFragment == null || GlobalDefine.currentFragment instanceof HomeFragment) {
-                    drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                    navigationView.setCheckedItem(R.id.nav_home);
-                    FragmentUtil.replaceFragment(this, new HomeFragment(), null);
-                } else {
-                    DebugLog.showLogCat("other");
-                }
-            } else {
-                FragmentUtil.replaceFragment(MainActivity.this, new LoginFragment(), null);
-            }
-        }
     }
 
     public TextView getTvGreeting() {
@@ -229,19 +223,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    public void showCoverNetworkLoading() {
-        UiUtil.showView(coverNetworkLoading);
-    }
-
-    public void hideCoverNetworkLoading() {
-        UiUtil.hideView(coverNetworkLoading, true);
-    }
-
-    @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -266,31 +247,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
         } else if (id == R.id.nav_profile) {
-//            getMyProfile();
             FragmentUtil.replaceFragment(MainActivity.this, new MyProfileFragment(), null);
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
         }
         return true;
-    }
-
-    public void getMyProfile() {
-        showCoverNetworkLoading();
-        getMyProfileRequest = new GetMyProfileRequest();
-        getMyProfileRequest.callRequest(MainActivity.this, new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
-            @Override
-            public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
-                hideCoverNetworkLoading();
-                myProfileResponse = dataSuccess;
-                FragmentUtil.replaceFragment(MainActivity.this, new MyProfileFragment().newInstance(myProfileResponse), null);
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-            }
-
-            @Override
-            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
-
-            }
-        });
     }
 }

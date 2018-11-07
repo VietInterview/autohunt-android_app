@@ -269,7 +269,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
             @Override
             public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
-
+                hideCoverNetworkLoading();
             }
         });
     }
@@ -382,7 +382,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     protected void onRestore() {
-        DebugLog.showLogCat("onRestore");
         getEventBaseFragment().showLogo(true);
     }
 
