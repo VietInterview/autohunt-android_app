@@ -9,12 +9,14 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,16 +30,19 @@ import com.vietinterview.getbee.adapter.ViewPagerAdapter;
 import com.vietinterview.getbee.api.request.BaseJsonRequest;
 import com.vietinterview.getbee.api.request.BaseRequest;
 import com.vietinterview.getbee.api.request.GetDetailCVRequest;
+import com.vietinterview.getbee.api.request.SearchMyCVRequest;
 import com.vietinterview.getbee.api.request.SubmitCVRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.SubmitCVResponse;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 import com.vietinterview.getbee.api.response.detailjob.DetailJobResponse;
+import com.vietinterview.getbee.api.response.listcv.CVResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnSetHeightViewListener;
 import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +71,6 @@ public class DetailCVFragment extends BaseFragment {
     private GetDetailCVRequest getDetailCVRequest;
     private SubmitCVRequest submitCVRequest;
     private DetailCVResponse detailCVResponse;
-    private int mCvId;
 
     public static DetailCVFragment newInstance(DetailJobResponse detailJobResponse, DetailCVResponse detailCVResponse) {
         DetailCVFragment fm = new DetailCVFragment();
@@ -182,27 +186,35 @@ public class DetailCVFragment extends BaseFragment {
         ImageView imgInfoSentCV = (ImageView) mNotifydialog.findViewById(R.id.imgInfoSentCV);
         final TextView tvContent = (TextView) mNotifydialog.findViewById(R.id.tvContent);
         final TextView tvContentSendCV = (TextView) mNotifydialog.findViewById(R.id.tvContentSendCV);
-        final TextView tvHunt = (TextView) mNotifydialog.findViewById(R.id.tvHunt);
-        final TextView tvSentCV = (TextView) mNotifydialog.findViewById(R.id.tvSentCV);
+        final Button btnHunt = (Button) mNotifydialog.findViewById(R.id.btnHunt);
+        final Button btnSendCV = (Button) mNotifydialog.findViewById(R.id.btnSendCV);
+        String feeHunt = getResources().getString(R.string.hunt_reward) + " <b>" + StringUtils.filterCurrencyString(detailJobResponse.getFee()) + " VND</b>";
+        tvContent.setText(Html.fromHtml(feeHunt));
+        String feeSendCV = getResources().getString(R.string.cv_reward) + " <b>" + StringUtils.filterCurrencyString((detailJobResponse.getFee() * 47) / 68) + " VND</b>";
+        tvContentSendCV.setText(Html.fromHtml(feeSendCV));
         imgInfoHunt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 tvContent.setVisibility(View.VISIBLE);
+                btnHunt.setVisibility(View.VISIBLE);
                 tvContentSendCV.setVisibility(View.GONE);
+                btnSendCV.setVisibility(View.GONE);
             }
         });
         imgInfoSentCV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 tvContent.setVisibility(View.GONE);
+                btnHunt.setVisibility(View.GONE);
                 tvContentSendCV.setVisibility(View.VISIBLE);
+                btnSendCV.setVisibility(View.VISIBLE);
             }
         });
-        tvHunt.setOnClickListener(new View.OnClickListener() {
+        btnHunt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showCoverNetworkLoading();
-                submitCVRequest = new SubmitCVRequest(mCvId, detailJobResponse.getId(), 1);
+                submitCVRequest = new SubmitCVRequest(detailCVResponse.getId(), detailJobResponse.getId(), 1);
                 submitCVRequest.callRequest(getActivity(), new ApiObjectCallBack<SubmitCVResponse, ErrorResponse>() {
                     @Override
                     public void onSuccess(int status, SubmitCVResponse data, List<SubmitCVResponse> dataArrayList, String message) {
@@ -215,7 +227,7 @@ public class DetailCVFragment extends BaseFragment {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     FragmentUtil.popEntireFragmentBackStack(DetailCVFragment.this);
-                                    FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(detailJobResponse), null);
+                                    FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(detailJobResponse.getId()), null);
                                 }
                             });
                         }
@@ -227,7 +239,12 @@ public class DetailCVFragment extends BaseFragment {
                         if (isAdded()) {
                             hideCoverNetworkLoading();
                             if (errorResponse.getErrorKey().equalsIgnoreCase("emailOrPhoneExist")) {
-                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.emailorphoneexist));
+                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.emailorphoneexist), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        searchMyCV(0, 0, 0);
+                                    }
+                                });
                             } else if (errorResponse.getErrorKey().equalsIgnoreCase("cvNotFound")) {
                                 DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.cvnotfound));
                             } else if (errorResponse.getErrorKey().equalsIgnoreCase("CvAlreadySubmitJob")) {
@@ -239,11 +256,11 @@ public class DetailCVFragment extends BaseFragment {
 
             }
         });
-        tvSentCV.setOnClickListener(new View.OnClickListener() {
+        btnSendCV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showCoverNetworkLoading();
-                submitCVRequest = new SubmitCVRequest(mCvId, detailJobResponse.getId(), 2);
+                submitCVRequest = new SubmitCVRequest(detailCVResponse.getId(), detailJobResponse.getId(), 2);
                 submitCVRequest.callRequest(getActivity(), new ApiObjectCallBack<SubmitCVResponse, ErrorResponse>() {
                     @Override
                     public void onSuccess(int status, SubmitCVResponse data, List<SubmitCVResponse> dataArrayList, String message) {
@@ -256,7 +273,7 @@ public class DetailCVFragment extends BaseFragment {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     FragmentUtil.popEntireFragmentBackStack(DetailCVFragment.this);
-                                    FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(detailJobResponse), null);
+                                    FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(detailJobResponse.getId()), null);
                                 }
                             });
                         }
@@ -268,7 +285,12 @@ public class DetailCVFragment extends BaseFragment {
                         if (isAdded()) {
                             hideCoverNetworkLoading();
                             if (errorResponse.getErrorKey().equalsIgnoreCase("emailOrPhoneExist")) {
-                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.emailorphoneexist));
+                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.emailorphoneexist), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        searchMyCV(0, 0, 0);
+                                    }
+                                });
                             } else if (errorResponse.getErrorKey().equalsIgnoreCase("cvNotFound")) {
                                 DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.cvnotfound));
                             } else if (errorResponse.getErrorKey().equalsIgnoreCase("CvAlreadySubmitJob")) {
@@ -282,6 +304,34 @@ public class DetailCVFragment extends BaseFragment {
             }
         });
         mNotifydialog.show();
+    }
+
+    private SearchMyCVRequest searchMyCVRequest;
+
+    public void searchMyCV(final int carrerId, final int cityId, final int page) {
+        showCoverNetworkLoading();
+        searchMyCVRequest = new SearchMyCVRequest(page, carrerId, cityId);
+        searchMyCVRequest.callRequest(getActivity(), new ApiObjectCallBack<CVResponse, ErrorResponse>() {
+            @Override
+            public void onSuccess(int status, CVResponse data, List<CVResponse> dataArrayList, String message) {
+                hideCoverNetworkLoading();
+                if (isAdded()) {
+                    if (data.getCvList().size() > 0) {
+                        FragmentUtil.popBackStack(DetailCVFragment.this);
+                    } else {
+                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.no_choice_cv));
+                    }
+                }
+            }
+
+            @Override
+            public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
+                hideCoverNetworkLoading();
+                if (isAdded()) {
+                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+                }
+            }
+        });
     }
 
     private void setupTabIcons() {

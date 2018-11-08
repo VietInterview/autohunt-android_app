@@ -71,9 +71,9 @@
     <string name="contract">Ký hợp đồng</string>
     <string name="default_key">Mặc định</string>
     <string name="info_account">Thông tin cá nhân</string>
-    <string name="hunt_reward">Mức thưởng dự kiến mà bạn sẽ nhận được: 4,000,000 VNĐ, trong đó x= 68% số tiền lương của UV</string>
+    <string name="hunt_reward">Mức thưởng dự kiến mà bạn sẽ nhận được:</string>
     <string name="cv_reward_title">Chỉ gửi CV</string>
-    <string name="cv_reward">Mức thưởng dự kiến mà bạn sẽ nhận được: 1,000,000 VNĐ, trong đó x= 47% số tiền lương của UV</string>
+    <string name="cv_reward">Mức thưởng dự kiến mà bạn sẽ nhận được:</string>
     <string name="contact_content">Vui lòng liên hệ với chúng tôi để được trợ giúp: </string>
     <string name="wrong_acc">Tài khoản đăng nhập hoặc mật khẩu của bạn không đúng. Xin vui lòng nhập lại!</string>
     <string name="type_old_pass">Nhập mật khẩu cũ</string>
@@ -168,7 +168,7 @@
     <string name="above_100">Lớn hơn 100 người</string>
     <string name="above_500">Lớn hơn 500 người</string>
     <string name="average">Trung bình</string>
-    <string name="emailorphoneexist">CV này đã được CTV khác gửi đi. Vui lòng chọn CV khác</string>
+    <string name="emailorphoneexist">Ứng viên này đã được chính bạn hoặc CTV viên khác sử dụng và gửi đi. Bạn vui lòng chọn CV khác</string>
     <string name="cvnotfound">CV không tồn tại</string>
     <string name="cvalreadysubmitjob">CV đã được apply vào job</string>
     <string name="no_cv_upload">Bạn chưa upload CV nào. Hãy nhanh tay upload CV để kiếm thêm thu nhập</string>
@@ -184,4 +184,5 @@
     <string name="min_6_character">Mật khẩu hợp lệ từ 6 ký tự trở lên</string>
     <string name="choose_least_one">Vui lòng chọn ít nhất một lĩnh vực muốn cộng tác</string>
     <string name="no_choice_cv">Bạn chưa có hồ sơ ứng viên. Hãy nhanh tay tạo Hồ sơ ứng viên để kiếm thêm thu nhập</string>
+    <string name="working_form">Hình thức làm việc</string>
 </resources>

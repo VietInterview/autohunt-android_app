@@ -52,6 +52,8 @@ public class InfoDetailCVFragment extends BaseFragment {
     TextView tvSalary;
     @BindView(R.id.tvTarget)
     TextView tvTarget;
+    @BindView(R.id.tvworkingForm)
+    TextView tvworkingForm;
     @BindView(R.id.llPhone)
     LinearLayout llPhone;
     @BindView(R.id.llEmail)
@@ -84,6 +86,8 @@ public class InfoDetailCVFragment extends BaseFragment {
     LinearLayout llTarget;
     @BindView(R.id.llInfo)
     LinearLayout llInfo;
+    @BindView(R.id.llworkingForm)
+    LinearLayout llworkingForm;
     DetailCVResponse detailCVResponse;
     ViewTreeObserver vto;
 
@@ -136,6 +140,7 @@ public class InfoDetailCVFragment extends BaseFragment {
         llExp.setVisibility(detailCVResponse.getExperienceYear() != null ? View.VISIBLE : View.GONE);
         llSalary.setVisibility(detailCVResponse.getDesiredSalary() != null ? View.VISIBLE : View.GONE);
         llTarget.setVisibility(detailCVResponse.getCareerObjectives() != null ? View.VISIBLE : View.GONE);
+        llworkingForm.setVisibility(detailCVResponse.getWorkingForm() != null ? View.VISIBLE : View.GONE);
         tvPhone.setText(detailCVResponse.getPhone());
         tvEmail.setText(detailCVResponse.getEmail());
         if (detailCVResponse.getSex() != null) {
@@ -179,6 +184,7 @@ public class InfoDetailCVFragment extends BaseFragment {
         tvExp.setText(detailCVResponse.getExperienceYear().getName());
         tvSalary.setText(StringUtils.filterCurrencyString(detailCVResponse.getDesiredSalary()) + " " + detailCVResponse.getCurrencyName());
         tvTarget.setText(detailCVResponse.getCareerObjectives());
+        tvworkingForm.setText(detailCVResponse.getWorkingForm().getName());
     }
 
     @Override

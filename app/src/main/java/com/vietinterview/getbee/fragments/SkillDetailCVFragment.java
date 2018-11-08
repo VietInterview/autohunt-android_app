@@ -33,6 +33,8 @@ public class SkillDetailCVFragment extends BaseFragment {
     TextView tvHobby;
     @BindView(R.id.llContent)
     LinearLayout llContent;
+    @BindView(R.id.llHobby)
+    LinearLayout llHobby;
     DetailCVResponse detailCVResponse;
 
     public static SkillDetailCVFragment newInstance(DetailCVResponse detailCVResponse) {
@@ -66,6 +68,7 @@ public class SkillDetailCVFragment extends BaseFragment {
             }
             tvNodata.setVisibility(View.GONE);
             llContent.setVisibility(View.VISIBLE);
+            llHobby.setVisibility(detailCVResponse.getCvSkill().getHobby() == null ? View.GONE : View.VISIBLE);
             tvHobby.setText(detailCVResponse.getCvSkill().getHobby());
         } else {
             tvNodata.setVisibility(View.VISIBLE);

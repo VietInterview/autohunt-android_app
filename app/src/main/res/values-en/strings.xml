@@ -71,9 +71,9 @@
     <string name="contract">Contract</string>
     <string name="default_key">Default</string>
     <string name="info_account">Info account</string>
-    <string name="hunt_reward">Expected bonus: 4,000,000 VND (equivalent to 68%)</string>
+    <string name="hunt_reward">Expected rewards you will receive:</string>
     <string name="cv_reward_title">Just send CV</string>
-    <string name="cv_reward">Estimated reward you will receive: 1,000,000 VND (47%)</string>
+    <string name="cv_reward">Expected rewards you will receive: </string>
     <string name="contact_content">Please contact us for assistance: </string>
     <string name="wrong_acc">Your login or password is incorrect. Please enter again!</string>
     <string name="type_old_pass">Type old password</string>
@@ -184,4 +184,5 @@
     <string name="min_6_character">A valid password of 6 characters or more</string>
     <string name="choose_least_one">Please select at least one field of interest</string>
     <string name="no_choice_cv">You do not have a resume. Quickly create a Resume to earn more income</string>
+    <string name="working_form">Form of work</string>
 </resources>
