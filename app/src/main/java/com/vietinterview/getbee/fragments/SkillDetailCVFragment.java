@@ -29,6 +29,8 @@ public class SkillDetailCVFragment extends BaseFragment {
     LinearLayout llInfo;
     @BindView(R.id.tvNodata)
     TextView tvNodata;
+    @BindView(R.id.tvHobby)
+    TextView tvHobby;
     @BindView(R.id.llContent)
     LinearLayout llContent;
     DetailCVResponse detailCVResponse;
@@ -64,6 +66,7 @@ public class SkillDetailCVFragment extends BaseFragment {
             }
             tvNodata.setVisibility(View.GONE);
             llContent.setVisibility(View.VISIBLE);
+            tvHobby.setText(detailCVResponse.getCvSkill().getHobby());
         } else {
             tvNodata.setVisibility(View.VISIBLE);
             llContent.setVisibility(View.GONE);

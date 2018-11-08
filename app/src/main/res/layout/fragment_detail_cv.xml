@@ -44,6 +44,7 @@
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
                     android:gravity="center"
+                    app:layout_scrollFlags="scroll|enterAlways|snap"
                     app:popupTheme="@style/AppTheme.PopupOverlay">
 
                     <ImageView

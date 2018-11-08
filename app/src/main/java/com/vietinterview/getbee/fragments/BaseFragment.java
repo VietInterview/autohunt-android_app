@@ -333,6 +333,8 @@ public abstract class BaseFragment extends Fragment {
                 act.getSupportActionBar().show();
                 Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
                 toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
+                toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
+
                 toolbar.setNavigationIcon(getIconLeft());
                 toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                     @Override
@@ -361,6 +363,7 @@ public abstract class BaseFragment extends Fragment {
                 act.getSupportActionBar().show();
                 Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
                 toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
+                toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
                 toolbar.setVisibility(View.VISIBLE);
                 toolbar.setNavigationIcon(getIconLeft());
                 toolbar.setNavigationOnClickListener(new View.OnClickListener() {

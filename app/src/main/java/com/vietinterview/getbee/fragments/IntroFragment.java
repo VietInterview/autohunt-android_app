@@ -3,12 +3,14 @@ package com.vietinterview.getbee.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.adapter.SlidingImageAdapter;
 import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.fragments.BaseFragment;
@@ -59,6 +61,9 @@ public class IntroFragment extends BaseFragment {
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbarVisible(false);
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        }
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         for (int i = 0; i < IMAGES.length; i++)
             ImagesArray.add(IMAGES[i]);

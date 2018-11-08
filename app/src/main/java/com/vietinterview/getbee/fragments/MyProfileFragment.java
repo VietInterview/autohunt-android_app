@@ -34,6 +34,7 @@ import com.vietinterview.getbee.customview.NunitoTextInputEditText;
 import com.vietinterview.getbee.model.Carrer;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.customview.TouchDetectableScrollView;
+import com.vietinterview.getbee.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -275,7 +276,10 @@ public class MyProfileFragment extends BaseFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.save) {
-            saveProfile();
+            if (StringUtils.isEmpty(tvHunt.getText().toString().trim())) {
+                Toast.makeText(getActivity(), getResources().getString(R.string.choose_least_one), Toast.LENGTH_SHORT).show();
+            } else
+                saveProfile();
             return true;
         }
         return super.onOptionsItemSelected(item);

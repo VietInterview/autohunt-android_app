@@ -39,6 +39,8 @@ public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLay
     private MyCVSubmitAdapter myCVSubmitAdapter;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.tvNodata)
+    TextView tvNodata;
     private SearchCVSubmitRequest searchCVSubmitRequest;
     private int mPage = 0;
     private int mStatus = 11;
@@ -105,6 +107,7 @@ public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLay
                     cvResponse = data;
                     cvListsServer.clear();
                     cvListsServer.addAll(data.getCvList());
+                    tvNodata.setVisibility(data.getTotal() == 0 ? View.VISIBLE : View.GONE);
                     if (page == 0) cvLists.clear();
                     else {
 ////                    jobsList.remove(jobsList.size() - 1);
@@ -112,7 +115,7 @@ public class MyCVApplyedFragment extends BaseFragment implements SwipeRefreshLay
                     }
                     cvLists.addAll(data.getCvList());
                     if (page == 0) {
-                        myCVSubmitAdapter = new MyCVSubmitAdapter(recyclerView, getActivity(),data.getTotal(), cvLists, MyCVApplyedFragment.this);
+                        myCVSubmitAdapter = new MyCVSubmitAdapter(recyclerView, getActivity(), data.getTotal(), cvLists, MyCVApplyedFragment.this);
                         recyclerView.setAdapter(myCVSubmitAdapter);
                     }
                     myCVSubmitAdapter.setOnLoadMoreListener(MyCVApplyedFragment.this);

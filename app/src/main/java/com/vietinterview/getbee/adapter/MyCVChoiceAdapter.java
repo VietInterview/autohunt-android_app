@@ -135,7 +135,7 @@ public class MyCVChoiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCarrer)).setText(cvLists.get(position).getCareerName());
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setVisibility(position == 0 ? View.VISIBLE : View.GONE);
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setText(this.mTotal + " " + mContext.getResources().getString(R.string.cv_found));
-//            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvJobTitle)).setText(cvLists.get(position).getJobTitle());
+            ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setVisibility(View.GONE);
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvJobTitle)).setVisibility(View.GONE);
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvDate)).setText(mContext.getResources().getString(R.string.update) + " " + DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(cvLists.get(position).getUpdatedDate()) + ""));
             ((RelativeLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setOnClickListener(new View.OnClickListener() {

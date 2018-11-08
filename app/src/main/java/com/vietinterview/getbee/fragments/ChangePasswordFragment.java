@@ -243,7 +243,12 @@ public class ChangePasswordFragment extends BaseFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.save) {
-            if (StringUtils.isEmpty(edtOldPass.getText().toString().trim())) {
+            String oldPass = edtOldPass.getText().toString();
+            String newPass = edtNewPass.getText().toString();
+            String retypePass = edtRetype.getText().toString();
+            if (oldPass.length() < 6 || newPass.length() < 6 || retypePass.length() < 6) {
+                Toast.makeText(getActivity(), getResources().getString(R.string.min_6_character), Toast.LENGTH_SHORT).show();
+            } else if (StringUtils.isEmpty(edtOldPass.getText().toString().trim())) {
                 edtOldPass.setHint(getResources().getString(R.string.please_input_old_pass));
                 edtOldPass.setHintTextColor(getResources().getColor(R.color.red));
                 imgOldPass.setVisibility(View.VISIBLE);

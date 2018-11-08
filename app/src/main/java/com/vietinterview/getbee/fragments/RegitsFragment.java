@@ -231,16 +231,29 @@ public class RegitsFragment extends BaseFragment {
 
     @OnClick(R.id.btnSignup)
     public void onSignupClick() {
-        if (edtEmail.getText().toString().trim().equalsIgnoreCase("")) {
+        if (StringUtils.isEmpty(edtName.getText().toString().trim()) && StringUtils.isEmpty(edtEmail.getText().toString().trim()) && StringUtils.isEmpty(edtPhone.getText().toString().trim())) {
+            edtName.setText("");
+            edtName.setHint(getResources().getString(R.string.input_name));
+            edtName.setHintTextColor(Color.RED);
+            icRightName.setVisibility(View.VISIBLE);
             edtEmail.setText("");
             edtEmail.setHint(getResources().getString(R.string.input_email));
             edtEmail.setHintTextColor(Color.RED);
             icRightEmail.setVisibility(View.VISIBLE);
+            edtPhone.setText("");
+            edtPhone.setHint(getResources().getString(R.string.input_phone));
+            edtPhone.setHintTextColor(Color.RED);
+            icRightPhone.setVisibility(View.VISIBLE);
         } else if (edtName.getText().toString().trim().equalsIgnoreCase("")) {
             edtName.setText("");
             edtName.setHint(getResources().getString(R.string.input_name));
             edtName.setHintTextColor(Color.RED);
             icRightName.setVisibility(View.VISIBLE);
+        } else if (edtEmail.getText().toString().trim().equalsIgnoreCase("")) {
+            edtEmail.setText("");
+            edtEmail.setHint(getResources().getString(R.string.input_email));
+            edtEmail.setHintTextColor(Color.RED);
+            icRightEmail.setVisibility(View.VISIBLE);
         } else if (edtPhone.getText().toString().trim().equalsIgnoreCase("")) {
             edtPhone.setText("");
             edtPhone.setHint(getResources().getString(R.string.input_phone));

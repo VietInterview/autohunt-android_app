@@ -60,7 +60,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:orientation="vertical"
                 android:padding="4dp">
@@ -77,11 +77,37 @@
                 <com.vietinterview.getbee.customview.FlowLayout
                     android:id="@+id/container"
                     android:layout_width="match_parent"
-                    android:layout_height="450dp"
+                    android:layout_height="400dp"
                     android:orientation="vertical"
                     android:scrollbars="vertical"
                     app:horizontalSpacing="5dp"
                     app:verticalSpacing="5dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="vertical"
+                android:padding="4dp">
+
+                <com.vietinterview.getbee.customview.NunitoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/hobby"
+                    android:textColor="#505059"
+                    android:textSize="18sp" />
+
+                <com.vietinterview.getbee.customview.NunitoBoldTextView
+                    android:id="@+id/tvHobby"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentBottom="true"
+                    android:textColor="#B1B1BA"
+                    android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>

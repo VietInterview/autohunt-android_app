@@ -56,6 +56,8 @@ public class MyJobFragment extends BaseFragment {
     private String mCarrerName = "";
     private String mCityId = "0";
     private String mCityName = "";
+    private JobsSavedFragment jobsSavedFragment;
+    private JobsApplyedFragment jobsApplyedFragment;
 
     @Override
     protected int getLayoutId() {
@@ -87,25 +89,70 @@ public class MyJobFragment extends BaseFragment {
 
             }
         });
-        setupViewPager(viewPager);
-        tabLayout.setupWithViewPager(viewPager);
-        setupTabIcons();
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
-            }
+//        if (jobsSavedFragment == null && jobsApplyedFragment == null) {
+            jobsSavedFragment = new JobsSavedFragment().newInstance(mCityId, mCarrerId);
+            jobsApplyedFragment = new JobsApplyedFragment().newInstance(mCityId, mCarrerId);
+            setupViewPager(viewPager);
+            tabLayout.setupWithViewPager(viewPager);
+            setupTabIcons();
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
+                }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.background_icon_not_focus));
-            }
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+                    ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.background_icon_not_focus));
+                }
 
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
 
-            }
-        });
+                }
+            });
+//        } else {
+//            viewPager.setCurrentItem(0);
+//            viewPager.setOffscreenPageLimit(2);
+//            viewPager.setAdapter(adapter);
+//            tabLayout.setupWithViewPager(viewPager);
+//            setupTabIcons();
+//            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//                @Override
+//                public void onTabSelected(TabLayout.Tab tab) {
+//                    ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
+//                }
+//
+//                @Override
+//                public void onTabUnselected(TabLayout.Tab tab) {
+//                    ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.background_icon_not_focus));
+//                }
+//
+//                @Override
+//                public void onTabReselected(TabLayout.Tab tab) {
+//
+//                }
+//            });
+//        }
+//        setupViewPager(viewPager);
+//        tabLayout.setupWithViewPager(viewPager);
+//        setupTabIcons();
+//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//                ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.background_icon_not_focus));
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//
+//            }
+//        });
     }
 
     @Override
@@ -130,11 +177,14 @@ public class MyJobFragment extends BaseFragment {
         tabLayout.getTabAt(1).setCustomView(tabTwo);
     }
 
+    ViewPagerAdapter adapter;
+
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFrag(new JobsSavedFragment().newInstance(mCityId, mCarrerId), getResources().getString(R.string.job_saved));
-        adapter.addFrag(new JobsApplyedFragment().newInstance(mCityId, mCarrerId), getResources().getString(R.string.job_applyed));
+        adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+        adapter.addFrag(jobsSavedFragment, getResources().getString(R.string.job_saved));
+        adapter.addFrag(jobsApplyedFragment, getResources().getString(R.string.job_applyed));
         viewPager.setCurrentItem(0);
+        viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(adapter);
     }
 

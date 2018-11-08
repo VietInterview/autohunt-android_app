@@ -292,7 +292,11 @@ public class DetailJobFragment extends BaseFragment {
             public void onSuccess(int status, CVResponse data, List<CVResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 if (isAdded()) {
-                    FragmentUtil.pushFragment(getActivity(), DetailJobFragment.this, new ChoiceCVFragment().newInstance(mDetailJobResponse, data), null);
+                    if (data.getCvList().size() > 0)
+                        FragmentUtil.pushFragment(getActivity(), DetailJobFragment.this, new ChoiceCVFragment().newInstance(mDetailJobResponse, data), null);
+                    else {
+                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.no_choice_cv));
+                    }
                 }
             }
 
