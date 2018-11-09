@@ -78,6 +78,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     ClearableRegularEditText edtJobTitle;
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.tvNodata)
+    TextView tvNodata;
     private boolean visibleSearch = false;
     private boolean visibleCondition = false;
     private JobsAdapter jobsAdapter;
@@ -221,6 +223,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                     if (page == 0) jobsList.clear();
                     else jobsAdapter.notifyItemRemoved(jobsList.size());
                     mTotal = data.getTotal();
+                    tvNodata.setVisibility(mTotal == 0 ? View.VISIBLE : View.GONE);
                     jobsList.addAll(data.getJobList());
                     if (page == 0) {
                         jobsAdapter = new JobsAdapter(recyclerView, jobsList, mTotal, HomeFragment.this, getActivity());
@@ -232,6 +235,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 } else {
                     if (page == 0) jobsList.clear();
                     mTotal = data.getTotal();
+                    tvNodata.setVisibility(mTotal == 0 ? View.VISIBLE : View.GONE);
                     jobsList.addAll(data.getJobList());
                     if (jobsAdapter == null) {
                         jobsAdapter = new JobsAdapter(recyclerView, jobsList, mTotal, HomeFragment.this, getActivity());
@@ -445,6 +449,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     public ArrayList<BaseRequest> getArrayBaseRequest() {
         ArrayList<BaseRequest> baseRequests = new ArrayList<>();
         baseRequests.add(getSearchJobsRequest);
+        baseRequests.add(getMyProfileRequest);
         return baseRequests;
     }
 }

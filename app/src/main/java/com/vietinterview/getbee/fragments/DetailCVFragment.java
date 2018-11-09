@@ -42,6 +42,7 @@ import com.vietinterview.getbee.callback.OnSetHeightViewListener;
 import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.utils.ShowImageUtils;
 import com.vietinterview.getbee.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -142,12 +143,7 @@ public class DetailCVFragment extends BaseFragment {
     protected void initData() {
         tvFullName.setText(detailCVResponse.getFullName());
         tvBirthDay.setText(DateUtil.convertToMyFormatFull(detailCVResponse.getBirthday() + ""));
-        RequestOptions options = new RequestOptions()
-                .fitCenter()
-                .error(R.drawable.ic_ava_null)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .priority(Priority.HIGH);
-        Glide.with(getActivity()).load(detailCVResponse.getPictureUrl()).apply(options).into(imgAva);
+        ShowImageUtils.showImage(getActivity(), detailCVResponse.getPictureUrl(), R.drawable.ic_ava_null, imgAva);
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();

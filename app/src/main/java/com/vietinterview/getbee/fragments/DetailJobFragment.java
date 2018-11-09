@@ -46,6 +46,7 @@ import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.utils.ShowImageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +61,8 @@ import butterknife.OnClick;
 public class DetailJobFragment extends BaseFragment {
     @BindView(R.id.saveUnsaveJob)
     Button saveUnsaveJob;
+    @BindView(R.id.btnApplyCV)
+    Button btnApplyCV;
     @BindView(R.id.tvcompanyName)
     TextView tvcompanyName;
     @BindView(R.id.tvjobTitle)
@@ -76,6 +79,8 @@ public class DetailJobFragment extends BaseFragment {
     ViewPager viewPager;
     @BindView(R.id.llParent)
     LinearLayout llParent;
+    @BindView(R.id.llFooter)
+    LinearLayout llFooter;
     private TabLayout tabLayout;
     private Dialog mNotifydialog;
     //    private JobList mJobList;
@@ -167,9 +172,11 @@ public class DetailJobFragment extends BaseFragment {
             if (mDetailJobResponse.getStatus() == 1) {
                 tvstatus.setText(getResources().getString(R.string.hiring));
                 llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));
+                llFooter.setVisibility(View.VISIBLE);
             } else {
                 tvstatus.setText(getResources().getString(R.string.closed));
                 llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_notyet_send));
+                llFooter.setVisibility(View.GONE);
             }
 
             if (mDetailJobResponse.getCollStatus() != null) {
@@ -326,8 +333,7 @@ public class DetailJobFragment extends BaseFragment {
                     llParent.setVisibility(View.VISIBLE);
                     tvcompanyName.setText(data.getCompanyName());
                     tvjobTitle.setText(data.getJobTitle());
-                    RequestOptions options = new RequestOptions().fitCenter().error(R.drawable.ic_company_null).diskCacheStrategy(DiskCacheStrategy.ALL).priority(Priority.HIGH);
-                    Glide.with(getActivity()).load(data.getCompanyImg()).apply(options).into(imgCompany);
+                    ShowImageUtils.showImage(getActivity(), data.getCompanyImg(), R.drawable.ic_company_null, imgCompany);
                     if (data.getStatus() == 1) {
                         tvstatus.setText(getResources().getString(R.string.hiring));
                         llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));
@@ -509,6 +515,7 @@ public class DetailJobFragment extends BaseFragment {
     public ArrayList<BaseRequest> getArrayBaseRequest() {
         ArrayList<BaseRequest> baseRequests = new ArrayList<>();
         baseRequests.add(searchMyCVRequest);
+        baseRequests.add(getDetailJobRequest);
         return baseRequests;
     }
 }

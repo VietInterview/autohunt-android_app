@@ -1,6 +1,7 @@
 package com.vietinterview.getbee.api.request;
 
 import com.vietinterview.getbee.api.response.ErrorResponse;
+import com.vietinterview.getbee.api.response.login.ErrorLoginResponse;
 import com.vietinterview.getbee.api.response.login.LoginResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
 
@@ -14,7 +15,7 @@ import java.util.List;
  * Created by hiepn on 22/04/2017.
  */
 
-public class LoginRequest extends BaseJsonRequest<LoginResponse, ErrorResponse> {
+public class LoginRequest extends BaseJsonRequest<LoginResponse, ErrorLoginResponse> {
     private String mEmail;
     private String mPassword;
 
@@ -29,8 +30,8 @@ public class LoginRequest extends BaseJsonRequest<LoginResponse, ErrorResponse> 
     }
 
     @Override
-    public Class<ErrorResponse> getResponseFailClass() throws JSONException {
-        return ErrorResponse.class;
+    public Class<ErrorLoginResponse> getResponseFailClass() throws JSONException {
+        return ErrorLoginResponse.class;
     }
 
     @Override
@@ -39,7 +40,7 @@ public class LoginRequest extends BaseJsonRequest<LoginResponse, ErrorResponse> 
     }
 
     @Override
-    public List<ErrorResponse> getListResponseFailClass() {
+    public List<ErrorLoginResponse> getListResponseFailClass() {
         return null;
     }
 

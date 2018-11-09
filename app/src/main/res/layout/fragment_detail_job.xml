@@ -161,7 +161,7 @@
                 android:layout_width="149dp"
                 android:layout_height="40dp"
                 android:layout_margin="8dp"
-                android:background="@drawable/borderbutton_yellow"
+                android:background="@drawable/borderbutton_yellow_highlight"
                 android:drawableLeft="@drawable/ic_addcv"
                 android:drawablePadding="-16dp"
                 android:paddingLeft="32dp"

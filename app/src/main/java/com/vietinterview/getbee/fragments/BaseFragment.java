@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GestureDetectorCompat;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.activities.BaseActivity;
@@ -27,6 +29,7 @@ import com.vietinterview.getbee.api.request.BaseJsonRequest;
 import com.vietinterview.getbee.api.request.BaseRequest;
 import com.vietinterview.getbee.model.Event;
 import com.vietinterview.getbee.utils.DebugLog;
+import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.KeyboardUtil;
 import com.vietinterview.getbee.utils.UiUtil;
 
@@ -173,6 +176,8 @@ public abstract class BaseFragment extends Fragment {
         showhidetoolbar(isVisible);
     }
 
+    boolean doubleBackToExitPressedOnce = false;
+
     public void setProcessOnBackPess(boolean isProcess) {
         if (isProcess) {
             if (getView() == null) {
@@ -187,7 +192,21 @@ public abstract class BaseFragment extends Fragment {
                         if (getFragmentManager().getBackStackEntryCount() > 0) {
                             processOnBackPress();
                         } else {
-                            getActivity().finish();
+                            if (doubleBackToExitPressedOnce) {
+                                if (isAdded())
+                                    getActivity().finish();
+                            }
+                            doubleBackToExitPressedOnce = true;
+                            Toast.makeText(getActivity(), getResources().getString(R.string.press_back_noti), Toast.LENGTH_SHORT).show();
+
+                            new Handler().postDelayed(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    doubleBackToExitPressedOnce = false;
+
+                                }
+                            }, 2000);
                         }
                         return true;
                     }

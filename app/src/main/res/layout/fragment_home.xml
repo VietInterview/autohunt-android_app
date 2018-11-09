@@ -141,6 +141,16 @@
                 android:background="@color/gray_not_focus" />
         </LinearLayout>
 
+        <com.vietinterview.getbee.customview.NunitoTextView
+            android:id="@+id/tvNodata"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
+            android:gravity="center"
+            android:text="@string/no_data"
+            android:textColor="#B1B1BA"
+            android:visibility="gone" />
+
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_container"
             android:layout_width="match_parent"

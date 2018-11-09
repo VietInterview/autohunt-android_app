@@ -38,6 +38,7 @@ import com.vietinterview.getbee.fragments.StatisticalFragment;
 import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.utils.ShowImageUtils;
 import com.vietinterview.getbee.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -125,12 +126,7 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int listPosition) {
         if (holder instanceof MyViewHolder) {
             final MyViewHolder myViewHolder = (MyViewHolder) holder;
-            RequestOptions options = new RequestOptions()
-                    .fitCenter()
-                    .error(R.drawable.ic_company_null)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .priority(Priority.HIGH);
-            Glide.with(mActivity).load(dataSet.get(listPosition).getCompanyImg()).apply(options).into(myViewHolder.imgBussiness);
+            ShowImageUtils.showImage(mActivity, dataSet.get(listPosition).getCompanyImg(), R.drawable.ic_company_null, myViewHolder.imgBussiness);
             if (listPosition == 0) {
                 myViewHolder.llHeader.setVisibility(View.VISIBLE);
                 myViewHolder.titleHeader.setText(this.total + " " + mActivity.getResources().getString(R.string.job_found));

@@ -3,6 +3,7 @@ package com.vietinterview.getbee.activities;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
@@ -184,7 +186,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void applyFontToMenuItem(MenuItem mi) {
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Nunito-Regular.ttf");
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
-        DebugLog.showLogCat(getResources().getDimension(R.dimen.font_menu_left) + "");
         mNewTitle.setSpan(new CustomTypefaceSpan((int) getResources().getDimension(R.dimen.font_menu_left), "", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mi.setTitle(mNewTitle);
     }
@@ -255,4 +256,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
         return true;
     }
+
+    boolean doubleBackToExitPressedOnce = false;
 }

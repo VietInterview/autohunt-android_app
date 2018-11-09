@@ -76,7 +76,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="550dp"
+                        android:layout_height="600dp"
                         android:layout_marginHorizontal="@dimen/activity_vertical_margin"
                         android:layout_marginTop="50dp"
                         android:background="@color/white"
@@ -165,7 +165,7 @@
                 android:id="@+id/btnApplyCV"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@drawable/borderbutton_yellow"
+                android:background="@drawable/borderbutton_yellow_highlight"
                 android:text="@string/apply_cv"
                 android:textColor="@color/black" />
         </LinearLayout>

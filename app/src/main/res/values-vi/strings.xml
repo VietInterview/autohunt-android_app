@@ -26,7 +26,7 @@
     <string name="interviewd">Đã phỏng vấn</string>
     <string name="accept_offer">Đã nhận việc</string>
     <string name="cv_submited">Hồ sơ đã ứng tuyển</string>
-    <string name="cv_submited_title">CV đã được nộp</string>
+    <string name="cv_submited_title">hồ sơ đã được nộp</string>
     <string name="info">Thông tin</string>
     <string name="exp">Kinh nghiệm</string>
     <string name="level">Trình độ</string>
@@ -176,7 +176,7 @@
     <string name="please_input_old_pass">Xin hãy nhập mật khẩu cũ</string>
     <string name="please_input_new_pass">Xin hãy nhập mật khẩu mới</string>
     <string name="please_input_retype_pass">Xin hãy nhập lại mật khẩu mới</string>
-    <string name="compare_new_retype_pass">Mật khẩu mới không khớp, vui lòng kiểm tra lại.</string>
+    <string name="compare_new_retype_pass">Mật khẩu mới không trùng , vui lòng nhập lại</string>
     <string name="compare_old_new_pass">Mật khẩu mới không được trùng với mật khẩu cũ</string>
     <string name="change_password_success">Thay đổi mật khẩu thành công</string>
     <string name="change_password_fail">Thay đổi mật khẩu thất bại</string>
@@ -185,4 +185,6 @@
     <string name="choose_least_one">Vui lòng chọn ít nhất một lĩnh vực muốn cộng tác</string>
     <string name="no_choice_cv">Bạn chưa có hồ sơ ứng viên. Hãy nhanh tay tạo Hồ sơ ứng viên để kiếm thêm thu nhập</string>
     <string name="working_form">Hình thức làm việc</string>
+    <string name="press_back_noti">Bấm back 2 lần để thoát ứng dụng</string>
+    <string name="user_locked">Tài khoản của bạn bị tạm khóa, vui lòng liên hệ {hotline} nếu cần hỗ trợ giải đáp</string>
 </resources>

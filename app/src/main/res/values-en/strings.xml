@@ -185,4 +185,6 @@
     <string name="choose_least_one">Please select at least one field of interest</string>
     <string name="no_choice_cv">You do not have a resume. Quickly create a Resume to earn more income</string>
     <string name="working_form">Form of work</string>
+    <string name="press_back_noti">Press back twice to exit the application</string>
+    <string name="user_locked">Your account is locked, please contact {hotline} if you need help answering</string>
 </resources>

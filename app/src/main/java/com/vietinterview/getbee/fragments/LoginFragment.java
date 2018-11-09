@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
@@ -28,6 +29,7 @@ import com.vietinterview.getbee.api.request.BaseJsonRequest;
 import com.vietinterview.getbee.api.request.GetMyProfileRequest;
 import com.vietinterview.getbee.api.request.LoginRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
+import com.vietinterview.getbee.api.response.login.ErrorLoginResponse;
 import com.vietinterview.getbee.api.response.login.LoginResponse;
 import com.vietinterview.getbee.api.response.myprofile.MyProfileResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
@@ -229,44 +231,52 @@ public class LoginFragment extends BaseFragment {
         } else {
             showCoverNetworkLoading();
             loginRequest = new LoginRequest(edtEmail.getText().toString().trim(), edtPass.getText().toString().trim());
-            loginRequest.callRequest(getActivity(), new ApiObjectCallBack<LoginResponse, ErrorResponse>() {
+            loginRequest.callRequest(getActivity(), new ApiObjectCallBack<LoginResponse, ErrorLoginResponse>() {
                 @Override
                 public void onSuccess(int status, LoginResponse data, List<LoginResponse> dataArrayList, String message) {
-                    if (status == 200) {
-                        userInfoBean = new UserInfoBean();
-                        userInfoBean.nickname = edtEmail.getText().toString().trim();
-                        userInfoBean.access_token = data.getApiToken();
-                        AccountManager.setUserInfoBean(userInfoBean);
-                        getMyProfile();
-                        if (getActivity() instanceof MainActivity) {
-                            ((MainActivity) getActivity()).drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                    if (isAdded()) {
+                        if (status == 200) {
+                            userInfoBean = new UserInfoBean();
+                            userInfoBean.nickname = edtEmail.getText().toString().trim();
+                            userInfoBean.access_token = data.getApiToken();
+                            AccountManager.setUserInfoBean(userInfoBean);
+                            getMyProfile();
+                            if (getActivity() instanceof MainActivity) {
+                                ((MainActivity) getActivity()).drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                            }
+                            getAct().navigationView.setCheckedItem(R.id.nav_home);
+                            FragmentUtil.replaceFragment(getActivity(), new HomeFragment(), null);
                         }
-                        getAct().navigationView.setCheckedItem(R.id.nav_home);
-                        FragmentUtil.replaceFragment(getActivity(), new HomeFragment(), null);
                     }
                 }
 
                 @Override
-                public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
-                    hideCoverNetworkLoading();
-                    mNotifydialog = new Dialog(getActivity());
-                    mNotifydialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    mNotifydialog.setContentView(R.layout.dialog_noti);
-                    mNotifydialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    mNotifydialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                    Window window = mNotifydialog.getWindow();
-                    WindowManager.LayoutParams wlp = window.getAttributes();
-                    wlp.gravity = Gravity.TOP;
-                    wlp.y = 300;
-                    window.setAttributes(wlp);
-                    Button btnOK = (Button) mNotifydialog.findViewById(R.id.btnOK);
-                    btnOK.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mNotifydialog.dismiss();
+                public void onFail(int failCode, ErrorLoginResponse errorResponse, List<ErrorLoginResponse> dataArrayList, String message) {
+                    if (isAdded()) {
+                        hideCoverNetworkLoading();
+                        mNotifydialog = new Dialog(getActivity());
+                        mNotifydialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        mNotifydialog.setContentView(R.layout.dialog_noti);
+                        mNotifydialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        mNotifydialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                        Window window = mNotifydialog.getWindow();
+                        WindowManager.LayoutParams wlp = window.getAttributes();
+                        wlp.gravity = Gravity.TOP;
+                        wlp.y = 300;
+                        window.setAttributes(wlp);
+                        TextView tvContent = mNotifydialog.findViewById(R.id.tvContent);
+                        if (errorResponse.getDetail().equalsIgnoreCase("userLock")) {
+                            tvContent.setText(getResources().getString(R.string.user_locked));
                         }
-                    });
-                    mNotifydialog.show();
+                        Button btnOK = (Button) mNotifydialog.findViewById(R.id.btnOK);
+                        btnOK.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mNotifydialog.dismiss();
+                            }
+                        });
+                        mNotifydialog.show();
+                    }
                 }
             });
         }
