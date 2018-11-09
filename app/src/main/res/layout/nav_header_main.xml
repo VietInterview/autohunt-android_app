@@ -26,7 +26,7 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/white"
-        android:textSize="30sp" />
+        android:textSize="@dimen/font_greeting" />
 
     <TextView
         android:id="@+id/textView"

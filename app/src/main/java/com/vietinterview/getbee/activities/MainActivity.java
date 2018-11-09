@@ -76,6 +76,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void initView() {
         setLanguage(SharedPrefUtils.getString(AppConstant.LANGUAGE, "vi"));
+        DebugLog.showLogCat(UiUtil.getDpi(this) + "");
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -106,11 +107,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         tvGreeting = (TextView) headerView.findViewById(R.id.tvGreeting);
         if (AccountManager.getUserInfoBean() != null)
             if (AccountManager.getUserInfoBean().getName() != null)
-                tvGreeting.setText(getResources().getString(R.string.greeting) + AccountManager.getUserInfoBean().getName() + "!");
+                tvGreeting.setText(getResources().getString(R.string.greeting) + " " + AccountManager.getUserInfoBean().getName() + "!");
         getEventBaseActivity().setOnSetTextGreetingListener(new OnSetTextGreetingListener() {
             @Override
             public void onSetTextGreeting(String name) {
-                tvGreeting.setText(getResources().getString(R.string.greeting) + name + "!");
+                tvGreeting.setText(getResources().getString(R.string.greeting) + " " + name + "!");
             }
         });
         getEventBaseActivity().setOnShowLogoListener(new OnShowLogoListener() {
@@ -183,7 +184,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void applyFontToMenuItem(MenuItem mi) {
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Nunito-Regular.ttf");
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
-        mNewTitle.setSpan(new CustomTypefaceSpan("", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        DebugLog.showLogCat(getResources().getDimension(R.dimen.font_menu_left) + "");
+        mNewTitle.setSpan(new CustomTypefaceSpan((int) getResources().getDimension(R.dimen.font_menu_left), "", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mi.setTitle(mNewTitle);
     }
 

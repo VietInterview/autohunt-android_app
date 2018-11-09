@@ -1,9 +1,12 @@
 package com.vietinterview.getbee.customview;
 
+import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.text.TextPaint;
 import android.text.style.TypefaceSpan;
+
+import com.vietinterview.getbee.R;
 
 /**
  * Created by hiepnguyennghia on 10/10/18.
@@ -12,10 +15,12 @@ import android.text.style.TypefaceSpan;
 public class CustomTypefaceSpan extends TypefaceSpan {
 
     private final Typeface newType;
+    private static int mFontSize;
 
-    public CustomTypefaceSpan(String family, Typeface type) {
+    public CustomTypefaceSpan(int fontsize, String family, Typeface type) {
         super(family);
         newType = type;
+        mFontSize = fontsize;
     }
 
     @Override
@@ -46,7 +51,7 @@ public class CustomTypefaceSpan extends TypefaceSpan {
             paint.setTextSkewX(-0.25f);
 
         }
-        paint.setTextSize(48);
+        paint.setTextSize(mFontSize);
         paint.setTypeface(tf);
     }
 }

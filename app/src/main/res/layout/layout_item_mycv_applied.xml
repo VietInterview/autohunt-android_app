@@ -20,6 +20,7 @@
         <RelativeLayout
             android:id="@+id/primaryContentCardView"
             android:layout_width="match_parent"
+            android:background="@drawable/background_press"
             android:layout_height="wrap_content">
 
             <com.vietinterview.getbee.customview.NunitoBoldTextView

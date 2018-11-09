@@ -74,6 +74,14 @@
                     android:background="@android:color/transparent"
                     android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="550dp"
+                        android:layout_marginHorizontal="@dimen/activity_vertical_margin"
+                        android:layout_marginTop="50dp"
+                        android:background="@color/white"
+                        android:orientation="vertical" />
+
                     <RelativeLayout
                         android:id="@+id/rlHeader"
                         android:layout_width="match_parent"

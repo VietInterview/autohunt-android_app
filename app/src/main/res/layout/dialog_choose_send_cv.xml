@@ -79,7 +79,7 @@
             android:text="@string/hunt_reward"
             android:textColor="@color/black"
             android:textSize="16sp"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btnHunt"

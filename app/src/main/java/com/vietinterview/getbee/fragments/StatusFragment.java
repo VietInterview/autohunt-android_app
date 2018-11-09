@@ -126,8 +126,8 @@ public class StatusFragment extends BaseFragment {
     protected void initData() {
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         cvStatuses = new ArrayList<>();
-        cvStatuses.add(new CVStatus(0, getResources().getString(R.string.not_save)));
-        cvStatuses.add(new CVStatus(1, getResources().getString(R.string.saved)));
+//        cvStatuses.add(new CVStatus(0, getResources().getString(R.string.not_save)));
+//        cvStatuses.add(new CVStatus(1, getResources().getString(R.string.saved)));
         cvStatuses.add(new CVStatus(2, getResources().getString(R.string.applyed)));
         cvStatuses.add(new CVStatus(3, getResources().getString(R.string.approved)));
         cvStatuses.add(new CVStatus(4, getResources().getString(R.string.seen)));

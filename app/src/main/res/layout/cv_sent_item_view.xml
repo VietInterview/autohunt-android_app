@@ -6,22 +6,24 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="89dp">
+        android:layout_height="wrap_content">
 
         <com.vietinterview.getbee.customview.NunitoBoldTextView
             android:id="@+id/tvName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/llStatus"
             android:padding="@dimen/activity_vertical_margin"
             android:textColor="#000000"
             android:textSize="16sp" />
 
         <com.vietinterview.getbee.customview.NunitoTextView
             android:id="@+id/tvDate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentBottom="true" android:layout_below="@+id/tvName"
+            android:layout_toLeftOf="@+id/llStatus"
             android:padding="@dimen/activity_vertical_margin"
             android:textColor="#191830"
             android:textSize="16sp" />

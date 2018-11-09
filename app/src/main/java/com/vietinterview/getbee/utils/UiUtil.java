@@ -2,9 +2,11 @@ package com.vietinterview.getbee.utils;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Build;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -34,6 +36,12 @@ public class UiUtil {
      */
     public static int pxToDp(int px) {
         return (int) (px / Resources.getSystem().getDisplayMetrics().density);
+    }
+
+    public static int getDpi(Context context) {
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        int densityDpi = (int) (metrics.density * 160f);
+        return densityDpi;
     }
 
     /**

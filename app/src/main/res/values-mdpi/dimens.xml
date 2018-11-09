@@ -10,4 +10,6 @@
     <dimen name="tab_label">14sp</dimen>
     <dimen name="custom_tab_layout_height">72dp</dimen>
     <dimen name="fab_circle_radius">25dp</dimen>
+    <dimen name="font_greeting">20sp</dimen>
+    <dimen name="font_menu_left">16sp</dimen>
 </resources>

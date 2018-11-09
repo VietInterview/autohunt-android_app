@@ -15,7 +15,7 @@
         <item
             android:id="@+id/nav_cv"
             android:icon="@drawable/ic_mycv_menuleft"
-            android:title="@string/mycv"
+            android:title="@string/mycv" 
             app:actionViewClass="com.vietinterview.getbee.customview.CircularTextView" />
         <item
             android:id="@+id/nav_profile"
