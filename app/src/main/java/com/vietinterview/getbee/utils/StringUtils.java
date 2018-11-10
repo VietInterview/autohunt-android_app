@@ -14,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -319,11 +320,10 @@ public class StringUtils {
     }
 
     public static String filterCurrencyString(long number) {
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-        symbols.setGroupingSeparator(',');
-        DecimalFormat decimalFormat = new DecimalFormat("#,###", symbols);
-        String prezzo = decimalFormat.format(number);
-        return prezzo;
+        NumberFormat nf = NumberFormat.getInstance();
+        DecimalFormat df = (DecimalFormat) nf;
+        df.applyPattern("#,###");
+        return df.format(number);
     }
 }
 

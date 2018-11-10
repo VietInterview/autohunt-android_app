@@ -78,7 +78,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void initView() {
         setLanguage(SharedPrefUtils.getString(AppConstant.LANGUAGE, "vi"));
-        DebugLog.showLogCat(UiUtil.getDpi(this) + "");
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -109,11 +108,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         tvGreeting = (TextView) headerView.findViewById(R.id.tvGreeting);
         if (AccountManager.getUserInfoBean() != null)
             if (AccountManager.getUserInfoBean().getName() != null)
-                tvGreeting.setText(getResources().getString(R.string.greeting) + " " + AccountManager.getUserInfoBean().getName() + "!");
+                tvGreeting.setText(getResources().getString(R.string.greeting) + "\n" + AccountManager.getUserInfoBean().getName() + "!");
         getEventBaseActivity().setOnSetTextGreetingListener(new OnSetTextGreetingListener() {
             @Override
             public void onSetTextGreeting(String name) {
-                tvGreeting.setText(getResources().getString(R.string.greeting) + " " + name + "!");
+                tvGreeting.setText(getResources().getString(R.string.greeting) + "\n" + name + "!");
             }
         });
         getEventBaseActivity().setOnShowLogoListener(new OnShowLogoListener() {

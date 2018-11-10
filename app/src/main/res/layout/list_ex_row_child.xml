@@ -34,7 +34,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
-                android:text="FPT Soft"
                 android:textColor="#B1B1BA"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -61,7 +60,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
-                android:text="Dưới 50 người"
                 android:textColor="#B1B1BA"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -88,7 +86,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
-                android:text="UX/UI Designer"
                 android:textColor="#B1B1BA"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -115,7 +112,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:text="09/2014 - 10/2015"
                 android:textColor="#B1B1BA"
                 android:textSize="18sp" />
 
@@ -125,7 +121,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
-                android:text="Công việc hiện tại"
                 android:textColor="#B1B1BA"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -152,7 +147,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
-                android:text="1,200 USD"
                 android:textColor="#B1B1BA"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -179,7 +173,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
-                android:text="Không có dữ liệu"
                 android:textColor="#B1B1BA"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -206,7 +199,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
-                android:text="Không có dữ liệu"
                 android:textColor="#B1B1BA"
                 android:textSize="18sp" />
         </LinearLayout>

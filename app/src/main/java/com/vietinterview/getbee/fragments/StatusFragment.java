@@ -128,7 +128,7 @@ public class StatusFragment extends BaseFragment {
         cvStatuses = new ArrayList<>();
 //        cvStatuses.add(new CVStatus(0, getResources().getString(R.string.not_save)));
 //        cvStatuses.add(new CVStatus(1, getResources().getString(R.string.saved)));
-        cvStatuses.add(new CVStatus(2, getResources().getString(R.string.sent)));
+        cvStatuses.add(new CVStatus(2, getResources().getString(R.string.applyed)));
         cvStatuses.add(new CVStatus(3, getResources().getString(R.string.seen)));
         cvStatuses.add(new CVStatus(4, getResources().getString(R.string.not_accept)));
         cvStatuses.add(new CVStatus(5, getResources().getString(R.string.invite_interview)));

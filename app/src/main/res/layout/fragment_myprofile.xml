@@ -125,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:editable="false"
                     android:hint="Email"
-                    android:textColor="@color/black"
+                    android:textColor="@color/gray_not_focus"
                     android:textSize="16sp"
                     app:hintAnimationEnabled="true"
                     app:hintTextAppearance="@style/customfontstyle" />
@@ -219,5 +219,4 @@
             </RelativeLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-    >
 </RelativeLayout>

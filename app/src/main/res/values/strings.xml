@@ -160,7 +160,7 @@
     <string name="conputer_skill_tit">Tin học</string>
     <string name="office_information">Tin học văn phòng</string>
     <string name="other_soft">Phần mềm khác</string>
-    <string name="hunt_send_cv_noti">CV của bạn đã được upload thành công và đang được chờ xử lý trước khi gửi đến NTD, thời gian xử lý tối đa là 24 giờ. Chúng tôi sẽ thông báo tới bạn ngay khi hoàn thành</string>
+    <string name="hunt_send_cv_noti">Hồ sơ của bạn đã được gửi tới NTD. Vui lòng kiểm tra trạng thái hồ sơ đã gửi trong mục "Hồ sơ đã ứng tuyển"</string>
     <string name="sent">Đã gửi</string>
     <string name="no_data">Không có thông tin</string>
     <string name="below_50">Dưới 50 người</string>
@@ -171,7 +171,7 @@
     <string name="emailorphoneexist">Ứng viên này đã được chính bạn hoặc CTV viên khác sử dụng và gửi đi. Bạn vui lòng chọn CV khác</string>
     <string name="cvnotfound">CV không tồn tại</string>
     <string name="cvalreadysubmitjob">CV đã được apply vào job</string>
-    <string name="no_cv_upload">Bạn chưa upload CV nào. Hãy nhanh tay upload CV để kiếm thêm thu nhập</string>
+    <string name="no_cv_upload">Bạn chưa có hồ sơ ứng viên. Hãy nhanh tay tạo Hồ sơ ứng viên để kiếm thêm thu nhập</string>
     <string name="save_profile_success">Lưu thông tin thành công</string>
     <string name="please_input_old_pass">Xin hãy nhập mật khẩu cũ</string>
     <string name="please_input_new_pass">Xin hãy nhập mật khẩu mới</string>
