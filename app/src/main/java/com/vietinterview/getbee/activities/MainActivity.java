@@ -107,12 +107,21 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         View headerView = navigationView.getHeaderView(0);
         tvGreeting = (TextView) headerView.findViewById(R.id.tvGreeting);
         if (AccountManager.getUserInfoBean() != null)
-            if (AccountManager.getUserInfoBean().getName() != null)
-                tvGreeting.setText(getResources().getString(R.string.greeting) + "\n" + AccountManager.getUserInfoBean().getName() + "!");
+            if (AccountManager.getUserInfoBean().getName() != null) {
+                if (AccountManager.getUserInfoBean().getName().length() <= 6) {
+                    tvGreeting.setText(getResources().getString(R.string.greeting) + " " + AccountManager.getUserInfoBean().getName() + "!");
+                } else {
+                    tvGreeting.setText(getResources().getString(R.string.greeting) + "\n" + AccountManager.getUserInfoBean().getName() + "!");
+                }
+            }
         getEventBaseActivity().setOnSetTextGreetingListener(new OnSetTextGreetingListener() {
             @Override
             public void onSetTextGreeting(String name) {
-                tvGreeting.setText(getResources().getString(R.string.greeting) + "\n" + name + "!");
+                if (name.length() <= 6) {
+                    tvGreeting.setText(getResources().getString(R.string.greeting) + " " + name + "!");
+                } else {
+                    tvGreeting.setText(getResources().getString(R.string.greeting) + "\n" + name + "!");
+                }
             }
         });
         getEventBaseActivity().setOnShowLogoListener(new OnShowLogoListener() {

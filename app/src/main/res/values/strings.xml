@@ -187,4 +187,5 @@
     <string name="working_form">Hình thức làm việc</string>
     <string name="press_back_noti">Bấm back 2 lần để thoát ứng dụng</string>
     <string name="user_locked">Tài khoản của bạn bị tạm khóa, vui lòng liên hệ {hotline} nếu cần hỗ trợ giải đáp</string>
+    <string name="incorrect_password">Mật khẩu không đúng, vui lòng thử lại</string>
 </resources>

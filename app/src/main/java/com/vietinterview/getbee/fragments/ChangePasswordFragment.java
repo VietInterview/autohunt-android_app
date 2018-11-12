@@ -164,7 +164,9 @@ public class ChangePasswordFragment extends BaseFragment {
                         myItemShouldBeEnabled = true;
                         View toastView = getLayoutInflater().inflate(R.layout.activity_toast_custom_view, null);
                         TextView textView = toastView.findViewById(R.id.customToastText);
-                        textView.setText(dataFail.getTitle());
+                        if (dataFail.getTitle().equalsIgnoreCase("incorrect_password"))
+                            textView.setText(getResources().getString(R.string.incorrect_password));
+                        else textView.setText(dataFail.getTitle());
                         Toast toast = new Toast(getActivity());
                         toast.setView(toastView);
                         toast.setDuration(Toast.LENGTH_SHORT);

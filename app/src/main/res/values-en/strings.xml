@@ -187,4 +187,5 @@
     <string name="working_form">Form of work</string>
     <string name="press_back_noti">Press back twice to exit the application</string>
     <string name="user_locked">Your account is locked, please contact {hotline} if you need help answering</string>
+    <string name="incorrect_password">Password incorrect, please try again</string>
 </resources>
