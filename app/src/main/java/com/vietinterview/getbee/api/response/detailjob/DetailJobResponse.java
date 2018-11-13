@@ -110,7 +110,9 @@ public class DetailJobResponse implements Parcelable {
     @SerializedName("jobLevelName")
     @Expose
     private String jobLevelName;
-
+    @SerializedName("jobRequirements")
+    @Expose
+    private String jobRequirements;
     protected DetailJobResponse(Parcel in) {
         if (in.readByte() == 0) {
             id = null;
@@ -242,6 +244,14 @@ public class DetailJobResponse implements Parcelable {
             return new DetailJobResponse[size];
         }
     };
+
+    public String getJobRequirements() {
+        return jobRequirements;
+    }
+
+    public void setJobRequirements(String jobRequirements) {
+        this.jobRequirements = jobRequirements;
+    }
 
     public String getCurrencyName() {
         return currencyName;

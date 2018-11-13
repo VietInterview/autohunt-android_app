@@ -49,14 +49,21 @@ public class InfoFragment extends BaseFragment {
     TextView tvcountCv;
     @BindView(R.id.tvjobDescription)
     TextView tvjobDescription;
+    @BindView(R.id.tvjobRequirement)
+    TextView tvjobRequirement;
     @BindView(R.id.llContentDes)
     LinearLayout llContentDes;
+    @BindView(R.id.llContentRequirement)
+    LinearLayout llContentRequirement;
     @BindView(R.id.imgDes)
     ImageView imgDes;
+    @BindView(R.id.imgRequirement)
+    ImageView imgRequirement;
     @BindView(R.id.llInfo)
     LinearLayout llInfo;
     DetailJobResponse detailJobResponse;
     boolean isVisibleDes = true;
+    boolean isVisibleRequi = true;
     ViewTreeObserver vto;
 
     public static InfoFragment newInstance(DetailJobResponse detailJobResponse) {
@@ -111,6 +118,7 @@ public class InfoFragment extends BaseFragment {
         tvcountCv.setText(detailJobResponse.getCountCv() + "");
         tvRewardCTV.setText(StringUtils.filterCurrencyString(detailJobResponse.getFee()) + " " + detailJobResponse.getCurrencyName());
         tvjobDescription.setText(Html.fromHtml(detailJobResponse.getJobDescription()));
+        tvjobRequirement.setText(Html.fromHtml(detailJobResponse.getJobRequirements()));
     }
 
     @Override
@@ -145,6 +153,43 @@ public class InfoFragment extends BaseFragment {
             isVisibleDes = true;
             llContentDes.setVisibility(View.VISIBLE);
             imgDes.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_down));
+            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                        llInfo.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    } else {
+                        llInfo.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
+                    int height = llInfo.getMeasuredHeight();
+                    getEventBaseFragment().setHeightView(height);
+                }
+            });
+        }
+    }
+
+    @OnClick(R.id.llRequirement)
+    public void onExpanRequiClick() {
+        if (isVisibleRequi) {
+            isVisibleRequi = false;
+            llContentRequirement.setVisibility(View.GONE);
+            imgRequirement.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_right));
+            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                        llInfo.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    } else {
+                        llInfo.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
+                    int height = llInfo.getMeasuredHeight();
+                    getEventBaseFragment().setHeightView(height);
+                }
+            });
+        } else {
+            isVisibleRequi = true;
+            llContentRequirement.setVisibility(View.VISIBLE);
+            imgRequirement.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_down));
             vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {

@@ -426,5 +426,67 @@
                 android:textColor="@color/black"
                 android:textSize="16sp" />
         </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_not_focus" />
+
+        <LinearLayout
+            android:id="@+id/llRequirement"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#F7FAFF"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_vertical_margin">
+
+            <com.vietinterview.getbee.customview.NunitoBoldTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="@string/job_requirement"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/imgRequirement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_arrow_down" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_not_focus" />
+
+        <LinearLayout
+            android:id="@+id/llContentRequirement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_vertical_margin">
+
+            <com.vietinterview.getbee.customview.NunitoTextView
+                android:id="@+id/tvjobRequirement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:lines="100"
+                android:maxLines="5"
+                android:minLines="2"
+                android:singleLine="false"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
