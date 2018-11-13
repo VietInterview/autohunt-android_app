@@ -55,19 +55,19 @@ public class SkillDetailCVFragment extends BaseFragment {
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-        vto = llInfo.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                    llInfo.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                } else {
-                    llInfo.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                }
-                int height = llInfo.getMeasuredHeight();
-                getEventBaseFragment().setHeightView(height);
-            }
-        });
+//        vto = llInfo.getViewTreeObserver();
+//        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+//                    llInfo.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//                } else {
+//                    llInfo.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//                }
+//                int height = llInfo.getMeasuredHeight();
+//                getEventBaseFragment().setHeightView(height);
+//            }
+//        });
         getEventBaseFragment().setOnSwitchToSixListener(new OnSwitchToSixListener() {
             @Override
             public void onSwitchToSix() {
