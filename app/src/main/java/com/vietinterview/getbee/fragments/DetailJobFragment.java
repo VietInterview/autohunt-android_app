@@ -167,8 +167,7 @@ public class DetailJobFragment extends BaseFragment {
             llParent.setVisibility(View.VISIBLE);
             tvcompanyName.setText(mDetailJobResponse.getCompanyName());
             tvjobTitle.setText(mDetailJobResponse.getJobTitle());
-            RequestOptions options = new RequestOptions().fitCenter().error(R.drawable.ic_company_null).diskCacheStrategy(DiskCacheStrategy.ALL).priority(Priority.HIGH);
-            Glide.with(getActivity()).load(mDetailJobResponse.getCompanyImg()).apply(options).into(imgCompany);
+            ShowImageUtils.showImage(getActivity(),mDetailJobResponse.getCompanyImg(),R.drawable.ic_company_null,imgCompany);
             if (mDetailJobResponse.getStatus() == 1) {
                 tvstatus.setText(getResources().getString(R.string.hiring));
                 llStatus.setBackgroundDrawable(getResources().getDrawable(R.drawable.borderbutton_green));

@@ -32,6 +32,7 @@ import com.vietinterview.getbee.fragments.JobsSavedFragment;
 import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.utils.ShowImageUtils;
 import com.vietinterview.getbee.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -126,12 +127,7 @@ public class MyJobsSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int listPosition) {
         if (holder instanceof MyViewHolder) {
             final MyViewHolder myViewHolder = (MyViewHolder) holder;
-            RequestOptions options = new RequestOptions()
-                    .fitCenter()
-                    .error(R.drawable.ic_company_null)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .priority(Priority.HIGH);
-            Glide.with(mActivity).load(dataSet.get(listPosition).getCompanyImg()).apply(options).into(myViewHolder.imgBussiness);
+            ShowImageUtils.showImage(mActivity, dataSet.get(listPosition).getCompanyImg(), R.drawable.ic_company_null, myViewHolder.imgBussiness);
             myViewHolder.llHeader.setVisibility(listPosition == 0 ? View.VISIBLE : View.GONE);
             myViewHolder.titleHeader.setText(this.mTotal + " " + mActivity.getResources().getString(R.string.job_saved));
             myViewHolder.tvjobTitle.setText(StringUtils.nullStrToEmpty(dataSet.get(listPosition).getJobTitle()));

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -39,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ImageView
+                <com.vietinterview.getbee.customview.RoundRectCornerImageView
                     android:id="@+id/imgBussiness"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
@@ -48,8 +49,9 @@
                     android:layout_weight="0.5"
                     android:background="@drawable/border_image"
                     android:elevation="2dp"
-                    android:scaleType="center"
-                    android:tag="image_tag" />
+                    android:scaleType="fitXY"
+                    android:tag="image_tag"
+                    app:elevation="2dp" />
 
                 <LinearLayout
                     android:layout_width="0dp"

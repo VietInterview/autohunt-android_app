@@ -1,9 +1,11 @@
 package com.vietinterview.getbee.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -36,6 +38,7 @@ public class SkillDetailCVFragment extends BaseFragment {
     @BindView(R.id.llHobby)
     LinearLayout llHobby;
     DetailCVResponse detailCVResponse;
+    ViewTreeObserver vto;
 
     public static SkillDetailCVFragment newInstance(DetailCVResponse detailCVResponse) {
         SkillDetailCVFragment fm = new SkillDetailCVFragment();
@@ -52,10 +55,23 @@ public class SkillDetailCVFragment extends BaseFragment {
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
+        vto = llInfo.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    llInfo.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                } else {
+                    llInfo.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+                int height = llInfo.getMeasuredHeight();
+                getEventBaseFragment().setHeightView(height);
+            }
+        });
         getEventBaseFragment().setOnSwitchToSixListener(new OnSwitchToSixListener() {
             @Override
             public void onSwitchToSix() {
-                getEventBaseFragment().setHeightView(LayoutUtils.getViewHeight(llInfo));
+                getEventBaseFragment().setHeightView(LayoutUtils.getViewHeight(llInfo) + 200);
             }
         });
         if (detailCVResponse.getCvSkill() != null) {

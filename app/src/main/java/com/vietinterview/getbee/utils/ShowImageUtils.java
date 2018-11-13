@@ -17,7 +17,7 @@ import com.vietinterview.getbee.constant.ApiConstant;
 public class ShowImageUtils {
     public static void showImage(Context context, String urlImage, int iconError, ImageView imageView) {
         RequestOptions options = new RequestOptions()
-                .fitCenter()
+                .optionalCenterCrop()
                 .error(iconError)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH);
