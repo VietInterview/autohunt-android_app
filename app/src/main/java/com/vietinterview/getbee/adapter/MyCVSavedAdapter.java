@@ -3,6 +3,7 @@ package com.vietinterview.getbee.adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,9 +19,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chauthai.swipereveallayout.SwipeRevealLayout;
+import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.DeleteCVRequest;
 import com.vietinterview.getbee.api.request.GetDetailCVRequest;
+import com.vietinterview.getbee.api.response.DeleteCVResponse;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 import com.vietinterview.getbee.api.response.listcv.CvList;
@@ -34,6 +38,7 @@ import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.utils.GsonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +68,7 @@ public class MyCVSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private boolean isLoading;
     private BaseFragment baseFragment;
     private int mTotal;
+    private final ViewBinderHelper binderHelper = new ViewBinderHelper();
 
     public MyCVSavedAdapter(RecyclerView recyclerView, Context context, int total, ArrayList<CvList> cvLists, BaseFragment homeFragment) {
         this.cvLists = cvLists;
@@ -104,7 +110,7 @@ public class MyCVSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.layout_item_mycv, parent, false);
             ViewPagerAdapter adapter = new ViewPagerAdapter();
-            ((ViewPager) v.findViewById(R.id.viewPager)).setAdapter(adapter);
+//            ((ViewPager) v.findViewById(R.id.viewPager)).setAdapter(adapter);
 
             DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
             v.getLayoutParams().width = displayMetrics.widthPixels;
@@ -137,13 +143,14 @@ public class MyCVSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     getDetailCV(cvLists.get(position).getId());
                 }
             });
+            binderHelper.bind((SwipeRevealLayout) ((MyViewHolder) holder).swipeLayout, cvLists.get(position).getId().toString());
 //            baseFragment.getEventBaseFragment().setOnCloseSwipeListener(new OnCloseSwipeListener() {
 //                @Override
 //                public void onCloseSwipe() {
 //                    ((ViewPager) ((MyViewHolder) holder).mView.findViewById(R.id.viewPager)).setCurrentItem(0);
 //                }
 //            });
-            ((ViewPager) ((MyViewHolder) holder).mView.findViewById(R.id.viewPager)).setCurrentItem(mItemSwipedStates.get(position).ordinal());
+//            ((ViewPager) ((MyViewHolder) holder).mView.findViewById(R.id.viewPager)).setCurrentItem(mItemSwipedStates.get(position).ordinal());
             if (position % 2 == 0) {
                 ((RelativeLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.row_not_white));
             } else {
@@ -158,10 +165,16 @@ public class MyCVSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         @Override
                         public void onSuccess(int status, Object data, List dataArrayList, String message) {
                             baseFragment.hideCoverNetworkLoading();
+                            DeleteCVResponse deleteCVResponse = GsonUtils.fromJson(message, DeleteCVResponse.class);
+                            if (deleteCVResponse.getCount() <= 0) {
+                                DialogUtil.showDialog(baseFragment.getActivity(), baseFragment.getResources().getString(R.string.noti_title), baseFragment.getResources().getString(R.string.delete_cv_fail));
+                            } else {
+                                baseFragment.hideCoverNetworkLoading();
 //                            cvLists.remove(cvLists.get(position));
 //                            setmTotal(cvLists.size());
-                            baseFragment.getEventBaseFragment().refreshMyCV();
-                            notifyDataSetChanged();
+                                baseFragment.getEventBaseFragment().refreshMyCV();
+                                notifyDataSetChanged();
+                            }
                         }
 
                         @Override
@@ -169,39 +182,68 @@ public class MyCVSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                             baseFragment.hideCoverNetworkLoading();
                         }
                     });
+//                    deleteCVRequest.callRequest(mContext, new ApiObjectCallBack<DeleteCVResponse, ErrorResponse>() {
+//                        @Override
+//                        public void onSuccess(int status, DeleteCVResponse dataSuccess, List<DeleteCVResponse> listDataSuccess, String message) {
+//                            if(baseFragment.isAdded()){
+//                                if(dataSuccess.getCount())
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+//
+//                        }
+//                    });
                 }
             });
             baseFragment.getArrayBaseRequest().add(deleteCVRequest);
-            ((ViewPager) ((MyViewHolder) holder).mView.findViewById(R.id.viewPager)).setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                int previousPagePosition = 0;
-
-                @Override
-                public void onPageScrolled(int pagePosition, float positionOffset, int positionOffsetPixels) {
-                    if (pagePosition == previousPagePosition)
-                        return;
-                    switch (pagePosition) {
-                        case 0:
-                            mItemSwipedStates.set(position, SwipedState.SHOWING_PRIMARY_CONTENT);
-                            break;
-                        case 1:
-                            mItemSwipedStates.set(position, SwipedState.SHOWING_SECONDARY_CONTENT);
-                            break;
-                    }
-                    previousPagePosition = pagePosition;
-                }
-
-                @Override
-                public void onPageSelected(int pagePosition) {
-                }
-
-                @Override
-                public void onPageScrollStateChanged(int state) {
-                }
-            });
+//            ((ViewPager) ((MyViewHolder) holder).mView.findViewById(R.id.viewPager)).setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//                int previousPagePosition = 0;
+//
+//                @Override
+//                public void onPageScrolled(int pagePosition, float positionOffset, int positionOffsetPixels) {
+//                    if (pagePosition == previousPagePosition)
+//                        return;
+//                    switch (pagePosition) {
+//                        case 0:
+//                            mItemSwipedStates.set(position, SwipedState.SHOWING_PRIMARY_CONTENT);
+//                            break;
+//                        case 1:
+//                            mItemSwipedStates.set(position, SwipedState.SHOWING_SECONDARY_CONTENT);
+//                            break;
+//                    }
+//                    previousPagePosition = pagePosition;
+//                }
+//
+//                @Override
+//                public void onPageSelected(int pagePosition) {
+//                }
+//
+//                @Override
+//                public void onPageScrollStateChanged(int state) {
+//                }
+//            });
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.progressBar.setIndeterminate(true);
         }
+    }
+
+    /**
+     * Only if you need to restore open/close state when the orientation is changed.
+     * Call this method in {@link android.app.Activity#onSaveInstanceState(Bundle)}
+     */
+    public void saveStates(Bundle outState) {
+        binderHelper.saveStates(outState);
+    }
+
+    /**
+     * Only if you need to restore open/close state when the orientation is changed.
+     * Call this method in {@link android.app.Activity#onRestoreInstanceState(Bundle)}
+     */
+    public void restoreStates(Bundle inState) {
+        binderHelper.restoreStates(inState);
     }
 
     @Override
@@ -267,10 +309,12 @@ public class MyCVSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public View mView;
+        private SwipeRevealLayout swipeLayout;
 
         public MyViewHolder(View v) {
             super(v);
             mView = v;
+            swipeLayout = (SwipeRevealLayout) v.findViewById(R.id.swipe_layout);
         }
     }
 

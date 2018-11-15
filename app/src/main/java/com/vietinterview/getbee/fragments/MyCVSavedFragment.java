@@ -190,10 +190,14 @@ public class MyCVSavedFragment extends BaseFragment implements SwipeRefreshLayou
 
     @Override
     protected void onSaveState(final Bundle bundle) {
+        myCVSavedAdapter.saveStates(bundle);
     }
 
     @Override
     protected void onRestoreState(Bundle bundle) {
+        if (myCVSavedAdapter != null) {
+            myCVSavedAdapter.restoreStates(bundle);
+        }
     }
 
     @Override

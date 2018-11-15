@@ -38,6 +38,7 @@
                 android:inputType="textPassword"
                 android:paddingHorizontal="@dimen/activity_vertical_margin"
                 android:paddingVertical="8dp"
+                android:singleLine="true"
                 android:textColor="#191830"
                 android:textSize="20sp" />
 
@@ -95,6 +96,7 @@
                 android:inputType="textPassword"
                 android:paddingHorizontal="@dimen/activity_vertical_margin"
                 android:paddingVertical="8dp"
+                android:singleLine="true"
                 android:textColor="#191830"
                 android:textSize="20sp" />
 
@@ -151,6 +153,7 @@
                 android:inputType="textPassword"
                 android:paddingHorizontal="@dimen/activity_vertical_margin"
                 android:paddingVertical="8dp"
+                android:singleLine="true"
                 android:textColor="#191830"
                 android:textSize="20sp" />
 

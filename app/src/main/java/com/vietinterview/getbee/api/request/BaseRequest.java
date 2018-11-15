@@ -19,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
@@ -151,8 +152,12 @@ public abstract class BaseRequest<T, V> {
             client.delete(getAbsoluteUrl(), putParams(), new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                    DebugLog.showLogCat(responseBody.toString());
-                    mApiObjectCallBack.onSuccess(statusCode, null, null, responseBody.toString());
+                    try {
+                        DebugLog.showLogCat(new String(responseBody, "UTF-8"));
+                        mApiObjectCallBack.onSuccess(statusCode, null, null, new String(responseBody, "UTF-8"));
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override

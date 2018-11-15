@@ -1,9 +1,15 @@
 package com.vietinterview.getbee.fragments;
 
+import android.Manifest;
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.Layout;
@@ -21,6 +27,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
@@ -187,6 +194,53 @@ public class LoginFragment extends BaseFragment {
         wlp.gravity = Gravity.TOP;
         wlp.y = 300;
         window.setAttributes(wlp);
+        ImageView imgCall = mForgotPassdialog.findViewById(R.id.imgCall);
+        ImageView imgEmail = mForgotPassdialog.findViewById(R.id.imgEmail);
+        imgCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mIntent;
+                String number = ("tel:02466629448");
+                mIntent = new Intent(Intent.ACTION_CALL);
+                mIntent.setData(Uri.parse(number));
+// Here, thisActivity is the current activity
+                if (ContextCompat.checkSelfPermission(getActivity(),
+                        Manifest.permission.CALL_PHONE)
+                        != PackageManager.PERMISSION_GRANTED) {
+
+                    ActivityCompat.requestPermissions(getActivity(),
+                            new String[]{Manifest.permission.CALL_PHONE},
+                            MY_PERMISSIONS_REQUEST_CALL_PHONE);
+
+                    // MY_PERMISSIONS_REQUEST_CALL_PHONE is an
+                    // app-defined int constant. The callback method gets the
+                    // result of the request.
+                } else {
+                    //You already have permission
+                    try {
+                        startActivity(mIntent);
+                    } catch (SecurityException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        imgEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+                emailIntent.setType("text/plain");
+                emailIntent.setType("message/rfc822");
+                try {
+                    startActivity(Intent.createChooser(emailIntent,
+                            "Send email using..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(getActivity(),
+                            "No email clients installed.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         Button btnOK = (Button) mForgotPassdialog.findViewById(R.id.btnOK);
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -195,6 +249,32 @@ public class LoginFragment extends BaseFragment {
             }
         });
         mForgotPassdialog.show();
+    }
+
+    public static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CALL_PHONE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the phone call
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 
     UserInfoBean userInfoBean;

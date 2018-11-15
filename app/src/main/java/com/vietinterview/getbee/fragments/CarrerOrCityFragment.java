@@ -28,6 +28,7 @@ import com.vietinterview.getbee.api.response.CareerResponse;
 import com.vietinterview.getbee.api.response.CityResponse;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.callback.OnClearCheckedListener;
 import com.vietinterview.getbee.customview.NunitoEditText;
 import com.vietinterview.getbee.customview.NunitoTextView;
 import com.vietinterview.getbee.utils.DialogUtil;
@@ -90,10 +91,25 @@ public class CarrerOrCityFragment extends BaseFragment {
         setHasOptionsMenu(true);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                if (i == 0) {
+                    for (int j = 1; j < careerResponses.size(); j++) {
+                        listView.setItemChecked(j, false);
+                    }
+                } else {
+                    listView.setItemChecked(0, false);
+                }
                 updateMenuTitles();
             }
         });
+//        getEventBaseFragment().setOnClearCheckedListener(new OnClearCheckedListener() {
+//            @Override
+//            public void onClearCheck() {
+//                for (int i = 0; i < careerResponses.size(); i++) {
+//                    listView.setItemChecked(i, false);
+//                }
+//            }
+//        });
         edtSearchJob.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -185,7 +201,7 @@ public class CarrerOrCityFragment extends BaseFragment {
                 hideCoverNetworkLoading();
                 careerResponses.add(new CareerResponse(0, getResources().getString(R.string.all_carrer)));
                 careerResponses.addAll(dataArrayList);
-                carrerAdapter = new CarrerAdapter(getActivity(), careerResponses);
+                carrerAdapter = new CarrerAdapter(getActivity(), careerResponses, CarrerOrCityFragment.this);
                 listView.setAdapter(carrerAdapter);
             }
 
@@ -277,7 +293,15 @@ public class CarrerOrCityFragment extends BaseFragment {
                     } else {
                         if (!mIsSignleChoice) {
                             if (getSelectedItemsCarrer() != null) {
-                                intent.putParcelableArrayListExtra("arrListCarrer", getSelectedItemsCarrer());
+                                if (getSelectedItemsCarrer().get(0).getId() == 0) {
+                                    listView.setItemChecked(0, false);
+                                    for (int i = 1; i < careerResponses.size(); i++) {
+                                        listView.setItemChecked(i, true);
+                                    }
+                                    intent.putParcelableArrayListExtra("arrListCarrer", getSelectedItemsCarrer());
+                                } else {
+                                    intent.putParcelableArrayListExtra("arrListCarrer", getSelectedItemsCarrer());
+                                }
                                 getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
                                 FragmentUtil.popBackStack(CarrerOrCityFragment.this);
                             }

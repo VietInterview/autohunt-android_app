@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.CareerResponse;
 import com.vietinterview.getbee.customview.CheckableLinearLayout;
+import com.vietinterview.getbee.fragments.BaseFragment;
+import com.vietinterview.getbee.utils.DebugLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +20,12 @@ public class CarrerAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     List<CareerResponse> mCareerResponses;
     List<CareerResponse> mCareerResponsesFilter;
+    BaseFragment baseFragment;
 
-    public CarrerAdapter(Context context, List<CareerResponse> careerResponses) {
+    public CarrerAdapter(Context context, List<CareerResponse> careerResponses, BaseFragment baseFragment) {
         mCareerResponses = careerResponses;
         mCareerResponsesFilter = careerResponses;
+        this.baseFragment = baseFragment;
         inflater = LayoutInflater.from(context);
     }
 
@@ -42,7 +46,7 @@ public class CarrerAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
         final CareerResponse careerResponse = mCareerResponsesFilter.get(i);
 
         if (view == null) {

@@ -118,7 +118,7 @@ public class ExComSkillListViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        LstComputerSkill lstComputerSkill = (LstComputerSkill) getGroup(groupPosition);
+//        LstComputerSkill lstComputerSkill = (LstComputerSkill) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_lan_row_group, null);

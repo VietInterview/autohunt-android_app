@@ -11,11 +11,35 @@
         android:gravity="center"
         android:textColor="#B1B1BA" />
 
-    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/viewPager"
+    <com.chauthai.swipereveallayout.SwipeRevealLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/swipe_layout"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:overScrollMode="never">
+        app:dragEdge="right"
+        app:mode="same_level">
+
+
+        <LinearLayout
+            android:id="@+id/secondaryContentFrameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center|right"
+            android:orientation="horizontal">
+
+            <com.vietinterview.getbee.customview.NunitoRegularButton
+                android:id="@+id/btnDeleteCV"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:background="@color/red"
+                android:drawableTop="@drawable/ic_trash"
+                android:drawablePadding="-30dp"
+                android:paddingTop="20dp"
+                android:text="@string/delete"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/primaryContentCardView"
@@ -90,26 +114,5 @@
                     android:textSize="12sp" />
             </LinearLayout>
         </RelativeLayout>
-
-        <LinearLayout
-            android:id="@+id/secondaryContentFrameLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center|right"
-            android:orientation="horizontal">
-
-            <com.vietinterview.getbee.customview.NunitoRegularButton
-                android:id="@+id/btnDeleteCV"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:background="@color/red"
-                android:drawableTop="@drawable/ic_trash"
-                android:drawablePadding="-30dp"
-                android:paddingTop="20dp"
-                android:text="@string/delete"
-                android:textColor="@color/white" />
-
-        </LinearLayout>
-    </android.support.v4.view.ViewPager>
+    </com.chauthai.swipereveallayout.SwipeRevealLayout>
 </LinearLayout>
