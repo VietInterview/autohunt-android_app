@@ -16,11 +16,12 @@ public class ApiConstant {
 
     //Server KH
     public final static String REAL_URL = "https://api.getbee.vn/";
-    public final static String DEV_URL = "https://api.getbee.vn/";
-    public final static String IMG_URL = "https://getbee.vn/";
-//    public final static String IMG_URL = "https://api.dev.getbee.vn/";
+    public final static String DEV_URL = "https://api.dev.getbee.vn/";
+    public final static String IMG_URL_DEV = "https://dev.getbee.vn/";
+    public final static String IMG_URL_REAL = "https://getbee.vn/";
     public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
     public final static String BASE_URL = IS_DEBUG_BUILD_TYPE ? DEV_URL : REAL_URL;
+    public final static String IMG_URL = IS_DEBUG_BUILD_TYPE ? IMG_URL_DEV : IMG_URL_REAL;
     public final static int POST = 1;
     public final static int GET = 0;
     public final static int DELETE = 2;
