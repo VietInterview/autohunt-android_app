@@ -194,7 +194,7 @@ public class JobsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             if (status == 200) {
                                 dataSet.get(listPosition).setCollStatus(data.getStatus());
                                 if (data.getStatus() == 0) {
-                                    Toast.makeText(mHomeFragment.getActivity(), mHomeFragment.getResources().getString(R.string.cancel_save_noti), Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(mHomeFragment.getActivity(), mHomeFragment.getResources().getString(R.string.cancel_save_noti), Toast.LENGTH_SHORT).show();
                                     myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_save));
                                 } else if (data.getStatus() == 1) {
                                     Toast.makeText(mHomeFragment.getActivity(), mHomeFragment.getResources().getString(R.string.saved_noti), Toast.LENGTH_SHORT).show();

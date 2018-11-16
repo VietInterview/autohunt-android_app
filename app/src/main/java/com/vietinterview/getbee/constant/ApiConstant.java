@@ -11,16 +11,16 @@ public class ApiConstant {
 
     public static final boolean IS_DEBUG_BUILD_TYPE = BuildConfig.BUILD_TYPE.equals("debug");
 
-    public static final int REQUEST_TIMEOUT = 10;
+    public static final int REQUEST_TIMEOUT = 20;
     public static final int LIMIT = 30;
 
     //Server KH
     public final static String REAL_URL = "https://api.getbee.vn/";
-    public final static String DEV_URL = "https://api.getbee.vn/";
-//    public final static String DEV_URL = "https://api.dev.getbee.vn/";
-//    public final static String IMG_URL_DEV = "https://dev.getbee.vn/";
-    public final static String IMG_URL_DEV = "https://getbee.vn/";
     public final static String IMG_URL_REAL = "https://getbee.vn/";
+    public final static String DEV_URL = "https://api.dev.getbee.vn/";
+    public final static String IMG_URL_DEV = "https://dev.getbee.vn/";
+//    public final static String DEV_URL = "https://api.getbee.vn/";
+//    public final static String IMG_URL_DEV = "https://getbee.vn/";
     public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
     public final static String BASE_URL = IS_DEBUG_BUILD_TYPE ? DEV_URL : REAL_URL;
     public final static String IMG_URL = IS_DEBUG_BUILD_TYPE ? IMG_URL_DEV : IMG_URL_REAL;

@@ -3,7 +3,6 @@ package com.vietinterview.getbee.activities;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -22,14 +21,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.api.request.GetMyProfileRequest;
-import com.vietinterview.getbee.api.response.ErrorResponse;
-import com.vietinterview.getbee.api.response.myprofile.MyProfileResponse;
-import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnFillBackgroundListener;
 import com.vietinterview.getbee.callback.OnSetTextGreetingListener;
 import com.vietinterview.getbee.callback.OnShowLogoListener;
@@ -43,12 +37,8 @@ import com.vietinterview.getbee.fragments.LoginFragment;
 import com.vietinterview.getbee.fragments.MyCVFragment;
 import com.vietinterview.getbee.fragments.MyJobFragment;
 import com.vietinterview.getbee.fragments.MyProfileFragment;
-import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
-import com.vietinterview.getbee.utils.UiUtil;
-
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -66,6 +56,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @BindView(R.id.mainview)
     public CoordinatorLayout mainview;
     TextView tvGreeting;
+    ImageView imgVi;
+    ImageView imgEn;
     public ActionBarDrawerToggle toggle;
     CircularTextView slideshow;
     CircularTextView gallery;
@@ -99,6 +91,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                     navigationView.setCheckedItem(R.id.nav_home);
                     FragmentUtil.replaceFragment(this, new HomeFragment(), null);
+                } else {
+                    FragmentUtil.replaceFragment(this, GlobalDefine.currentFragment, null);
                 }
             } else {
                 FragmentUtil.replaceFragment(MainActivity.this, new LoginFragment(), null);
@@ -106,8 +100,40 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
         View headerView = navigationView.getHeaderView(0);
         tvGreeting = (TextView) headerView.findViewById(R.id.tvGreeting);
+        imgVi = headerView.findViewById(R.id.imgVi);
+        imgEn = headerView.findViewById(R.id.imgEn);
+        if (SharedPrefUtils.getString(AppConstant.LANGUAGE, "vi").equalsIgnoreCase("en")) {
+            imgVi.setEnabled(true);
+            imgEn.setEnabled(false);
+            imgEn.setAlpha(50);
+            imgVi.setAlpha(200);
+        } else {
+            imgVi.setEnabled(false);
+            imgEn.setEnabled(true);
+            imgEn.setAlpha(200);
+            imgVi.setAlpha(50);
+        }
+        imgVi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigationView.setCheckedItem(R.id.nav_home);
+                FragmentUtil.replaceFragment(MainActivity.this, new HomeFragment(), null);
+                SharedPrefUtils.putString(AppConstant.LANGUAGE, "vi");
+                setLanguage(SharedPrefUtils.getString(AppConstant.LANGUAGE, "vi"));
+            }
+        });
+        imgEn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigationView.setCheckedItem(R.id.nav_home);
+                FragmentUtil.replaceFragment(MainActivity.this, new HomeFragment(), null);
+                SharedPrefUtils.putString(AppConstant.LANGUAGE, "en");
+                setLanguage(SharedPrefUtils.getString(AppConstant.LANGUAGE, "vi"));
+            }
+        });
         if (AccountManager.getUserInfoBean() != null)
             if (AccountManager.getUserInfoBean().getName() != null) {
+                navigationView.setCheckedItem(R.id.nav_home);
                 if (AccountManager.getUserInfoBean().getName().length() <= 6) {
                     tvGreeting.setText(getResources().getString(R.string.greeting) + " " + AccountManager.getUserInfoBean().getName() + "!");
                 } else {
@@ -124,6 +150,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
             }
         });
+
         getEventBaseActivity().setOnShowLogoListener(new OnShowLogoListener() {
             @Override
             public void onShowLogo(boolean isShowLogo) {
@@ -190,7 +217,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         });
     }
-
     private void applyFontToMenuItem(MenuItem mi) {
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Nunito-Regular.ttf");
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
@@ -264,6 +290,4 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
         return true;
     }
-
-    boolean doubleBackToExitPressedOnce = false;
 }

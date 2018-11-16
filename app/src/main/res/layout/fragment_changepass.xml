@@ -56,11 +56,11 @@
 
         <View
             android:layout_width="fill_parent"
-            android:layout_height="0.5dp"
+            android:layout_height="1dp"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/activity_vertical_margin"
             android:layout_marginRight="@dimen/activity_vertical_margin"
-            android:background="#000000" />
+            android:background="#40000000" />
     </LinearLayout>
 
     <LinearLayout
@@ -114,16 +114,16 @@
 
         <View
             android:layout_width="fill_parent"
-            android:layout_height="0.5dp"
+            android:layout_height="1dp"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/activity_vertical_margin"
             android:layout_marginRight="@dimen/activity_vertical_margin"
-            android:background="#000000" />
+            android:background="#40000000" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="89dp"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:orientation="vertical">
 
@@ -172,10 +172,10 @@
 
         <View
             android:layout_width="fill_parent"
-            android:layout_height="0.5dp"
+            android:layout_height="1dp"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/activity_vertical_margin"
             android:layout_marginRight="@dimen/activity_vertical_margin"
-            android:background="#000000" />
+            android:background="#40000000" />
     </LinearLayout>
 </LinearLayout>

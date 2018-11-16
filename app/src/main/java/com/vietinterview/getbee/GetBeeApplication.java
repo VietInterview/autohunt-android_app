@@ -5,7 +5,6 @@ import android.content.res.Configuration;
 
 import com.bumptech.glide.request.target.ViewTarget;
 import com.vietinterview.getbee.constant.AppConstant;
-import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
 
 import java.util.Locale;
@@ -18,7 +17,6 @@ public class GetBeeApplication extends Application {
     public static String sDefSystemLanguage;
     private static GetBeeApplication instance;
     private static SharedPrefUtils sharedPreferences;
-
     public GetBeeApplication() {
         instance = this;
     }

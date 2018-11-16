@@ -192,7 +192,7 @@ public class MyJobsAppliedAdapter extends RecyclerView.Adapter<RecyclerView.View
                                 jobsApplyedFragment.hideCoverNetworkLoading();
                                 if (status == 200) {
                                     if (data.getStatus() == 0) {
-                                        Toast.makeText(jobsApplyedFragment.getActivity(), jobsApplyedFragment.getResources().getString(R.string.cancel_save_noti), Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(jobsApplyedFragment.getActivity(), jobsApplyedFragment.getResources().getString(R.string.cancel_save_noti), Toast.LENGTH_SHORT).show();
                                         myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_save));
                                     } else if (data.getStatus() == 1) {
                                         Toast.makeText(jobsApplyedFragment.getActivity(), jobsApplyedFragment.getResources().getString(R.string.saved_noti), Toast.LENGTH_SHORT).show();

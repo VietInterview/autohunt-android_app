@@ -1,7 +1,9 @@
 package com.vietinterview.getbee.activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -79,7 +81,30 @@ public abstract class BaseActivity extends LocalizationActivity {
     protected boolean checkApiDialogIsShow() {
         return dialogErrorAPI.isShowing() || dialogTimeOutAPI.isShowing() || dialogNoConnection.isShowing();
     }
-
+    private static ProgressDialog progressDlg;
+    public void showProgressDialog(boolean cancleable) {
+        if (progressDlg != null && progressDlg.isShowing()) {
+            closeProgressDialog();
+        }
+        progressDlg = ProgressDialog.show(this, "", "Đang xử lý", true, cancleable);
+        progressDlg.setCancelable(cancleable);
+        progressDlg.setCanceledOnTouchOutside(cancleable);
+//        progressDlg.setOnCancelListener(new DialogInterface.OnCancelListener() {
+//            @Override
+//            public void onCancel(DialogInterface dialog) {
+//                cancelAllRequest(getArrayJsonRequest(), getArrayBaseRequest());
+//            }
+//        });
+    }
+    public void closeProgressDialog() {
+        if (progressDlg != null) {
+            try {
+                progressDlg.dismiss();
+                progressDlg = null;
+            } catch (Exception e) {
+            }
+        }
+    }
     @Override
     protected void onDestroy() {
         if (!isUnregistEventBus) {

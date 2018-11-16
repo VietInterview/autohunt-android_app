@@ -199,7 +199,7 @@ public class MyJobsSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                                     setmTotal(dataSet.size());
                                     notifyDataSetChanged();
                                     if (data.getStatus() == 0) {
-                                        Toast.makeText(jobsSavedFragment.getActivity(), jobsSavedFragment.getResources().getString(R.string.cancel_save_noti), Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(jobsSavedFragment.getActivity(), jobsSavedFragment.getResources().getString(R.string.cancel_save_noti), Toast.LENGTH_SHORT).show();
                                         myViewHolder.imgStatus.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_save));
                                     } else if (data.getStatus() == 1) {
                                         Toast.makeText(jobsSavedFragment.getActivity(), jobsSavedFragment.getResources().getString(R.string.saved_noti), Toast.LENGTH_SHORT).show();
