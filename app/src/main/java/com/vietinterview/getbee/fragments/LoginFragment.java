@@ -285,7 +285,11 @@ public class LoginFragment extends BaseFragment {
         getMyProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
             @Override
             public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
-                userInfoBean.name = dataSuccess.getFullNameColl();
+                if (dataSuccess.getFullNameColl() != null) {
+                    userInfoBean.name = dataSuccess.getFullNameColl();
+                } else {
+                    userInfoBean.name = edtEmail.getText().toString().trim().split("[$&<@%*]")[0];
+                }
                 AccountManager.setUserInfoBean(userInfoBean);
                 getEventBaseFragment().setTextGreeting(AccountManager.getUserInfoBean().name);
             }

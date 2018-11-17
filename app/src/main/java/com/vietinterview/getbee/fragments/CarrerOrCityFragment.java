@@ -31,6 +31,7 @@ import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnClearCheckedListener;
 import com.vietinterview.getbee.customview.NunitoEditText;
 import com.vietinterview.getbee.customview.NunitoTextView;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
@@ -93,11 +94,15 @@ public class CarrerOrCityFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
                 if (i == 0) {
-                    for (int j = 1; j < careerResponses.size(); j++) {
+                    listView.setItemChecked(0, true);
+                    for (int j = 1; j < listView.getCount(); j++) {
                         listView.setItemChecked(j, false);
                     }
                 } else {
                     listView.setItemChecked(0, false);
+//                    for (int k = 1; k < listView.getCount(); k++) {
+//                        listView.setItemChecked(k, listView.getItemAtPosition(k).);
+//                    }
                 }
                 updateMenuTitles();
             }
@@ -225,8 +230,9 @@ public class CarrerOrCityFragment extends BaseFragment {
         ArrayList<CareerResponse> result = new ArrayList<>();
         SparseBooleanArray checkedItems = listView.getCheckedItemPositions();
 
-        for (int i = 0; i < listView.getCount(); ++i) {
+        for (int i = 0; i < checkedItems.size(); i++) {
             if (checkedItems.size() > 0) {
+                DebugLog.showLogCat(checkedItems.size() + " - " + listView.getCount() + " - " + i);
                 if (checkedItems.valueAt(i)) {
                     result.add((CareerResponse) listView.getItemAtPosition(checkedItems.keyAt(i)));
                 }

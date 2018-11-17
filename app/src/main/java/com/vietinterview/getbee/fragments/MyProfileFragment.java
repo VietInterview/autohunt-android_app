@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.api.request.BaseJsonRequest;
@@ -174,8 +175,14 @@ public class MyProfileFragment extends BaseFragment {
     public void saveProfile() {
         showCoverNetworkLoading();
         ArrayList<Carrer> carrers = new ArrayList<>();
-        for (int i = 0; i < careerResponses.size(); i++) {
-            carrers.add(new Carrer(careerResponses.get(i).getId(), careerResponses.get(i).getName()));
+        if (careerResponses.size() > 0) {
+            for (int i = 0; i < careerResponses.size(); i++) {
+                carrers.add(new Carrer(careerResponses.get(i).getId(), careerResponses.get(i).getName()));
+            }
+        } else {
+            for (int i = 0; i < mMyProfileResponse.getDesideratedCareer().size(); i++) {
+                carrers.add(new Carrer(mMyProfileResponse.getDesideratedCareer().get(i).getId(), mMyProfileResponse.getDesideratedCareer().get(i).getName()));
+            }
         }
         saveMyProfileRequest = new SaveMyProfileRequest(edtFullName.getText().toString().trim(), edtAdd.getText().toString().trim(), edtCarrer.getText().toString().trim(), carrers, edtEmail.getText().toString().trim(), edtPhone.getText().toString().trim());
         saveMyProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
@@ -211,6 +218,10 @@ public class MyProfileFragment extends BaseFragment {
                     } else {
                         tvHunt.setText(mCarrerName);
                     }
+                    if (dataSuccess.getFullNameColl() != null) {
+                        AccountManager.getUserInfoBean().name = dataSuccess.getFullNameColl();
+                        getEventBaseFragment().setTextGreeting(AccountManager.getUserInfoBean().name);
+                    } else getEventBaseFragment().setTextGreeting("");
                     Toast.makeText(getActivity(), getResources().getString(R.string.save_profile_success), Toast.LENGTH_SHORT).show();
                 }
             }
