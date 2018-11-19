@@ -82,22 +82,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 imglogo.setVisibility(View.GONE);
             }
         });
-        boolean isFirst = SharedPrefUtils.getBoolean(AppConstant.FIRST, true);
-        if (isFirst) {
-            FragmentUtil.replaceFragment(MainActivity.this, new IntroFragment(), null);
-        } else {
-            if (AccountManager.getUserInfoBean() != null) {
-                if (GlobalDefine.currentFragment == null || GlobalDefine.currentFragment instanceof HomeFragment) {
-                    drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                    navigationView.setCheckedItem(R.id.nav_home);
-                    FragmentUtil.replaceFragment(this, new HomeFragment(), null);
-                } else {
-                    FragmentUtil.replaceFragment(this, GlobalDefine.currentFragment, null);
-                }
-            } else {
-                FragmentUtil.replaceFragment(MainActivity.this, new LoginFragment(), null);
-            }
-        }
         View headerView = navigationView.getHeaderView(0);
         tvGreeting = (TextView) headerView.findViewById(R.id.tvGreeting);
         imgVi = headerView.findViewById(R.id.imgVi);
@@ -133,7 +117,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         });
         if (AccountManager.getUserInfoBean() != null)
             if (AccountManager.getUserInfoBean().getName() != null) {
-                navigationView.setCheckedItem(R.id.nav_home);
                 if (AccountManager.getUserInfoBean().getName().length() <= 6) {
                     tvGreeting.setText(getResources().getString(R.string.greeting) + " " + AccountManager.getUserInfoBean().getName() + "!");
                 } else {
@@ -217,6 +200,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         });
     }
+
     private void applyFontToMenuItem(MenuItem mi) {
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Nunito-Regular.ttf");
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
@@ -226,6 +210,34 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void initData() {
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        boolean isFirst = SharedPrefUtils.getBoolean(AppConstant.FIRST, true);
+        if (isFirst) {
+            FragmentUtil.replaceFragment(MainActivity.this, new IntroFragment(), null);
+        } else {
+            if (AccountManager.getUserInfoBean() != null) {
+                if (GlobalDefine.currentFragment == null || GlobalDefine.currentFragment instanceof HomeFragment) {
+                    drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                    navigationView.setCheckedItem(R.id.nav_home);
+                    FragmentUtil.replaceFragment(this, new HomeFragment(), null);
+                } else {
+                    if (GlobalDefine.currentFragment instanceof MyJobFragment) {
+                        navigationView.setCheckedItem(R.id.nav_job);
+                    } else if (GlobalDefine.currentFragment instanceof MyCVFragment) {
+                        navigationView.setCheckedItem(R.id.nav_cv);
+                    } else if (GlobalDefine.currentFragment instanceof MyProfileFragment) {
+                        navigationView.setCheckedItem(R.id.nav_profile);
+                    }
+                    FragmentUtil.replaceFragment(this, GlobalDefine.currentFragment, null);
+                }
+            } else {
+                FragmentUtil.replaceFragment(MainActivity.this, new LoginFragment(), null);
+            }
+        }
     }
 
     public TextView getTvGreeting() {
