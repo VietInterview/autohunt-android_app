@@ -25,28 +25,8 @@ public class IntroFragment extends BaseFragment {
     private static int currentPage = 0;
     private static int NUM_PAGES = 0;
     private static final Integer[] IMAGES = {R.drawable.ic_pic1_intro, R.drawable.ic_pic2_intro, R.drawable.ic_pic3_intro};
-    private static final String[] String = {"A B2B Marketplace for Employers & Recruitment Agencies\n", "Vietnam's Largest Recruitment Agencies Marketplace", "1000's of quality recruiters working for you!"};
     private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
     private ArrayList<String> StringsArray = new ArrayList<String>();
-
-//    @Override
-//    public int setContentViewId() {
-//        return R.layout.activity_intro;
-//    }
-//
-//    @Override
-//    public void initView() {
-//        boolean isFirst = SharedPrefUtils.getBoolean(AppConstant.FIRST, true);
-//        if (isFirst) {
-//            init();
-//        } else {
-//            DebugLog.showLogCat("Main");
-//            finish();
-//            Intent mainIntent = new Intent(this, MainActivity.class);
-//            mainIntent.putExtra("isLogin", true);
-//            startActivity(mainIntent);
-//        }
-//    }
 
     @Override
     protected int getLayoutId() {
@@ -64,6 +44,7 @@ public class IntroFragment extends BaseFragment {
         if (getActivity() instanceof MainActivity) {
             ((MainActivity) getActivity()).drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         }
+        final String[] String = {getResources().getString(R.string.intro1), getResources().getString(R.string.intro2), getResources().getString(R.string.intro3)};
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         for (int i = 0; i < IMAGES.length; i++)
             ImagesArray.add(IMAGES[i]);
@@ -120,7 +101,4 @@ public class IntroFragment extends BaseFragment {
 
     }
 
-    private void init() {
-
-    }
 }

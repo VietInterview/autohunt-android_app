@@ -191,4 +191,7 @@
     <string name="incorrect_password">Mật khẩu không đúng, vui lòng thử lại</string>
     <string name="job_requirement">Yêu cầu công việc</string>
     <string name="delete_cv_fail">Xóa hồ sơ không thành công</string>
+    <string name="intro3">1000+ chuyên gia tuyển dụng cao cấp làm việc cho bạn!</string>
+    <string name="intro2">Nền tảng tuyển dụng trực tuyến số 1 Việt Nam</string>
+    <string name="intro1">Nền tảng kết nối dành cho doanh nghiệp và các chuyên gia tuyển dụng</string>
 </resources>
