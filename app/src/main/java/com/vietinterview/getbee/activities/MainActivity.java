@@ -24,6 +24,10 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.api.request.GetAccountRequest;
+import com.vietinterview.getbee.api.response.ErrorResponse;
+import com.vietinterview.getbee.api.response.account.AccountResponse;
+import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnFillBackgroundListener;
 import com.vietinterview.getbee.callback.OnSetTextGreetingListener;
 import com.vietinterview.getbee.callback.OnShowLogoListener;
@@ -37,8 +41,12 @@ import com.vietinterview.getbee.fragments.LoginFragment;
 import com.vietinterview.getbee.fragments.MyCVFragment;
 import com.vietinterview.getbee.fragments.MyJobFragment;
 import com.vietinterview.getbee.fragments.MyProfileFragment;
+import com.vietinterview.getbee.utils.DebugLog;
+import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -61,6 +69,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public ActionBarDrawerToggle toggle;
     CircularTextView slideshow;
     CircularTextView gallery;
+    private GetAccountRequest getAccountRequest;
 
     @Override
     public int setContentViewId() {
@@ -220,6 +229,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             FragmentUtil.replaceFragment(MainActivity.this, new IntroFragment(), null);
         } else {
             if (AccountManager.getUserInfoBean() != null) {
+                getAccount();
                 if (GlobalDefine.currentFragment == null || GlobalDefine.currentFragment instanceof HomeFragment) {
                     drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                     navigationView.setCheckedItem(R.id.nav_home);
@@ -238,6 +248,23 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 FragmentUtil.replaceFragment(MainActivity.this, new LoginFragment(), null);
             }
         }
+    }
+
+    public void getAccount() {
+        getAccountRequest = new GetAccountRequest();
+        getAccountRequest.callRequest(this, new ApiObjectCallBack<AccountResponse, ErrorResponse>() {
+            @Override
+            public void onSuccess(int status, AccountResponse dataSuccess, List<AccountResponse> listDataSuccess, String message) {
+                if (status == 200) {
+                    DebugLog.showLogCat(dataSuccess.getFullName());
+                }
+            }
+
+            @Override
+            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                DialogUtil.showDialog(MainActivity.this, getResources().getString(R.string.noti_title), message);
+            }
+        });
     }
 
     public TextView getTvGreeting() {

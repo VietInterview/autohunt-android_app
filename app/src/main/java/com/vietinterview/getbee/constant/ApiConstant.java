@@ -45,4 +45,5 @@ public class ApiConstant {
     public final static String GET_MY_PROFILE = BASE_URL + "svccollaborator/api/getProfiles";
     public final static String UPDATE_MY_PROFILE = BASE_URL + "svccollaborator/api/saveProfile";
     public final static String CHANGE_PASSWORD = BASE_URL + "api/account/change-password";
+    public final static String GET_MY_ACCOUNT = BASE_URL + "api/account";
 }
