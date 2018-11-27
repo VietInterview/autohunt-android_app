@@ -27,9 +27,9 @@ import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.StringUtils;
-import com.vietinterview.getbee.customview.NunitoBoldTextView;
-import com.vietinterview.getbee.customview.NunitoEditText;
-import com.vietinterview.getbee.customview.NunitoTextView;
+import com.vietinterview.getbee.customview.RobotoBoldTextView;
+import com.vietinterview.getbee.customview.RobotoEditText;
+import com.vietinterview.getbee.customview.RobotoTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,17 +43,17 @@ import butterknife.OnClick;
  */
 public class RegitsFragment extends BaseFragment {
     @BindView(R.id.edtName)
-    NunitoEditText edtName;
+    RobotoEditText edtName;
     @BindView(R.id.edtJob)
-    NunitoEditText edtJob;
+    RobotoEditText edtJob;
     @BindView(R.id.edtAdd)
-    NunitoEditText edtAdd;
+    RobotoEditText edtAdd;
     @BindView(R.id.edtEmail)
     EditText edtEmail;
     @BindView(R.id.edtPhone)
     EditText edtPhone;
     @BindView(R.id.tvGoLogin)
-    NunitoBoldTextView tvGoLogin;
+    RobotoBoldTextView tvGoLogin;
     @BindView(R.id.icRightName)
     ImageView icRightName;
     @BindView(R.id.icRightEmail)
@@ -279,7 +279,7 @@ public class RegitsFragment extends BaseFragment {
                             wlp.gravity = Gravity.TOP;
                             wlp.y = 250;
                             window.setAttributes(wlp);
-                            NunitoTextView nunitoTextView = (NunitoTextView) mNotifydialog.findViewById(R.id.tvContent);
+                            RobotoTextView nunitoTextView = (RobotoTextView) mNotifydialog.findViewById(R.id.tvContent);
                             nunitoTextView.setText(getResources().getString(R.string.regist_succces));
                             Button btnOK = (Button) mNotifydialog.findViewById(R.id.btnOK);
                             btnOK.setOnClickListener(new View.OnClickListener() {
@@ -314,7 +314,7 @@ public class RegitsFragment extends BaseFragment {
                                 wlp.gravity = Gravity.TOP;
                                 wlp.y = 250;
                                 window.setAttributes(wlp);
-                                NunitoTextView nunitoTextView = (NunitoTextView) mNotifydialog.findViewById(R.id.tvContent);
+                                RobotoTextView nunitoTextView = (RobotoTextView) mNotifydialog.findViewById(R.id.tvContent);
                                 nunitoTextView.setText(getResources().getString(R.string.regist_succces));
                                 Button btnOK = (Button) mNotifydialog.findViewById(R.id.btnOK);
                                 btnOK.setOnClickListener(new View.OnClickListener() {

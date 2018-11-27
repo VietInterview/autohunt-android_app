@@ -3,7 +3,6 @@ package com.vietinterview.getbee.adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,21 +16,16 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.DeleteCVRequest;
 import com.vietinterview.getbee.api.request.GetDetailCVRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 import com.vietinterview.getbee.api.response.detailjob.DetailJobResponse;
-import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.api.response.listcv.CvList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
-import com.vietinterview.getbee.customview.NunitoRegularButton;
+import com.vietinterview.getbee.customview.RobotoRegularButton;
 import com.vietinterview.getbee.fragments.BaseFragment;
 import com.vietinterview.getbee.fragments.DetailCVFragment;
 import com.vietinterview.getbee.utils.DateUtil;
@@ -150,7 +144,7 @@ public class MyCVChoiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             } else {
                 ((RelativeLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.background_press));
             }
-            ((NunitoRegularButton) ((MyViewHolder) holder).mView.findViewById(R.id.btnDeleteCV)).setOnClickListener(new View.OnClickListener() {
+            ((RobotoRegularButton) ((MyViewHolder) holder).mView.findViewById(R.id.btnDeleteCV)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     baseFragment.showCoverNetworkLoading();

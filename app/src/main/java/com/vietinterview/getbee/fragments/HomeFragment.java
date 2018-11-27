@@ -3,11 +3,8 @@ package com.vietinterview.getbee.fragments;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,7 +26,6 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.adapter.JobsAdapter;
 import com.vietinterview.getbee.api.request.BaseRequest;
 import com.vietinterview.getbee.api.request.GetMyProfileRequest;
@@ -45,7 +41,6 @@ import com.vietinterview.getbee.constant.ApiConstant;
 import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.customview.ClearableRegularEditText;
-import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
@@ -417,7 +412,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 visibleCondition = false;
                 llSearch.setVisibility(View.GONE);
                 llCondition.setVisibility(View.GONE);
-                menu.getItem(0).setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_search_black));
+                menu.getItem(0).setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_search));
             } else {
                 visibleSearch = true;
                 visibleCondition = false;

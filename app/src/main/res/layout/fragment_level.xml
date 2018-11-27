@@ -20,7 +20,7 @@
             android:nestedScrollingEnabled="true"
             android:orientation="vertical">
 
-            <com.vietinterview.getbee.customview.NunitoBoldTextView
+            <com.vietinterview.getbee.customview.RobotoBoldTextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="#ECF0F7"
@@ -38,7 +38,7 @@
                 android:nestedScrollingEnabled="true"
                 android:visibility="visible" />
 
-            <com.vietinterview.getbee.customview.NunitoBoldTextView
+            <com.vietinterview.getbee.customview.RobotoBoldTextView
                 android:id="@+id/addLevel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
                 android:text="Thêm kinh nghiệm"
                 android:textSize="18sp" />
 
-            <com.vietinterview.getbee.customview.NunitoBoldTextView
+            <com.vietinterview.getbee.customview.RobotoBoldTextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="#ECF0F7"
@@ -67,7 +67,7 @@
                 android:nestedScrollingEnabled="true"
                 android:visibility="visible" />
 
-            <com.vietinterview.getbee.customview.NunitoBoldTextView
+            <com.vietinterview.getbee.customview.RobotoBoldTextView
                 android:id="@+id/addLanguage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
                 android:text="Thêm kinh nghiệm"
                 android:textSize="18sp" />
 
-            <com.vietinterview.getbee.customview.NunitoBoldTextView
+            <com.vietinterview.getbee.customview.RobotoBoldTextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="#ECF0F7"
@@ -99,7 +99,7 @@
                     android:layout_marginHorizontal="16dp"
                     android:padding="4dp">
 
-                    <com.vietinterview.getbee.customview.NunitoTextView
+                    <com.vietinterview.getbee.customview.RobotoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -107,7 +107,7 @@
                         android:text="MS Word"
                         android:textSize="16sp" />
 
-                    <com.vietinterview.getbee.customview.NunitoBoldTextView
+                    <com.vietinterview.getbee.customview.RobotoBoldTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -146,7 +146,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <com.vietinterview.getbee.customview.NunitoBoldButton
+        <com.vietinterview.getbee.customview.RobotoBoldButton
             android:id="@+id/btnNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

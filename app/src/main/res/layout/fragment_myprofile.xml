@@ -32,7 +32,7 @@
                     android:focusable="true"
                     android:focusableInTouchMode="true" />
 
-                <com.vietinterview.getbee.customview.NunitoTextInputEditText
+                <com.vietinterview.getbee.customview.RobotoTextInputEditText
                     android:id="@+id/edtFullName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.vietinterview.getbee.customview.NunitoTextView
+                <com.vietinterview.getbee.customview.RobotoTextView
                     android:id="@+id/tvTitlePass"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                     android:textColor="#B1B1BA"
                     android:textSize="16sp" />
 
-                <com.vietinterview.getbee.customview.NunitoTextView
+                <com.vietinterview.getbee.customview.RobotoTextView
                     android:id="@+id/tvPass"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                 app:hintAnimationEnabled="true"
                 app:hintTextAppearance="@style/customfontstyle">
 
-                <com.vietinterview.getbee.customview.NunitoTextInputEditText
+                <com.vietinterview.getbee.customview.RobotoTextInputEditText
                     android:id="@+id/edtPhone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
                 app:hintAnimationEnabled="true"
                 app:hintTextAppearance="@style/customfontstyle">
 
-                <com.vietinterview.getbee.customview.NunitoTextInputEditText
+                <com.vietinterview.getbee.customview.RobotoTextInputEditText
                     android:id="@+id/edtEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -142,7 +142,7 @@
                 app:hintAnimationEnabled="true"
                 app:hintTextAppearance="@style/customfontstyle">
 
-                <com.vietinterview.getbee.customview.NunitoTextInputEditText
+                <com.vietinterview.getbee.customview.RobotoTextInputEditText
                     android:id="@+id/edtAdd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -162,7 +162,7 @@
                 app:hintAnimationEnabled="true"
                 app:hintTextAppearance="@style/customfontstyle">
 
-                <com.vietinterview.getbee.customview.NunitoTextInputEditText
+                <com.vietinterview.getbee.customview.RobotoTextInputEditText
                     android:id="@+id/edtCarrer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -179,7 +179,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.vietinterview.getbee.customview.NunitoTextView
+                <com.vietinterview.getbee.customview.RobotoTextView
                     android:id="@+id/tvTitleHunt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -190,7 +190,7 @@
                     android:textColor="#B1B1BA"
                     android:textSize="16sp" />
 
-                <com.vietinterview.getbee.customview.NunitoTextView
+                <com.vietinterview.getbee.customview.RobotoTextView
                     android:id="@+id/tvHunt"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

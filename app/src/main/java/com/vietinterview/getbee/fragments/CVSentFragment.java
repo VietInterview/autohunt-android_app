@@ -9,12 +9,10 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.detailjob.DetailJobResponse;
-import com.vietinterview.getbee.callback.OnSwitchToOneListener;
 import com.vietinterview.getbee.callback.OnSwitchToThreeListener;
 import com.vietinterview.getbee.customview.FlowLayout;
-import com.vietinterview.getbee.customview.NunitoTextView;
+import com.vietinterview.getbee.customview.RobotoTextView;
 import com.vietinterview.getbee.utils.DateUtil;
-import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.LayoutUtils;
 
 import butterknife.BindView;
@@ -60,7 +58,7 @@ public class CVSentFragment extends BaseFragment {
                 LinearLayout linearLayout = (LinearLayout) LayoutUtils.inflate(mFlowLayout, R.layout.cv_sent_item_view, false);
                 TextView tvName = (TextView) linearLayout.findViewById(R.id.tvName);
                 TextView tvDate = (TextView) linearLayout.findViewById(R.id.tvDate);
-                NunitoTextView btnStatus = (NunitoTextView) linearLayout.findViewById(R.id.tvStatus);
+                RobotoTextView btnStatus = (RobotoTextView) linearLayout.findViewById(R.id.tvStatus);
                 LinearLayout llStatus = (LinearLayout) linearLayout.findViewById(R.id.llStatus);
                 tvName.setText(detailJobResponse.getLstJobApply().get(i).getFullName());
                 tvDate.setText(DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(detailJobResponse.getLstJobApply().get(i).getCreatedDate()) + ""));

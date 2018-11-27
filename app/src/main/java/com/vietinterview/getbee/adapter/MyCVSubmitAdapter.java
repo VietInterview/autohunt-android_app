@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.DeleteCVRequest;
@@ -25,7 +24,7 @@ import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 import com.vietinterview.getbee.api.response.listcv.CvList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
-import com.vietinterview.getbee.customview.NunitoRegularButton;
+import com.vietinterview.getbee.customview.RobotoRegularButton;
 import com.vietinterview.getbee.fragments.BaseFragment;
 import com.vietinterview.getbee.fragments.DetailCVFragment;
 import com.vietinterview.getbee.utils.DateUtil;
@@ -187,7 +186,7 @@ public class MyCVSubmitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             } else {
                 ((RelativeLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.white));
             }
-            ((NunitoRegularButton) ((MyViewHolder) holder).mView.findViewById(R.id.btnDeleteCV)).setOnClickListener(new View.OnClickListener() {
+            ((RobotoRegularButton) ((MyViewHolder) holder).mView.findViewById(R.id.btnDeleteCV)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     baseFragment.showCoverNetworkLoading();

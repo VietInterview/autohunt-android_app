@@ -25,7 +25,7 @@
         app:itemTextColor="@color/white"
         app:menu="@menu/activity_main2_drawer">
 
-        <com.vietinterview.getbee.customview.NunitoTextView
+        <com.vietinterview.getbee.customview.RobotoTextView
             android:id="@+id/tvLogout"
             android:layout_width="wrap_content"
             android:layout_height="48dp"

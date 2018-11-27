@@ -5,11 +5,9 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
@@ -29,13 +26,11 @@ import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 import com.vietinterview.getbee.api.response.listcv.CvList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
-import com.vietinterview.getbee.callback.OnCloseSwipeListener;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
-import com.vietinterview.getbee.customview.NunitoRegularButton;
+import com.vietinterview.getbee.customview.RobotoRegularButton;
 import com.vietinterview.getbee.fragments.BaseFragment;
 import com.vietinterview.getbee.fragments.DetailCVFragment;
 import com.vietinterview.getbee.utils.DateUtil;
-import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.GsonUtils;
@@ -145,19 +140,12 @@ public class MyCVSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 }
             });
             binderHelper.bind((SwipeRevealLayout) ((MyViewHolder) holder).swipeLayout, cvLists.get(position).getId().toString());
-//            baseFragment.getEventBaseFragment().setOnCloseSwipeListener(new OnCloseSwipeListener() {
-//                @Override
-//                public void onCloseSwipe() {
-//                    ((ViewPager) ((MyViewHolder) holder).mView.findViewById(R.id.viewPager)).setCurrentItem(0);
-//                }
-//            });
-//            ((ViewPager) ((MyViewHolder) holder).mView.findViewById(R.id.viewPager)).setCurrentItem(mItemSwipedStates.get(position).ordinal());
             if (position % 2 == 0) {
                 ((RelativeLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.row_not_white));
             } else {
                 ((RelativeLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.white));
             }
-            ((NunitoRegularButton) ((MyViewHolder) holder).mView.findViewById(R.id.btnDeleteCV)).setOnClickListener(new View.OnClickListener() {
+            ((RobotoRegularButton) ((MyViewHolder) holder).mView.findViewById(R.id.btnDeleteCV)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     baseFragment.showCoverNetworkLoading();
@@ -171,8 +159,6 @@ public class MyCVSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                                 DialogUtil.showDialog(baseFragment.getActivity(), baseFragment.getResources().getString(R.string.noti_title), baseFragment.getResources().getString(R.string.delete_cv_fail));
                             } else {
                                 baseFragment.hideCoverNetworkLoading();
-//                            cvLists.remove(cvLists.get(position));
-//                            setmTotal(cvLists.size());
                                 baseFragment.getEventBaseFragment().refreshMyCV();
                                 notifyDataSetChanged();
                             }
@@ -183,48 +169,9 @@ public class MyCVSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                             baseFragment.hideCoverNetworkLoading();
                         }
                     });
-//                    deleteCVRequest.callRequest(mContext, new ApiObjectCallBack<DeleteCVResponse, ErrorResponse>() {
-//                        @Override
-//                        public void onSuccess(int status, DeleteCVResponse dataSuccess, List<DeleteCVResponse> listDataSuccess, String message) {
-//                            if(baseFragment.isAdded()){
-//                                if(dataSuccess.getCount())
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
-//
-//                        }
-//                    });
                 }
             });
             baseFragment.getArrayBaseRequest().add(deleteCVRequest);
-//            ((ViewPager) ((MyViewHolder) holder).mView.findViewById(R.id.viewPager)).setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//                int previousPagePosition = 0;
-//
-//                @Override
-//                public void onPageScrolled(int pagePosition, float positionOffset, int positionOffsetPixels) {
-//                    if (pagePosition == previousPagePosition)
-//                        return;
-//                    switch (pagePosition) {
-//                        case 0:
-//                            mItemSwipedStates.set(position, SwipedState.SHOWING_PRIMARY_CONTENT);
-//                            break;
-//                        case 1:
-//                            mItemSwipedStates.set(position, SwipedState.SHOWING_SECONDARY_CONTENT);
-//                            break;
-//                    }
-//                    previousPagePosition = pagePosition;
-//                }
-//
-//                @Override
-//                public void onPageSelected(int pagePosition) {
-//                }
-//
-//                @Override
-//                public void onPageScrollStateChanged(int state) {
-//                }
-//            });
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.progressBar.setIndeterminate(true);
@@ -271,7 +218,6 @@ public class MyCVSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     DialogUtil.showDialog(baseFragment.getActivity(), baseFragment.getResources().getString(R.string.noti_title), message, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            FragmentUtil.popBackStack(baseFragment);
                         }
                     });
                 }

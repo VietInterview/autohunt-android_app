@@ -35,7 +35,7 @@
             android:orientation="vertical"
             android:padding="18dp">
 
-            <com.vietinterview.getbee.customview.NunitoBoldTextView
+            <com.vietinterview.getbee.customview.RobotoBoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -45,7 +45,7 @@
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
-            <com.vietinterview.getbee.customview.NunitoTextView
+            <com.vietinterview.getbee.customview.RobotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -161,7 +161,7 @@
                     android:visibility="gone" />
             </LinearLayout>
 
-            <com.vietinterview.getbee.customview.NunitoTextView
+            <com.vietinterview.getbee.customview.RobotoTextView
                 android:id="@+id/tvForgotPass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -173,7 +173,7 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
-        <com.vietinterview.getbee.customview.NunitoBoldButton
+        <com.vietinterview.getbee.customview.RobotoBoldButton
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -196,7 +196,7 @@
             android:gravity="center|bottom"
             android:orientation="horizontal">
 
-            <com.vietinterview.getbee.customview.NunitoTextView
+            <com.vietinterview.getbee.customview.RobotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -207,7 +207,7 @@
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
-            <com.vietinterview.getbee.customview.NunitoBoldTextView
+            <com.vietinterview.getbee.customview.RobotoBoldTextView
                 android:id="@+id/tvGoRegits"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

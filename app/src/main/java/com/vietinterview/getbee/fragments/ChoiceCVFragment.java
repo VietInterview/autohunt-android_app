@@ -20,7 +20,7 @@ import com.vietinterview.getbee.api.response.listcv.CvList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.constant.ApiConstant;
-import com.vietinterview.getbee.customview.NunitoBoldButton;
+import com.vietinterview.getbee.customview.RobotoBoldButton;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
@@ -37,7 +37,7 @@ public class ChoiceCVFragment extends BaseFragment implements SwipeRefreshLayout
     @BindView(R.id.recycler_view)
     public RecyclerView recyclerView;
     @BindView(R.id.btnDelete)
-    NunitoBoldButton btnDelete;
+    RobotoBoldButton btnDelete;
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout mSwipeRefreshLayout;
     private MyCVChoiceAdapter myCVChoiceAdapter;

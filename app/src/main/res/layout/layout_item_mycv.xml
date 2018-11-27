@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.vietinterview.getbee.customview.NunitoTextView
+    <com.vietinterview.getbee.customview.RobotoTextView
         android:id="@+id/tvCountCV"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -24,18 +24,19 @@
             android:id="@+id/secondaryContentFrameLayout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:background="@drawable/borderbutton_red"
             android:gravity="center|right"
             android:orientation="horizontal">
 
-            <com.vietinterview.getbee.customview.NunitoRegularButton
+            <com.vietinterview.getbee.customview.RobotoRegularButton
                 android:id="@+id/btnDeleteCV"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:background="@color/red"
+                android:background="@android:color/transparent"
                 android:drawableTop="@drawable/ic_trash"
                 android:drawablePadding="-30dp"
-                android:paddingTop="20dp"
+                android:paddingTop="30dp"
                 android:text="@string/delete"
                 android:textColor="@color/white" />
 
@@ -46,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.vietinterview.getbee.customview.NunitoBoldTextView
+            <com.vietinterview.getbee.customview.RobotoBoldTextView
                 android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,7 +62,7 @@
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
-            <com.vietinterview.getbee.customview.NunitoTextView
+            <com.vietinterview.getbee.customview.RobotoTextView
                 android:id="@+id/tvCarrer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -76,7 +77,7 @@
                 android:textColor="#505059"
                 android:textSize="16sp" />
 
-            <com.vietinterview.getbee.customview.NunitoTextView
+            <com.vietinterview.getbee.customview.RobotoTextView
                 android:id="@+id/tvDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -104,7 +105,7 @@
                 android:orientation="vertical"
                 android:paddingHorizontal="8dp">
 
-                <com.vietinterview.getbee.customview.NunitoTextView
+                <com.vietinterview.getbee.customview.RobotoTextView
                     android:id="@+id/tvStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

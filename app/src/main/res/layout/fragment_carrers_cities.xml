@@ -9,7 +9,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.vietinterview.getbee.customview.NunitoEditText
+    <com.vietinterview.getbee.customview.RobotoEditText
         android:id="@+id/edtSearchJob"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -19,7 +19,7 @@
         android:padding="@dimen/activity_vertical_margin"
         android:textSize="18sp" />
 
-    <com.vietinterview.getbee.customview.NunitoTextView
+    <com.vietinterview.getbee.customview.RobotoTextView
         android:id="@+id/tvHeader"
         android:layout_width="match_parent"
         android:layout_height="60dp"

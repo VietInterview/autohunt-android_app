@@ -15,7 +15,7 @@
         android:layout_above="@+id/add"
         android:visibility="visible" />
 
-    <com.vietinterview.getbee.customview.NunitoBoldTextView
+    <com.vietinterview.getbee.customview.RobotoBoldTextView
         android:id="@+id/add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <com.vietinterview.getbee.customview.NunitoBoldButton
+        <com.vietinterview.getbee.customview.RobotoBoldButton
             android:id="@+id/btnNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

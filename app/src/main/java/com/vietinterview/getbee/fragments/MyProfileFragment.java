@@ -3,9 +3,6 @@ package com.vietinterview.getbee.fragments;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,11 +15,8 @@ import android.widget.Toast;
 
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.activities.MainActivity;
-import com.vietinterview.getbee.api.request.BaseJsonRequest;
 import com.vietinterview.getbee.api.request.BaseRequest;
 import com.vietinterview.getbee.api.request.GetMyProfileRequest;
-import com.vietinterview.getbee.api.request.LoginRequest;
 import com.vietinterview.getbee.api.request.SaveMyProfileRequest;
 import com.vietinterview.getbee.api.response.CareerResponse;
 import com.vietinterview.getbee.api.response.ErrorResponse;
@@ -31,11 +25,10 @@ import com.vietinterview.getbee.api.response.myprofile.MyProfileResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.constant.GlobalDefine;
-import com.vietinterview.getbee.customview.NunitoTextInputEditText;
+import com.vietinterview.getbee.customview.RobotoTextInputEditText;
 import com.vietinterview.getbee.model.Carrer;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
-import com.vietinterview.getbee.customview.TouchDetectableScrollView;
 import com.vietinterview.getbee.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -51,15 +44,15 @@ public class MyProfileFragment extends BaseFragment {
     @BindView(R.id.scrollView)
     NestedScrollView scrollView;
     @BindView(R.id.edtFullName)
-    NunitoTextInputEditText edtFullName;
+    RobotoTextInputEditText edtFullName;
     @BindView(R.id.edtPhone)
-    NunitoTextInputEditText edtPhone;
+    RobotoTextInputEditText edtPhone;
     @BindView(R.id.edtEmail)
-    NunitoTextInputEditText edtEmail;
+    RobotoTextInputEditText edtEmail;
     @BindView(R.id.edtAdd)
-    NunitoTextInputEditText edtAdd;
+    RobotoTextInputEditText edtAdd;
     @BindView(R.id.edtCarrer)
-    NunitoTextInputEditText edtCarrer;
+    RobotoTextInputEditText edtCarrer;
     @BindView(R.id.tvHunt)
     TextView tvHunt;
     //    private String mCarrerId = "0";

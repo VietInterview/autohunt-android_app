@@ -17,12 +17,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.StatusAdapter;
-import com.vietinterview.getbee.customview.NunitoEditText;
-import com.vietinterview.getbee.customview.NunitoTextView;
+import com.vietinterview.getbee.customview.RobotoEditText;
+import com.vietinterview.getbee.customview.RobotoTextView;
 import com.vietinterview.getbee.model.CVStatus;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
@@ -41,9 +40,9 @@ public class StatusFragment extends BaseFragment {
     @BindView(R.id.list)
     public ListView listView;
     @BindView(R.id.tvHeader)
-    NunitoTextView tvHeader;
+    RobotoTextView tvHeader;
     @BindView(R.id.edtSearchJob)
-    NunitoEditText edtSearchJob;
+    RobotoEditText edtSearchJob;
     StatusAdapter statusAdapter;
     private Menu mMenu;
     private MenuItem mMenuItem;
@@ -183,8 +182,8 @@ public class StatusFragment extends BaseFragment {
             textView.setText(getResources().getString(R.string.choose));
             textView.setPadding(0, 0, 16, 0);
             textView.setTextSize(18);
-            textView.setTextColor(Color.BLACK);
-            Typeface font = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "fonts/Nunito-Bold.ttf");
+            textView.setTextColor(getResources().getColor(R.color.iconcolor));
+            Typeface font = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "fonts/Roboto-Bold.ttf");
             textView.setTypeface(font);
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -217,9 +216,9 @@ public class StatusFragment extends BaseFragment {
             TextView textView = (TextView) menuItem.getActionView();
             textView.setText(getResources().getString(R.string.choose));
             textView.setTextSize(18);
-            textView.setTextColor(Color.BLACK);
+            textView.setTextColor(getResources().getColor(R.color.iconcolor));
             textView.setPadding(0, 0, 16, 0);
-            Typeface font = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "fonts/Nunito-Bold.ttf");
+            Typeface font = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "fonts/Roboto-Bold.ttf");
             textView.setTypeface(font);
         }
     }

@@ -97,7 +97,7 @@
                             android:background="@drawable/border_top_left_right"
                             android:orientation="vertical">
 
-                            <com.vietinterview.getbee.customview.NunitoBoldTextView
+                            <com.vietinterview.getbee.customview.RobotoBoldTextView
                                 android:id="@+id/tvFullName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
                                 android:textColor="#191830"
                                 android:textSize="18sp" />
 
-                            <com.vietinterview.getbee.customview.NunitoTextView
+                            <com.vietinterview.getbee.customview.RobotoTextView
                                 android:id="@+id/tvBirthDay"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -165,7 +165,7 @@
             android:paddingHorizontal="16dp"
             android:paddingVertical="8dp">
 
-            <com.vietinterview.getbee.customview.NunitoBoldButton
+            <com.vietinterview.getbee.customview.RobotoBoldButton
                 android:id="@+id/btnApplyCV"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"

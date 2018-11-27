@@ -49,7 +49,7 @@
                         android:background="@color/white"
                         android:orientation="vertical">
 
-                        <com.vietinterview.getbee.customview.NunitoTextView
+                        <com.vietinterview.getbee.customview.RobotoTextView
                             android:id="@+id/tvcompanyName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                             android:textColor="#505059"
                             android:textSize="18sp" />
 
-                        <com.vietinterview.getbee.customview.NunitoBoldTextView
+                        <com.vietinterview.getbee.customview.RobotoBoldTextView
                             android:id="@+id/tvjobTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
                             android:background="@color/step_complete"
                             android:orientation="vertical">
 
-                            <com.vietinterview.getbee.customview.NunitoTextView
+                            <com.vietinterview.getbee.customview.RobotoTextView
                                 android:id="@+id/tvstatus"
                                 android:layout_width="wrap_content"
                                 android:layout_height="25dp"
@@ -147,7 +147,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <com.vietinterview.getbee.customview.NunitoBoldButton
+            <com.vietinterview.getbee.customview.RobotoBoldButton
                 android:id="@+id/saveUnsaveJob"
                 android:layout_width="149dp"
                 android:layout_height="40dp"
@@ -158,7 +158,7 @@
                 android:paddingLeft="16dp"
                 android:textColor="#B1B1BA" />
 
-            <com.vietinterview.getbee.customview.NunitoBoldButton
+            <com.vietinterview.getbee.customview.RobotoBoldButton
                 android:id="@+id/btnApplyCV"
                 android:layout_width="149dp"
                 android:layout_height="40dp"

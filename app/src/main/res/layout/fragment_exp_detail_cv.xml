@@ -17,7 +17,7 @@
         android:nestedScrollingEnabled="true"
         android:layout_height="match_parent">
 
-        <com.vietinterview.getbee.customview.NunitoTextView
+        <com.vietinterview.getbee.customview.RobotoTextView
             android:id="@+id/tvNodata"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

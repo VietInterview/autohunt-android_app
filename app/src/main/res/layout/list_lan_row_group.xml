@@ -15,7 +15,7 @@
         android:orientation="vertical"
         android:padding="8dp">
 
-        <com.vietinterview.getbee.customview.NunitoTextView
+        <com.vietinterview.getbee.customview.RobotoTextView
             android:id="@+id/tvLanguage"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

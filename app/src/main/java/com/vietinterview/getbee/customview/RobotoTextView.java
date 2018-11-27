@@ -10,30 +10,30 @@ import android.util.AttributeSet;
  * Created by V4-OS01 on 25/10/2016.
  */
 
-public class NunitoTextView extends AppCompatTextView {
+public class RobotoTextView extends AppCompatTextView {
     public Typeface FONT_NAME;
 
 
-    public NunitoTextView(Context context) {
+    public RobotoTextView(Context context) {
         super(context);
         if (FONT_NAME == null)
-            FONT_NAME = Typeface.createFromAsset(context.getAssets(), "fonts/Nunito-Regular.ttf");
+            FONT_NAME = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
         this.setTypeface(FONT_NAME);
 //        this.setTextSize(getResources().getDimensionPixelSize(R.dimen.sixe_text));
     }
 
-    public NunitoTextView(Context context, AttributeSet attrs) {
+    public RobotoTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         if (FONT_NAME == null)
-            FONT_NAME = Typeface.createFromAsset(context.getAssets(), "fonts/Nunito-Regular.ttf");
+            FONT_NAME = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
         this.setTypeface(FONT_NAME);
 //        this.setTextSize(getResources().getDimensionPixelSize(R.dimen.sixe_text));
     }
 
-    public NunitoTextView(Context context, AttributeSet attrs, int defStyle) {
+    public RobotoTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         if (FONT_NAME == null)
-            FONT_NAME = Typeface.createFromAsset(context.getAssets(), "fonts/Nunito-Regular.ttf");
+            FONT_NAME = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
         this.setTypeface(FONT_NAME);
 //        this.setTextSize(getResources().getDimensionPixelSize(R.dimen.sixe_text));
     }

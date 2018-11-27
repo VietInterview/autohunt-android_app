@@ -211,7 +211,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void applyFontToMenuItem(MenuItem mi) {
-        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Nunito-Regular.ttf");
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
         mNewTitle.setSpan(new CustomTypefaceSpan((int) getResources().getDimension(R.dimen.font_menu_left), "", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mi.setTitle(mNewTitle);
@@ -272,7 +272,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void initializeCountDrawer() {
-        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Nunito-Regular.ttf");
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
         GradientDrawable gd = new GradientDrawable();
         gd.setCornerRadius(5);
         gd.setSize(10, 10);

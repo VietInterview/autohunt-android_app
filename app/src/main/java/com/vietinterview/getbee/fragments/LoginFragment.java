@@ -12,18 +12,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
-import android.text.Layout;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,15 +39,13 @@ import com.vietinterview.getbee.api.response.myprofile.MyProfileResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.model.UserInfoBean;
 import com.vietinterview.getbee.utils.FragmentUtil;
-import com.vietinterview.getbee.customview.NunitoEditText;
+import com.vietinterview.getbee.customview.RobotoEditText;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.vietinterview.getbee.utils.EventBusHelper.post;
 
 /**
  * Created by hiepnguyennghia on 10/8/18.
@@ -61,9 +56,9 @@ public class LoginFragment extends BaseFragment {
     private Dialog mForgotPassdialog;
     LoginRequest loginRequest;
     @BindView(R.id.edtEmail)
-    NunitoEditText edtEmail;
+    RobotoEditText edtEmail;
     @BindView(R.id.edtPass)
-    NunitoEditText edtPass;
+    RobotoEditText edtPass;
     @BindView(R.id.icRightEmail)
     ImageView icRightEmail;
     @BindView(R.id.icRightPass)

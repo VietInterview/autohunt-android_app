@@ -37,7 +37,7 @@
             app:srcCompat="@drawable/ic_lan_en" />
     </LinearLayout>
 
-    <com.vietinterview.getbee.customview.NunitoTextView
+    <com.vietinterview.getbee.customview.RobotoTextView
         android:id="@+id/tvGreeting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
