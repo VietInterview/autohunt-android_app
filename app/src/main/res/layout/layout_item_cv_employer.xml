@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.vietinterview.getbee.customview.RobotoTextView
+        android:id="@+id/tvCountCV"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textColor="#B1B1BA" />
+
+    <com.chauthai.swipereveallayout.SwipeRevealLayout
+        android:id="@+id/swipe_layout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        app:dragEdge="right"
+        app:mode="same_level">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view1"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@android:color/transparent"
+            app:cardBackgroundColor="@android:color/transparent"
+            card_view:cardCornerRadius="0dp"
+            card_view:cardElevation="0dp">
+
+            <LinearLayout
+                android:id="@+id/secondaryContentFrameLayout"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/borderbutton_blue"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.vietinterview.getbee.customview.RobotoRegularButton
+                    android:id="@+id/btnShowDetailJob"
+                    android:layout_width="76dp"
+                    android:layout_height="76dp"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:drawableTop="@drawable/ic_detail_cv_ntd"
+                    android:drawablePadding="-20dp"
+                    android:paddingTop="25dp"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/white"
+            card_view:cardCornerRadius="5dp"
+            card_view:cardElevation="5dp"
+            card_view:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:id="@+id/primaryContentCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/primaryContentCardView5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <com.vietinterview.getbee.customview.RobotoBoldTextView
+                        android:id="@+id/tvName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:gravity="left|center"
+                        android:text="Nguyễn Thùy Hoài Anh"
+                        android:textColor="#042E51"
+                        android:textSize="18sp" />
+
+                    <com.vietinterview.getbee.customview.RobotoTextView
+                        android:id="@+id/tvCarrer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_time_experi"
+                        android:drawablePadding="8dp"
+                        android:text="05 ngày trước"
+                        android:textColor="#677B8D"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <com.vietinterview.getbee.customview.RobotoTextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="0dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="top"
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_red"
+                    android:gravity="center"
+                    android:text="Đã ứng tuyển"
+                    android:textColor="#FF5A5A"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </com.chauthai.swipereveallayout.SwipeRevealLayout>
+</LinearLayout>

@@ -37,6 +37,7 @@ import com.vietinterview.getbee.customview.CircularTextView;
 import com.vietinterview.getbee.customview.CustomTypefaceSpan;
 import com.vietinterview.getbee.fragments.HomeFragment;
 import com.vietinterview.getbee.fragments.IntroFragment;
+import com.vietinterview.getbee.fragments.JobsEmployerFragment;
 import com.vietinterview.getbee.fragments.LoginFragment;
 import com.vietinterview.getbee.fragments.MyCVFragment;
 import com.vietinterview.getbee.fragments.MyJobFragment;
@@ -324,6 +325,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             drawer.closeDrawer(GravityCompat.START);
         } else if (id == R.id.nav_profile) {
             FragmentUtil.replaceFragment(MainActivity.this, new MyProfileFragment(), null);
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+        } else if (id == R.id.nav_temp) {
+            FragmentUtil.replaceFragment(MainActivity.this, new JobsEmployerFragment(), null);
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
         }

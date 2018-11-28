@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -13,15 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.api.request.DeleteCVRequest;
 import com.vietinterview.getbee.api.request.GetDetailCVRequest;
-import com.vietinterview.getbee.api.response.DeleteCVResponse;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
 import com.vietinterview.getbee.api.response.listcv.CvList;
@@ -29,11 +25,11 @@ import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.customview.RobotoRegularButton;
 import com.vietinterview.getbee.fragments.BaseFragment;
+import com.vietinterview.getbee.fragments.CVsEmployerFragment;
 import com.vietinterview.getbee.fragments.DetailCVFragment;
-import com.vietinterview.getbee.utils.DateUtil;
+import com.vietinterview.getbee.fragments.DetailJobNTDFragment;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
-import com.vietinterview.getbee.utils.GsonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,14 +39,13 @@ import java.util.List;
  * created by tindle
  * created time 16/8/12 下午10:55
  */
-public class MyCVSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class JobsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private enum SwipedState {
         SHOWING_PRIMARY_CONTENT,
         SHOWING_SECONDARY_CONTENT
     }
 
-    private DeleteCVRequest deleteCVRequest;
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
     private ArrayList<CvList> cvLists;
@@ -65,7 +60,7 @@ public class MyCVSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private int mTotal;
     private final ViewBinderHelper binderHelper = new ViewBinderHelper();
 
-    public MyCVSavedAdapter(RecyclerView recyclerView, Context context, int total, ArrayList<CvList> cvLists, BaseFragment homeFragment) {
+    public JobsEmployerAdapter(RecyclerView recyclerView, Context context, int total, ArrayList<CvList> cvLists, BaseFragment homeFragment) {
         this.cvLists = cvLists;
         this.mContext = context;
         this.mTotal = total;
@@ -102,7 +97,7 @@ public class MyCVSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_ITEM) {
-            LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_mycv, parent, false);
+            LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_job_employer, parent, false);
             DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
             v.getLayoutParams().width = displayMetrics.widthPixels;
             v.requestLayout();
@@ -118,51 +113,33 @@ public class MyCVSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof MyViewHolder) {
-            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvName)).setText(cvLists.get(position).getFullName());
-            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCarrer)).setText(cvLists.get(position).getCareerName());
+//            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvName)).setText(cvLists.get(position).getFullName());
+//            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCarrer)).setText(cvLists.get(position).getCareerName());
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setText(this.mTotal == 0 ? mContext.getResources().getString(R.string.no_cv_upload) : this.mTotal + " " + mContext.getResources().getString(R.string.cv_found));
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setVisibility(position == 0 ? View.VISIBLE : View.GONE);
-            ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setVisibility(View.GONE);
-            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvDate)).setText(mContext.getResources().getString(R.string.update) + " " + DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(cvLists.get(position).getUpdatedDate()) + ""));
-            ((RelativeLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setOnClickListener(new View.OnClickListener() {
+//            ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setVisibility(View.GONE);
+//            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvDate)).setText(mContext.getResources().getString(R.string.update) + " " + DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(cvLists.get(position).getUpdatedDate()) + ""));
+            ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    getDetailCV(cvLists.get(position).getId());
+//                    getDetailCV(cvLists.get(position).getId());
+                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new CVsEmployerFragment(), null);
                 }
             });
             binderHelper.bind((SwipeRevealLayout) ((MyViewHolder) holder).swipeLayout, cvLists.get(position).getId().toString());
             if (position % 2 == 0) {
-                ((RelativeLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.row_not_white));
+                ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.row_not_white));
             } else {
-                ((RelativeLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.white));
+                ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.white));
             }
-            ((RobotoRegularButton) ((MyViewHolder) holder).mView.findViewById(R.id.btnDeleteCV)).setOnClickListener(new View.OnClickListener() {
+            ((RobotoRegularButton) ((MyViewHolder) holder).mView.findViewById(R.id.btnShowDetailJob)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    baseFragment.showCoverNetworkLoading();
-                    deleteCVRequest = new DeleteCVRequest(cvLists.get(position).getId());
-                    deleteCVRequest.callRequest(mContext, new ApiObjectCallBack() {
-                        @Override
-                        public void onSuccess(int status, Object data, List dataArrayList, String message) {
-                            baseFragment.hideCoverNetworkLoading();
-                            DeleteCVResponse deleteCVResponse = GsonUtils.fromJson(message, DeleteCVResponse.class);
-                            if (deleteCVResponse.getCount() <= 0) {
-                                DialogUtil.showDialog(baseFragment.getActivity(), baseFragment.getResources().getString(R.string.noti_title), baseFragment.getResources().getString(R.string.delete_cv_fail));
-                            } else {
-                                baseFragment.hideCoverNetworkLoading();
-                                baseFragment.getEventBaseFragment().refreshMyCV();
-                                notifyDataSetChanged();
-                            }
-                        }
-
-                        @Override
-                        public void onFail(int status, Object dataFail, List listDataFail, String message) {
-                            baseFragment.hideCoverNetworkLoading();
-                        }
-                    });
+//                    baseFragment.showCoverNetworkLoading();
+                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailJobNTDFragment(), null);
                 }
             });
-            baseFragment.getArrayBaseRequest().add(deleteCVRequest);
+//            baseFragment.getArrayBaseRequest().add(deleteCVRequest);
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.progressBar.setIndeterminate(true);

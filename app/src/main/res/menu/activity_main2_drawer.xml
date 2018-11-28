@@ -21,5 +21,9 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_user_menuleft"
             android:title="@string/info_account" />
+        <item
+            android:id="@+id/nav_temp"
+            android:icon="@drawable/ic_user_menuleft"
+            android:title="Test" />
     </group>
 </menu>

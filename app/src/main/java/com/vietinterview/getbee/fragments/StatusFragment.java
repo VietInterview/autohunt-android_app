@@ -74,7 +74,7 @@ public class StatusFragment extends BaseFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                updateMenuTitles();
+//                updateMenuTitles();
             }
         });
         edtSearchJob.addTextChangedListener(new TextWatcher() {

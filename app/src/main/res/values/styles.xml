@@ -23,13 +23,6 @@
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
-    <style name="AppTheme.CTVTheme" parent="AppTheme.NoActionBar">
-    </style>
-    <style name="AppTheme.NTDTheme" parent="AppTheme.NoActionBar">
-    </style>
-    <style name="customfontstyle" parent="@android:style/TextAppearance.Small">
-        <item name="android:fontFamily">@fonts/Nunito-Regular</item>
-    </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
@@ -37,11 +30,6 @@
     <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
         <item name="android:popupBackground">@android:color/white</item>
     </style>
-
-    <!--<style name="popupMenuStyle" parent="Theme.AppCompat.Light.DarkActionBar">-->
-    <!--<item name="android:textColor">@color/black</item>-->
-    <!--<item name="android:itemBackground">@color/white</item>-->
-    <!--</style>-->
     <style name="HintTextAppearance">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">#FFD215</item>
