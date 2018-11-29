@@ -87,8 +87,7 @@ public class DetailCVNTDFragment extends BaseFragment {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
         adapter.addFrag(new InfoDetailCVNTDFragment(), "THÔNG TIN");
-        adapter.addFrag(new DummyFragment(
-                ContextCompat.getColor(getActivity(), R.color.white)), "KINH NGHIỆM");
+        adapter.addFrag(new ExpDetailCVNTDFragment(), "KINH NGHIỆM");
         adapter.addFrag(new DummyFragment(
                 ContextCompat.getColor(getActivity(), R.color.white)), "BẰNG CẤP");
         viewPager.setAdapter(adapter);
