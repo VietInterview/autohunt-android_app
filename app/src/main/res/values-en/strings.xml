@@ -194,4 +194,6 @@
     <string name="intro3">1000"'"s of quality recruiters working for you!</string>
     <string name="intro2">Vietnam"'"s Largest Recruitment Agencies Marketplace</string>
     <string name="intro1">A B2B Marketplace for Employers &amp; Recruitment Agencies</string>
+    <string name="not_enought_exp">You have not entered the work experience, please check again</string>
+    <string name="not_enought_edu">You have not entered a working level, please check again</string>
 </resources>

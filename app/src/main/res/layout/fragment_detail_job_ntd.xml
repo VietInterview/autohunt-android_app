@@ -32,6 +32,7 @@
                 android:orientation="vertical">
 
                 <com.vietinterview.getbee.customview.RobotoMediumTextView
+                    android:id="@+id/tvJobTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@string/font_fontFamily_medium"
@@ -40,6 +41,7 @@
                     android:textSize="24sp" />
 
                 <com.vietinterview.getbee.customview.RobotoTextView
+                    android:id="@+id/tvStatus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_time_experi"

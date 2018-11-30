@@ -23,8 +23,14 @@ import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.activities.MainActivity;
+import com.vietinterview.getbee.api.response.detailjobcustomer.DetailJobCustomerResponse;
+import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.utils.StringUtils;
 
+import java.util.Date;
+
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -32,14 +38,62 @@ import butterknife.OnClick;
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 public class DetailJobNTDFragment extends BaseFragment {
-    TextView tvSongDes;
+    @BindView(R.id.tvJobTitle)
+    TextView tvJobTitle;
+    @BindView(R.id.tvLevel)
+    TextView tvLevel;
+    @BindView(R.id.tvworkingForm)
+    TextView tvworkingForm;
+    @BindView(R.id.tvCarrer)
+    TextView tvCarrer;
+    @BindView(R.id.tvRequireExp)
+    TextView tvRequireExp;
+    @BindView(R.id.tvWorkPlace)
+    TextView tvWorkPlace;
+    @BindView(R.id.tvQuantityHiring)
+    TextView tvQuantityHiring;
+    @BindView(R.id.tvCertificate)
+    TextView tvCertificate;
+    @BindView(R.id.tvAge)
+    TextView tvAge;
+    @BindView(R.id.tvSalary)
+    TextView tvSalary;
+    @BindView(R.id.tvFee)
+    TextView tvFee;
+    @BindView(R.id.tvDatePublic)
+    TextView tvDatePublic;
+    @BindView(R.id.tvExpireDate)
+    TextView tvExpireDate;
+    @BindView(R.id.tvKeyWord)
+    TextView tvKeyWord;
+    @BindView(R.id.tvLanCV)
+    TextView tvLanCV;
+    @BindView(R.id.tvContact)
+    TextView tvContact;
+    @BindView(R.id.tvEmail)
+    TextView tvEmail;
+    @BindView(R.id.tvJobDes)
+    TextView tvJobDes;
+    @BindView(R.id.tvjobRequirement)
+    TextView tvjobRequirement;
+    @BindView(R.id.btShowmore)
     Button btShowmore;
+    @BindView(R.id.gradientView)
     LinearLayout gradientView;
     private CollapsingToolbarLayout collapsingToolbar;
     private AppBarLayout appBarLayout;
     private RecyclerView recyclerView;
     private Menu collapsedMenu;
     private boolean appBarExpanded = true;
+    private DetailJobCustomerResponse detailJobCustomerResponse;
+
+    public static DetailJobNTDFragment newInstance(DetailJobCustomerResponse detailJobCustomerResponse) {
+        DetailJobNTDFragment fm = new DetailJobNTDFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("detailJobCustomerResponse", detailJobCustomerResponse);
+        fm.setArguments(bundle);
+        return fm;
+    }
 
     @Override
     protected int getLayoutId() {
@@ -48,7 +102,7 @@ public class DetailJobNTDFragment extends BaseFragment {
 
     @Override
     protected void getArgument(Bundle bundle) {
-
+        detailJobCustomerResponse = bundle.getParcelable("detailJobCustomerResponse");
     }
 
     @Override
@@ -79,22 +133,55 @@ public class DetailJobNTDFragment extends BaseFragment {
                 }
             }
         });
-        tvSongDes = (TextView) root.findViewById(R.id.tvSongDes);
-        btShowmore = (Button) root.findViewById(R.id.btShowmore);
-        gradientView = root.findViewById(R.id.gradientView);
-        tvSongDes.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_header_selector));
+        tvJobTitle.setText(detailJobCustomerResponse.getJobTitle());
+        tvLevel.setText(detailJobCustomerResponse.getCurrentLevel().getName());//note
+        tvworkingForm.setText(detailJobCustomerResponse.getWorkingForm().getName());
+
+        StringBuilder s0 = new StringBuilder("");
+        for (int i = 0; i < detailJobCustomerResponse.getLstCareer().size(); i++) {
+            if (i == detailJobCustomerResponse.getLstCareer().size() - 1) {
+                s0.append(detailJobCustomerResponse.getLstCareer().get(i).getName() + "");
+            } else {
+                s0.append(detailJobCustomerResponse.getLstCareer().get(i).getName() + ", ");
+            }
+        }
+        tvCarrer.setText(s0.toString());
+        tvRequireExp.setText(detailJobCustomerResponse.getWorkExperience());
+        StringBuilder s1 = new StringBuilder("");
+        for (int i = 0; i < detailJobCustomerResponse.getLstCareer().size(); i++) {
+            if (i == detailJobCustomerResponse.getLstCareer().size() - 1) {
+                s1.append(detailJobCustomerResponse.getLstCareer().get(i).getName() + "");
+            } else {
+                s1.append(detailJobCustomerResponse.getLstCareer().get(i).getName() + ", ");
+            }
+        }
+        tvWorkPlace.setText(s1.toString());
+        tvQuantityHiring.setText(detailJobCustomerResponse.getQuantity() + "");
+        tvCertificate.setText(detailJobCustomerResponse.getEducationLevel().getName());
+        tvAge.setText(detailJobCustomerResponse.getAge() + "");
+        tvSalary.setText(StringUtils.filterCurrencyString(detailJobCustomerResponse.getFromSalary()) + " - " + StringUtils.filterCurrencyString(detailJobCustomerResponse.getToSalary()));
+        tvFee.setText(StringUtils.filterCurrencyString(detailJobCustomerResponse.getFee()));
+        tvDatePublic.setText(DateUtil.convertToMyFormatFull(detailJobCustomerResponse.getSubmitDate()));
+        tvExpireDate.setText(DateUtil.convertToMyFormatFull(detailJobCustomerResponse.getExpireDate()));
+        tvKeyWord.setText(detailJobCustomerResponse.getTag());
+        tvLanCV.setText("Ngon ngu");
+        tvContact.setText(detailJobCustomerResponse.getCustomers().getContactName());
+        tvEmail.setText(detailJobCustomerResponse.getCustomers().getContactEmail());
+        tvJobDes.setText(detailJobCustomerResponse.getJobDescription());
+        tvjobRequirement.setText(detailJobCustomerResponse.getJobRequirements());
+        tvJobDes.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_header_selector));
         btShowmore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (btShowmore.getText().toString().equalsIgnoreCase("Xem thêm  ")) {
-                    tvSongDes.setMaxLines(Integer.MAX_VALUE);//your TextView
+                    tvJobDes.setMaxLines(Integer.MAX_VALUE);//your TextView
                     btShowmore.setText("Rút gọn  ");
                     gradientView.setVisibility(View.GONE);
                     btShowmore.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up_blue, 0);
                 } else {
-                    tvSongDes.setMaxLines(6);
-                    tvSongDes.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_header_selector));
+                    tvJobDes.setMaxLines(6);
+                    tvJobDes.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_header_selector));
                     btShowmore.setText("Xem thêm  ");
                     gradientView.setVisibility(View.VISIBLE);
                     btShowmore.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_down_blue, 0);

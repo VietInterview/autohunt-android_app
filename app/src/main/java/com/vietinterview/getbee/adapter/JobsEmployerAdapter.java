@@ -18,9 +18,11 @@ import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.GetDetailCVRequest;
+import com.vietinterview.getbee.api.request.GetDetailJobCustomerRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
-import com.vietinterview.getbee.api.response.listcv.CvList;
+import com.vietinterview.getbee.api.response.detailjobcustomer.DetailJobCustomerResponse;
+import com.vietinterview.getbee.api.response.jobcustomer.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.customview.RobotoRegularButton;
@@ -48,20 +50,20 @@ public class JobsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
-    private ArrayList<CvList> cvLists;
+    private ArrayList<JobList> cusLists;
     private List<SwipedState> mItemSwipedStates;
     private Context mContext;
     private int visibleThreshold = 5;
     private int lastVisibleItem, totalItemCount;
     private OnLoadMoreListener onLoadMoreListener;
-    private GetDetailCVRequest getDetailCVRequest;
+    private GetDetailJobCustomerRequest getDetailJobCustomerRequest;
     private boolean isLoading;
     private BaseFragment baseFragment;
     private int mTotal;
     private final ViewBinderHelper binderHelper = new ViewBinderHelper();
 
-    public JobsEmployerAdapter(RecyclerView recyclerView, Context context, int total, ArrayList<CvList> cvLists, BaseFragment homeFragment) {
-        this.cvLists = cvLists;
+    public JobsEmployerAdapter(RecyclerView recyclerView, Context context, int total, ArrayList<JobList> cvLists, BaseFragment homeFragment) {
+        this.cusLists = cvLists;
         this.mContext = context;
         this.mTotal = total;
         this.baseFragment = homeFragment;
@@ -113,30 +115,40 @@ public class JobsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof MyViewHolder) {
-//            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvName)).setText(cvLists.get(position).getFullName());
-//            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCarrer)).setText(cvLists.get(position).getCareerName());
+            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvcountJobOffer)).setText(cusLists.get(position).getCountOffer() + "");
+            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvsumJob)).setText("/" + cusLists.get(position).getCountCv() + "");
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setText(this.mTotal == 0 ? mContext.getResources().getString(R.string.no_cv_upload) : this.mTotal + " " + mContext.getResources().getString(R.string.cv_found));
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setVisibility(position == 0 ? View.VISIBLE : View.GONE);
+            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvname)).setText(cusLists.get(position).getJobTitle());
+            if (cusLists.get(position).getStatus() == 1 && cusLists.get(position).getLimited() > 0 && cusLists.get(position).getLimited() < 8) {
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Sắp hết hạn");
+            } else if (cusLists.get(position).getStatus() == 1 && cusLists.get(position).getLimited() > 7) {
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Còn " + cusLists.get(position).getLimited() + "ngày");
+            } else if (cusLists.get(position).getStatus() == 1 && cusLists.get(position).getLimited() == 0) {
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Đã hết hạn");
+            } else if (cusLists.get(position).getStatus() == 0) {
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Nháp");
+            }
 //            ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setVisibility(View.GONE);
-//            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvDate)).setText(mContext.getResources().getString(R.string.update) + " " + DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(cvLists.get(position).getUpdatedDate()) + ""));
+//            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvDate)).setText(mContext.getResources().getString(R.string.update) + " " + DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(cusLists.get(position).getUpdatedDate()) + ""));
             ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    getDetailCV(cvLists.get(position).getId());
+//                    getDetailCV(cusLists.get(position).getId());
                     FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new CVsEmployerFragment(), null);
                 }
             });
-            binderHelper.bind((SwipeRevealLayout) ((MyViewHolder) holder).swipeLayout, cvLists.get(position).getId().toString());
-            if (position % 2 == 0) {
-                ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.row_not_white));
-            } else {
-                ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.white));
-            }
+            binderHelper.bind((SwipeRevealLayout) ((MyViewHolder) holder).swipeLayout, cusLists.get(position).getId().toString());
+//            if (position % 2 == 0) {
+//                ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.row_not_white));
+//            } else {
+//                ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.white));
+//            }
             ((RobotoRegularButton) ((MyViewHolder) holder).mView.findViewById(R.id.btnShowDetailJob)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    baseFragment.showCoverNetworkLoading();
-                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailJobNTDFragment(), null);
+                    baseFragment.showCoverNetworkLoading();
+                    getDetailCV(cusLists.get(position).getId());
                 }
             });
 //            baseFragment.getArrayBaseRequest().add(deleteCVRequest);
@@ -164,18 +176,18 @@ public class JobsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
-        return cvLists.size();
+        return cusLists.size();
     }
 
     public void getDetailCV(int id) {
         baseFragment.showCoverNetworkLoading();
-        getDetailCVRequest = new GetDetailCVRequest(id);
-        getDetailCVRequest.callRequest(baseFragment.getActivity(), new ApiObjectCallBack<DetailCVResponse, ErrorResponse>() {
+        getDetailJobCustomerRequest = new GetDetailJobCustomerRequest(id);
+        getDetailJobCustomerRequest.callRequest(baseFragment.getActivity(), new ApiObjectCallBack<DetailJobCustomerResponse, ErrorResponse>() {
             @Override
-            public void onSuccess(int status, DetailCVResponse data, List<DetailCVResponse> dataArrayList, String message) {
+            public void onSuccess(int status, DetailJobCustomerResponse data, List<DetailJobCustomerResponse> dataArrayList, String message) {
                 baseFragment.hideCoverNetworkLoading();
                 if (baseFragment.isAdded()) {
-                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailCVFragment().newInstance(null, data), null);
+                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailJobNTDFragment().newInstance(data), null);
                 }
             }
 

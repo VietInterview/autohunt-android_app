@@ -172,134 +172,140 @@ public class DetailCVFragment extends BaseFragment {
 
     @OnClick(R.id.btnApplyCV)
     public void onApplyCVClick() {
-        mNotifydialog = new Dialog(getActivity());
-        mNotifydialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        mNotifydialog.setContentView(R.layout.dialog_choose_send_cv);
-        mNotifydialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        mNotifydialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        if (detailCVResponse.getLstEmploymentHis().size() > 0 && detailCVResponse.getLstEducationHis().size() > 0) {
+            mNotifydialog = new Dialog(getActivity());
+            mNotifydialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            mNotifydialog.setContentView(R.layout.dialog_choose_send_cv);
+            mNotifydialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            mNotifydialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        ImageView imgInfoHunt = (ImageView) mNotifydialog.findViewById(R.id.imgInfoHunt);
-        ImageView imgInfoSentCV = (ImageView) mNotifydialog.findViewById(R.id.imgInfoSentCV);
-        final TextView tvContent = (TextView) mNotifydialog.findViewById(R.id.tvContent);
-        final TextView tvContentSendCV = (TextView) mNotifydialog.findViewById(R.id.tvContentSendCV);
-        final Button btnHunt = (Button) mNotifydialog.findViewById(R.id.btnHunt);
-        final Button btnSendCV = (Button) mNotifydialog.findViewById(R.id.btnSendCV);
-        String feeHunt = getResources().getString(R.string.hunt_reward) + " <b>" + StringUtils.filterCurrencyString(detailJobResponse.getFee()) + " VND</b>";
-        tvContent.setText(Html.fromHtml(feeHunt));
-        String feeSendCV = getResources().getString(R.string.cv_reward) + " <b>" + StringUtils.filterCurrencyString((detailJobResponse.getFee() * 47) / 68) + " VND</b>";
-        tvContentSendCV.setText(Html.fromHtml(feeSendCV));
-        imgInfoHunt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tvContent.setVisibility(View.VISIBLE);
-                btnHunt.setVisibility(View.VISIBLE);
-                tvContentSendCV.setVisibility(View.GONE);
-                btnSendCV.setVisibility(View.GONE);
-            }
-        });
-        imgInfoSentCV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tvContent.setVisibility(View.GONE);
-                btnHunt.setVisibility(View.GONE);
-                tvContentSendCV.setVisibility(View.VISIBLE);
-                btnSendCV.setVisibility(View.VISIBLE);
-            }
-        });
-        btnHunt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showCoverNetworkLoading();
-                submitCVRequest = new SubmitCVRequest(detailCVResponse.getId(), detailJobResponse.getId(), 1);
-                submitCVRequest.callRequest(getActivity(), new ApiObjectCallBack<SubmitCVResponse, ErrorResponse>() {
-                    @Override
-                    public void onSuccess(int status, SubmitCVResponse data, List<SubmitCVResponse> dataArrayList, String message) {
-                        if (isAdded()) {
-                            mNotifydialog.dismiss();
-                            hideCoverNetworkLoading();
-                            detailJobResponse.setCollStatus(2);
-                            getEventBaseFragment().refreshHome();
-                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.hunt_send_cv_noti), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    FragmentUtil.popEntireFragmentBackStack(DetailCVFragment.this);
-                                    FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(detailJobResponse.getId()), null);
-                                }
-                            });
-                        }
-                    }
-
-                    @Override
-                    public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
-                        mNotifydialog.dismiss();
-                        if (isAdded()) {
-                            hideCoverNetworkLoading();
-                            if (errorResponse.getErrorKey().equalsIgnoreCase("emailOrPhoneExist")) {
-                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.emailorphoneexist), new DialogInterface.OnClickListener() {
+            ImageView imgInfoHunt = (ImageView) mNotifydialog.findViewById(R.id.imgInfoHunt);
+            ImageView imgInfoSentCV = (ImageView) mNotifydialog.findViewById(R.id.imgInfoSentCV);
+            final TextView tvContent = (TextView) mNotifydialog.findViewById(R.id.tvContent);
+            final TextView tvContentSendCV = (TextView) mNotifydialog.findViewById(R.id.tvContentSendCV);
+            final Button btnHunt = (Button) mNotifydialog.findViewById(R.id.btnHunt);
+            final Button btnSendCV = (Button) mNotifydialog.findViewById(R.id.btnSendCV);
+            String feeHunt = getResources().getString(R.string.hunt_reward) + " <b>" + StringUtils.filterCurrencyString(detailJobResponse.getFee()) + " VND</b>";
+            tvContent.setText(Html.fromHtml(feeHunt));
+            String feeSendCV = getResources().getString(R.string.cv_reward) + " <b>" + StringUtils.filterCurrencyString((detailJobResponse.getFee() * 47) / 68) + " VND</b>";
+            tvContentSendCV.setText(Html.fromHtml(feeSendCV));
+            imgInfoHunt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    tvContent.setVisibility(View.VISIBLE);
+                    btnHunt.setVisibility(View.VISIBLE);
+                    tvContentSendCV.setVisibility(View.GONE);
+                    btnSendCV.setVisibility(View.GONE);
+                }
+            });
+            imgInfoSentCV.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    tvContent.setVisibility(View.GONE);
+                    btnHunt.setVisibility(View.GONE);
+                    tvContentSendCV.setVisibility(View.VISIBLE);
+                    btnSendCV.setVisibility(View.VISIBLE);
+                }
+            });
+            btnHunt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showCoverNetworkLoading();
+                    submitCVRequest = new SubmitCVRequest(detailCVResponse.getId(), detailJobResponse.getId(), 1);
+                    submitCVRequest.callRequest(getActivity(), new ApiObjectCallBack<SubmitCVResponse, ErrorResponse>() {
+                        @Override
+                        public void onSuccess(int status, SubmitCVResponse data, List<SubmitCVResponse> dataArrayList, String message) {
+                            if (isAdded()) {
+                                mNotifydialog.dismiss();
+                                hideCoverNetworkLoading();
+                                detailJobResponse.setCollStatus(2);
+                                getEventBaseFragment().refreshHome();
+                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.hunt_send_cv_noti), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        searchMyCV(0, 0, 0);
+                                        FragmentUtil.popEntireFragmentBackStack(DetailCVFragment.this);
+                                        FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(detailJobResponse.getId()), null);
                                     }
                                 });
-                            } else if (errorResponse.getErrorKey().equalsIgnoreCase("cvNotFound")) {
-                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.cvnotfound));
-                            } else if (errorResponse.getErrorKey().equalsIgnoreCase("CvAlreadySubmitJob")) {
-                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.cvalreadysubmitjob));
                             }
                         }
-                    }
-                });
 
-            }
-        });
-        btnSendCV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showCoverNetworkLoading();
-                submitCVRequest = new SubmitCVRequest(detailCVResponse.getId(), detailJobResponse.getId(), 2);
-                submitCVRequest.callRequest(getActivity(), new ApiObjectCallBack<SubmitCVResponse, ErrorResponse>() {
-                    @Override
-                    public void onSuccess(int status, SubmitCVResponse data, List<SubmitCVResponse> dataArrayList, String message) {
-                        if (isAdded()) {
+                        @Override
+                        public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
                             mNotifydialog.dismiss();
-                            hideCoverNetworkLoading();
-                            detailJobResponse.setCollStatus(2);
-                            getEventBaseFragment().refreshHome();
-                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.hunt_send_cv_noti), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    FragmentUtil.popEntireFragmentBackStack(DetailCVFragment.this);
-                                    FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(detailJobResponse.getId()), null);
+                            if (isAdded()) {
+                                hideCoverNetworkLoading();
+                                if (errorResponse.getErrorKey().equalsIgnoreCase("emailOrPhoneExist")) {
+                                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.emailorphoneexist), new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            searchMyCV(0, 0, 0);
+                                        }
+                                    });
+                                } else if (errorResponse.getErrorKey().equalsIgnoreCase("cvNotFound")) {
+                                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.cvnotfound));
+                                } else if (errorResponse.getErrorKey().equalsIgnoreCase("CvAlreadySubmitJob")) {
+                                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.cvalreadysubmitjob));
                                 }
-                            });
+                            }
                         }
-                    }
-
-                    @Override
-                    public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
-                        mNotifydialog.dismiss();
-                        if (isAdded()) {
-                            hideCoverNetworkLoading();
-                            if (errorResponse.getErrorKey().equalsIgnoreCase("emailOrPhoneExist")) {
-                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.emailorphoneexist), new DialogInterface.OnClickListener() {
+                    });
+                }
+            });
+            btnSendCV.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showCoverNetworkLoading();
+                    submitCVRequest = new SubmitCVRequest(detailCVResponse.getId(), detailJobResponse.getId(), 2);
+                    submitCVRequest.callRequest(getActivity(), new ApiObjectCallBack<SubmitCVResponse, ErrorResponse>() {
+                        @Override
+                        public void onSuccess(int status, SubmitCVResponse data, List<SubmitCVResponse> dataArrayList, String message) {
+                            if (isAdded()) {
+                                mNotifydialog.dismiss();
+                                hideCoverNetworkLoading();
+                                detailJobResponse.setCollStatus(2);
+                                getEventBaseFragment().refreshHome();
+                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.hunt_send_cv_noti), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        searchMyCV(0, 0, 0);
+                                        FragmentUtil.popEntireFragmentBackStack(DetailCVFragment.this);
+                                        FragmentUtil.pushFragment(getActivity(), DetailCVFragment.this, new DetailJobFragment().newInstance(detailJobResponse.getId()), null);
                                     }
                                 });
-                            } else if (errorResponse.getErrorKey().equalsIgnoreCase("cvNotFound")) {
-                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.cvnotfound));
-                            } else if (errorResponse.getErrorKey().equalsIgnoreCase("CvAlreadySubmitJob")) {
-                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.cvalreadysubmitjob));
                             }
                         }
-                    }
-                });
+
+                        @Override
+                        public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
+                            mNotifydialog.dismiss();
+                            if (isAdded()) {
+                                hideCoverNetworkLoading();
+                                if (errorResponse.getErrorKey().equalsIgnoreCase("emailOrPhoneExist")) {
+                                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.emailorphoneexist), new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            searchMyCV(0, 0, 0);
+                                        }
+                                    });
+                                } else if (errorResponse.getErrorKey().equalsIgnoreCase("cvNotFound")) {
+                                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.cvnotfound));
+                                } else if (errorResponse.getErrorKey().equalsIgnoreCase("CvAlreadySubmitJob")) {
+                                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.cvalreadysubmitjob));
+                                }
+                            }
+                        }
+                    });
 
 
-            }
-        });
-        mNotifydialog.show();
+                }
+            });
+            mNotifydialog.show();
+        } else {
+            if (detailCVResponse.getLstEmploymentHis().size() == 0)
+                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.not_enought_exp));
+            else if (detailCVResponse.getLstEducationHis().size() == 0)
+                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.not_enought_edu));
+        }
     }
 
     private SearchMyCVRequest searchMyCVRequest;

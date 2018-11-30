@@ -194,4 +194,6 @@
     <string name="intro3">1000+ chuyên gia tuyển dụng cao cấp làm việc cho bạn!</string>
     <string name="intro2">Nền tảng tuyển dụng trực tuyến số 1 Việt Nam</string>
     <string name="intro1">Nền tảng kết nối dành cho doanh nghiệp và các chuyên gia tuyển dụng</string>
+    <string name="not_enought_exp">Bạn chưa nhập kinh nghiệm làm việc, vui lòng kiểm tra lại</string>
+    <string name="not_enought_edu">Bạn chưa nhập trình độ làm việc, vui lòng kiểm tra lại</string>
 </resources>

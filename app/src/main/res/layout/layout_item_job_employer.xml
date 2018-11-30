@@ -86,7 +86,7 @@
                         android:orientation="horizontal">
 
                         <com.vietinterview.getbee.customview.RobotoBoldTextView
-                            android:id="@+id/tvName"
+                            android:id="@+id/tvcountJobOffer"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
@@ -97,7 +97,7 @@
                             android:textSize="24sp" />
 
                         <com.vietinterview.getbee.customview.RobotoTextView
-                            android:id="@+id/tvCarrer"
+                            android:id="@+id/tvsumJob"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
@@ -131,7 +131,7 @@
                     android:orientation="vertical">
 
                     <com.vietinterview.getbee.customview.RobotoMediumTextView
-                        android:id="@+id/tvDate2"
+                        android:id="@+id/tvname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
@@ -142,7 +142,7 @@
                         android:textSize="18sp" />
 
                     <com.vietinterview.getbee.customview.RobotoTextView
-                        android:id="@+id/tvDate3"
+                        android:id="@+id/tvStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"

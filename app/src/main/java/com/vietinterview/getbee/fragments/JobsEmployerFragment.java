@@ -18,13 +18,14 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.JobsEmployerAdapter;
-import com.vietinterview.getbee.api.request.SearchCVSaveRequest;
+import com.vietinterview.getbee.api.request.GetJobCustomerRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
-import com.vietinterview.getbee.api.response.listcv.CVResponse;
-import com.vietinterview.getbee.api.response.listcv.CvList;
+import com.vietinterview.getbee.api.response.jobcustomer.JobCustomerResponse;
+import com.vietinterview.getbee.api.response.jobcustomer.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.constant.AppConstant;
+import com.vietinterview.getbee.customview.ClearableRegularEditText;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
@@ -51,10 +52,13 @@ public class JobsEmployerFragment extends BaseFragment implements SwipeRefreshLa
     LinearLayout llSearch;
     @BindView(R.id.tvStatus)
     TextView tvStatus;
-    private SearchCVSaveRequest searchCVSaveRequest;
+    @BindView(R.id.edtJobTitle)
+    ClearableRegularEditText edtJobTitle;
+    int mStatus = -1;
+    private GetJobCustomerRequest getJobCustomerRequest;
     private JobsEmployerAdapter jobsEmployerAdapter;
-    private ArrayList<CvList> cvLists = new ArrayList<>();
-    private ArrayList<CvList> cvListsServer = new ArrayList<>();
+    private ArrayList<JobList> jobLists = new ArrayList<>();
+    private ArrayList<JobList> jobListsServer = new ArrayList<>();
 
     public static JobsEmployerFragment newInstance(int carrerId, int cityId) {
         JobsEmployerFragment fm = new JobsEmployerFragment();
@@ -99,23 +103,23 @@ public class JobsEmployerFragment extends BaseFragment implements SwipeRefreshLa
     public void getCVSaved(final int page) {
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
             showCoverNetworkLoading();
-        searchCVSaveRequest = new SearchCVSaveRequest(page);
-        searchCVSaveRequest.callRequest(getActivity(), new ApiObjectCallBack<CVResponse, ErrorResponse>() {
+        getJobCustomerRequest = new GetJobCustomerRequest(page, edtJobTitle.getText().toString().trim(), mStatus);
+        getJobCustomerRequest.callRequest(getActivity(), new ApiObjectCallBack<JobCustomerResponse, ErrorResponse>() {
             @Override
-            public void onSuccess(int status, CVResponse data, List<CVResponse> dataArrayList, String message) {
+            public void onSuccess(int status, JobCustomerResponse data, List<JobCustomerResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 if (isAdded()) {
                     mSwipeRefreshLayout.setRefreshing(false);
-                    cvListsServer.clear();
-                    cvListsServer.addAll(data.getCvList());
+                    jobListsServer.clear();
+                    jobListsServer.addAll(data.getJobList());
                     tvNodata.setVisibility(data.getTotal() == 0 ? View.VISIBLE : View.GONE);
-                    if (page == 0) cvLists.clear();
+                    if (page == 0) jobLists.clear();
                     else {
-                        jobsEmployerAdapter.notifyItemRemoved(cvLists.size());
+                        jobsEmployerAdapter.notifyItemRemoved(jobLists.size());
                     }
-                    cvLists.addAll(data.getCvList());
+                    jobLists.addAll(data.getJobList());
                     if (page == 0) {
-                        jobsEmployerAdapter = new JobsEmployerAdapter(recyclerView, getActivity(), data.getTotal(), cvLists, JobsEmployerFragment.this);
+                        jobsEmployerAdapter = new JobsEmployerAdapter(recyclerView, getActivity(), data.getTotal(), jobLists, JobsEmployerFragment.this);
                         recyclerView.setAdapter(jobsEmployerAdapter);
                     }
                     jobsEmployerAdapter.setOnLoadMoreListener(JobsEmployerFragment.this);
