@@ -68,10 +68,29 @@ public class ExExpListViewAdapter extends BaseExpandableListAdapter {
         tvJobTitle.setText(lstEmploymentHi.getTitle());
         tvWorkTime.setText(DateUtil.convertToMyFormatVacant(lstEmploymentHi.getFromMonth() + "") + " - " + DateUtil.convertToMyFormatVacant(lstEmploymentHi.getToMonth() + ""));
         if (lstEmploymentHi.getSalary() != null)
-            tvSalary.setText(StringUtils.filterCurrencyString(lstEmploymentHi.getSalary()) + " " + mCurrencyName);
+            tvSalary.setText(StringUtils.filterCurrencyString(lstEmploymentHi.getSalary()) + " " + genStringCurrency(lstEmploymentHi.getSalaryCurency()));
         tvJobDes.setText(lstEmploymentHi.getJobDescription());
         tvAchievements.setText(lstEmploymentHi.getAchievement());
         return convertView;
+    }
+
+    public String genStringCurrency(int value) {
+        String valueString;
+        switch (value) {
+            case 1:
+                valueString = "VND";
+                break;
+            case 2:
+                valueString = "USD";
+                break;
+            case 3:
+                valueString = "JPY";
+                break;
+            default:
+                valueString = "";
+                break;
+        }
+        return valueString;
     }
 
     public String genString(int value) {
