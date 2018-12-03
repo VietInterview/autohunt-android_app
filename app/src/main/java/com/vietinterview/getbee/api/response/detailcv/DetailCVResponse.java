@@ -70,7 +70,7 @@ public class DetailCVResponse implements Parcelable {
     private ExperienceYear experienceYear;
     @SerializedName("fee")
     @Expose
-    private Integer fee;
+    private Long fee;
     @SerializedName("fromSalary")
     @Expose
     private Integer fromSalary;
@@ -190,7 +190,7 @@ public class DetailCVResponse implements Parcelable {
         if (in.readByte() == 0) {
             fee = null;
         } else {
-            fee = in.readInt();
+            fee = in.readLong();
         }
         if (in.readByte() == 0) {
             fromSalary = null;
@@ -426,11 +426,11 @@ public class DetailCVResponse implements Parcelable {
         this.experienceYear = experienceYear;
     }
 
-    public Integer getFee() {
+    public Long getFee() {
         return fee;
     }
 
-    public void setFee(Integer fee) {
+    public void setFee(Long fee) {
         this.fee = fee;
     }
 
@@ -672,7 +672,7 @@ public class DetailCVResponse implements Parcelable {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeInt(fee);
+            parcel.writeLong(fee);
         }
         if (fromSalary == null) {
             parcel.writeByte((byte) 0);
