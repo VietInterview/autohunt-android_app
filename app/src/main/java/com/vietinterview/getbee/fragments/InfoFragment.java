@@ -116,7 +116,7 @@ public class InfoFragment extends BaseFragment {
         tvSalaryFromTo.setText(StringUtils.filterCurrencyString(detailJobResponse.getFromSalary()) + " " + detailJobResponse.getCurrencyName() + " - " + StringUtils.filterCurrencyString(detailJobResponse.getToSalary()) + " " + detailJobResponse.getCurrencyName());
         tvquantity.setText(detailJobResponse.getQuantity() + "");
         tvcountCv.setText(detailJobResponse.getCountCv() + "");
-        tvRewardCTV.setText(StringUtils.filterCurrencyString(detailJobResponse.getFee()) + " " + detailJobResponse.getCurrencyName());
+        tvRewardCTV.setText(StringUtils.filterCurrencyString(detailJobResponse.getFee()) + " VND");
         tvjobDescription.setText(Html.fromHtml(detailJobResponse.getJobDescription()));
         tvjobRequirement.setText(Html.fromHtml(detailJobResponse.getJobRequirements()));
     }
