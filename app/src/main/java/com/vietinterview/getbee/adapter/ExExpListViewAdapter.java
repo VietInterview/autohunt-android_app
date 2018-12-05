@@ -64,58 +64,14 @@ public class ExExpListViewAdapter extends BaseExpandableListAdapter {
         }
         tvCompanyName.setText(lstEmploymentHi.getCompanyName());
         if (lstEmploymentHi.getHumanResources() != null)
-            tvQuantityEmploy.setText(genString(lstEmploymentHi.getHumanResources()));
+            tvQuantityEmploy.setText(StringUtils.genString(lstEmploymentHi.getHumanResources(), context));
         tvJobTitle.setText(lstEmploymentHi.getTitle());
         tvWorkTime.setText(DateUtil.convertToMyFormatVacant(lstEmploymentHi.getFromMonth() + "") + " - " + DateUtil.convertToMyFormatVacant(lstEmploymentHi.getToMonth() + ""));
         if (lstEmploymentHi.getSalary() != null)
-            tvSalary.setText(StringUtils.filterCurrencyString(lstEmploymentHi.getSalary()) + " " + genStringCurrency(lstEmploymentHi.getSalaryCurency()));
+            tvSalary.setText(StringUtils.filterCurrencyString(lstEmploymentHi.getSalary()) + " " + StringUtils.genStringCurrency(lstEmploymentHi.getSalaryCurency()));
         tvJobDes.setText(lstEmploymentHi.getJobDescription());
         tvAchievements.setText(lstEmploymentHi.getAchievement());
         return convertView;
-    }
-
-    public String genStringCurrency(int value) {
-        String valueString;
-        switch (value) {
-            case 1:
-                valueString = "VND";
-                break;
-            case 2:
-                valueString = "USD";
-                break;
-            case 3:
-                valueString = "JPY";
-                break;
-            default:
-                valueString = "";
-                break;
-        }
-        return valueString;
-    }
-
-    public String genString(int value) {
-        String valueString;
-        switch (value) {
-            case 1:
-                valueString = context.getResources().getString(R.string.below_50);
-                break;
-            case 2:
-                valueString = context.getResources().getString(R.string.from_50_to_100);
-                break;
-            case 3:
-                valueString = context.getResources().getString(R.string.above_100);
-                break;
-            case 4:
-                valueString = context.getResources().getString(R.string.above_500);
-                break;
-            case 5:
-                valueString = context.getResources().getString(R.string.average);
-                break;
-            default:
-                valueString = "";
-                break;
-        }
-        return valueString;
     }
 
     @Override

@@ -1,31 +1,31 @@
 package com.vietinterview.getbee.fragments;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.adapter.ExpDetailCVNTDAdapter;
-import com.vietinterview.getbee.api.request.SearchMyCVRequest;
 import com.vietinterview.getbee.api.response.detailcvcustomer.DetailCVCustomerResponse;
 
 import butterknife.BindView;
 
 /**
- * Created by hiepnguyennghia on 11/29/18.
+ * Created by hiepnguyennghia on 12/5/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class ExpDetailCVNTDFragment extends BaseFragment {
-    @BindView(R.id.recycler_view)
-    public RecyclerView recyclerView;
-    private ExpDetailCVNTDAdapter expDetailCVNTDAdapter;
+public class SkillDetailCVNTDFragment extends BaseFragment {
+    @BindView(R.id.tvSkillPrimary)
+    TextView tvSkillPrimary;
+    @BindView(R.id.tvSkillOther)
+    TextView tvSkillOther;
+    @BindView(R.id.tvHobby)
+    TextView tvHobby;
     DetailCVCustomerResponse mDetailCVCustomerResponse;
 
-    public static ExpDetailCVNTDFragment newInstance(DetailCVCustomerResponse detailCVCustomerResponse) {
-        ExpDetailCVNTDFragment fm = new ExpDetailCVNTDFragment();
+    public static SkillDetailCVNTDFragment newInstance(DetailCVCustomerResponse detailCVCustomerResponse) {
+        SkillDetailCVNTDFragment fm = new SkillDetailCVNTDFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable("detailCVCustomerResponse", detailCVCustomerResponse);
         fm.setArguments(bundle);
@@ -34,7 +34,7 @@ public class ExpDetailCVNTDFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_detail_exp_cv_ntd;
+        return R.layout.fragment_skill_detailcv_ntd;
     }
 
     @Override
@@ -44,18 +44,21 @@ public class ExpDetailCVNTDFragment extends BaseFragment {
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
+        if (mDetailCVCustomerResponse.getCvSkill() != null) {
+            tvSkillPrimary.setText(mDetailCVCustomerResponse.getCvSkill().getPrimarySkill());
+            tvHobby.setText(mDetailCVCustomerResponse.getCvSkill().getHobby());
+            StringBuffer otherSkillBuffer = new StringBuffer("");
+            for (int i = 0; i < mDetailCVCustomerResponse.getCvSkill().getLstOtherSkillName().size(); i++) {
+                otherSkillBuffer.append(mDetailCVCustomerResponse.getCvSkill().getLstOtherSkillName().get(i) + "\n");
+            }
+            tvSkillOther.setText(otherSkillBuffer.toString());
+        }
     }
 
     @Override
     protected void initData() {
-//        searchMyCV(0, 0, 0);
-        expDetailCVNTDAdapter = new ExpDetailCVNTDAdapter(recyclerView, getActivity(), mDetailCVCustomerResponse.getLstEmploymentHis(), this);
-        recyclerView.setAdapter(expDetailCVNTDAdapter);
-    }
 
+    }
 
     @Override
     protected void initialize() {

@@ -1,9 +1,7 @@
 package com.vietinterview.getbee.adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.Resources;
-import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -16,18 +14,11 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.DeleteCVRequest;
-import com.vietinterview.getbee.api.request.GetDetailCVRequest;
-import com.vietinterview.getbee.api.response.ErrorResponse;
-import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
-import com.vietinterview.getbee.api.response.detailcvcustomer.LstEmploymentHi;
+import com.vietinterview.getbee.api.response.detailcvcustomer.LstEducationHi;
 import com.vietinterview.getbee.api.response.detailjob.DetailJobResponse;
-import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.fragments.BaseFragment;
-import com.vietinterview.getbee.fragments.DetailCVFragment;
 import com.vietinterview.getbee.utils.DateUtil;
-import com.vietinterview.getbee.utils.DialogUtil;
-import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -38,7 +29,7 @@ import java.util.List;
  * created by tindle
  * created time 16/8/12 下午10:55
  */
-public class ExpDetailCVNTDAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class EduDetailCVNTDAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private enum SwipedState {
         SHOWING_PRIMARY_CONTENT,
@@ -49,7 +40,7 @@ public class ExpDetailCVNTDAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private DeleteCVRequest deleteCVRequest;
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
-    private List<LstEmploymentHi> lstEmploymentHis;
+    private List<LstEducationHi> lstEducationHis;
     private List<SwipedState> mItemSwipedStates;
     private Context mContext;
     private int visibleThreshold = 5;
@@ -58,12 +49,12 @@ public class ExpDetailCVNTDAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private boolean isLoading;
     private BaseFragment baseFragment;
 
-    public ExpDetailCVNTDAdapter(RecyclerView recyclerView, Context context, List<LstEmploymentHi> cvLists, BaseFragment homeFragment) {
-        this.lstEmploymentHis = cvLists;
+    public EduDetailCVNTDAdapter(RecyclerView recyclerView, Context context, List<LstEducationHi> lstEducationHis, BaseFragment homeFragment) {
+        this.lstEducationHis = lstEducationHis;
         this.mContext = context;
         this.baseFragment = homeFragment;
         mItemSwipedStates = new ArrayList<>();
-        for (int i = 0; i < cvLists.size(); i++) {
+        for (int i = 0; i < lstEducationHis.size(); i++) {
             mItemSwipedStates.add(i, SwipedState.SHOWING_PRIMARY_CONTENT);
         }
         final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
@@ -112,8 +103,8 @@ public class ExpDetailCVNTDAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof MyViewHolder) {
-            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCompanyName)).setText(lstEmploymentHis.get(position).getCompanyName());
-            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvContent)).setText(lstEmploymentHis.get(position).getTitle() + "\n" + StringUtils.genString(lstEmploymentHis.get(position).getHumanResources(), mContext) + "\nTháng" + DateUtil.convertToMyFormatVacant(lstEmploymentHis.get(position).getFromMonth() + "") + " - " + DateUtil.convertToMyFormatVacant(lstEmploymentHis.get(position).getToMonth() + "") + "\n" + lstEmploymentHis.get(position).getJobDescription());
+            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCompanyName)).setText(lstEducationHis.get(position).getSubject());
+            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvContent)).setText(lstEducationHis.get(position).getSchool() + "\nChuyên ngành: "+lstEducationHis.get(position).getCareer() + "\n" + lstEducationHis.get(position).getGraduationTypeName());
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.progressBar.setIndeterminate(true);
@@ -122,7 +113,7 @@ public class ExpDetailCVNTDAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemCount() {
-        return lstEmploymentHis.size();
+        return lstEducationHis.size();
     }
 
 

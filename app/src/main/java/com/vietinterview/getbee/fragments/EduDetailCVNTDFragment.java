@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.adapter.EduDetailCVNTDAdapter;
 import com.vietinterview.getbee.adapter.ExpDetailCVNTDAdapter;
-import com.vietinterview.getbee.api.request.SearchMyCVRequest;
 import com.vietinterview.getbee.api.response.detailcvcustomer.DetailCVCustomerResponse;
 
 import butterknife.BindView;
@@ -18,14 +18,14 @@ import butterknife.BindView;
  * Created by hiepnguyennghia on 11/29/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class ExpDetailCVNTDFragment extends BaseFragment {
+public class EduDetailCVNTDFragment extends BaseFragment {
     @BindView(R.id.recycler_view)
     public RecyclerView recyclerView;
-    private ExpDetailCVNTDAdapter expDetailCVNTDAdapter;
+    private EduDetailCVNTDAdapter eduDetailCVNTDAdapter;
     DetailCVCustomerResponse mDetailCVCustomerResponse;
 
-    public static ExpDetailCVNTDFragment newInstance(DetailCVCustomerResponse detailCVCustomerResponse) {
-        ExpDetailCVNTDFragment fm = new ExpDetailCVNTDFragment();
+    public static EduDetailCVNTDFragment newInstance(DetailCVCustomerResponse detailCVCustomerResponse) {
+        EduDetailCVNTDFragment fm = new EduDetailCVNTDFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable("detailCVCustomerResponse", detailCVCustomerResponse);
         fm.setArguments(bundle);
@@ -52,8 +52,8 @@ public class ExpDetailCVNTDFragment extends BaseFragment {
     @Override
     protected void initData() {
 //        searchMyCV(0, 0, 0);
-        expDetailCVNTDAdapter = new ExpDetailCVNTDAdapter(recyclerView, getActivity(), mDetailCVCustomerResponse.getLstEmploymentHis(), this);
-        recyclerView.setAdapter(expDetailCVNTDAdapter);
+        eduDetailCVNTDAdapter = new EduDetailCVNTDAdapter(recyclerView, getActivity(), mDetailCVCustomerResponse.getLstEducationHis(), this);
+        recyclerView.setAdapter(eduDetailCVNTDAdapter);
     }
 
 

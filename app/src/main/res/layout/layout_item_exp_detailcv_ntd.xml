@@ -6,24 +6,22 @@
     android:orientation="vertical">
 
     <com.vietinterview.getbee.customview.RobotoMediumTextView
-        android:id="@+id/tvCountCV"
-        android:layout_width="match_parent"
+        android:id="@+id/tvCompanyName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="4dp"
         android:fontFamily="@string/font_fontFamily_medium"
         android:gravity="left"
-        android:text="Công Ty Truyền Thông và Công Nghệ Vietevo"
         android:textColor="#042E51"
         android:textSize="16sp" />
 
     <com.vietinterview.getbee.customview.RobotoMediumTextView
-        android:id="@+id/tvCountCV2"
+        android:id="@+id/tvContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="4dp"
         android:fontFamily="@string/font_fontFamily_medium"
         android:gravity="left"
-        android:text="CEO - Co-founder"
         android:textColor="#677B8D"
         android:textSize="16sp" />
 

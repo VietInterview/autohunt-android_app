@@ -26,11 +26,43 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Cấp bậc"
+                android:text="Ngày sinh"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.RobotoTextView
+                android:id="@+id/tvBirthDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
+                android:textColor="#677B8D"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="4dp"
+                android:background="#D8D8D8" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:orientation="vertical">
+
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
+                android:fontFamily="@string/font_fontFamily_medium"
+                android:text="Giới tính"
+                android:textColor="#042E51"
+                android:textSize="16sp" />
+
+            <com.vietinterview.getbee.customview.RobotoTextView
+                android:id="@+id/tvGender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
@@ -57,11 +89,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Cấp bậc"
+                android:text="Tình trạng hôn nhân"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.RobotoTextView
+                android:id="@+id/tvMarried"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
@@ -88,11 +121,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Cấp bậc"
+                android:text="Tỉnh/thành phố"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.RobotoTextView
+                android:id="@+id/tvCity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
@@ -119,11 +153,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Cấp bậc"
+                android:text="Vị trí mong muốn"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.RobotoTextView
+                android:id="@+id/tvPositionWish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
@@ -150,11 +185,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Cấp bậc"
+                android:text="Cấp bậc hiện tại"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.RobotoTextView
+                android:id="@+id/tvCurrentLevel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
@@ -181,11 +217,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Cấp bậc"
+                android:text="Cấp bậc mong muốn"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.RobotoTextView
+                android:id="@+id/tvLevelWish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
@@ -212,11 +249,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Cấp bậc"
+                android:text="Ngành nghề"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.RobotoTextView
+                android:id="@+id/tvCarrer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
@@ -243,11 +281,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Cấp bậc"
+                android:text="Địa điểm làm việc"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.RobotoTextView
+                android:id="@+id/tvWorkPLace"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
@@ -274,11 +313,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Cấp bậc"
+                android:text="Trình độ học vấn"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.RobotoTextView
+                android:id="@+id/tvCertificate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
@@ -305,11 +345,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Cấp bậc"
+                android:text="Số năm kinh nghiệm"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.RobotoTextView
+                android:id="@+id/tvExpYear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
@@ -336,42 +377,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Cấp bậc"
+                android:text="Mức lương mong muốn"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.RobotoTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="4dp"
-                android:text="Nhân viên"
-                android:textColor="#677B8D"
-                android:textSize="16sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="4dp"
-                android:background="#D8D8D8" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/activity_vertical_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:orientation="vertical">
-
-            <com.vietinterview.getbee.customview.RobotoMediumTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="4dp"
-                android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Cấp bậc"
-                android:textColor="#042E51"
-                android:textSize="16sp" />
-
-            <com.vietinterview.getbee.customview.RobotoTextView
+                android:id="@+id/tvSalaryWish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
@@ -392,12 +403,22 @@
             android:background="@drawable/main_header_selector"
             android:orientation="vertical">
 
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginVertical="4dp"
+                android:fontFamily="@string/font_fontFamily_medium"
+                android:text="Mục tiêu nghề nghiệp"
+                android:textColor="#042E51"
+                android:textSize="16sp" />
+
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/tvSongDes"
+                    android:id="@+id/tvTarget"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"

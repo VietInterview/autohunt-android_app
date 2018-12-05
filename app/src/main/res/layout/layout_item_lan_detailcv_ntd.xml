@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/activity_vertical_margin"
+    android:orientation="vertical">
+
+    <com.vietinterview.getbee.customview.RobotoMediumTextView
+        android:id="@+id/tvLanguageName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="4dp"
+        android:fontFamily="@string/font_fontFamily_medium"
+        android:gravity="left"
+        android:textColor="#042E51"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:layout_weight="1"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:gravity="left"
+            android:text="@string/listen"
+            android:textColor="#677B8D"
+            android:textSize="16sp" />
+
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:id="@+id/tvListen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:layout_weight="1"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:gravity="right"
+            android:textColor="#677B8D"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:layout_weight="1"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:gravity="left"
+            android:text="@string/speak"
+            android:textColor="#677B8D"
+            android:textSize="16sp" />
+
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:id="@+id/tvSpeak"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:layout_weight="1"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:gravity="right"
+            android:textColor="#677B8D"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:layout_weight="1"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:gravity="left"
+            android:text="@string/read"
+            android:textColor="#677B8D"
+            android:textSize="16sp" />
+
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:id="@+id/tvRead"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:layout_weight="1"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:gravity="right"
+            android:textColor="#677B8D"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:layout_weight="1"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:gravity="left"
+            android:text="@string/write"
+            android:textColor="#677B8D"
+            android:textSize="16sp" />
+
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:id="@+id/tvWrite"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:layout_weight="1"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:gravity="right"
+            android:textColor="#677B8D"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/background_icon_not_focus" />
+</LinearLayout>

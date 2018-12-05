@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.detailcv.LstLanguage;
+import com.vietinterview.getbee.utils.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -49,38 +50,15 @@ public class ExLanListViewAdapter extends BaseExpandableListAdapter {
         TextView tvSpeak = convertView.findViewById(R.id.tvSpeak);
         TextView tvRead = convertView.findViewById(R.id.tvRead);
         TextView tvWrite = convertView.findViewById(R.id.tvWrite);
-        tvListen.setText(genString(lstLanguage.getListen()));
-        tvSpeak.setText(genString(lstLanguage.getSpeak()));
-        tvRead.setText(genString(lstLanguage.getRead()));
-        tvWrite.setText(genString(lstLanguage.getWrite()));
+        tvListen.setText(StringUtils.genStringLan(lstLanguage.getListen(), context));
+        tvSpeak.setText(StringUtils.genStringLan(lstLanguage.getSpeak(), context));
+        tvRead.setText(StringUtils.genStringLan(lstLanguage.getRead(), context));
+        tvWrite.setText(StringUtils.genStringLan(lstLanguage.getWrite(), context));
         if (childPosition == this.listDataChild.get(this.listDataGroup.get(groupPosition).getLanguageName()).size() - 1) {
             convertView.setPadding(32, 0, 32, 32);
         } else
             convertView.setPadding(0, 0, 0, 0);
         return convertView;
-    }
-
-    public String genString(int value) {
-        String valueString;
-        switch (value) {
-            case 1:
-                valueString = context.getResources().getString(R.string.good);
-                break;
-            case 2:
-                valueString = context.getResources().getString(R.string.rather);
-                break;
-            case 3:
-                valueString = context.getResources().getString(R.string.medium);
-                break;
-            case 4:
-                valueString = context.getResources().getString(R.string.least);
-                break;
-
-            default:
-                valueString = "";
-                break;
-        }
-        return valueString;
     }
 
     @Override

@@ -330,6 +330,74 @@ public class StringUtils {
         return df.format(number);
     }
 
+
+    public static String genStringLan(int value, Context context) {
+        String valueString;
+        switch (value) {
+            case 1:
+                valueString = context.getResources().getString(R.string.good);
+                break;
+            case 2:
+                valueString = context.getResources().getString(R.string.rather);
+                break;
+            case 3:
+                valueString = context.getResources().getString(R.string.medium);
+                break;
+            case 4:
+                valueString = context.getResources().getString(R.string.least);
+                break;
+
+            default:
+                valueString = "";
+                break;
+        }
+        return valueString;
+    }
+
+    public static String genStringCurrency(int value) {
+        String valueString;
+        switch (value) {
+            case 1:
+                valueString = "VND";
+                break;
+            case 2:
+                valueString = "USD";
+                break;
+            case 3:
+                valueString = "JPY";
+                break;
+            default:
+                valueString = "";
+                break;
+        }
+        return valueString;
+    }
+
+    public static String genString(int value, Context context) {
+        String valueString;
+        switch (value) {
+            case 1:
+                valueString = context.getResources().getString(R.string.below_50);
+                break;
+            case 2:
+                valueString = context.getResources().getString(R.string.from_50_to_100);
+                break;
+            case 3:
+                valueString = context.getResources().getString(R.string.above_100);
+                break;
+            case 4:
+                valueString = context.getResources().getString(R.string.above_500);
+                break;
+            case 5:
+                valueString = context.getResources().getString(R.string.average);
+                break;
+            default:
+                valueString = "";
+                break;
+        }
+        return valueString;
+    }
+
     public static StatusCV genStringStatus(int status, Context context) {
         StatusCV statusCV = null;
         switch (status) {

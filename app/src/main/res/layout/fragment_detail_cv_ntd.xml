@@ -98,7 +98,8 @@
             android:layout_height="55dp"
             android:layout_alignParentBottom="true"
             android:background="@color/white"
-            android:paddingTop="0dp" />
+            android:paddingTop="0dp"
+            app:tabMode="scrollable" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager

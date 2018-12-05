@@ -9,6 +9,7 @@ import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -78,8 +79,12 @@ public class DetailJobNTDFragment extends BaseFragment {
     TextView tvjobRequirement;
     @BindView(R.id.btShowmore)
     Button btShowmore;
+    @BindView(R.id.btShowmore1)
+    Button btShowmore1;
     @BindView(R.id.gradientView)
     LinearLayout gradientView;
+    @BindView(R.id.gradientView1)
+    LinearLayout gradientView1;
     private CollapsingToolbarLayout collapsingToolbar;
     private AppBarLayout appBarLayout;
     private RecyclerView recyclerView;
@@ -167,8 +172,8 @@ public class DetailJobNTDFragment extends BaseFragment {
         tvLanCV.setText("Ngon ngu");
         tvContact.setText(detailJobCustomerResponse.getCustomers().getContactName());
         tvEmail.setText(detailJobCustomerResponse.getCustomers().getContactEmail());
-        tvJobDes.setText(detailJobCustomerResponse.getJobDescription());
-        tvjobRequirement.setText(detailJobCustomerResponse.getJobRequirements());
+        tvJobDes.setText(Html.fromHtml(detailJobCustomerResponse.getJobDescription()));
+        tvjobRequirement.setText(Html.fromHtml(detailJobCustomerResponse.getJobRequirements()));
         tvJobDes.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_header_selector));
         btShowmore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,6 +190,24 @@ public class DetailJobNTDFragment extends BaseFragment {
                     btShowmore.setText("Xem thêm  ");
                     gradientView.setVisibility(View.VISIBLE);
                     btShowmore.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_down_blue, 0);
+                }
+            }
+        });
+        btShowmore1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (btShowmore1.getText().toString().equalsIgnoreCase("Xem thêm  ")) {
+                    tvjobRequirement.setMaxLines(Integer.MAX_VALUE);//your TextView
+                    btShowmore1.setText("Rút gọn  ");
+                    gradientView1.setVisibility(View.GONE);
+                    btShowmore1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up_blue, 0);
+                } else {
+                    tvjobRequirement.setMaxLines(6);
+                    tvjobRequirement.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_header_selector));
+                    btShowmore1.setText("Xem thêm  ");
+                    gradientView1.setVisibility(View.VISIBLE);
+                    btShowmore1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_down_blue, 0);
                 }
             }
         });

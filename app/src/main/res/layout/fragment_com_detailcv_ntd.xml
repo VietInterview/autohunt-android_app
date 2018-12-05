@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Created by Hiep Nguyen Nghia.
+    Copyright © 2018 Vietinterview. All rights reserved.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/activity_horizontal_margin">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:layout_weight="1"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:gravity="left"
+            android:text="Microsoft Word:"
+            android:textColor="#677B8D"
+            android:textSize="16sp" />
+
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:id="@+id/tvWord"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:layout_weight="1"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:gravity="right"
+            android:textColor="#677B8D"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:layout_weight="1"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:gravity="left"
+            android:text="Microsoft Excel:"
+            android:textColor="#677B8D"
+            android:textSize="16sp" />
+
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:id="@+id/tvExcel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:layout_weight="1"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:gravity="right"
+            android:textColor="#677B8D"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:layout_weight="1.1"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:gravity="left"
+            android:text="Microsoft Power Point:"
+            android:textColor="#677B8D"
+            android:textSize="16sp" />
+
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:id="@+id/tvPowerPoint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:layout_weight="1"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:gravity="right"
+            android:textColor="#677B8D"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:layout_weight="1"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:gravity="left"
+            android:text="Microsoft Outlook:"
+            android:textColor="#677B8D"
+            android:textSize="16sp" />
+
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:id="@+id/tvOutLook"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:layout_weight="1"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:gravity="right"
+            android:textColor="#677B8D"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/background_icon_not_focus" />
+
+    <com.vietinterview.getbee.customview.RobotoMediumTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="4dp"
+        android:fontFamily="@string/font_fontFamily_medium"
+        android:gravity="left"
+        android:text="@string/other_soft"
+        android:textColor="#042E51"
+        android:textSize="16sp" />
+
+    <com.vietinterview.getbee.customview.RobotoMediumTextView
+        android:id="@+id/tvOtherSoft"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="4dp"
+        android:fontFamily="@string/font_fontFamily_medium"
+        android:gravity="left"
+        android:textColor="#677B8D"
+        android:textSize="16sp" />
+</LinearLayout>
