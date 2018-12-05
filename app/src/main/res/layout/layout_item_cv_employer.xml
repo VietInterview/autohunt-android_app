@@ -81,11 +81,12 @@
                     <com.vietinterview.getbee.customview.RobotoBoldTextView
                         android:id="@+id/tvName"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_gravity="bottom"
-                        android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
                         android:layout_marginLeft="8dp"
-                        android:layout_weight="1"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_weight="2"
                         android:gravity="left|center"
                         android:text="Nguyễn Thùy Hoài Anh"
                         android:textColor="#042E51"
@@ -94,20 +95,21 @@
                     <com.vietinterview.getbee.customview.RobotoTextView
                         android:id="@+id/tvCarrer"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_gravity="bottom"
-                        android:layout_marginBottom="8dp"
                         android:layout_marginLeft="8dp"
+                        android:layout_marginBottom="8dp"
                         android:layout_weight="1"
                         android:drawableLeft="@drawable/ic_time_experi"
                         android:drawablePadding="8dp"
+                        android:gravity="top"
                         android:text="05 ngày trước"
                         android:textColor="#677B8D"
                         android:textSize="14sp" />
                 </LinearLayout>
 
                 <com.vietinterview.getbee.customview.RobotoTextView
-                    android:id="@+id/tvDate"
+                    android:id="@+id/tvStatus"
                     android:layout_width="0dp"
                     android:layout_height="24dp"
                     android:layout_gravity="top"

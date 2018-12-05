@@ -39,4 +39,5 @@
     <color name="row_not_white">#F7FAFF</color>
     <color name="primary_500">#3F51B5</color>
     <color name="black_trans80">#33000000</color>
+    <color name="blue">#3C84F7</color>
 </resources>

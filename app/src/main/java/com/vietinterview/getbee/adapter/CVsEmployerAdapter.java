@@ -17,20 +17,21 @@ import android.widget.TextView;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.api.request.GetDetailCVByJobCustomerRequest;
 import com.vietinterview.getbee.api.request.GetDetailCVRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.detailcv.DetailCVResponse;
-import com.vietinterview.getbee.api.response.listcv.CvList;
+import com.vietinterview.getbee.api.response.detailcvcustomer.DetailCVCustomerResponse;
+import com.vietinterview.getbee.api.response.listcvcustomer.CvList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.customview.RobotoRegularButton;
 import com.vietinterview.getbee.fragments.BaseFragment;
-import com.vietinterview.getbee.fragments.CVsEmployerFragment;
 import com.vietinterview.getbee.fragments.DetailCVFragment;
 import com.vietinterview.getbee.fragments.DetailCVNTDFragment;
-import com.vietinterview.getbee.fragments.DetailJobNTDFragment;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,7 @@ public class CVsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private int visibleThreshold = 5;
     private int lastVisibleItem, totalItemCount;
     private OnLoadMoreListener onLoadMoreListener;
-    private GetDetailCVRequest getDetailCVRequest;
+    private GetDetailCVByJobCustomerRequest getDetailCVByJobCustomerRequest;
     private boolean isLoading;
     private BaseFragment baseFragment;
     private int mTotal;
@@ -114,30 +115,26 @@ public class CVsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof MyViewHolder) {
-//            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvName)).setText(cvLists.get(position).getFullName());
-//            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCarrer)).setText(cvLists.get(position).getCareerName());
+            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvName)).setText(cvLists.get(position).getFullName());
+            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCarrer)).setText(cvLists.get(position).getCountDay() + " " + baseFragment.getResources().getString(R.string.before_day));
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setText(this.mTotal == 0 ? mContext.getResources().getString(R.string.no_cv_upload) : this.mTotal + " " + mContext.getResources().getString(R.string.cv_found));
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setVisibility(position == 0 ? View.VISIBLE : View.GONE);
 //            ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setVisibility(View.GONE);
-//            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvDate)).setText(mContext.getResources().getString(R.string.update) + " " + DateUtil.convertToMyFormat(DateUtil.convertToGMTDate(cvLists.get(position).getUpdatedDate()) + ""));
+            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(StringUtils.genStringStatusCVNTD(cvLists.get(position).getStatus(), baseFragment.getActivity()).getStatus());
+            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setBackgroundDrawable(StringUtils.genStringStatusCVNTD(cvLists.get(position).getStatus(), baseFragment.getActivity()).getDrawable());
+            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(StringUtils.genStringStatusCVNTD(cvLists.get(position).getStatus(), baseFragment.getActivity()).getColor());
             ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 //                    getDetailCV(cvLists.get(position).getId());
-                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new CVsEmployerFragment(), null);
+//                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new CVsEmployerFragment(), null);
                 }
             });
             binderHelper.bind((SwipeRevealLayout) ((MyViewHolder) holder).swipeLayout, cvLists.get(position).getId().toString());
-            if (position % 2 == 0) {
-                ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.row_not_white));
-            } else {
-                ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.white));
-            }
             ((RobotoRegularButton) ((MyViewHolder) holder).mView.findViewById(R.id.btnShowDetailJob)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    baseFragment.showCoverNetworkLoading();
-                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailCVNTDFragment(), null);
+                    getDetailCV(cvLists.get(position).getId());
                 }
             });
 //            baseFragment.getArrayBaseRequest().add(deleteCVRequest);
@@ -170,13 +167,13 @@ public class CVsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public void getDetailCV(int id) {
         baseFragment.showCoverNetworkLoading();
-        getDetailCVRequest = new GetDetailCVRequest(id);
-        getDetailCVRequest.callRequest(baseFragment.getActivity(), new ApiObjectCallBack<DetailCVResponse, ErrorResponse>() {
+        getDetailCVByJobCustomerRequest = new GetDetailCVByJobCustomerRequest(id);
+        getDetailCVByJobCustomerRequest.callRequest(baseFragment.getActivity(), new ApiObjectCallBack<DetailCVCustomerResponse, ErrorResponse>() {
             @Override
-            public void onSuccess(int status, DetailCVResponse data, List<DetailCVResponse> dataArrayList, String message) {
+            public void onSuccess(int status, DetailCVCustomerResponse data, List<DetailCVCustomerResponse> dataArrayList, String message) {
                 baseFragment.hideCoverNetworkLoading();
                 if (baseFragment.isAdded()) {
-                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailCVFragment().newInstance(null, data), null);
+                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailCVNTDFragment().newInstance(data), null);
                 }
             }
 

@@ -18,10 +18,13 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.CVsEmployerAdapter;
+import com.vietinterview.getbee.api.request.GetListCVByJobCustomerRequest;
 import com.vietinterview.getbee.api.request.SearchCVSaveRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
+import com.vietinterview.getbee.api.response.jobcustomer.JobList;
 import com.vietinterview.getbee.api.response.listcv.CVResponse;
-import com.vietinterview.getbee.api.response.listcv.CvList;
+import com.vietinterview.getbee.api.response.listcvcustomer.CvList;
+import com.vietinterview.getbee.api.response.listcvcustomer.CvsCustomerResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.constant.AppConstant;
@@ -51,16 +54,16 @@ public class CVsEmployerFragment extends BaseFragment implements SwipeRefreshLay
     LinearLayout llSearch;
     @BindView(R.id.tvStatus)
     TextView tvStatus;
-    private SearchCVSaveRequest searchCVSaveRequest;
+    JobList mJobList;
+    private GetListCVByJobCustomerRequest getListCVByJobCustomerRequest;
     private CVsEmployerAdapter cvsEmployerAdapter;
     private ArrayList<CvList> cvLists = new ArrayList<>();
     private ArrayList<CvList> cvListsServer = new ArrayList<>();
 
-    public static CVsEmployerFragment newInstance(int carrerId, int cityId) {
+    public static CVsEmployerFragment newInstance(JobList jobList) {
         CVsEmployerFragment fm = new CVsEmployerFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("carrerId", carrerId);
-        bundle.putInt("cityId", cityId);
+        bundle.putParcelable("jobList", jobList);
         fm.setArguments(bundle);
         return fm;
     }
@@ -72,7 +75,7 @@ public class CVsEmployerFragment extends BaseFragment implements SwipeRefreshLay
 
     @Override
     protected void getArgument(Bundle bundle) {
-
+        mJobList = bundle.getParcelable("jobList");
     }
 
     @Override
@@ -99,10 +102,10 @@ public class CVsEmployerFragment extends BaseFragment implements SwipeRefreshLay
     public void getCVSaved(final int page) {
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
             showCoverNetworkLoading();
-        searchCVSaveRequest = new SearchCVSaveRequest(page);
-        searchCVSaveRequest.callRequest(getActivity(), new ApiObjectCallBack<CVResponse, ErrorResponse>() {
+        getListCVByJobCustomerRequest = new GetListCVByJobCustomerRequest(page, String.valueOf(mJobList.getId()), Integer.parseInt(mStatusId));
+        getListCVByJobCustomerRequest.callRequest(getActivity(), new ApiObjectCallBack<CvsCustomerResponse, ErrorResponse>() {
             @Override
-            public void onSuccess(int status, CVResponse data, List<CVResponse> dataArrayList, String message) {
+            public void onSuccess(int status, CvsCustomerResponse data, List<CvsCustomerResponse> dataArrayList, String message) {
                 hideCoverNetworkLoading();
                 if (isAdded()) {
                     mSwipeRefreshLayout.setRefreshing(false);

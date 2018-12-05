@@ -12,24 +12,43 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.SimpleRecyclerAdapter;
 import com.vietinterview.getbee.adapter.ViewPagerAdapter;
+import com.vietinterview.getbee.api.response.detailcvcustomer.DetailCVCustomerResponse;
 import com.vietinterview.getbee.model.VersionModel;
 import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.utils.ShowImageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by hiepnguyennghia on 11/28/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 public class DetailCVNTDFragment extends BaseFragment {
+    @BindView(R.id.tvFullname)
+    TextView tvFullname;
+    @BindView(R.id.imgAva)
+    CircleImageView imgAva;
+    DetailCVCustomerResponse mDetailCVCustomerResponse;
+
+    public static DetailCVNTDFragment newInstance(DetailCVCustomerResponse detailCVCustomerResponse) {
+        DetailCVNTDFragment fm = new DetailCVNTDFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("detailCVCustomerResponse", detailCVCustomerResponse);
+        fm.setArguments(bundle);
+        return fm;
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_detail_cv_ntd;
@@ -37,7 +56,7 @@ public class DetailCVNTDFragment extends BaseFragment {
 
     @Override
     protected void getArgument(Bundle bundle) {
-
+        mDetailCVCustomerResponse = bundle.getParcelable("detailCVCustomerResponse");
     }
 
     @Override
@@ -46,7 +65,8 @@ public class DetailCVNTDFragment extends BaseFragment {
         setCustomToolbarVisible(false);
         final ViewPager viewPager = (ViewPager) root.findViewById(R.id.tabanim_viewpager);
         setupViewPager(viewPager);
-
+        tvFullname.setText(mDetailCVCustomerResponse.getFullName());
+        ShowImageUtils.showImage(getActivity(), mDetailCVCustomerResponse.getPictureUrl(), R.drawable.ic_ava_null, imgAva);
         TabLayout tabLayout = (TabLayout) root.findViewById(R.id.tabanim_tabs);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.iconcolor));
@@ -54,7 +74,6 @@ public class DetailCVNTDFragment extends BaseFragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
                 viewPager.setCurrentItem(tab.getPosition());
 
                 switch (tab.getPosition()) {

@@ -48,4 +48,6 @@ public class ApiConstant {
     public final static String GET_MY_ACCOUNT = BASE_URL + "api/account";
     public final static String GET_JOB_CUSTOMER = BASE_URL + "svccustomer/api/searchCusHome";
     public final static String GET_DETAIL_JOB_CUSTOMER = BASE_URL + "svccustomer/api/cusjobs/getJobById";
+    public final static String GET_CV_BY_JOB_CUSTOMER = BASE_URL + "svccustomer/api/searchCusHomeCvByJob";
+    public final static String GET_DETAIL_CV_BY_JOB_CUSTOMER = BASE_URL + "svccollaborator/api/cvs/getViewCvById";
 }

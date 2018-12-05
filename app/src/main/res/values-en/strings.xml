@@ -196,4 +196,5 @@
     <string name="intro1">A B2B Marketplace for Employers &amp; Recruitment Agencies</string>
     <string name="not_enought_exp">You have not entered the work experience, please check again</string>
     <string name="not_enought_edu">You have not entered a working level, please check again</string>
+    <string name="before_day">days ago</string>
 </resources>

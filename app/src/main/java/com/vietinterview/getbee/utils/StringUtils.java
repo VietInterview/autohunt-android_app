@@ -5,10 +5,14 @@ package com.vietinterview.getbee.utils;
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 
+import android.content.Context;
 import android.text.Spannable;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.Patterns;
+
+import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.model.StatusCV;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -324,6 +328,86 @@ public class StringUtils {
         DecimalFormat df = (DecimalFormat) nf;
         df.applyPattern("#,###");
         return df.format(number);
+    }
+
+    public static StatusCV genStringStatus(int status, Context context) {
+        StatusCV statusCV = null;
+        switch (status) {
+            case 0:
+                statusCV = new StatusCV(context.getResources().getString(R.string.not_send), context.getResources().getDrawable(R.drawable.border_gray), context.getColor(R.color.background_icon_not_focus));
+                break;
+            case 1:
+                statusCV = new StatusCV(context.getResources().getString(R.string.sent), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
+                break;
+            case 2:
+                statusCV = new StatusCV(context.getResources().getString(R.string.sent), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
+                break;
+            case 3:
+                statusCV = new StatusCV(context.getResources().getString(R.string.seen), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
+                break;
+            case 4:
+                statusCV = new StatusCV(context.getResources().getString(R.string.not_accept), context.getResources().getDrawable(R.drawable.border_gray), context.getColor(R.color.background_icon_not_focus));
+                break;
+            case 5:
+                statusCV = new StatusCV(context.getResources().getString(R.string.invite_interview), context.getResources().getDrawable(R.drawable.border_red), context.getColor(R.color.red));
+                break;
+            case 6:
+                statusCV = new StatusCV(context.getResources().getString(R.string.interviewed), context.getResources().getDrawable(R.drawable.border_green), context.getColor(R.color.green));
+                break;
+            case 7:
+                statusCV = new StatusCV(context.getResources().getString(R.string.offered), context.getResources().getDrawable(R.drawable.border_green), context.getColor(R.color.green));
+                break;
+            case 8:
+                statusCV = new StatusCV(context.getResources().getString(R.string.go_to_work), context.getResources().getDrawable(R.drawable.border_green), context.getColor(R.color.green));
+                break;
+            case 9:
+                statusCV = new StatusCV(context.getResources().getString(R.string.contract), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
+                break;
+            case 10:
+                statusCV = new StatusCV(context.getResources().getString(R.string.not_accept), context.getResources().getDrawable(R.drawable.border_gray), context.getColor(R.color.background_icon_not_focus));
+                break;
+        }
+        return statusCV;
+    }
+
+    public static StatusCV genStringStatusCVNTD(int status, Context context) {
+        StatusCV statusCV = null;
+        switch (status) {
+            case 0:
+                statusCV = new StatusCV(context.getResources().getString(R.string.not_send), context.getResources().getDrawable(R.drawable.border_gray), context.getColor(R.color.background_icon_not_focus));
+                break;
+            case 1:
+                statusCV = new StatusCV(context.getResources().getString(R.string.sent), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
+                break;
+            case 2:
+                statusCV = new StatusCV(context.getResources().getString(R.string.sent), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
+                break;
+            case 3:
+                statusCV = new StatusCV(context.getResources().getString(R.string.seen), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
+                break;
+            case 4:
+                statusCV = new StatusCV(context.getResources().getString(R.string.not_accept), context.getResources().getDrawable(R.drawable.border_gray), context.getColor(R.color.background_icon_not_focus));
+                break;
+            case 5:
+                statusCV = new StatusCV(context.getResources().getString(R.string.invite_interview), context.getResources().getDrawable(R.drawable.border_red), context.getColor(R.color.red));
+                break;
+            case 6:
+                statusCV = new StatusCV(context.getResources().getString(R.string.interviewed), context.getResources().getDrawable(R.drawable.border_green), context.getColor(R.color.green));
+                break;
+            case 7:
+                statusCV = new StatusCV(context.getResources().getString(R.string.offered), context.getResources().getDrawable(R.drawable.border_green), context.getColor(R.color.green));
+                break;
+            case 8:
+                statusCV = new StatusCV(context.getResources().getString(R.string.go_to_work), context.getResources().getDrawable(R.drawable.border_green), context.getColor(R.color.green));
+                break;
+            case 9:
+                statusCV = new StatusCV(context.getResources().getString(R.string.contract), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
+                break;
+            case 10:
+                statusCV = new StatusCV(context.getResources().getString(R.string.not_accept), context.getResources().getDrawable(R.drawable.border_gray), context.getColor(R.color.background_icon_not_focus));
+                break;
+        }
+        return statusCV;
     }
 }
 

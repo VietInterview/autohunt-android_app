@@ -45,6 +45,7 @@
         </android.support.v7.widget.Toolbar>
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgAva"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
@@ -53,6 +54,7 @@
             app:layout_scrollFlags="scroll|enterAlways|snap" />
 
         <TextView
+            android:id="@+id/tvFullname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
