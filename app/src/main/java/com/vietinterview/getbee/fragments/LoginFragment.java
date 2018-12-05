@@ -41,8 +41,10 @@ import com.vietinterview.getbee.api.response.login.LoginResponse;
 import com.vietinterview.getbee.api.response.myprofile.MyProfileResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.model.UserInfoBean;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.customview.NunitoEditText;
+import com.vietinterview.getbee.utils.SharedPrefUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +82,7 @@ public class LoginFragment extends BaseFragment {
     ImageView imgUser;
     @BindView(R.id.imgPass)
     ImageView imgPass;
+    private String edtMailData;
 
     @Override
     protected int getLayoutId() {
@@ -99,7 +102,7 @@ public class LoginFragment extends BaseFragment {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.toString().equalsIgnoreCase("")) {
                     edtEmail.setHint(getResources().getString(R.string.input_email));
-                    icRightEmail.setVisibility(View.VISIBLE);
+                    icRightEmail.setVisibility(View.GONE);
                 } else {
                     edtEmail.setTextColor(Color.BLACK);
                     icRightEmail.setVisibility(View.GONE);
@@ -168,12 +171,10 @@ public class LoginFragment extends BaseFragment {
 
     @Override
     protected void getArgument(Bundle bundle) {
-
     }
 
     @Override
     protected void initData() {
-
     }
 
     @OnClick(R.id.tvGoRegits)
@@ -368,22 +369,21 @@ public class LoginFragment extends BaseFragment {
 
     @Override
     protected void onRestore() {
-
     }
 
     @Override
     protected void initialize() {
-
+        edtEmail.clearFocus();
+        edtEmail.setText(SharedPrefUtils.getString("email", "").equalsIgnoreCase("") ? "" : SharedPrefUtils.getString("email", ""));
     }
 
     @Override
     protected void onSaveState(Bundle bundle) {
-
+        SharedPrefUtils.putString("email", edtEmail.getText().toString().trim());
     }
 
     @Override
     protected void onRestoreState(Bundle bundle) {
-
     }
 
     @Override
