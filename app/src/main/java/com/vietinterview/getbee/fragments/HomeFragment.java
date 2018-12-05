@@ -48,6 +48,7 @@ import com.vietinterview.getbee.customview.ClearableRegularEditText;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.utils.SharedPrefUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,6 +117,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
+        SharedPrefUtils.removeKey("email");
         setCustomToolbar(true);
         setHasOptionsMenu(true);
         setCustomToolbarVisible(true);
