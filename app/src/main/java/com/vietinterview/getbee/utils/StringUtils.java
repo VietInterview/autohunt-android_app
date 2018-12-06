@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.Patterns;
 
+import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.model.StatusCV;
 
@@ -330,6 +331,18 @@ public class StringUtils {
         return df.format(number);
     }
 
+    public static boolean checkFunction(String code) {
+        boolean isHave = false;
+        for (int i = 0; i < AccountManager.getUserInfoBean().getLstFunctionAuthority().size(); i++) {
+            if (AccountManager.getUserInfoBean().getLstFunctionAuthority().get(i).getCode().equalsIgnoreCase(code)) {
+                isHave = true;
+                break;
+            } else {
+                isHave = false;
+            }
+        }
+        return isHave;
+    }
 
     public static String genStringLan(int value, Context context) {
         String valueString;

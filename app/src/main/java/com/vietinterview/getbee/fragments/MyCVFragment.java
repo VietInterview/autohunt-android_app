@@ -19,7 +19,9 @@ import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ViewPagerAdapter;
 import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.constant.GlobalDefine;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.utils.SharedPrefUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -50,7 +52,7 @@ public class MyCVFragment extends BaseFragment {
     private boolean visibleFilter = false;
     private boolean mIsCity = false;
     private boolean mIsStatus = false;
-    private int mPosition = 0;
+    private int mPosition;
     private String mCarrerId = "0";
     private String mCarrerName = "";
     private String mCityId = "0";
@@ -117,7 +119,6 @@ public class MyCVFragment extends BaseFragment {
 
     @Override
     protected void getArgument(Bundle bundle) {
-
     }
 
     @Override
@@ -128,21 +129,26 @@ public class MyCVFragment extends BaseFragment {
     private void setupTabIcons() {
         TextView tabOne = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
         tabOne.setText(getResources().getString(R.string.cv_saved));
-        tabOne.setTextColor(getResources().getColor(R.color.black));
+        tabOne.setTextColor(SharedPrefUtils.getString("menu", "").equalsIgnoreCase("CTV_CV_SAVE") ? getResources().getColor(R.color.black) : getResources().getColor(R.color.background_icon_not_focus));
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
         tabTwo.setText(getResources().getString(R.string.cv_submited));
-        tabTwo.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
+        tabTwo.setTextColor(SharedPrefUtils.getString("menu", "").equalsIgnoreCase("CTV_CV_SEND") ? getResources().getColor(R.color.black) : getResources().getColor(R.color.background_icon_not_focus));
         tabLayout.getTabAt(1).setCustomView(tabTwo);
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         viewPagerAdapter.addFrag(visibleFilter ? new MyCVSavedFragment().newInstance(Integer.parseInt(mCarrerId), Integer.parseInt(mCityId)) : new MyCVSavedFragment(), "CV đã lưu");
         viewPagerAdapter.addFrag(new MyCVApplyedFragment().newInstance(Integer.parseInt(mStatusId), Integer.parseInt(mCarrerId), Integer.parseInt(mCityId)), "CV đã nộp");
-        viewPager.setCurrentItem(mPosition);
+        if (SharedPrefUtils.getString("menu", "").equalsIgnoreCase("CTV_CV_SAVE"))
+            mPosition = 0;
+        else if (SharedPrefUtils.getString("menu", "").equalsIgnoreCase("CTV_CV_SEND"))
+            mPosition = 1;
+        DebugLog.showLogCat(mPosition + "");
         viewPager.setAdapter(viewPagerAdapter);
+        viewPager.setCurrentItem(mPosition);
     }
 
     @OnClick(R.id.llCarrer)

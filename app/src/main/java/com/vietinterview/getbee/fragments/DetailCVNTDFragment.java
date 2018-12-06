@@ -11,17 +11,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.SimpleRecyclerAdapter;
 import com.vietinterview.getbee.adapter.ViewPagerAdapter;
 import com.vietinterview.getbee.api.response.detailcvcustomer.DetailCVCustomerResponse;
 import com.vietinterview.getbee.model.VersionModel;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.ShowImageUtils;
+import com.vietinterview.getbee.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +43,8 @@ public class DetailCVNTDFragment extends BaseFragment {
     TextView tvFullname;
     @BindView(R.id.imgAva)
     CircleImageView imgAva;
+    @BindView(R.id.btnProcessCV)
+    Button btnProcessCV;
     DetailCVCustomerResponse mDetailCVCustomerResponse;
 
     public static DetailCVNTDFragment newInstance(DetailCVCustomerResponse detailCVCustomerResponse) {
@@ -63,6 +69,7 @@ public class DetailCVNTDFragment extends BaseFragment {
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbar(false);
         setCustomToolbarVisible(false);
+//        btnProcessCV.setVisibility(StringUtils.checkFunction("CUS_HOME_PAGE_VIEW_CV_DETAIL") ? View.VISIBLE : View.GONE);
         final ViewPager viewPager = (ViewPager) root.findViewById(R.id.tabanim_viewpager);
         setupViewPager(viewPager);
         tvFullname.setText(mDetailCVCustomerResponse.getFullName());

@@ -25,6 +25,7 @@ import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.utils.SharedPrefUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +59,7 @@ public class MyJobFragment extends BaseFragment {
     private String mCityName = "";
     private JobsSavedFragment jobsSavedFragment;
     private JobsApplyedFragment jobsApplyedFragment;
+    private int mPosition = 0;
 
     @Override
     protected int getLayoutId() {
@@ -90,27 +92,27 @@ public class MyJobFragment extends BaseFragment {
             }
         });
 //        if (jobsSavedFragment == null && jobsApplyedFragment == null) {
-            jobsSavedFragment = new JobsSavedFragment().newInstance(mCityId, mCarrerId);
-            jobsApplyedFragment = new JobsApplyedFragment().newInstance(mCityId, mCarrerId);
-            setupViewPager(viewPager);
-            tabLayout.setupWithViewPager(viewPager);
-            setupTabIcons();
-            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                @Override
-                public void onTabSelected(TabLayout.Tab tab) {
-                    ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
-                }
+        jobsSavedFragment = new JobsSavedFragment().newInstance(mCityId, mCarrerId);
+        jobsApplyedFragment = new JobsApplyedFragment().newInstance(mCityId, mCarrerId);
+        setupViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
+        setupTabIcons();
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.black));
+            }
 
-                @Override
-                public void onTabUnselected(TabLayout.Tab tab) {
-                    ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.background_icon_not_focus));
-                }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.background_icon_not_focus));
+            }
 
-                @Override
-                public void onTabReselected(TabLayout.Tab tab) {
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
 
-                }
-            });
+            }
+        });
 //        } else {
 //            viewPager.setCurrentItem(0);
 //            viewPager.setOffscreenPageLimit(2);
@@ -157,7 +159,6 @@ public class MyJobFragment extends BaseFragment {
 
     @Override
     protected void getArgument(Bundle bundle) {
-
     }
 
     @Override
@@ -168,12 +169,12 @@ public class MyJobFragment extends BaseFragment {
     private void setupTabIcons() {
         TextView tabOne = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
         tabOne.setText(getResources().getString(R.string.job_saved_tit));
-        tabOne.setTextColor(getResources().getColor(R.color.black));
+        tabOne.setTextColor(SharedPrefUtils.getString("menu", "").equalsIgnoreCase("CTV_JOB_SAVE") ? getResources().getColor(R.color.black) : getResources().getColor(R.color.background_icon_not_focus));
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
         tabTwo.setText(getResources().getString(R.string.job_applyed_tit));
-        tabTwo.setTextColor(getResources().getColor(R.color.background_icon_not_focus));
+        tabTwo.setTextColor(SharedPrefUtils.getString("menu", "").equalsIgnoreCase("CTV_JOB_SENT") ? getResources().getColor(R.color.black) : getResources().getColor(R.color.background_icon_not_focus));
         tabLayout.getTabAt(1).setCustomView(tabTwo);
     }
 
@@ -183,9 +184,12 @@ public class MyJobFragment extends BaseFragment {
         adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         adapter.addFrag(jobsSavedFragment, getResources().getString(R.string.job_saved));
         adapter.addFrag(jobsApplyedFragment, getResources().getString(R.string.job_applyed));
-        viewPager.setCurrentItem(0);
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(adapter);
+        if (SharedPrefUtils.getString("menu", "").equalsIgnoreCase("CTV_JOB_SAVE"))
+            viewPager.setCurrentItem(0);
+        else if (SharedPrefUtils.getString("menu", "").equalsIgnoreCase("CTV_JOB_SENT"))
+            viewPager.setCurrentItem(1);
     }
 
     @OnClick(R.id.llCarrer)

@@ -131,6 +131,7 @@ public class CVsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 }
             });
             binderHelper.bind((SwipeRevealLayout) ((MyViewHolder) holder).swipeLayout, cvLists.get(position).getId().toString());
+            ((RobotoRegularButton) ((MyViewHolder) holder).mView.findViewById(R.id.btnShowDetailJob)).setEnabled(StringUtils.checkFunction("CUS_HOME_PAGE_VIEW_CV_DETAIL"));
             ((RobotoRegularButton) ((MyViewHolder) holder).mView.findViewById(R.id.btnShowDetailJob)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

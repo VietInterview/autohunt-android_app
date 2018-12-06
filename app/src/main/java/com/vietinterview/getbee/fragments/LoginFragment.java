@@ -30,14 +30,19 @@ import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.api.request.BaseJsonRequest;
+import com.vietinterview.getbee.api.request.GetAccountRequest;
 import com.vietinterview.getbee.api.request.GetMyProfileRequest;
 import com.vietinterview.getbee.api.request.LoginRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
+import com.vietinterview.getbee.api.response.account.AccountResponse;
+import com.vietinterview.getbee.api.response.account.LstMenuAuthority;
 import com.vietinterview.getbee.api.response.login.ErrorLoginResponse;
 import com.vietinterview.getbee.api.response.login.LoginResponse;
 import com.vietinterview.getbee.api.response.myprofile.MyProfileResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.model.UserInfoBean;
+import com.vietinterview.getbee.utils.DebugLog;
+import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.customview.RobotoEditText;
 
@@ -320,11 +325,7 @@ public class LoginFragment extends BaseFragment {
                             userInfoBean.access_token = data.getApiToken();
                             AccountManager.setUserInfoBean(userInfoBean);
                             getMyProfile();
-                            if (getActivity() instanceof MainActivity) {
-                                ((MainActivity) getActivity()).drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                            }
-                            getAct().navigationView.setCheckedItem(R.id.nav_home);
-                            FragmentUtil.replaceFragment(getActivity(), new HomeFragment(), null);
+                            getAccount();
                         }
                     }
                 }
@@ -359,6 +360,38 @@ public class LoginFragment extends BaseFragment {
                 }
             });
         }
+    }
+
+    private GetAccountRequest getAccountRequest;
+
+    public void getAccount() {
+        getAccountRequest = new GetAccountRequest();
+        getAccountRequest.callRequest(getActivity(), new ApiObjectCallBack<AccountResponse, ErrorResponse>() {
+            @Override
+            public void onSuccess(int status, AccountResponse dataSuccess, List<AccountResponse> listDataSuccess, String message) {
+                if (status == 200) {
+                    userInfoBean.setLstMenuAuthority(dataSuccess.getLstMenuAuthority());
+                    userInfoBean.getLstMenuAuthority().add(new LstMenuAuthority(0, getResources().getString(R.string.info_acc_tit), "PROFILE"));
+                    userInfoBean.setLstFunctionAuthority(dataSuccess.getLstFunctionAuthority());
+                    userInfoBean.setType(dataSuccess.getType());
+                    AccountManager.setUserInfoBean(userInfoBean);
+                    getEventBaseFragment().setMenu();
+                    if (getActivity() instanceof MainActivity) {
+                        ((MainActivity) getActivity()).drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                    }
+                    getAct().navigationView.setCheckedItem(R.id.nav_home);
+                    if (AccountManager.getUserInfoBean().getType() == 7)
+                        FragmentUtil.replaceFragment(getActivity(), new HomeFragment(), null);
+                    else
+                        FragmentUtil.replaceFragment(getActivity(), new JobsEmployerFragment(), null);
+                }
+            }
+
+            @Override
+            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+            }
+        });
     }
 
     @Override

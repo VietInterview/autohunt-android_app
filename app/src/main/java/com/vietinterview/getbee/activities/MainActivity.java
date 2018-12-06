@@ -3,6 +3,7 @@ package com.vietinterview.getbee.activities;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -29,6 +30,7 @@ import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.account.AccountResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnFillBackgroundListener;
+import com.vietinterview.getbee.callback.OnSetMenuListener;
 import com.vietinterview.getbee.callback.OnSetTextGreetingListener;
 import com.vietinterview.getbee.callback.OnShowLogoListener;
 import com.vietinterview.getbee.constant.AppConstant;
@@ -70,7 +72,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public ActionBarDrawerToggle toggle;
     CircularTextView slideshow;
     CircularTextView gallery;
-    private GetAccountRequest getAccountRequest;
 
     @Override
     public int setContentViewId() {
@@ -183,12 +184,41 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 findItem(R.id.nav_cv));
         slideshow.setVisibility(View.GONE);
         gallery.setVisibility(View.GONE);
-        initializeCountDrawer();
+//        initializeCountDrawer();
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        Menu m = navigationView.getMenu();
-        for (int i = 0; i < m.size(); i++) {
-            MenuItem mi = m.getItem(i);
+        final Menu menu = navigationView.getMenu();
+        navigationView.getMenu().clear();
+        getEventBaseActivity().setOnSetMenuListener(new OnSetMenuListener() {
+            @Override
+            public void onSetMenu() {
+                navigationView.getMenu().clear();
+                for (int i = 0; i < AccountManager.getUserInfoBean().getLstMenuAuthority().size(); i++) {
+                    menu.add(0, AccountManager.getUserInfoBean().getLstMenuAuthority().get(i).getId(), 0, AccountManager.getUserInfoBean().getLstMenuAuthority().get(i).getName());
+                }
+                for (int i = 0; i < menu.size(); i++) {
+                    MenuItem mi = menu.getItem(i);
+                    setIcon(mi);
+                    SubMenu subMenu = mi.getSubMenu();
+                    if (subMenu != null && subMenu.size() > 0) {
+                        for (int j = 0; j < subMenu.size(); j++) {
+                            MenuItem subMenuItem = subMenu.getItem(j);
+                            applyFontToMenuItem(subMenuItem);
+                        }
+                    }
+                    applyFontToMenuItem(mi);
+                }
+            }
+        });
+        if (AccountManager.getUserInfoBean() != null) {
+            for (int i = 0; i < AccountManager.getUserInfoBean().getLstMenuAuthority().size(); i++) {
+                menu.add(0, AccountManager.getUserInfoBean().getLstMenuAuthority().get(i).getId(), 0, AccountManager.getUserInfoBean().getLstMenuAuthority().get(i).getName());
+            }
+        } else
+            navigationView.inflateMenu(R.menu.menu_left_ctv_drawer);
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem mi = menu.getItem(i);
+            if (AccountManager.getUserInfoBean() != null) setIcon(mi);
             SubMenu subMenu = mi.getSubMenu();
             if (subMenu != null && subMenu.size() > 0) {
                 for (int j = 0; j < subMenu.size(); j++) {
@@ -230,11 +260,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             FragmentUtil.replaceFragment(MainActivity.this, new IntroFragment(), null);
         } else {
             if (AccountManager.getUserInfoBean() != null) {
-                getAccount();
                 if (GlobalDefine.currentFragment == null || GlobalDefine.currentFragment instanceof HomeFragment) {
                     drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                     navigationView.setCheckedItem(R.id.nav_home);
-                    FragmentUtil.replaceFragment(this, new HomeFragment(), null);
+                    if (AccountManager.getUserInfoBean().getType() == 7)
+                        FragmentUtil.replaceFragment(this, new HomeFragment(), null);
+                    else FragmentUtil.replaceFragment(this, new JobsEmployerFragment(), null);
                 } else {
                     if (GlobalDefine.currentFragment instanceof MyJobFragment) {
                         navigationView.setCheckedItem(R.id.nav_job);
@@ -251,53 +282,36 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    public void getAccount() {
-        getAccountRequest = new GetAccountRequest();
-        getAccountRequest.callRequest(this, new ApiObjectCallBack<AccountResponse, ErrorResponse>() {
-            @Override
-            public void onSuccess(int status, AccountResponse dataSuccess, List<AccountResponse> listDataSuccess, String message) {
-                if (status == 200) {
-                    DebugLog.showLogCat(dataSuccess.getFullName());
-                }
-            }
-
-            @Override
-            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
-                DialogUtil.showDialog(MainActivity.this, getResources().getString(R.string.noti_title), message);
-            }
-        });
-    }
-
     public TextView getTvGreeting() {
         return tvGreeting;
     }
 
-    private void initializeCountDrawer() {
-        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
-        GradientDrawable gd = new GradientDrawable();
-        gd.setCornerRadius(5);
-        gd.setSize(10, 10);
-        gallery.setGravity(Gravity.CENTER);
-        gallery.setTypeface(font, Typeface.BOLD);
-        gallery.setTextColor(getResources().getColor(R.color.black));
-        gallery.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
-        gallery.setSolidColor("#FFD215");
-        gallery.setTextSize(12);
-        gallery.setBackground(gd);
-        gallery.setStrokeColor("#00FFFFFF");
-        gallery.setStrokeWidth(10);
-        gallery.setText("99+");
-        slideshow.setGravity(Gravity.CENTER);
-        slideshow.setTypeface(font, Typeface.BOLD);
-        slideshow.setTextColor(getResources().getColor(R.color.black));
-        slideshow.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
-        slideshow.setSolidColor("#FFD215");
-        slideshow.setStrokeWidth(10);
-        slideshow.setStrokeColor("#00FFFFFF");
-        slideshow.setBackground(gd);
-        slideshow.setTextSize(12);
-        slideshow.setText("7");
-    }
+//    private void initializeCountDrawer() {
+//        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+//        GradientDrawable gd = new GradientDrawable();
+//        gd.setCornerRadius(5);
+//        gd.setSize(10, 10);
+//        gallery.setGravity(Gravity.CENTER);
+//        gallery.setTypeface(font, Typeface.BOLD);
+//        gallery.setTextColor(getResources().getColor(R.color.black));
+//        gallery.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
+//        gallery.setSolidColor("#FFD215");
+//        gallery.setTextSize(12);
+//        gallery.setBackground(gd);
+//        gallery.setStrokeColor("#00FFFFFF");
+//        gallery.setStrokeWidth(10);
+//        gallery.setText("99+");
+//        slideshow.setGravity(Gravity.CENTER);
+//        slideshow.setTypeface(font, Typeface.BOLD);
+//        slideshow.setTextColor(getResources().getColor(R.color.black));
+//        slideshow.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
+//        slideshow.setSolidColor("#FFD215");
+//        slideshow.setStrokeWidth(10);
+//        slideshow.setStrokeColor("#00FFFFFF");
+//        slideshow.setBackground(gd);
+//        slideshow.setTextSize(12);
+//        slideshow.setText("7");
+//    }
 
     @Override
     public void onBackPressed() {
@@ -308,29 +322,99 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
+    public void setIcon(MenuItem item) {
+        for (int i = 0; i < AccountManager.getUserInfoBean().getLstMenuAuthority().size(); i++) {
+            if (item.getItemId() == AccountManager.getUserInfoBean().getLstMenuAuthority().get(i).getId()) {
+                switch (AccountManager.getUserInfoBean().getLstMenuAuthority().get(i).getCode()) {
+                    case "CTV_HOME_PAGE":
+                        item.setIcon(R.drawable.ic_home);
+                        break;
+                    case "CTV_JOB_SAVE":
+                        item.setIcon(R.drawable.ic_vali);
+                        break;
+                    case "CTV_JOB_SENT":
+                        item.setIcon(R.drawable.ic_vali);
+                        break;
+                    case "CTV_CV_SAVE":
+                        item.setIcon(R.drawable.ic_mycv_menuleft);
+                        break;
+                    case "CTV_CV_SEND":
+                        item.setIcon(R.drawable.ic_mycv_menuleft);
+                        break;
+                    case "CMS_JOB_AND_CV":
+                        break;
+                    case "CMS_CTV":
+                        break;
+                    case "CMS_JOB":
+                        break;
+                    case "CMS_CUSTOMER":
+                        break;
+                    case "CMS_CV":
+                        break;
+                    case "CUSTOMER_HOME_PAGE":
+                        item.setIcon(R.drawable.ic_home);
+                        break;
+                    default:
+                        item.setIcon(R.drawable.ic_user_menuleft);
+                        break;
+                }
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        }
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.nav_home) {
-            FragmentUtil.replaceFragment(this, new HomeFragment(), null);
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            drawer.closeDrawer(GravityCompat.START);
-        } else if (id == R.id.nav_job) {
-            FragmentUtil.replaceFragment(this, new MyJobFragment(), null);
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            drawer.closeDrawer(GravityCompat.START);
-        } else if (id == R.id.nav_cv) {
-            FragmentUtil.replaceFragment(this, new MyCVFragment(), null);
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            drawer.closeDrawer(GravityCompat.START);
-        } else if (id == R.id.nav_profile) {
-            FragmentUtil.replaceFragment(MainActivity.this, new MyProfileFragment(), null);
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            drawer.closeDrawer(GravityCompat.START);
-        } else if (id == R.id.nav_temp) {
-            FragmentUtil.replaceFragment(MainActivity.this, new JobsEmployerFragment(), null);
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            drawer.closeDrawer(GravityCompat.START);
+        int accType = AccountManager.getUserInfoBean().getType();
+        for (int i = 0; i < AccountManager.getUserInfoBean().getLstMenuAuthority().size(); i++) {
+            if (item.getItemId() == AccountManager.getUserInfoBean().getLstMenuAuthority().get(i).getId()) {
+                switch (AccountManager.getUserInfoBean().getLstMenuAuthority().get(i).getCode()) {
+                    case "CTV_HOME_PAGE":
+                        FragmentUtil.replaceFragment(this, new HomeFragment(), null);
+                        break;
+                    case "CTV_JOB_SAVE":
+                        SharedPrefUtils.putString("menu", AccountManager.getUserInfoBean().getLstMenuAuthority().get(i).getCode());
+                        FragmentUtil.replaceFragment(this, new MyJobFragment(), null);
+                        break;
+                    case "CTV_JOB_SENT":
+                        SharedPrefUtils.putString("menu", AccountManager.getUserInfoBean().getLstMenuAuthority().get(i).getCode());
+                        FragmentUtil.replaceFragment(this, new MyJobFragment(), null);
+                        break;
+                    case "CTV_CV_SAVE":
+                        SharedPrefUtils.putString("menu", AccountManager.getUserInfoBean().getLstMenuAuthority().get(i).getCode());
+                        FragmentUtil.replaceFragment(this, new MyCVFragment(), null);
+                        break;
+                    case "CTV_CV_SEND":
+                        SharedPrefUtils.putString("menu", AccountManager.getUserInfoBean().getLstMenuAuthority().get(i).getCode());
+                        FragmentUtil.replaceFragment(this, new MyCVFragment(), null);
+                        break;
+                    case "CMS_JOB_AND_CV":
+                        break;
+                    case "CMS_CTV":
+                        break;
+                    case "CMS_JOB":
+                        break;
+                    case "CMS_CUSTOMER":
+                        break;
+                    case "CMS_CV":
+                        break;
+                    case "CUSTOMER_HOME_PAGE":
+                        if (accType == 2) {
+                            FragmentUtil.replaceFragment(this, new JobsEmployerFragment(), null);
+                        } else if (accType == 7) {
+                            FragmentUtil.replaceFragment(this, new HomeFragment(), null);
+                        } else {
+                            FragmentUtil.replaceFragment(this, new JobsEmployerFragment(), null);
+                        }
+                        break;
+                    default:
+                        FragmentUtil.replaceFragment(MainActivity.this, new MyProfileFragment(), null);
+                        break;
+                }
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+            }
         }
         return true;
     }

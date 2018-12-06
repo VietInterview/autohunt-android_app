@@ -70,6 +70,7 @@
             app:layout_scrollFlags="scroll|enterAlways|snap">
 
             <com.vietinterview.getbee.customview.RobotoMediumButton
+                android:id="@+id/btnProcessCV"
                 android:layout_width="152dp"
                 android:layout_height="44dp"
                 android:layout_centerInParent="true"

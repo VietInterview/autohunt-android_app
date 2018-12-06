@@ -23,7 +23,7 @@
         app:headerLayout="@layout/nav_header_main"
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@color/white"
-        app:menu="@menu/activity_main2_drawer">
+        app:menu="@menu/menu_left_ctv_drawer">
 
         <com.vietinterview.getbee.customview.RobotoTextView
             android:id="@+id/tvLogout"

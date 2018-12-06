@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import com.vietinterview.getbee.callback.OnChangeStepExpListener;
 import com.vietinterview.getbee.callback.OnClearCheckedListener;
-import com.vietinterview.getbee.callback.OnCloseSwipeListener;
+import com.vietinterview.getbee.callback.OnSetMenuListener;
 import com.vietinterview.getbee.callback.OnFillBackgroundListener;
 import com.vietinterview.getbee.callback.OnRefreshHomeListener;
 import com.vietinterview.getbee.callback.OnRefreshMyCVSavedListener;
@@ -39,8 +39,7 @@ public class Event implements Parcelable {
     private OnSwitchToFourListener onSwitchToFourListener;
     private OnSwitchToFiveListener onSwitchToFiveListener;
     private OnSwitchToSixListener onSwitchToSixListener;
-    private OnCloseSwipeListener onCloseSwipeListener;
-    private OnClearCheckedListener onClearCheckedListener;
+    private OnSetMenuListener onSetMenuListener;
 
     protected Event(Parcel in) {
     }
@@ -61,8 +60,8 @@ public class Event implements Parcelable {
         }
     };
 
-    public void setOnClearCheckedListener(OnClearCheckedListener onClearCheckedListener) {
-        this.onClearCheckedListener = onClearCheckedListener;
+    public void setOnSetMenuListener(OnSetMenuListener onSetMenuListener) {
+        this.onSetMenuListener = onSetMenuListener;
     }
 
     public void setOnSwitchToOneListener(OnSwitchToOneListener onSwitchToOneListener) {
@@ -205,9 +204,9 @@ public class Event implements Parcelable {
         }
     }
 
-    public void clearCheck() {
-        if (this.onClearCheckedListener != null) {
-            this.onClearCheckedListener.onClearCheck();
+    public void setMenu() {
+        if (this.onSetMenuListener != null) {
+            this.onSetMenuListener.onSetMenu();
         }
     }
 
