@@ -4,7 +4,7 @@ import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.RequestParams;
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.api.response.ErrorResponse;
-import com.vietinterview.getbee.api.response.myprofile.MyProfileResponse;
+import com.vietinterview.getbee.api.response.ctvprofile.MyProfileResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
 
 import java.lang.reflect.Type;
@@ -15,7 +15,7 @@ import java.util.List;
  * Created by hiepnguyennghia on 11/5/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class GetMyProfileRequest extends BaseRequest<MyProfileResponse, ErrorResponse> {
+public class GetCTVProfileRequest extends BaseRequest<MyProfileResponse, ErrorResponse> {
     @Override
     public Class<MyProfileResponse> getResponseSuccessClass() {
         return MyProfileResponse.class;
@@ -61,6 +61,6 @@ public class GetMyProfileRequest extends BaseRequest<MyProfileResponse, ErrorRes
 
     @Override
     protected String getAbsoluteUrl() {
-        return ApiConstant.GET_MY_PROFILE;
+        return ApiConstant.GET_CTV_PROFILE;
     }
 }

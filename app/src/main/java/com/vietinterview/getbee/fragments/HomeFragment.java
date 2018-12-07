@@ -28,12 +28,14 @@ import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.JobsAdapter;
 import com.vietinterview.getbee.api.request.BaseRequest;
-import com.vietinterview.getbee.api.request.GetMyProfileRequest;
+import com.vietinterview.getbee.api.request.GetCTVProfileRequest;
+import com.vietinterview.getbee.api.request.GetCUSProfileRequest;
 import com.vietinterview.getbee.api.request.GetSearchJobsRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
+import com.vietinterview.getbee.api.response.customerprofile.ProfileCustomerResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.api.response.jobs.JobsResponse;
-import com.vietinterview.getbee.api.response.myprofile.MyProfileResponse;
+import com.vietinterview.getbee.api.response.ctvprofile.MyProfileResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.callback.OnRefreshHomeListener;
@@ -253,24 +255,42 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         });
     }
 
-    GetMyProfileRequest getMyProfileRequest;
+    GetCTVProfileRequest getCTVProfileRequest;
+    GetCUSProfileRequest getCUSProfileRequest;
 
     public void getMyProfile() {
         showCoverNetworkLoading();
-        getMyProfileRequest = new GetMyProfileRequest();
-        getMyProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
-            @Override
-            public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
-                hideCoverNetworkLoading();
-                AccountManager.getUserInfoBean().setName(dataSuccess.getFullNameColl());
-                getAct().getTvGreeting().setText(getResources().getString(R.string.greeting) + AccountManager.getUserInfoBean().getName() + "!");
-            }
+        if(AccountManager.getUserInfoBean().getType() == 7) {
+            getCTVProfileRequest = new GetCTVProfileRequest();
+            getCTVProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
+                @Override
+                public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
+                    hideCoverNetworkLoading();
+                    AccountManager.getUserInfoBean().setName(dataSuccess.getFullNameColl());
+                    getAct().getTvGreeting().setText(getResources().getString(R.string.greeting) + AccountManager.getUserInfoBean().getName() + "!");
+                }
 
-            @Override
-            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
-                hideCoverNetworkLoading();
-            }
-        });
+                @Override
+                public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                    hideCoverNetworkLoading();
+                }
+            });
+        } else if (AccountManager.getUserInfoBean().getType() == 2){
+            getCUSProfileRequest = new GetCUSProfileRequest();
+            getCUSProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<ProfileCustomerResponse, ErrorResponse>() {
+                @Override
+                public void onSuccess(int status, ProfileCustomerResponse dataSuccess, List<ProfileCustomerResponse> listDataSuccess, String message) {
+                    hideCoverNetworkLoading();
+                    AccountManager.getUserInfoBean().setName(dataSuccess.getCompanyName());
+                    getAct().getTvGreeting().setText(getResources().getString(R.string.greeting) + AccountManager.getUserInfoBean().getName() + "!");
+                }
+
+                @Override
+                public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                    hideCoverNetworkLoading();
+                }
+            });
+        }
     }
 
     @OnClick(R.id.llCarrer)
@@ -444,7 +464,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     public ArrayList<BaseRequest> getArrayBaseRequest() {
         ArrayList<BaseRequest> baseRequests = new ArrayList<>();
         baseRequests.add(getSearchJobsRequest);
-        baseRequests.add(getMyProfileRequest);
+        baseRequests.add(getCTVProfileRequest);
         return baseRequests;
     }
 }

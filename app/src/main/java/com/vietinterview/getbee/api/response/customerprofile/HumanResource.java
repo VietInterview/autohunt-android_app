@@ -1,10 +1,10 @@
 
-package com.vietinterview.getbee.api.response.myprofile;
+package com.vietinterview.getbee.api.response.customerprofile;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class DesideratedCareer {
+public class HumanResource {
 
     @SerializedName("id")
     @Expose
@@ -12,11 +12,6 @@ public class DesideratedCareer {
     @SerializedName("name")
     @Expose
     private String name;
-
-    public DesideratedCareer(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     public Integer getId() {
         return id;

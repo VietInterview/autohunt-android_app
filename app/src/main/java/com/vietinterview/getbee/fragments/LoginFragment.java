@@ -31,17 +31,18 @@ import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.api.request.BaseJsonRequest;
 import com.vietinterview.getbee.api.request.GetAccountRequest;
-import com.vietinterview.getbee.api.request.GetMyProfileRequest;
+import com.vietinterview.getbee.api.request.GetCTVProfileRequest;
+import com.vietinterview.getbee.api.request.GetCUSProfileRequest;
 import com.vietinterview.getbee.api.request.LoginRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.account.AccountResponse;
 import com.vietinterview.getbee.api.response.account.LstMenuAuthority;
+import com.vietinterview.getbee.api.response.customerprofile.ProfileCustomerResponse;
 import com.vietinterview.getbee.api.response.login.ErrorLoginResponse;
 import com.vietinterview.getbee.api.response.login.LoginResponse;
-import com.vietinterview.getbee.api.response.myprofile.MyProfileResponse;
+import com.vietinterview.getbee.api.response.ctvprofile.MyProfileResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.model.UserInfoBean;
-import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.customview.RobotoEditText;
@@ -278,27 +279,49 @@ public class LoginFragment extends BaseFragment {
     }
 
     UserInfoBean userInfoBean;
-    GetMyProfileRequest getMyProfileRequest;
+    GetCTVProfileRequest getMyProfileRequest;
+    GetCUSProfileRequest getCUSProfileRequest;
 
     public void getMyProfile() {
-        getMyProfileRequest = new GetMyProfileRequest();
-        getMyProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
-            @Override
-            public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
-                if (dataSuccess.getFullNameColl() != null) {
-                    userInfoBean.name = dataSuccess.getFullNameColl();
-                } else {
-                    userInfoBean.name = edtEmail.getText().toString().trim().split("[$&<@%*]")[0];
+        if (AccountManager.getUserInfoBean().getType() == 7) {
+            getMyProfileRequest = new GetCTVProfileRequest();
+            getMyProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
+                @Override
+                public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
+                    if (dataSuccess.getFullNameColl() != null) {
+                        userInfoBean.name = dataSuccess.getFullNameColl();
+                    } else {
+                        userInfoBean.name = edtEmail.getText().toString().trim().split("[$&<@%*]")[0];
+                    }
+                    AccountManager.setUserInfoBean(userInfoBean);
+                    getEventBaseFragment().setTextGreeting(AccountManager.getUserInfoBean().name);
                 }
-                AccountManager.setUserInfoBean(userInfoBean);
-                getEventBaseFragment().setTextGreeting(AccountManager.getUserInfoBean().name);
-            }
 
-            @Override
-            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                @Override
+                public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
 
-            }
-        });
+                }
+            });
+        } else if(AccountManager.getUserInfoBean().getType()==2){
+            getCUSProfileRequest = new GetCUSProfileRequest();
+            getCUSProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<ProfileCustomerResponse, ErrorResponse>() {
+                @Override
+                public void onSuccess(int status, ProfileCustomerResponse dataSuccess, List<ProfileCustomerResponse> listDataSuccess, String message) {
+                    if (dataSuccess.getCompanyName() != null) {
+                        userInfoBean.name = dataSuccess.getCompanyName();
+                    } else {
+                        userInfoBean.name = edtEmail.getText().toString().trim().split("[$&<@%*]")[0];
+                    }
+                    AccountManager.setUserInfoBean(userInfoBean);
+                    getEventBaseFragment().setTextGreeting(AccountManager.getUserInfoBean().name);
+                }
+
+                @Override
+                public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+
+                }
+            });
+        }
     }
 
     @OnClick(R.id.btnLogin)

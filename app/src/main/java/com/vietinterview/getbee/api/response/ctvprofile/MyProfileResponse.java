@@ -1,5 +1,5 @@
 
-package com.vietinterview.getbee.api.response.myprofile;
+package com.vietinterview.getbee.api.response.ctvprofile;
 
 import android.os.Parcel;
 import android.os.Parcelable;
