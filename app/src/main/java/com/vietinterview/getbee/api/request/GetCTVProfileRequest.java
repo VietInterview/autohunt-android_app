@@ -61,6 +61,6 @@ public class GetCTVProfileRequest extends BaseRequest<MyProfileResponse, ErrorRe
 
     @Override
     protected String getAbsoluteUrl() {
-        return ApiConstant.GET_CTV_PROFILE;
+        return AccountManager.getApiConstantTest().getGET_CTV_PROFILE();
     }
 }

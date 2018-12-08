@@ -42,7 +42,10 @@ import com.vietinterview.getbee.api.response.login.ErrorLoginResponse;
 import com.vietinterview.getbee.api.response.login.LoginResponse;
 import com.vietinterview.getbee.api.response.ctvprofile.MyProfileResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.constant.ApiConstant;
+import com.vietinterview.getbee.constant.ApiConstantTest;
 import com.vietinterview.getbee.model.UserInfoBean;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.customview.RobotoEditText;
@@ -81,6 +84,10 @@ public class LoginFragment extends BaseFragment {
     ImageView imgUser;
     @BindView(R.id.imgPass)
     ImageView imgPass;
+    @BindView(R.id.tvLogin)
+    TextView tvLogin;
+    private int dem = 0;
+    ApiConstantTest apiConstant = new ApiConstantTest();
 
     @Override
     protected int getLayoutId() {
@@ -110,6 +117,35 @@ public class LoginFragment extends BaseFragment {
             @Override
             public void afterTextChanged(Editable editable) {
 
+            }
+        });
+        if (AccountManager.getApiConstantTest().getBASE_URL().equalsIgnoreCase(ApiConstant.REAL_URL)) {
+            tvLogin.setText(getResources().getString(R.string.login));
+            tvLogin.setTextColor(getResources().getColor(R.color.black));
+        } else {
+            tvLogin.setText(tvLogin.getText() + " Dev Mode");
+            tvLogin.setTextColor(getResources().getColor(R.color.red));
+        }
+        tvLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (dem < 7) {
+                    dem++;
+                    apiConstant.setBASE_URL(ApiConstant.REAL_URL);
+                    apiConstant.setIMG_URL(ApiConstant.IMG_URL_REAL);
+                    AccountManager.setApiConstantTest(apiConstant);
+                    DebugLog.showLogCat(AccountManager.getApiConstantTest().getBASE_URL() + "\n" + AccountManager.getApiConstantTest().getLOGIN());
+                    tvLogin.setText(getResources().getString(R.string.login));
+                    tvLogin.setTextColor(getResources().getColor(R.color.black));
+                } else {
+                    dem--;
+                    apiConstant.setBASE_URL(ApiConstant.DEV_URL);
+                    apiConstant.setIMG_URL(ApiConstant.IMG_URL_DEV);
+                    AccountManager.setApiConstantTest(apiConstant);
+                    DebugLog.showLogCat(AccountManager.getApiConstantTest().getBASE_URL() + "\n" + AccountManager.getApiConstantTest().getLOGIN());
+                    tvLogin.setText(tvLogin.getText() + " Dev Mode");
+                    tvLogin.setTextColor(getResources().getColor(R.color.red));
+                }
             }
         });
         edtEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -302,7 +338,7 @@ public class LoginFragment extends BaseFragment {
 
                 }
             });
-        } else if(AccountManager.getUserInfoBean().getType()==2){
+        } else if (AccountManager.getUserInfoBean().getType() == 2) {
             getCUSProfileRequest = new GetCUSProfileRequest();
             getCUSProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<ProfileCustomerResponse, ErrorResponse>() {
                 @Override
@@ -347,7 +383,6 @@ public class LoginFragment extends BaseFragment {
                             userInfoBean.nickname = edtEmail.getText().toString().trim();
                             userInfoBean.access_token = data.getApiToken();
                             AccountManager.setUserInfoBean(userInfoBean);
-                            getMyProfile();
                             getAccount();
                         }
                     }
@@ -397,6 +432,7 @@ public class LoginFragment extends BaseFragment {
                     userInfoBean.getLstMenuAuthority().add(new LstMenuAuthority(0, getResources().getString(R.string.info_acc_tit), "PROFILE"));
                     userInfoBean.setLstFunctionAuthority(dataSuccess.getLstFunctionAuthority());
                     userInfoBean.setType(dataSuccess.getType());
+                    getMyProfile();
                     AccountManager.setUserInfoBean(userInfoBean);
                     getEventBaseFragment().setMenu();
                     if (getActivity() instanceof MainActivity) {

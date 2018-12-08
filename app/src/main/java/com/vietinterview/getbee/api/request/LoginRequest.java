@@ -1,9 +1,11 @@
 package com.vietinterview.getbee.api.request;
 
+import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.login.ErrorLoginResponse;
 import com.vietinterview.getbee.api.response.login.LoginResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
+import com.vietinterview.getbee.constant.ApiConstantTest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,6 +72,6 @@ public class LoginRequest extends BaseJsonRequest<LoginResponse, ErrorLoginRespo
 
     @Override
     protected String getAbsoluteUrl() {
-        return ApiConstant.LOGIN;
+        return AccountManager.getApiConstantTest().getLOGIN();
     }
 }

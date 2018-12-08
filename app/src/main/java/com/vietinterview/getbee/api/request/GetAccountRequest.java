@@ -61,6 +61,6 @@ public class GetAccountRequest extends BaseRequest<AccountResponse, ErrorRespons
 
     @Override
     protected String getAbsoluteUrl() {
-        return ApiConstant.GET_MY_ACCOUNT;
+        return AccountManager.getApiConstantTest().getGET_MY_ACCOUNT();
     }
 }

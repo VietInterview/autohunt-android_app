@@ -33,6 +33,8 @@ import com.vietinterview.getbee.callback.OnFillBackgroundListener;
 import com.vietinterview.getbee.callback.OnSetMenuListener;
 import com.vietinterview.getbee.callback.OnSetTextGreetingListener;
 import com.vietinterview.getbee.callback.OnShowLogoListener;
+import com.vietinterview.getbee.constant.ApiConstant;
+import com.vietinterview.getbee.constant.ApiConstantTest;
 import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.customview.CircularTextView;
@@ -80,6 +82,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void initView() {
+        if (AccountManager.getApiConstantTest() == null) {
+            ApiConstantTest apiConstantInit = new ApiConstantTest();
+            apiConstantInit.setBASE_URL(ApiConstant.REAL_URL);
+            apiConstantInit.setIMG_URL(ApiConstant.IMG_URL_REAL);
+            AccountManager.setApiConstantTest(apiConstantInit);
+        }
         setLanguage(SharedPrefUtils.getString(AppConstant.LANGUAGE, "vi"));
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setSupportActionBar(toolbar);

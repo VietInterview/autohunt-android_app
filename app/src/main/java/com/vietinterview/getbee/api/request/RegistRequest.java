@@ -1,5 +1,6 @@
 package com.vietinterview.getbee.api.request;
 
+import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
 
@@ -78,6 +79,6 @@ public class RegistRequest extends BaseJsonRequest<ErrorResponse, ErrorResponse>
 
     @Override
     protected String getAbsoluteUrl() {
-        return ApiConstant.REGIST;
+        return AccountManager.getApiConstantTest().getREGIST();
     }
 }

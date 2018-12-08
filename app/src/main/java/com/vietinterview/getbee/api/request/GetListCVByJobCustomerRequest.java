@@ -75,6 +75,6 @@ public class GetListCVByJobCustomerRequest extends BaseRequest<CvsCustomerRespon
 
     @Override
     protected String getAbsoluteUrl() {
-        return ApiConstant.GET_CV_BY_JOB_CUSTOMER;
+        return AccountManager.getApiConstantTest().getGET_CV_BY_JOB_CUSTOMER();
     }
 }

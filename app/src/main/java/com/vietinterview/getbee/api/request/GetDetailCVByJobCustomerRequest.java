@@ -66,6 +66,6 @@ public class GetDetailCVByJobCustomerRequest extends BaseRequest<DetailCVCustome
 
     @Override
     protected String getAbsoluteUrl() {
-        return ApiConstant.GET_DETAIL_CV_BY_JOB_CUSTOMER + "/" + mId;
+        return AccountManager.getApiConstantTest().getGET_DETAIL_CV_BY_JOB_CUSTOMER() + "/" + mId;
     }
 }

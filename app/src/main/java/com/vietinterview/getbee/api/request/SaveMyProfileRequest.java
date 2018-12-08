@@ -100,6 +100,6 @@ public class SaveMyProfileRequest extends BaseJsonRequest<MyProfileResponse, Err
 
     @Override
     protected String getAbsoluteUrl() {
-        return ApiConstant.UPDATE_MY_PROFILE;
+        return AccountManager.getApiConstantTest().getUPDATE_MY_PROFILE();
     }
 }

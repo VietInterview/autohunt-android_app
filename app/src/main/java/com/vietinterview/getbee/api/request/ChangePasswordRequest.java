@@ -75,6 +75,6 @@ public class ChangePasswordRequest extends BaseJsonRequest<Object, ErrorChangePa
 
     @Override
     protected String getAbsoluteUrl() {
-        return ApiConstant.CHANGE_PASSWORD;
+        return AccountManager.getApiConstantTest().getCHANGE_PASSWORD();
     }
 }

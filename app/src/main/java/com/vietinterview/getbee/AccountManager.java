@@ -3,6 +3,7 @@ package com.vietinterview.getbee;
 import android.provider.Settings;
 import android.text.TextUtils;
 
+import com.vietinterview.getbee.constant.ApiConstantTest;
 import com.vietinterview.getbee.model.UserInfoBean;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
 import com.google.gson.Gson;
@@ -15,9 +16,11 @@ public class AccountManager {
 
     private static final String KEY_USER_INFO = "user_info";
     private static final String KEY_ACCESS_TOKEN = "key_access_token";
+    private static final String KEY_API = "API";
 
 
     private static UserInfoBean userInfoBean;
+    private static ApiConstantTest apiConstantTest;
     private static String accessToken;
 
     private static String UDID;
@@ -28,6 +31,20 @@ public class AccountManager {
             userInfoBean = new Gson().fromJson(json, UserInfoBean.class);
         }
         return userInfoBean;
+    }
+
+    public static void setApiConstantTest(ApiConstantTest apiConstantTest) {
+        AccountManager.apiConstantTest = apiConstantTest;
+        String json = new Gson().toJson(apiConstantTest);
+        SharedPrefUtils.putString(KEY_API, json);
+    }
+
+    public static ApiConstantTest getApiConstantTest() {
+        if (apiConstantTest == null && SharedPrefUtils.containKey(KEY_API)) {
+            final String json = SharedPrefUtils.getString(KEY_API, null);
+            apiConstantTest = new Gson().fromJson(json, ApiConstantTest.class);
+        }
+        return apiConstantTest;
     }
 
     public static void setUserInfoBean(UserInfoBean userInfoBean) {

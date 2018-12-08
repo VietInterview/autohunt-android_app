@@ -62,6 +62,6 @@ public class GetCUSProfileRequest extends BaseRequest<ProfileCustomerResponse, E
 
     @Override
     protected String getAbsoluteUrl() {
-        return ApiConstant.GET_CUS_PROFILE;
+        return AccountManager.getApiConstantTest().getGET_CUS_PROFILE();
     }
 }

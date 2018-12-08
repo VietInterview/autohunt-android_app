@@ -67,6 +67,6 @@ public class GetDetailJobCustomerRequest extends BaseRequest<DetailJobCustomerRe
 
     @Override
     protected String getAbsoluteUrl() {
-        return ApiConstant.GET_DETAIL_JOB_CUSTOMER + "/" + mId;
+        return AccountManager.getApiConstantTest().getGET_DETAIL_JOB_CUSTOMER() + "/" + mId;
     }
 }
