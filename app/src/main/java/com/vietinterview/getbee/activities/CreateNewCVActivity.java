@@ -53,7 +53,7 @@ public class CreateNewCVActivity extends BaseActivity {
                 }
             }
         });
-//        FragmentUtil.replaceFragment(CreateNewCVActivity.this, new CreateNewCVFragment(), null);
+//        FragmentUtil.replaceFragment(CreateNewCVActivity.this, new ProcessResumeFragment(), null);
     }
 
     @Override

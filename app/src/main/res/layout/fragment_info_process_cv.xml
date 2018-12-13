@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Created by Hiep Nguyen Nghia.
+    Copyright © 2018 Vietinterview. All rights reserved.
+-->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_above="@+id/llFooter"
+    android:nestedScrollingEnabled="true"
+    android:background="#F2F9FF"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.vietinterview.getbee.customview.RobotoMediumTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="16dp"
+                    android:fontFamily="@string/font_fontFamily_medium"
+                    android:text="Thông tin ứng viên"
+                    android:textColor="#9FB6CB"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_top_bottom"
+                    android:orientation="horizontal"
+                    android:padding="14dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:elevation="2dp"
+                        android:src="@drawable/avatar2"
+                        app:elevation="2dp" />
+
+                    <com.vietinterview.getbee.customview.RobotoMediumTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginVertical="16dp"
+                        android:layout_weight="2"
+                        android:fontFamily="@string/font_fontFamily_medium"
+                        android:text="Nguyễn Sơn Tùng"
+                        android:textColor="#042E51"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_info_hunt"
+                        android:tint="#9FB6CB" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_top_bottom"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <com.vietinterview.getbee.customview.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ngày sinh"
+                        android:textColor="#677B8D"
+                        android:textSize="14sp" />
+
+                    <com.vietinterview.getbee.customview.RobotoMediumTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@string/font_fontFamily_medium"
+                        android:text="04/10/1989"
+                        android:textColor="#042E51"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_top_bottom"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <com.vietinterview.getbee.customview.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Trình độ học vấn"
+                        android:textColor="#677B8D"
+                        android:textSize="14sp" />
+
+                    <com.vietinterview.getbee.customview.RobotoMediumTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@string/font_fontFamily_medium"
+                        android:text="Đại học"
+                        android:textColor="#042E51"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_top_bottom"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <com.vietinterview.getbee.customview.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Vị trí mong muốn"
+                        android:textColor="#677B8D"
+                        android:textSize="14sp" />
+
+                    <com.vietinterview.getbee.customview.RobotoMediumTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@string/font_fontFamily_medium"
+                        android:text="Nhân viên thiết kế"
+                        android:textColor="#042E51"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_top_bottom"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <com.vietinterview.getbee.customview.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Địa điểm làm việc"
+                        android:textColor="#677B8D"
+                        android:textSize="14sp" />
+
+                    <com.vietinterview.getbee.customview.RobotoMediumTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@string/font_fontFamily_medium"
+                        android:text="Hà nội, TP. Hồ Chí Minh"
+                        android:textColor="#042E51"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_top_bottom"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <com.vietinterview.getbee.customview.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Số năm kinh nghiệm"
+                        android:textColor="#677B8D"
+                        android:textSize="14sp" />
+
+                    <com.vietinterview.getbee.customview.RobotoMediumTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@string/font_fontFamily_medium"
+                        android:text="10 năm"
+                        android:textColor="#042E51"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_top_bottom"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <com.vietinterview.getbee.customview.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mức lương mong muốn"
+                        android:textColor="#677B8D"
+                        android:textSize="14sp" />
+
+                    <com.vietinterview.getbee.customview.RobotoMediumTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@string/font_fontFamily_medium"
+                        android:text="8,000,000 VND"
+                        android:textColor="#042E51"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <com.vietinterview.getbee.customview.RobotoMediumButton
+                        android:id="@+id/btnNotAccept"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/borderbutton_notyet_send"
+                        android:drawableTop="@drawable/ic_not_accept"
+                        android:padding="10dp"
+                        android:text="@string/not_accept"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp" />
+
+                    <com.vietinterview.getbee.customview.RobotoMediumButton
+                        android:id="@+id/btnNext"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="-3dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/borderbutton_blue"
+                        android:drawableTop="@drawable/ic_next_step"
+                        android:fontFamily="@string/font_fontFamily_medium"
+                        android:padding="10dp"
+                        android:text="Phỏng vấn"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:id="@+id/llForm"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.vietinterview.getbee.customview.RobotoMediumTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="16dp"
+                    android:fontFamily="@string/font_fontFamily_medium"
+                    android:text="Thông tin chuyên gia tuyển dụng"
+                    android:textColor="#9FB6CB"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_top_bottom"
+                    android:orientation="horizontal">
+
+
+                    <com.vietinterview.getbee.customview.RobotoMediumTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginVertical="16dp"
+                        android:layout_weight="2"
+                        android:fontFamily="@string/font_fontFamily_medium"
+                        android:text="Nguyễn Trần Huyền My"
+                        android:textColor="#042E51"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_top_bottom"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <com.vietinterview.getbee.customview.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Số điện thoại"
+                        android:textColor="#677B8D"
+                        android:textSize="14sp" />
+
+                    <com.vietinterview.getbee.customview.RobotoMediumTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@string/font_fontFamily_medium"
+                        android:text="039 123 456"
+                        android:textColor="#042E51"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_top_bottom"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <com.vietinterview.getbee.customview.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email liên hệ"
+                        android:textColor="#677B8D"
+                        android:textSize="14sp" />
+
+                    <com.vietinterview.getbee.customview.RobotoMediumTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@string/font_fontFamily_medium"
+                        android:text="tung.nguyen@vietinterview.com"
+                        android:textColor="#042E51"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <com.vietinterview.getbee.customview.RobotoMediumTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="8dp"
+                    android:fontFamily="@string/font_fontFamily_medium"
+                    android:text="Thông báo"
+                    android:textColor="#042E51"
+                    android:textSize="20sp" />
+
+                <com.vietinterview.getbee.customview.RobotoMediumTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="8dp"
+                    android:fontFamily="@string/font_fontFamily_medium"
+                    android:gravity="center"
+                    android:text="Ứng viên này đã bị từ chối vì lý do kinh nghiệm chưa đáp ứng!"
+                    android:textColor="#FF5A5A"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</ScrollView>

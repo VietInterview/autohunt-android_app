@@ -25,8 +25,8 @@ import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.customview.RobotoRegularButton;
 import com.vietinterview.getbee.fragments.BaseFragment;
-import com.vietinterview.getbee.fragments.CVsEmployerFragment;
-import com.vietinterview.getbee.fragments.DetailJobNTDFragment;
+import com.vietinterview.getbee.fragments.ResumesEmployerFragment;
+import com.vietinterview.getbee.fragments.DetailJobCustomerFragment;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
@@ -132,7 +132,7 @@ public class JobsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 @Override
                 public void onClick(View view) {
 //                    getDetailCV(jobLists.get(position).getId());
-                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new CVsEmployerFragment().newInstance(jobLists.get(position)), null);
+                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new ResumesEmployerFragment().newInstance(jobLists.get(position)), null);
                 }
             });
             binderHelper.bind((SwipeRevealLayout) ((MyViewHolder) holder).swipeLayout, jobLists.get(position).getId().toString());
@@ -184,7 +184,7 @@ public class JobsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             public void onSuccess(int status, DetailJobCustomerResponse data, List<DetailJobCustomerResponse> dataArrayList, String message) {
                 baseFragment.hideCoverNetworkLoading();
                 if (baseFragment.isAdded()) {
-                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailJobNTDFragment().newInstance(data), null);
+                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailJobCustomerFragment().newInstance(data), null);
                 }
             }
 

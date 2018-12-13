@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Created by Hiep Nguyen Nghia.
+    Copyright © 2018 Vietinterview. All rights reserved.
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@string/font_fontFamily_medium"
+                android:text="Số lần offer"
+                android:textColor="#042E51"
+                android:textSize="16sp" />
+
+            <com.vietinterview.getbee.customview.ClearableRegularEditText
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/border_gray" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@string/font_fontFamily_medium"
+                android:text="Mức lương"
+                android:textColor="#042E51"
+                android:textSize="16sp" />
+
+            <com.vietinterview.getbee.customview.ClearableRegularEditText
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/border_gray" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@string/font_fontFamily_medium"
+                android:text="Thời gian đi làm"
+                android:textColor="#042E51"
+                android:textSize="16sp" />
+
+            <com.vietinterview.getbee.customview.ClearableRegularEditText
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/border_gray" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@string/font_fontFamily_medium"
+                android:text="Địa chỉ làm việc"
+                android:textColor="#042E51"
+                android:textSize="16sp" />
+
+            <com.vietinterview.getbee.customview.ClearableRegularEditText
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/border_gray" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@string/font_fontFamily_medium"
+                android:text="Vị trí làm việc"
+                android:textColor="#042E51"
+                android:textSize="16sp" />
+
+            <com.vietinterview.getbee.customview.ClearableRegularEditText
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/border_gray" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@string/font_fontFamily_medium"
+                android:text="Ghi chú"
+                android:textColor="#042E51"
+                android:textSize="16sp" />
+
+            <com.vietinterview.getbee.customview.ClearableRegularEditText
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/border_gray" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@string/font_fontFamily_medium"
+                android:text="Kết quả phỏng vấn"
+                android:textColor="#042E51"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:background="@drawable/border_fill"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.vietinterview.getbee.customview.RobotoTextView
+                    android:layout_width="114dp"
+                    android:layout_height="65dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_like"
+                    android:gravity="center"
+                    android:text="Đạt" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/background_icon_not_focus" />
+
+                <com.vietinterview.getbee.customview.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="65dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_not_accept"
+                    android:drawableTint="#677B8D"
+                    android:gravity="center"
+                    android:text="Ứng viên không đi" />
+            </LinearLayout>
+
+            <com.vietinterview.getbee.customview.RobotoMediumButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/borderbutton_blue"
+                android:text="Xong"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

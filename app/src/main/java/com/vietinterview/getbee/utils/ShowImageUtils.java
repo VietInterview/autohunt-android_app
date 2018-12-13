@@ -7,7 +7,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.constant.ApiConstant;
+import com.vietinterview.getbee.constant.ApiConstantTest;
 
 /**
  * Created by hiepnguyennghia on 11/9/18.
@@ -20,6 +22,6 @@ public class ShowImageUtils {
                 .error(iconError)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH);
-        Glide.with(context).load(ApiConstant.IMG_URL + urlImage).apply(options).into(imageView);
+        Glide.with(context).load(AccountManager.getApiConstantTest().getIMG_URL() + urlImage).apply(options).into(imageView);
     }
 }

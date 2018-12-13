@@ -19,6 +19,7 @@ buildscript {
 }
 
 allprojects {
+    ext.supportVersion = "27.1.1"
     repositories {
         jcenter()
         mavenCentral()

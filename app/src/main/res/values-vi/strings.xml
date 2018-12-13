@@ -18,7 +18,7 @@
     <string name="cv_found">Hồ sơ được tìm thấy</string>
     <string name="edit">Sửa</string>
     <string name="cancel">Hủy</string>
-    <string name="create_new_cv">Tạo mới Hồ sơ</string>
+    <string name="process_cv">Xử lý Hồ sơ</string>
     <string name="cv_applyed">Hồ sơ đã được nộp</string>
     <string name="not_send">Chưa gửi</string>
     <string name="wait_approve">Chờ duyệt</string>

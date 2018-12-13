@@ -18,7 +18,7 @@
     <string name="cv_found">CV được tìm thấy</string>
     <string name="edit">Sửa</string>
     <string name="cancel">Hủy</string>
-    <string name="create_new_cv">Tạo mới CV</string>
+    <string name="process_cv">Xử lý hồ sơ</string>
     <string name="cv_applyed">CV đã được nộp</string>
     <string name="not_send">Chưa gửi</string>
     <string name="wait_approve">Chờ duyệt</string>
@@ -197,4 +197,17 @@
     <string name="not_enought_exp">Bạn chưa nhập kinh nghiệm làm việc, vui lòng kiểm tra lại</string>
     <string name="not_enought_edu">Bạn chưa nhập trình độ làm việc, vui lòng kiểm tra lại</string>
     <string name="before_day">ngày trước</string>
+
+    <string name="country_prompt">Choose a country</string>
+
+    <string-array name="country_arrays">
+        <item>Malaysia</item>
+        <item>United States</item>
+        <item>Indonesia</item>
+        <item>France</item>
+        <item>Italy</item>
+        <item>Singapore</item>
+        <item>New Zealand</item>
+        <item>India</item>
+    </string-array>
 </resources>

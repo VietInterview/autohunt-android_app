@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Created by Hiep Nguyen Nghia.
+    Copyright © 2018 Vietinterview. All rights reserved.
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F2F9FF"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:background="@drawable/ic_background_customer_profile"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.vietinterview.getbee.customview.RoundRectCornerImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/cannon" />
+
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="FPT Software"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp">
+
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hình ảnh công ty"
+                android:textColor="#042E51"
+                android:textSize="16sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/horizontal_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Video công ty"
+                android:textColor="#042E51"
+                android:textSize="16sp" />
+
+            <RelativeLayout
+                android:id="@+id/relVideo"
+                android:layout_width="match_parent"
+                android:layout_height="154dp">
+
+                <VideoView
+                    android:id="@+id/vv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true" />
+
+                <ProgressBar
+                    android:id="@+id/progrss"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_top_bottom"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <com.vietinterview.getbee.customview.RobotoMediumTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@string/font_fontFamily_medium"
+                    android:text="Vòng phỏng vấn"
+                    android:textColor="#042E51"
+                    android:textSize="16sp" />
+
+                <com.vietinterview.getbee.customview.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Vòng 1"
+                    android:textColor="#677B8D"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_top_bottom"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <com.vietinterview.getbee.customview.RobotoMediumTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@string/font_fontFamily_medium"
+                    android:text="Thời gian phỏng vấn"
+                    android:textColor="#042E51"
+                    android:textSize="16sp" />
+
+                <com.vietinterview.getbee.customview.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="11/12/2018, 08:00PM"
+                    android:textColor="#677B8D"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_top_bottom"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <com.vietinterview.getbee.customview.RobotoMediumTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@string/font_fontFamily_medium"
+                    android:text="Địa điểm phỏng vấn"
+                    android:textColor="#042E51"
+                    android:textSize="16sp" />
+
+                <com.vietinterview.getbee.customview.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tòa Báo Nông Thôn Ngày Ngay, Dương Đình Nghệ, Cầu Giấy, Hà Nội"
+                    android:textColor="#677B8D"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_top_bottom"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <com.vietinterview.getbee.customview.RobotoMediumTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@string/font_fontFamily_medium"
+                    android:text="Ghi chú"
+                    android:textColor="#042E51"
+                    android:textSize="16sp" />
+
+                <com.vietinterview.getbee.customview.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thí sinh không đến"
+                    android:textColor="#677B8D"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/main_header_selector"
+                android:orientation="vertical">
+
+                <com.vietinterview.getbee.customview.RobotoMediumTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                    android:layout_marginVertical="4dp"
+                    android:fontFamily="@string/font_fontFamily_medium"
+                    android:text="Mục tiêu nghề nghiệp"
+                    android:textColor="#042E51"
+                    android:textSize="16sp" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvTarget"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/main_header_selector"
+                        android:maxLines="6"
+                        android:text="Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure? On the other hand, we." />
+
+                    <LinearLayout
+                        android:id="@+id/gradientView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/main_header_selector"
+                        android:orientation="vertical" />
+                </FrameLayout>
+
+                <Button
+                    android:id="@+id/btShowmore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:background="@android:color/transparent"
+                    android:drawableRight="@drawable/ic_arrow_down_blue"
+                    android:text="Xem thêm  "
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/holo_blue_light" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_top_bottom"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <com.vietinterview.getbee.customview.RobotoMediumTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@string/font_fontFamily_medium"
+                    android:text="Phúc lợi công ty"
+                    android:textColor="#042E51"
+                    android:textSize="16sp" />
+
+                <com.vietinterview.getbee.customview.ClearableRegularEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/border_gray" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@string/font_fontFamily_medium"
+                android:text="Địa chỉ email"
+                android:textColor="#042E51"
+                android:textSize="16sp" />
+
+            <com.vietinterview.getbee.customview.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tungnguyen@vietinterview.com"
+                android:textColor="#677B8D"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

@@ -2,8 +2,6 @@ package com.vietinterview.getbee.activities;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -14,7 +12,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -25,10 +22,6 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.api.request.GetAccountRequest;
-import com.vietinterview.getbee.api.response.ErrorResponse;
-import com.vietinterview.getbee.api.response.account.AccountResponse;
-import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnFillBackgroundListener;
 import com.vietinterview.getbee.callback.OnSetMenuListener;
 import com.vietinterview.getbee.callback.OnSetTextGreetingListener;
@@ -39,19 +32,16 @@ import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.customview.CircularTextView;
 import com.vietinterview.getbee.customview.CustomTypefaceSpan;
+import com.vietinterview.getbee.fragments.CustomerProfileFragment;
 import com.vietinterview.getbee.fragments.HomeFragment;
 import com.vietinterview.getbee.fragments.IntroFragment;
 import com.vietinterview.getbee.fragments.JobsEmployerFragment;
 import com.vietinterview.getbee.fragments.LoginFragment;
-import com.vietinterview.getbee.fragments.MyCVFragment;
+import com.vietinterview.getbee.fragments.MyResumeFragment;
 import com.vietinterview.getbee.fragments.MyJobFragment;
-import com.vietinterview.getbee.fragments.MyProfileFragment;
-import com.vietinterview.getbee.utils.DebugLog;
-import com.vietinterview.getbee.utils.DialogUtil;
+import com.vietinterview.getbee.fragments.CollaboratorProfileFragment;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
-
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -136,7 +126,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         });
         if (AccountManager.getUserInfoBean() != null)
             if (AccountManager.getUserInfoBean().getName() != null) {
-                if (AccountManager.getUserInfoBean().getName().length() <= 6) {
+                if (AccountManager.getUserInfoBean().getName().length() <= 12) {
                     tvGreeting.setText(getResources().getString(R.string.greeting) + " " + AccountManager.getUserInfoBean().getName() + "!");
                 } else {
                     tvGreeting.setText(getResources().getString(R.string.greeting) + "\n" + AccountManager.getUserInfoBean().getName() + "!");
@@ -145,7 +135,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         getEventBaseActivity().setOnSetTextGreetingListener(new OnSetTextGreetingListener() {
             @Override
             public void onSetTextGreeting(String name) {
-                if (name.length() <= 6) {
+                if (name.length() <= 12) {
                     tvGreeting.setText(getResources().getString(R.string.greeting) + " " + name + "!");
                 } else {
                     tvGreeting.setText(getResources().getString(R.string.greeting) + "\n" + name + "!");
@@ -277,9 +267,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 } else {
                     if (GlobalDefine.currentFragment instanceof MyJobFragment) {
                         navigationView.setCheckedItem(R.id.nav_job);
-                    } else if (GlobalDefine.currentFragment instanceof MyCVFragment) {
+                    } else if (GlobalDefine.currentFragment instanceof MyResumeFragment) {
                         navigationView.setCheckedItem(R.id.nav_cv);
-                    } else if (GlobalDefine.currentFragment instanceof MyProfileFragment) {
+                    } else if (GlobalDefine.currentFragment instanceof CollaboratorProfileFragment) {
                         navigationView.setCheckedItem(R.id.nav_profile);
                     }
                     FragmentUtil.replaceFragment(this, GlobalDefine.currentFragment, null);
@@ -391,11 +381,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         break;
                     case "CTV_CV_SAVE":
                         SharedPrefUtils.putString("menu", AccountManager.getUserInfoBean().getLstMenuAuthority().get(i).getCode());
-                        FragmentUtil.replaceFragment(this, new MyCVFragment(), null);
+                        FragmentUtil.replaceFragment(this, new MyResumeFragment(), null);
                         break;
                     case "CTV_CV_SEND":
                         SharedPrefUtils.putString("menu", AccountManager.getUserInfoBean().getLstMenuAuthority().get(i).getCode());
-                        FragmentUtil.replaceFragment(this, new MyCVFragment(), null);
+                        FragmentUtil.replaceFragment(this, new MyResumeFragment(), null);
                         break;
                     case "CMS_JOB_AND_CV":
                         break;
@@ -417,7 +407,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         }
                         break;
                     default:
-                        FragmentUtil.replaceFragment(MainActivity.this, new MyProfileFragment(), null);
+//                        if (AccountManager.getUserInfoBean().getType() == 7)
+//                            FragmentUtil.replaceFragment(MainActivity.this, new CollaboratorProfileFragment(), null);
+//                        else if (AccountManager.getUserInfoBean().getType() == 2)
+                            FragmentUtil.replaceFragment(MainActivity.this, new CustomerProfileFragment(), null);
                         break;
                 }
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

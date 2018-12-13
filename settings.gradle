@@ -1,1 +1,1 @@
-include ':app', ':library', ':floatingedittext',':libs:ViewPagerIndicator-Library', ':swipe-reveal-layout'
+include ':app', ':floatingedittext',':libs:ViewPagerIndicator-Library', ':swipe-reveal-layout', ':stepview'

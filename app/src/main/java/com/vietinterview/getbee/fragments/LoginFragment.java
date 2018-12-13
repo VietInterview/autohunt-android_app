@@ -220,7 +220,6 @@ public class LoginFragment extends BaseFragment {
 
     @OnClick(R.id.tvForgotPass)
     public void onForgotpassClick() {
-
         mForgotPassdialog = new Dialog(getActivity());
         mForgotPassdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         mForgotPassdialog.setContentView(R.layout.dialog_forgotpass);
@@ -240,7 +239,6 @@ public class LoginFragment extends BaseFragment {
                 String number = ("tel:02466629448");
                 mIntent = new Intent(Intent.ACTION_CALL);
                 mIntent.setData(Uri.parse(number));
-// Here, thisActivity is the current activity
                 if (ContextCompat.checkSelfPermission(getActivity(),
                         Manifest.permission.CALL_PHONE)
                         != PackageManager.PERMISSION_GRANTED) {
@@ -248,12 +246,7 @@ public class LoginFragment extends BaseFragment {
                     ActivityCompat.requestPermissions(getActivity(),
                             new String[]{Manifest.permission.CALL_PHONE},
                             MY_PERMISSIONS_REQUEST_CALL_PHONE);
-
-                    // MY_PERMISSIONS_REQUEST_CALL_PHONE is an
-                    // app-defined int constant. The callback method gets the
-                    // result of the request.
                 } else {
-                    //You already have permission
                     try {
                         startActivity(mIntent);
                     } catch (SecurityException e) {
@@ -295,22 +288,12 @@ public class LoginFragment extends BaseFragment {
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_CALL_PHONE: {
-                // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted, yay! Do the phone call
-
                 } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
                 }
                 return;
             }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
         }
     }
 

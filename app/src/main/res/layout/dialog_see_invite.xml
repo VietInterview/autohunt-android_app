@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_bg"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:background="@drawable/border_red_top_left_right"
+            android:backgroundTint="#042E51"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <ImageView
+                android:layout_width="111dp"
+                android:layout_height="32dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_logo" />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:padding="@dimen/activity_horizontal_margin">
+
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:text="Thân gửi, Nguyễn Sơn Tùng Thời gian: 28/12/2018, 8:00 PM
+Địa điểm: Tòa Báo Nông Thôn Ngày Ngay, Dương Đình Nghệ, Cầu Giấy, Hà NộiBut I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness.
+
+No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful.
+
+Nor again is there anyone who loves or pursues or desires to obtain pain of itself"
+                android:textSize="16sp" />
+        </ScrollView>
+    </LinearLayout>
+
+    <com.vietinterview.getbee.customview.RobotoMediumButton
+        android:id="@+id/btnOK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:background="@android:color/transparent"
+        android:drawableTop="@drawable/ic_close_white"
+        android:text="Đóng"
+        android:textColor="@color/white" />
+</LinearLayout>

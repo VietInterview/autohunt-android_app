@@ -18,7 +18,7 @@
     <string name="cv_found">resumes found</string>
     <string name="edit">Edit</string>
     <string name="cancel">Cancel</string>
-    <string name="create_new_cv">Create new resume</string>
+    <string name="process_cv">Process resume</string>
     <string name="cv_applyed">Submitted resumes</string>
     <string name="not_send">Draft</string>
     <string name="wait_approve">Processing</string>
