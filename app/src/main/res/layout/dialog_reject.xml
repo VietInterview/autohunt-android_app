@@ -54,14 +54,15 @@
                     android:id="@+id/spinner1"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
-                    android:entries="@array/country_arrays"
                     android:prompt="@string/country_prompt" />
             </LinearLayout>
 
-            <EditText
+            <com.vietinterview.getbee.customview.ClearableRegularEditText
+                android:id="@+id/edtReasonOther"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/border_gray"
+                android:editable="false"
                 android:gravity="top|left"
                 android:hint="Nhập lý do từ chối"
                 android:inputType="textMultiLine"
@@ -93,6 +94,7 @@
     </LinearLayout>
 
     <com.vietinterview.getbee.customview.RobotoMediumButton
+        android:id="@+id/btnClose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"

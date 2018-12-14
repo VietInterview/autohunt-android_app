@@ -40,6 +40,7 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
                 <com.vietinterview.getbee.customview.RobotoMediumTextView
+                    android:id="@+id/tvNameStep"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@string/font_fontFamily_medium"
@@ -48,6 +49,7 @@
                     android:textSize="24sp" />
 
                 <com.vietinterview.getbee.customview.RobotoTextView
+                    android:id="@+id/tvStep"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Bước 1/5"

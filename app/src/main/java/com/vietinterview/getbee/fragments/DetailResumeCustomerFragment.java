@@ -133,6 +133,6 @@ public class DetailResumeCustomerFragment extends BaseFragment {
 
     @OnClick(R.id.btnProcessCV)
     public void onProcessClick() {
-        FragmentUtil.pushFragment(getActivity(), this, new ProcessResumeFragment(), null);
+        FragmentUtil.pushFragment(getActivity(), this, new ProcessResumeFragment().newInstance(mDetailCVCustomerResponse.getId(), mDetailCVCustomerResponse.getJobId()), null);
     }
 }

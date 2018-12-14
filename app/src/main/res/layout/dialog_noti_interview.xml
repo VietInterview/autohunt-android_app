@@ -60,7 +60,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/borderbutton_notyet_send"
-                android:text="Gửi từ chối"
+                android:text="Không"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 

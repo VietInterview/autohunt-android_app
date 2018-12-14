@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.api.response.detailprocessresume.DetailProcessResumeResponse;
 
 import butterknife.OnClick;
 
@@ -14,6 +15,16 @@ import butterknife.OnClick;
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 public class GoToWorkProcessResumeFragment extends BaseFragment {
+    DetailProcessResumeResponse detailProcessResumeResponse;
+
+    public static GoToWorkProcessResumeFragment newInstance(DetailProcessResumeResponse detailProcessResumeResponse) {
+        GoToWorkProcessResumeFragment fm = new GoToWorkProcessResumeFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("detailProcessResumeResponse", detailProcessResumeResponse);
+        fm.setArguments(bundle);
+        return fm;
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_gotowork_process_resume;

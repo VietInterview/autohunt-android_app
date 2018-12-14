@@ -421,7 +421,7 @@ public class LoginFragment extends BaseFragment {
                     if (getActivity() instanceof MainActivity) {
                         ((MainActivity) getActivity()).drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                     }
-                    getAct().navigationView.setCheckedItem(R.id.nav_home);
+                    getMainActivity().navigationView.setCheckedItem(R.id.nav_home);
                     if (AccountManager.getUserInfoBean().getType() == 7)
                         FragmentUtil.replaceFragment(getActivity(), new HomeFragment(), null);
                     else

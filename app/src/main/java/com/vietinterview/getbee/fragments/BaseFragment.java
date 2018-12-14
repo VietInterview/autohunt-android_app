@@ -28,8 +28,6 @@ import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.api.request.BaseJsonRequest;
 import com.vietinterview.getbee.api.request.BaseRequest;
 import com.vietinterview.getbee.model.Event;
-import com.vietinterview.getbee.utils.DebugLog;
-import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.KeyboardUtil;
 import com.vietinterview.getbee.utils.UiUtil;
 
@@ -67,7 +65,7 @@ public abstract class BaseFragment extends Fragment {
     TextView tvEmpty;
     LayoutInflater mInflater;
     ViewGroup mContainer;
-    MainActivity act;
+    MainActivity mainActivity;
     //    CreateNewCVActivity createNewCVActivity;
     private GestureDetectorCompat gestureDetectorCompat = null;
 
@@ -220,8 +218,8 @@ public abstract class BaseFragment extends Fragment {
         return baseActivity.getEventBaseActivity();
     }
 
-    public MainActivity getAct() {
-        return act;
+    public MainActivity getMainActivity() {
+        return mainActivity;
     }
 
 
@@ -346,11 +344,11 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void customToolbar(boolean isCustom) {
-        act = (MainActivity) getActivity();
+        mainActivity = (MainActivity) getActivity();
         if (isCustom) {
-            if (act.getSupportActionBar() != null) {
-                act.getSupportActionBar().show();
-                Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
+            if (mainActivity.getSupportActionBar() != null) {
+                mainActivity.getSupportActionBar().show();
+                Toolbar toolbar = (Toolbar) mainActivity.findViewById(R.id.toolbar);
                 toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
                 toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
 
@@ -367,20 +365,20 @@ public abstract class BaseFragment extends Fragment {
                 });
             }
         } else {
-            if (act.getSupportActionBar() != null) {
-                act.getSupportActionBar().hide();
-                Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
+            if (mainActivity.getSupportActionBar() != null) {
+                mainActivity.getSupportActionBar().hide();
+                Toolbar toolbar = (Toolbar) mainActivity.findViewById(R.id.toolbar);
                 toolbar.setNavigationIcon(null);
             }
         }
     }
 
     protected void showhidetoolbar(boolean isVisible) {
-        act = (MainActivity) getActivity();
+        mainActivity = (MainActivity) getActivity();
         if (isVisible) {
-            if (act.getSupportActionBar() != null) {
-                act.getSupportActionBar().show();
-                Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
+            if (mainActivity.getSupportActionBar() != null) {
+                mainActivity.getSupportActionBar().show();
+                Toolbar toolbar = (Toolbar) mainActivity.findViewById(R.id.toolbar);
                 toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
                 toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
                 toolbar.setVisibility(View.VISIBLE);
@@ -397,19 +395,19 @@ public abstract class BaseFragment extends Fragment {
                 });
             }
         } else {
-            if (act.getSupportActionBar() != null) {
-                act.getSupportActionBar().hide();
-                Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
+            if (mainActivity.getSupportActionBar() != null) {
+                mainActivity.getSupportActionBar().hide();
+                Toolbar toolbar = (Toolbar) mainActivity.findViewById(R.id.toolbar);
                 toolbar.setVisibility(View.GONE);
             }
         }
     }
 
     protected void loadMenuLeft() {
-        if (act.drawer.isDrawerOpen(GravityCompat.START)) {
-            act.drawer.closeDrawer(GravityCompat.START);
+        if (mainActivity.drawer.isDrawerOpen(GravityCompat.START)) {
+            mainActivity.drawer.closeDrawer(GravityCompat.START);
         } else {
-            act.drawer.openDrawer(GravityCompat.START);
+            mainActivity.drawer.openDrawer(GravityCompat.START);
         }
     }
 

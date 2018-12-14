@@ -52,7 +52,25 @@ public class ApiConstantTest {
     public String GET_DETAIL_JOB_CUSTOMER = BASE_URL + "svccustomer/api/cusjobs/getJobById";
     public String GET_CV_BY_JOB_CUSTOMER = BASE_URL + "svccustomer/api/searchCusHomeCvByJob";
     public String GET_DETAIL_CV_BY_JOB_CUSTOMER = BASE_URL + "svccollaborator/api/cvs/getViewCvById";
+    public String DETAIL_PROCESS_RESUME = "svccustomer/api/cvProcess/detail";
+    public String LIST_REJECT_REASON = "svccollaborator/api/getListRejectReason";
+    public String REJECT = "svccustomer/api/cvProcess/reject";
+    public String INVITE_INTERVIEW = "svccustomer/api/cvProcess/inviteInterview";
+    public String VIEW_EMAIL_INTERVIEW = "svccustomer/api/cvProcess/viewEmailInterview";
+    public String SEND_INTERVIEW = "svccustomer/api/cvProcess/sendInterview";
+    public String UPDATE_INTERVIEW_STATUS = "svccustomer/api/cvProcess/updateInterviewStatus";
 
+    public int getPOST() {
+        return POST;
+    }
+
+    public int getGET() {
+        return GET;
+    }
+
+    public int getDELETE() {
+        return DELETE;
+    }
 
     public void setBASE_URL(String BASE_URL) {
         this.BASE_URL = BASE_URL;
@@ -164,5 +182,33 @@ public class ApiConstantTest {
 
     public String getGET_DETAIL_CV_BY_JOB_CUSTOMER() {
         return getBASE_URL() + "svccollaborator/api/cvs/getViewCvById";
+    }
+
+    public String getDETAIL_PROCESS_RESUME() {
+        return getBASE_URL() + DETAIL_PROCESS_RESUME;
+    }
+
+    public String getLIST_REJECT_REASON() {
+        return getBASE_URL() + LIST_REJECT_REASON;
+    }
+
+    public String getREJECT() {
+        return getBASE_URL() + REJECT;
+    }
+
+    public String getINVITE_INTERVIEW() {
+        return getBASE_URL() + INVITE_INTERVIEW;
+    }
+
+    public String getVIEW_EMAIL_INTERVIEW() {
+        return getBASE_URL() + VIEW_EMAIL_INTERVIEW;
+    }
+
+    public String getSEND_INTERVIEW() {
+        return getBASE_URL() + SEND_INTERVIEW;
+    }
+
+    public String getUPDATE_INTERVIEW_STATUS() {
+        return getBASE_URL() + UPDATE_INTERVIEW_STATUS;
     }
 }

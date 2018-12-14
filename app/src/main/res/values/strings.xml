@@ -198,7 +198,7 @@
     <string name="not_enought_edu">Bạn chưa nhập trình độ làm việc, vui lòng kiểm tra lại</string>
     <string name="before_day">ngày trước</string>
 
-    <string name="country_prompt">Choose a country</string>
+    <string name="country_prompt">Choose a reason</string>
 
     <string-array name="country_arrays">
         <item>Malaysia</item>

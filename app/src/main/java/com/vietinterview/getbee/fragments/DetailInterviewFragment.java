@@ -5,15 +5,40 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.api.response.detailprocessresume.DetailProcessResumeResponse;
+import com.vietinterview.getbee.api.response.detailprocessresume.LstInterviewHi;
 import com.vietinterview.getbee.utils.FragmentUtil;
+
+import butterknife.BindView;
 
 /**
  * Created by hiepnguyennghia on 12/12/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class DetailInterviewFragment extends BaseFragment{
+public class DetailInterviewFragment extends BaseFragment {
+    @BindView(R.id.tvRound)
+    TextView tvRound;
+    @BindView(R.id.tvDateInterview)
+    TextView tvDateInterview;
+    @BindView(R.id.tvPlaceInterview)
+    TextView tvPlaceInterview;
+    @BindView(R.id.tvNote)
+    TextView tvNote;
+    @BindView(R.id.tvResult)
+    TextView tvResult;
+    LstInterviewHi lstInterviewHi;
+
+    public static DetailInterviewFragment newInstance(LstInterviewHi lstInterviewHi) {
+        DetailInterviewFragment fm = new DetailInterviewFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("lstInterviewHi", lstInterviewHi);
+        fm.setArguments(bundle);
+        return fm;
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_detail_interview;
@@ -21,7 +46,7 @@ public class DetailInterviewFragment extends BaseFragment{
 
     @Override
     protected void getArgument(Bundle bundle) {
-
+        lstInterviewHi = bundle.getParcelable("lstInterviewHi");
     }
 
     @Override
@@ -32,7 +57,30 @@ public class DetailInterviewFragment extends BaseFragment{
 
     @Override
     protected void initData() {
+        tvRound.setText(lstInterviewHi.getRound());
+        tvDateInterview.setText(lstInterviewHi.getInterviewDate());
+        tvNote.setText(lstInterviewHi.getNote());
+        tvResult.setText(switchResult(lstInterviewHi.getStatus()));
+        tvPlaceInterview.setText(lstInterviewHi.getInterviewAddress());
+    }
 
+    public String switchResult(int status) {
+        String statusINterview = "";
+        switch (status) {
+            case 1:
+                statusINterview = "Đạt";
+                break;
+            case 2:
+                statusINterview = "Không đạt";
+                break;
+            case 3:
+                statusINterview = "Ứng viên không đến";
+                break;
+            default:
+                statusINterview = "Chưa có kết quả";
+                break;
+        }
+        return statusINterview;
     }
 
     @Override

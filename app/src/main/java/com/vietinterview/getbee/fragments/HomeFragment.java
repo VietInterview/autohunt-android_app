@@ -267,7 +267,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
                     hideCoverNetworkLoading();
                     AccountManager.getUserInfoBean().setName(dataSuccess.getFullNameColl());
-                    getAct().getTvGreeting().setText(getResources().getString(R.string.greeting) + AccountManager.getUserInfoBean().getName() + "!");
+                    getMainActivity().getTvGreeting().setText(getResources().getString(R.string.greeting) + AccountManager.getUserInfoBean().getName() + "!");
                 }
 
                 @Override
@@ -282,7 +282,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 public void onSuccess(int status, ProfileCustomerResponse dataSuccess, List<ProfileCustomerResponse> listDataSuccess, String message) {
                     hideCoverNetworkLoading();
                     AccountManager.getUserInfoBean().setName(dataSuccess.getCompanyName());
-                    getAct().getTvGreeting().setText(getResources().getString(R.string.greeting) + AccountManager.getUserInfoBean().getName() + "!");
+                    getMainActivity().getTvGreeting().setText(getResources().getString(R.string.greeting) + AccountManager.getUserInfoBean().getName() + "!");
                 }
 
                 @Override

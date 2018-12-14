@@ -52,7 +52,7 @@ public abstract class BaseJsonRequest<T, V> {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    DebugLog.jsonFormat(getAbsoluteUrl(), response);
+                    DebugLog.jsonFormat("response "+getAbsoluteUrl(), response);
                     mApiObjectCallBack.onSuccess(statusCode, GsonUtils.fromJson(response.toString(), getResponseSuccessClass()), null, "");
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -106,7 +106,7 @@ public abstract class BaseJsonRequest<T, V> {
         StringEntity entity = null;
         try {
             entity = new StringEntity(putJsonParams().toString(), "UTF-8");
-            DebugLog.jsonFormat(getAbsoluteUrl(), putJsonParams().toString());
+            DebugLog.jsonFormat("call "+getAbsoluteUrl(), putJsonParams().toString());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (JSONException e) {

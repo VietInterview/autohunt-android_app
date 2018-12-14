@@ -83,6 +83,30 @@ public class DateUtil {
         }
         return converted_date;
     }
+    public synchronized static String convertToMyFormat3(String Date) {
+        String converted_date = "";
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm a", Locale.US);
+            Date date = sdf.parse(Date);
+
+            SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
+            converted_date = sdf2.format(date.getTime());
+        } catch (Exception e) {
+        }
+        return converted_date;
+    }
+    public synchronized static String convertToMyFormat4(String Date) {
+        String converted_date = "";
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US);
+            Date date = sdf.parse(Date);
+
+            SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm aa");
+            converted_date = sdf2.format(date.getTime());
+        } catch (Exception e) {
+        }
+        return converted_date;
+    }
     public synchronized static String convertToMyFormatVacant(String Date) {
         String converted_date = "";
         try {

@@ -11,13 +11,14 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingHorizontal="14dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="14dp">
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
 
             <com.vietinterview.getbee.customview.RobotoMediumTextView
                 android:layout_width="wrap_content"
@@ -28,17 +29,19 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.ClearableRegularEditText
+                android:id="@+id/edtRound"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginTop="14dp"
-                android:background="@drawable/border_gray" />
+                android:background="@drawable/border_gray_disable"
+                android:paddingHorizontal="14dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="14dp">
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
 
             <com.vietinterview.getbee.customview.RobotoMediumTextView
                 android:layout_width="wrap_content"
@@ -49,17 +52,21 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.ClearableRegularEditText
+                android:id="@+id/edtDateInterview"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginTop="14dp"
-                android:background="@drawable/border_gray" />
+                android:background="@drawable/border_gray"
+                android:drawableRight="@drawable/ic_calendar"
+                android:editable="false"
+                android:paddingHorizontal="14dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="14dp">
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
 
             <com.vietinterview.getbee.customview.RobotoMediumTextView
                 android:layout_width="wrap_content"
@@ -70,17 +77,19 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.ClearableRegularEditText
+                android:id="@+id/edtPlaceInterview"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginTop="14dp"
-                android:background="@drawable/border_gray" />
+                android:background="@drawable/border_gray"
+                android:paddingHorizontal="14dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="14dp">
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
 
             <com.vietinterview.getbee.customview.RobotoMediumTextView
                 android:layout_width="wrap_content"
@@ -91,17 +100,20 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.ClearableRegularEditText
+                android:id="@+id/edtNote"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginTop="14dp"
-                android:background="@drawable/border_gray" />
+                android:background="@drawable/border_gray"
+                android:paddingHorizontal="14dp" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="14dp">
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
 
             <com.vietinterview.getbee.customview.RobotoMediumTextView
                 android:layout_width="wrap_content"
@@ -119,6 +131,7 @@
                 android:orientation="horizontal">
 
                 <com.vietinterview.getbee.customview.RobotoTextView
+                    android:id="@+id/tvAchieve"
                     android:layout_width="114dp"
                     android:layout_height="65dp"
                     android:layout_marginTop="10dp"
@@ -132,6 +145,7 @@
                     android:background="@color/background_icon_not_focus" />
 
                 <com.vietinterview.getbee.customview.RobotoTextView
+                    android:id="@+id/tvNotAchieved"
                     android:layout_width="114dp"
                     android:layout_height="65dp"
                     android:layout_marginTop="10dp"
@@ -145,6 +159,7 @@
                     android:background="@color/background_icon_not_focus" />
 
                 <com.vietinterview.getbee.customview.RobotoTextView
+                    android:id="@+id/tvCandidateNotCome"
                     android:layout_width="wrap_content"
                     android:layout_height="65dp"
                     android:drawableTop="@drawable/ic_not_accept"
@@ -152,14 +167,54 @@
                     android:gravity="center"
                     android:text="Ứng viên không đi" />
             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/llFooter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/listInterview"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/borderbutton_fill_gray"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.vietinterview.getbee.customview.RobotoBoldButton
+                    android:id="@+id/btnSeeInvite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:drawableLeft="@drawable/ic_see_eye"
+                    android:drawablePadding="10dp"
+                    android:text="Mẫu thư mời"
+                    android:textColor="@color/white" />
+            </LinearLayout>
 
             <com.vietinterview.getbee.customview.RobotoMediumButton
-                android:layout_width="match_parent"
+                android:id="@+id/btnSendMail"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
+                android:layout_weight="1"
                 android:background="@drawable/borderbutton_blue"
-                android:text="Xong"
-                android:textColor="@color/white" />
+                android:drawableLeft="@drawable/ic_mail"
+                android:drawableTint="@color/white"
+                android:fontFamily="@string/font_fontFamily_medium"
+                android:padding="10dp"
+                android:text="Mời phỏng vấn"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -50,6 +50,7 @@
                     android:padding="14dp">
 
                     <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imgAva"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_weight="1"
@@ -58,6 +59,7 @@
                         app:elevation="2dp" />
 
                     <com.vietinterview.getbee.customview.RobotoMediumTextView
+                        android:id="@+id/tvNameResume"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
@@ -92,6 +94,7 @@
                         android:textSize="14sp" />
 
                     <com.vietinterview.getbee.customview.RobotoMediumTextView
+                        android:id="@+id/tvBirthDayResume"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@string/font_fontFamily_medium"
@@ -115,6 +118,7 @@
                         android:textSize="14sp" />
 
                     <com.vietinterview.getbee.customview.RobotoMediumTextView
+                        android:id="@+id/tvCertificate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@string/font_fontFamily_medium"
@@ -138,6 +142,7 @@
                         android:textSize="14sp" />
 
                     <com.vietinterview.getbee.customview.RobotoMediumTextView
+                        android:id="@+id/tvPositionWish"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@string/font_fontFamily_medium"
@@ -161,6 +166,7 @@
                         android:textSize="14sp" />
 
                     <com.vietinterview.getbee.customview.RobotoMediumTextView
+                        android:id="@+id/tvWorkPLace"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@string/font_fontFamily_medium"
@@ -184,6 +190,7 @@
                         android:textSize="14sp" />
 
                     <com.vietinterview.getbee.customview.RobotoMediumTextView
+                        android:id="@+id/tvExpYear"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@string/font_fontFamily_medium"
@@ -207,6 +214,7 @@
                         android:textSize="14sp" />
 
                     <com.vietinterview.getbee.customview.RobotoMediumTextView
+                        android:id="@+id/tvSalary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@string/font_fontFamily_medium"
@@ -222,7 +230,7 @@
                     android:padding="10dp">
 
                     <com.vietinterview.getbee.customview.RobotoMediumButton
-                        android:id="@+id/btnNotAccept"
+                        android:id="@+id/btnReject"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:layout_marginRight="5dp"
@@ -235,7 +243,7 @@
                         android:textSize="14sp" />
 
                     <com.vietinterview.getbee.customview.RobotoMediumButton
-                        android:id="@+id/btnNext"
+                        android:id="@+id/btnInviteInterview"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:layout_marginLeft="5dp"
@@ -283,6 +291,7 @@
 
 
                     <com.vietinterview.getbee.customview.RobotoMediumTextView
+                        android:id="@+id/tvCollName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
@@ -309,6 +318,7 @@
                         android:textSize="14sp" />
 
                     <com.vietinterview.getbee.customview.RobotoMediumTextView
+                        android:id="@+id/tvPhoneColl"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@string/font_fontFamily_medium"
@@ -332,6 +342,7 @@
                         android:textSize="14sp" />
 
                     <com.vietinterview.getbee.customview.RobotoMediumTextView
+                        android:id="@+id/tvEmailColl"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@string/font_fontFamily_medium"
@@ -343,6 +354,7 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/cardReject"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:cardCornerRadius="10dp"
@@ -353,7 +365,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
 
                 <com.vietinterview.getbee.customview.RobotoMediumTextView
                     android:layout_width="wrap_content"
