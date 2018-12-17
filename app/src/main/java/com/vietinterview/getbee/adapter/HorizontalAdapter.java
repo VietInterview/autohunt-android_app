@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.model.ImageCustomer;
+import com.vietinterview.getbee.utils.ShowImageUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -55,7 +56,8 @@ public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.My
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
-        holder.imageView.setImageResource(horizontalList.get(position).imageId);
+//        holder.imageView.setImageResource(horizontalList.get(position).imageId);
+        ShowImageUtils.showImage(context,horizontalList.get(position).imageId,R.drawable.ic_company_null,holder.imageView);
         holder.txtview.setText(horizontalList.get(position).txt);
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {

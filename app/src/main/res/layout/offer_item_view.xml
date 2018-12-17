@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rlRound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_top_bottom"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:id="@+id/tvRound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:text="Offer lần 3"
+            android:textColor="#042E51"
+            android:textSize="16sp" />
+
+        <com.vietinterview.getbee.customview.RobotoTextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvRound"
+            android:text="28/12/2018"
+            android:textColor="#677B8D"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_arrow_right" />
+    </RelativeLayout>
+</LinearLayout>

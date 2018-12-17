@@ -56,9 +56,16 @@ public class ApiConstantTest {
     public String LIST_REJECT_REASON = "svccollaborator/api/getListRejectReason";
     public String REJECT = "svccustomer/api/cvProcess/reject";
     public String INVITE_INTERVIEW = "svccustomer/api/cvProcess/inviteInterview";
-    public String VIEW_EMAIL_INTERVIEW = "svccustomer/api/cvProcess/viewEmailInterview";
     public String SEND_INTERVIEW = "svccustomer/api/cvProcess/sendInterview";
-    public String UPDATE_INTERVIEW_STATUS = "svccustomer/api/cvProcess/updateInterviewStatus";
+    public String UPDATE_INTERVIEW_STATUS = "svccustomer/api/cvProcess/updateOfferStatus";
+    public String OFFER_STATUS = "svccustomer/api/cvProcess/offerStatus";
+    public String SEND_OFFER = "svccustomer/api/cvProcess/sendOffer";
+    public String UPDATE_OFFER_STATUS = "svccustomer/api/cvProcess/updateOfferStatus";
+    public String GO_TO_WORK_STATUS = "svccustomer/api/cvProcess/gotoworkStatus";
+    public String GO_TO_WORK_UPDATE = "svccustomer/api/cvProcess/gotoWorkUpdate";
+    public String CONTRACT_STATUS = "svccustomer/api/cvProcess/contractStatus";
+    public String VIEW_EMAIL_INTERVIEW = "svccustomer/api/cvProcess/viewEmailInterview";
+    public String VIEW_EMAIL_OFFER = "svccustomer/api/cvProcess/viewEmailOffer";
 
     public int getPOST() {
         return POST;
@@ -210,5 +217,33 @@ public class ApiConstantTest {
 
     public String getUPDATE_INTERVIEW_STATUS() {
         return getBASE_URL() + UPDATE_INTERVIEW_STATUS;
+    }
+
+    public String getOFFER_STATUS() {
+        return getBASE_URL() + OFFER_STATUS;
+    }
+
+    public String getSEND_OFFER() {
+        return getBASE_URL() + SEND_OFFER;
+    }
+
+    public String getUPDATE_OFFER_STATUS() {
+        return getBASE_URL() + UPDATE_OFFER_STATUS;
+    }
+
+    public String getGO_TO_WORK_STATUS() {
+        return getBASE_URL() + GO_TO_WORK_STATUS;
+    }
+
+    public String getGO_TO_WORK_UPDATE() {
+        return getBASE_URL() + GO_TO_WORK_UPDATE;
+    }
+
+    public String getCONTRACT_STATUS() {
+        return getBASE_URL() + CONTRACT_STATUS;
+    }
+
+    public String getVIEW_EMAIL_OFFER() {
+        return getBASE_URL() + VIEW_EMAIL_OFFER;
     }
 }

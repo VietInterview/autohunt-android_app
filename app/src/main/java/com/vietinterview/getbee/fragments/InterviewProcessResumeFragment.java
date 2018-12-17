@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.GetListRejectReasonRequest;
+import com.vietinterview.getbee.api.request.OfferStatusRequest;
 import com.vietinterview.getbee.api.request.RejectRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.RejectReasonResponse;
@@ -58,8 +59,6 @@ public class InterviewProcessResumeFragment extends BaseFragment {
     FlowLayout flowListInterview;
     @BindView(R.id.btnNext)
     Button btnNext;
-    @BindView(R.id.btnSendMail)
-    Button btnSendMail;
     @BindView(R.id.cardReject)
     CardView cardReject;
     @BindView(R.id.tvAddRound)
@@ -100,21 +99,20 @@ public class InterviewProcessResumeFragment extends BaseFragment {
     protected void initData() {
         showListInterview();
         if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() != null) {
-            if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 1) {
+            if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 2) {
                 cardReject.setVisibility(View.VISIBLE);
                 getEventBaseFragment().reject();
                 btnNext.setEnabled(false);
-                btnSendMail.setEnabled(false);
                 tvAddRound.setEnabled(false);
             } else cardReject.setVisibility(View.GONE);
         } else cardReject.setVisibility(View.GONE);
-        if (detailProcessResumeResponse.getLstInterviewHis().size() > 0) {
-            if (detailProcessResumeResponse.getLstInterviewHis().get(detailProcessResumeResponse.getLstInterviewHis().size() - 1).getStatus() == 1) {
-                btnNotAccept.setVisibility(View.GONE);
-            } else {
-                btnNotAccept.setVisibility(View.VISIBLE);
-            }
-        }
+//        if (detailProcessResumeResponse.getLstInterviewHis().size() > 0) {
+//            if (detailProcessResumeResponse.getLstInterviewHis().get(detailProcessResumeResponse.getLstInterviewHis().size() - 1).getStatus() == 1) {
+//                btnNotAccept.setVisibility(View.GONE);
+//            } else {
+//                btnNotAccept.setVisibility(View.VISIBLE);
+//            }
+//        }
     }
 
     @OnClick(R.id.tvAddRound)
@@ -126,10 +124,65 @@ public class InterviewProcessResumeFragment extends BaseFragment {
         }
     }
 
+    private Dialog mNotifyDialog;
+
     @OnClick(R.id.btnNext)
     public void onNextClick() {
         if (detailProcessResumeResponse.getLstInterviewHis().get(detailProcessResumeResponse.getLstInterviewHis().size() - 1).getStatus() == 1) {
-            getEventBaseFragment().changeStepExp(2);
+            mNotifyDialog = new Dialog(getActivity());
+            mNotifyDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            mNotifyDialog.setContentView(R.layout.dialog_noti_interview);
+            mNotifyDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            mNotifyDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+            Window window = mNotifyDialog.getWindow();
+            WindowManager.LayoutParams wlp = window.getAttributes();
+            wlp.gravity = Gravity.TOP;
+            wlp.y = 300;
+            window.setAttributes(wlp);
+            Button btnOK = (Button) mNotifyDialog.findViewById(R.id.btnOK);
+            Button btnNo = mNotifyDialog.findViewById(R.id.btnNo);
+            TextView tvContent = mNotifyDialog.findViewById(R.id.tvContent);
+            tvContent.setText("Bạn có chắc chắn muốn gửi Offer tới ứng viên này?");
+            btnNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mNotifyDialog.dismiss();
+                }
+            });
+            btnOK.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (detailProcessResumeResponse.getLstOfferHis().size() > 0) {
+                        mNotifyDialog.dismiss();
+                        getEventBaseFragment().changeStepExp(2);
+                    } else {
+                        new OfferStatusRequest(detailProcessResumeResponse.getCvId(), detailProcessResumeResponse.getJobId()).callRequest(getActivity(), new ApiObjectCallBack<ErrorResponse, ErrorResponse>() {
+                            @Override
+                            public void onSuccess(int status, ErrorResponse dataSuccess, List<ErrorResponse> listDataSuccess, String message) {
+                                if (isAdded()) {
+                                    if (status == 200) {
+                                        mNotifyDialog.dismiss();
+                                        getEventBaseFragment().changeStepExp(2);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                                if (isAdded()) {
+                                    if (status == 200) {
+                                        mNotifyDialog.dismiss();
+                                        getEventBaseFragment().changeStepExp(2);
+                                    } else {
+                                        mNotifyDialog.dismiss();
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+            mNotifyDialog.show();
         } else {
             DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Vòng phỏng vấn gần nhất ứng viên không đạt vì vậy bạn không thể thêm mới vòng phỏng vấn");
         }
@@ -157,11 +210,6 @@ public class InterviewProcessResumeFragment extends BaseFragment {
         mReasonNotAcceptDialog.show();
     }
 
-    @OnClick(R.id.btnSendMail)
-    public void onSendMailClick() {
-
-    }
-
     @OnClick(R.id.btnNotAccept)
     public void onNotAcceptClick() {
         showCoverNetworkLoading();
@@ -172,7 +220,7 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                     hideCoverNetworkLoading();
                     final List<RejectReasonResponse> listReasonName = new ArrayList<RejectReasonResponse>();
                     for (int i = 0; i < listDataSuccess.size(); i++) {
-                        if (listDataSuccess.get(i).getStep() == 1) {
+                        if (listDataSuccess.get(i).getStep() == 2) {
                             listReasonName.add(listDataSuccess.get(i));
                         }
                     }
@@ -231,7 +279,6 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                                             DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Gửi từ chối thành công");
                                             cardReject.setVisibility(View.VISIBLE);
                                             btnNext.setEnabled(false);
-                                            btnSendMail.setEnabled(false);
                                             tvAddRound.setEnabled(false);
                                             flowListInterview.setEnabled(false);
                                             btnNotAccept.setEnabled(false);
@@ -292,22 +339,22 @@ public class InterviewProcessResumeFragment extends BaseFragment {
     }
 
     public String switchResult(int status) {
-        String statusINterview = "";
+        String statusInterview = "";
         switch (status) {
             case 1:
-                statusINterview = "Đạt";
+                statusInterview = "Đạt";
                 break;
             case 2:
-                statusINterview = "Không đạt";
+                statusInterview = "Không đạt";
                 break;
             case 3:
-                statusINterview = "Ứng viên không đến";
+                statusInterview = "Ứng viên không đến";
                 break;
             default:
-                statusINterview = "Chưa có kết quả";
+                statusInterview = "Chưa có kết quả";
                 break;
         }
-        return statusINterview;
+        return statusInterview;
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

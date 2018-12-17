@@ -29,6 +29,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.RobotoTextView
+                android:id="@+id/tvRound"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="offer lần 1"
@@ -52,6 +53,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.RobotoTextView
+                android:id="@+id/tvSalary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="8000000 VND"
@@ -75,6 +77,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.RobotoTextView
+                android:id="@+id/tvWorkTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="11/12/2018, 08:00 PM"
@@ -98,6 +101,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.RobotoTextView
+                android:id="@+id/tvWorkAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tòa Báo Nông Thôn Ngày Ngay, Dương Đình Nghệ, Cầu Giấy, Hà Nội"
@@ -121,6 +125,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.RobotoTextView
+                android:id="@+id/tvPosition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nhân viên thiết kế"
@@ -144,6 +149,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.RobotoTextView
+                android:id="@+id/tvNote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nhân viên mang theo hồ sơ và giấy khám"
@@ -162,11 +168,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Đồng ý"
+                android:text="Kết quả"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.RobotoTextView
+                android:id="@+id/tvResult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Thí sinh không đến"

@@ -35,11 +35,11 @@
 
 
         <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:id="@+id/tvContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:gravity="center"
-            android:text="Bạn có chắc chắn muốn gửi thư phỏng vấn tới ứng viên này?"
             android:textColor="#677B8D"
             android:textSize="18sp" />
 
@@ -51,7 +51,6 @@
             android:orientation="horizontal"
             android:padding="10dp"
             android:weightSum="2">
-
 
             <com.vietinterview.getbee.customview.RobotoBoldButton
                 android:id="@+id/btnNo"

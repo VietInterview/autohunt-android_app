@@ -54,6 +54,7 @@ public class JobsEmployerFragment extends BaseFragment implements SwipeRefreshLa
     TextView tvStatus;
     @BindView(R.id.edtJobTitle)
     ClearableRegularEditText edtJobTitle;
+    private int page = 0;
     int mStatus = -1;
     private GetJobCustomerRequest getJobCustomerRequest;
     private JobsEmployerAdapter jobsEmployerAdapter;
@@ -97,10 +98,10 @@ public class JobsEmployerFragment extends BaseFragment implements SwipeRefreshLa
 
     @Override
     protected void initData() {
-        getCVSaved(0);
+        getJobCustomer(0);
     }
 
-    public void getCVSaved(final int page) {
+    public void getJobCustomer(final int page) {
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
             showCoverNetworkLoading();
         getJobCustomerRequest = new GetJobCustomerRequest(page, edtJobTitle.getText().toString().trim(), mStatus);
@@ -221,7 +222,8 @@ public class JobsEmployerFragment extends BaseFragment implements SwipeRefreshLa
 
     @Override
     public void onRefresh() {
-
+        page = 0;
+        getJobCustomer(page);
     }
 
     @Override

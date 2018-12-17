@@ -22,11 +22,13 @@
             android:orientation="vertical">
 
             <com.vietinterview.getbee.customview.RoundRectCornerImageView
+                android:id="@+id/imgCompany"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:src="@drawable/cannon" />
 
             <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:id="@+id/tvCompanyName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -106,11 +108,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="Vòng phỏng vấn"
+                    android:text="Quy mô công ty"
                     android:textColor="#042E51"
                     android:textSize="16sp" />
 
                 <com.vietinterview.getbee.customview.RobotoTextView
+                    android:id="@+id/tvHumanResource"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Vòng 1"
@@ -129,11 +132,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="Thời gian phỏng vấn"
+                    android:text="Lĩnh vực/ ngành nghề"
                     android:textColor="#042E51"
                     android:textSize="16sp" />
 
                 <com.vietinterview.getbee.customview.RobotoTextView
+                    android:id="@+id/tvCarrer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="11/12/2018, 08:00PM"
@@ -152,11 +156,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="Địa điểm phỏng vấn"
+                    android:text="Địa chỉ công ty"
                     android:textColor="#042E51"
                     android:textSize="16sp" />
 
                 <com.vietinterview.getbee.customview.RobotoTextView
+                    android:id="@+id/tvCompanyAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tòa Báo Nông Thôn Ngày Ngay, Dương Đình Nghệ, Cầu Giấy, Hà Nội"
@@ -175,11 +180,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="Ghi chú"
+                    android:text="Thời gian làm việc"
                     android:textColor="#042E51"
                     android:textSize="16sp" />
 
                 <com.vietinterview.getbee.customview.RobotoTextView
+                    android:id="@+id/tvWorkTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Thí sinh không đến"
@@ -199,7 +205,7 @@
                     android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                     android:layout_marginVertical="4dp"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="Mục tiêu nghề nghiệp"
+                    android:text="Thông tin công ty"
                     android:textColor="#042E51"
                     android:textSize="16sp" />
 
@@ -208,7 +214,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/tvTarget"
+                        android:id="@+id/tvInfoCompany"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -230,7 +236,7 @@
                     android:id="@+id/btShowmore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
                     android:background="@android:color/transparent"
                     android:drawableRight="@drawable/ic_arrow_down_blue"
                     android:text="Xem thêm  "
@@ -257,7 +263,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
                     android:layout_marginTop="14dp"
-                    android:background="@drawable/border_gray" />
+                    android:background="@drawable/border_gray_disable" />
             </LinearLayout>
         </LinearLayout>
 
@@ -278,6 +284,7 @@
                 android:textSize="16sp" />
 
             <com.vietinterview.getbee.customview.RobotoTextView
+                android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="tungnguyen@vietinterview.com"

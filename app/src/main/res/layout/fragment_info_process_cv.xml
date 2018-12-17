@@ -10,8 +10,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_above="@+id/llFooter"
-    android:nestedScrollingEnabled="true"
     android:background="#F2F9FF"
+    android:nestedScrollingEnabled="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <LinearLayout
@@ -71,10 +71,13 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/imgInfo"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="1"
+                        android:padding="10dp"
+                        android:scaleType="center"
                         android:src="@drawable/ic_info_hunt"
                         android:tint="#9FB6CB" />
                 </LinearLayout>

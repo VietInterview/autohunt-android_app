@@ -72,6 +72,8 @@ public class InfoProcessResumeFragment extends BaseFragment {
     ImageView imgAva;
     @BindView(R.id.btnInviteInterview)
     Button btnInviteInterview;
+    @BindView(R.id.imgInfo)
+    ImageView imgInfo;
     DetailProcessResumeResponse detailProcessResumeResponse;
     private Dialog mRejectDialog;
     private Dialog mNotifyDialog;
@@ -136,6 +138,8 @@ public class InfoProcessResumeFragment extends BaseFragment {
         window.setAttributes(wlp);
         Button btnOK = (Button) mNotifyDialog.findViewById(R.id.btnOK);
         Button btnNo = mNotifyDialog.findViewById(R.id.btnNo);
+        TextView tvContent = mNotifyDialog.findViewById(R.id.tvContent);
+        tvContent.setText("Bạn có chắc chắn muốn gửi thư phỏng vấn tới ứng viên này?");
         btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -176,6 +180,11 @@ public class InfoProcessResumeFragment extends BaseFragment {
             }
         });
         mNotifyDialog.show();
+    }
+
+    @OnClick(R.id.imgInfo)
+    public void onImageClick() {
+        FragmentUtil.popBackStack(this);
     }
 
     @OnClick(R.id.btnReject)

@@ -53,6 +53,7 @@ public class DetailInterviewFragment extends BaseFragment {
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbar(true);
         setCustomToolbarVisible(true);
+        getEventBaseFragment().doFillBackground("Thông tin phỏng vấn");
     }
 
     @Override

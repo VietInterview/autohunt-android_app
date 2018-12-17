@@ -53,6 +53,7 @@ public class ResumesEmployerFragment extends BaseFragment implements SwipeRefres
     @BindView(R.id.tvStatus)
     TextView tvStatus;
     JobList mJobList;
+    private int page = 0;
     private GetListCVByJobCustomerRequest getListCVByJobCustomerRequest;
     private ResumesEmployerAdapter cvsEmployerAdapter;
     private ArrayList<CvList> cvLists = new ArrayList<>();
@@ -94,10 +95,10 @@ public class ResumesEmployerFragment extends BaseFragment implements SwipeRefres
 
     @Override
     protected void initData() {
-        getCVSaved(0);
+        getResumeEmployer(0);
     }
 
-    public void getCVSaved(final int page) {
+    public void getResumeEmployer(final int page) {
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
             showCoverNetworkLoading();
         getListCVByJobCustomerRequest = new GetListCVByJobCustomerRequest(page, String.valueOf(mJobList.getId()), Integer.parseInt(mStatusId));
@@ -218,7 +219,8 @@ public class ResumesEmployerFragment extends BaseFragment implements SwipeRefres
 
     @Override
     public void onRefresh() {
-
+        page = 0;
+        getResumeEmployer(page);
     }
 
     @Override

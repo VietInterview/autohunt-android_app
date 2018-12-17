@@ -60,10 +60,8 @@ public class CollaboratorProfileFragment extends BaseFragment {
     //    private String mCarrerId = "0";
     private String mCarrerName = "";
     MyProfileResponse mMyProfileResponse;
-    ProfileCustomerResponse profileCustomerResponse;
     SaveMyProfileRequest saveMyProfileRequest;
     GetCTVProfileRequest getMyProfileRequest;
-    GetCUSProfileRequest getCUSProfileRequest;
 
     public static CollaboratorProfileFragment newInstance(MyProfileResponse myProfileResponse) {
         CollaboratorProfileFragment fm = new CollaboratorProfileFragment();
@@ -128,87 +126,46 @@ public class CollaboratorProfileFragment extends BaseFragment {
 
     public void getMyProfile() {
         showCoverNetworkLoading();
-        if (AccountManager.getUserInfoBean().getType() == 7) {
-            getMyProfileRequest = new GetCTVProfileRequest();
-            getMyProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
-                @Override
-                public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
-                    if (isAdded()) {
-                        hideCoverNetworkLoading();
-                        mMyProfileResponse = dataSuccess;
-                        edtFullName.setText(mMyProfileResponse.getFullNameColl());
-                        edtPhone.setText(mMyProfileResponse.getPhoneColl());
-                        edtEmail.setText(mMyProfileResponse.getEmailColl());
-                        edtAdd.setText(mMyProfileResponse.getAddressColl());
-                        edtCarrer.setText(mMyProfileResponse.getCareerColl());
-                        if (mMyProfileResponse.getDesideratedCareer() != null) {
-                            if (mMyProfileResponse.getDesideratedCareer().size() > 0) {
-                                StringBuilder s0 = new StringBuilder("");
-                                for (int i = 0; i < mMyProfileResponse.getDesideratedCareer().size(); i++) {
-                                    if (i != mMyProfileResponse.getDesideratedCareer().size() - 1) {
-                                        s0.append(mMyProfileResponse.getDesideratedCareer().get(i).getName() + ", ");
-                                    } else {
-                                        s0.append(mMyProfileResponse.getDesideratedCareer().get(i).getName() + "");
-                                    }
+        getMyProfileRequest = new GetCTVProfileRequest();
+        getMyProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
+            @Override
+            public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
+                if (isAdded()) {
+                    hideCoverNetworkLoading();
+                    mMyProfileResponse = dataSuccess;
+                    edtFullName.setText(mMyProfileResponse.getFullNameColl());
+                    edtPhone.setText(mMyProfileResponse.getPhoneColl());
+                    edtEmail.setText(mMyProfileResponse.getEmailColl());
+                    edtAdd.setText(mMyProfileResponse.getAddressColl());
+                    edtCarrer.setText(mMyProfileResponse.getCareerColl());
+                    if (mMyProfileResponse.getDesideratedCareer() != null) {
+                        if (mMyProfileResponse.getDesideratedCareer().size() > 0) {
+                            StringBuilder s0 = new StringBuilder("");
+                            for (int i = 0; i < mMyProfileResponse.getDesideratedCareer().size(); i++) {
+                                if (i != mMyProfileResponse.getDesideratedCareer().size() - 1) {
+                                    s0.append(mMyProfileResponse.getDesideratedCareer().get(i).getName() + ", ");
+                                } else {
+                                    s0.append(mMyProfileResponse.getDesideratedCareer().get(i).getName() + "");
                                 }
-                                mCarrerName = s0.toString();
-                                tvHunt.setText(mCarrerName);
                             }
-                        } else {
+                            mCarrerName = s0.toString();
                             tvHunt.setText(mCarrerName);
                         }
+                    } else {
+                        tvHunt.setText(mCarrerName);
                     }
                 }
+            }
 
-                @Override
-                public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
-                    if (isAdded()) {
-                        hideCoverNetworkLoading();
-                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.error_please_try));
-                    }
+            @Override
+            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                if (isAdded()) {
+                    hideCoverNetworkLoading();
+                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.error_please_try));
                 }
-            });
-        } else if (AccountManager.getUserInfoBean().getType() == 2) {
-            getCUSProfileRequest = new GetCUSProfileRequest();
-            getCUSProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<ProfileCustomerResponse, ErrorResponse>() {
-                @Override
-                public void onSuccess(int status, ProfileCustomerResponse dataSuccess, List<ProfileCustomerResponse> listDataSuccess, String message) {
-                    if (isAdded()) {
-                        hideCoverNetworkLoading();
-                        profileCustomerResponse = dataSuccess;
-                        edtFullName.setText(profileCustomerResponse.getCompanyName());
-                        edtPhone.setText(profileCustomerResponse.getContactPhone());
-                        edtEmail.setText(profileCustomerResponse.getContactEmail());
-                        edtAdd.setText(profileCustomerResponse.getAddress());
-                        edtCarrer.setText(profileCustomerResponse.getDescripstion());
-                        if (profileCustomerResponse.getCareerSelectedItems() != null) {
-                            if (profileCustomerResponse.getCareerSelectedItems().size() > 0) {
-                                StringBuilder s0 = new StringBuilder("");
-                                for (int i = 0; i < profileCustomerResponse.getCareerSelectedItems().size(); i++) {
-                                    if (i != profileCustomerResponse.getCareerSelectedItems().size() - 1) {
-                                        s0.append(profileCustomerResponse.getCareerSelectedItems().get(i).getName() + ", ");
-                                    } else {
-                                        s0.append(profileCustomerResponse.getCareerSelectedItems().get(i).getName() + "");
-                                    }
-                                }
-                                mCarrerName = s0.toString();
-                                tvHunt.setText(mCarrerName);
-                            }
-                        } else {
-                            tvHunt.setText(mCarrerName);
-                        }
-                    }
-                }
+            }
+        });
 
-                @Override
-                public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
-                    if (isAdded()) {
-                        hideCoverNetworkLoading();
-                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.error_please_try));
-                    }
-                }
-            });
-        }
     }
 
     public void saveProfile() {

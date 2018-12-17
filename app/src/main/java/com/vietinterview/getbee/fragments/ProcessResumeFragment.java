@@ -15,7 +15,9 @@ import com.vietinterview.getbee.adapter.ViewPagerAdapter;
 import com.vietinterview.getbee.api.request.GetDetailProcessResumeRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.detailprocessresume.DetailProcessResumeResponse;
+import com.vietinterview.getbee.api.response.detailprocessresume.JobCvGotoWorkDto;
 import com.vietinterview.getbee.api.response.detailprocessresume.LstInterviewHi;
+import com.vietinterview.getbee.api.response.detailprocessresume.LstOfferHi;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnChangeStepExpListener;
 import com.vietinterview.getbee.callback.OnRejectListener;
@@ -45,6 +47,7 @@ public class ProcessResumeFragment extends BaseFragment {
     TextView tvStep;
     GetDetailProcessResumeRequest getDetailProcessResumeRequest;
     int mStep = 0;
+    int mStepClick = 0;
     int cvId;
     int jobId;
     DetailProcessResumeResponse detailProcessResumeResponse;
@@ -83,36 +86,12 @@ public class ProcessResumeFragment extends BaseFragment {
         stepView2.setOnStepClickListener(new StepView.OnStepClickListener() {
             @Override
             public void onStepClick(int step) {
-                if (step == 1) {
+                if (step <= mStepClick) {
                     stepView2.go(step, true);
                     mStep = step;
                     tvNameStep.setText(switchStepName(step));
                     mViewPager.setCurrentItem(step, true);
                     tvStep.setText("Bước " + (mStep + 1) + "/5");
-                } else if (step == 2) {
-                    if (detailProcessResumeResponse.getLstInterviewHis().size() > 0) {
-                        if (detailProcessResumeResponse.getLstInterviewHis().get(detailProcessResumeResponse.getLstInterviewHis().size() - 1).getStatus() == 1) {
-                            stepView2.go(step, true);
-                            mStep = step;
-                            tvNameStep.setText(switchStepName(step));
-                            mViewPager.setCurrentItem(step, true);
-                            tvStep.setText("Bước " + (mStep + 1) + "/5");
-                        }
-                    }
-                } else if (step == 3) {
-                    if (detailProcessResumeResponse.getLstOfferHis().size() > 0) {
-                        if (detailProcessResumeResponse.getLstOfferHis().get(detailProcessResumeResponse.getLstOfferHis().size() - 1).getStatus() == 1) {
-                            stepView2.go(step, true);
-                            mStep = step;
-                            tvNameStep.setText(switchStepName(step));
-                            mViewPager.setCurrentItem(step, true);
-                            tvStep.setText("Bước " + (mStep + 1) + "/5");
-                        }
-                    }
-                } else if (step == 4) {
-
-                } else if (step == 0) {
-
                 }
             }
         });
@@ -122,6 +101,20 @@ public class ProcessResumeFragment extends BaseFragment {
                 if (step == 1) {
                     if (detailProcessResumeResponse.getLstInterviewHis().size() == 0) {
                         FragmentUtil.pushFragment(getActivity(), ProcessResumeFragment.this, new CreateEditInterviewFragment().newInstance(null, detailProcessResumeResponse), null);
+                    }
+                } else if (step == 2) {
+                    if (detailProcessResumeResponse.getLstOfferHis().size() == 0) {
+                        FragmentUtil.pushFragment(getActivity(), ProcessResumeFragment.this, new CreateEditOfferFragment().newInstance(null, detailProcessResumeResponse), null);
+                    }
+                } else if (step == 3) {
+                    if (detailProcessResumeResponse.getJobCvGotoWorkDto() != null) {
+                        if (detailProcessResumeResponse.getJobCvGotoWorkDto().getId() == null)
+                            FragmentUtil.pushFragment(getActivity(), ProcessResumeFragment.this, new CreateGoToWorkFragment().newInstance(null, detailProcessResumeResponse), null);
+                        else {
+                            FragmentUtil.pushFragment(getActivity(), ProcessResumeFragment.this, new CreateGoToWorkFragment().newInstance(detailProcessResumeResponse.getJobCvGotoWorkDto(), detailProcessResumeResponse), null);
+                        }
+                    } else {
+                        FragmentUtil.pushFragment(getActivity(), ProcessResumeFragment.this, new CreateGoToWorkFragment().newInstance(null, detailProcessResumeResponse), null);
                     }
                 }
                 mStep = step;
@@ -159,19 +152,47 @@ public class ProcessResumeFragment extends BaseFragment {
                     if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() != null) {
                         stepView2.setEnabled(false);
                         mStep = detailProcessResumeResponse.getCvProcessInfo().getRejectStep();
+                        mStepClick = detailProcessResumeResponse.getCvProcessInfo().getRejectStep();
+                        stepView2.go(mStep - 1, true);
+                        mViewPager.setCurrentItem(mStep - 1);
+                        tvStep.setText("Bước " + (mStep) + "/5");
+                        tvNameStep.setText(switchStepName(mStep - 1));
                     } else if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 3 || detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4) {
                         mStep = 0;
+                        mStepClick = 0;
+                        stepView2.go(mStep, true);
+                        mViewPager.setCurrentItem(mStep);
+                        tvStep.setText("Bước " + (mStep + 1) + "/5");
+                        tvNameStep.setText(switchStepName(mStep));
                     } else if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 5 || detailProcessResumeResponse.getCvProcessInfo().getStatus() == 6) {
                         mStep = 1;
+                        mStepClick = 1;
+                        stepView2.go(mStep, true);
+                        mViewPager.setCurrentItem(mStep);
+                        tvStep.setText("Bước " + (mStep + 1) + "/5");
+                        tvNameStep.setText(switchStepName(mStep));
                     } else if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 7) {
                         mStep = 2;
+                        mStepClick = 2;
+                        stepView2.go(mStep, true);
+                        mViewPager.setCurrentItem(mStep);
+                        tvStep.setText("Bước " + (mStep + 1) + "/5");
+                        tvNameStep.setText(switchStepName(mStep));
                     } else if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 8) {
                         mStep = 3;
+                        mStepClick = 3;
+                        stepView2.go(mStep, true);
+                        mViewPager.setCurrentItem(mStep);
+                        tvStep.setText("Bước " + (mStep + 1) + "/5");
+                        tvNameStep.setText(switchStepName(mStep));
                     } else {
                         mStep = 4;
+                        mStepClick = 4;
+                        stepView2.go(mStep, true);
+                        mViewPager.setCurrentItem(mStep);
+                        tvStep.setText("Bước " + (mStep + 1) + "/5");
+                        tvNameStep.setText(switchStepName(mStep));
                     }
-                    stepView2.go(mStep, true);
-                    mViewPager.setCurrentItem(mStep);
                 }
             }
 
@@ -226,26 +247,47 @@ public class ProcessResumeFragment extends BaseFragment {
     }
 
     private LstInterviewHi lstInterviewHi;
+    private LstOfferHi lstOfferHi;
+    private JobCvGotoWorkDto jobCvGotoWorkDto;
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == AppConstant.FRAGMENT_CODE) {
                 lstInterviewHi = data.getParcelableExtra("lstInterviewHi");
-                boolean isDuplicate = false;
-                for (int i = 0; i < detailProcessResumeResponse.getLstInterviewHis().size(); i++) {
-                    if (detailProcessResumeResponse.getLstInterviewHis().get(i).getId() == lstInterviewHi.getId()) {
-                        isDuplicate = true;
-                        detailProcessResumeResponse.getLstInterviewHis().set(i, lstInterviewHi);
-                        break;
+                if (lstInterviewHi != null) {
+                    boolean isDuplicate = false;
+                    for (int i = 0; i < detailProcessResumeResponse.getLstInterviewHis().size(); i++) {
+                        if (detailProcessResumeResponse.getLstInterviewHis().get(i).getId() == lstInterviewHi.getId()) {
+                            isDuplicate = true;
+                            detailProcessResumeResponse.getLstInterviewHis().set(i, lstInterviewHi);
+                            break;
+                        }
                     }
+                    if (isDuplicate == false)
+                        detailProcessResumeResponse.getLstInterviewHis().add(lstInterviewHi);
                 }
-                if (isDuplicate == false)
-                    detailProcessResumeResponse.getLstInterviewHis().add(lstInterviewHi);
+                lstOfferHi = data.getParcelableExtra("lstOfferHi");
+                if (lstOfferHi != null) {
+                    boolean isDuplicateOffer = false;
+                    for (int i = 0; i < detailProcessResumeResponse.getLstOfferHis().size(); i++) {
+                        if (detailProcessResumeResponse.getLstOfferHis().get(i).getId() == lstOfferHi.getId()) {
+                            isDuplicateOffer = true;
+                            detailProcessResumeResponse.getLstOfferHis().set(i, lstOfferHi);
+                            break;
+                        }
+                    }
+                    if (isDuplicateOffer == false)
+                        detailProcessResumeResponse.getLstOfferHis().add(lstOfferHi);
+                }
+                jobCvGotoWorkDto = data.getParcelableExtra("jobCvGotoWorkDto");
+                if (jobCvGotoWorkDto != null)
+                    detailProcessResumeResponse.setJobCvGotoWorkDto(jobCvGotoWorkDto);
+
                 setupViewPager(mViewPager);
                 stepView2.go(mStep, true);
                 mViewPager.setCurrentItem(mStep, true);
-//                showListInterview();
+//                showListOffer();
             }
         }
     }
