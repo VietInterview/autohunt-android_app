@@ -26,6 +26,7 @@ import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.customview.RobotoRegularButton;
 import com.vietinterview.getbee.fragments.BaseFragment;
 import com.vietinterview.getbee.fragments.DetailResumeCustomerFragment;
+import com.vietinterview.getbee.fragments.ProcessResumeFragment;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.StringUtils;
@@ -57,12 +58,14 @@ public class ResumesEmployerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private boolean isLoading;
     private BaseFragment baseFragment;
     private int mTotal;
+    private int jobId;
     private final ViewBinderHelper binderHelper = new ViewBinderHelper();
 
-    public ResumesEmployerAdapter(RecyclerView recyclerView, Context context, int total, ArrayList<CvList> cvLists, BaseFragment homeFragment) {
+    public ResumesEmployerAdapter(RecyclerView recyclerView, Context context, int total, ArrayList<CvList> cvLists, int jobId, BaseFragment homeFragment) {
         this.cvLists = cvLists;
         this.mContext = context;
         this.mTotal = total;
+        this.jobId = jobId;
         this.baseFragment = homeFragment;
         mItemSwipedStates = new ArrayList<>();
         for (int i = 0; i < cvLists.size(); i++) {
@@ -123,8 +126,7 @@ public class ResumesEmployerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    getDetailCV(cvLists.get(position).getId());
-//                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new ResumesEmployerFragment(), null);
+                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new ProcessResumeFragment().newInstance(cvLists.get(position).getId(), jobId), null);
                 }
             });
             binderHelper.bind((SwipeRevealLayout) ((MyViewHolder) holder).swipeLayout, cvLists.get(position).getId().toString());

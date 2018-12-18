@@ -18,10 +18,12 @@ public class GetListCVByJobCustomerRequest extends BaseRequest<CvsCustomerRespon
     private int mPage;
     private String mId;
     private int mStatus;
+    private String cvName;
 
-    public GetListCVByJobCustomerRequest(int mPage, String id, int mStatus) {
+    public GetListCVByJobCustomerRequest(int mPage, String id, int mStatus, String cvName) {
         this.mPage = mPage;
         this.mId = id;
+        this.cvName = cvName;
         this.mStatus = mStatus;
     }
 
@@ -57,6 +59,7 @@ public class GetListCVByJobCustomerRequest extends BaseRequest<CvsCustomerRespon
         RequestParams requestParams = new RequestParams();
         requestParams.put("itemPerPage", ApiConstant.LIMIT + "");
         requestParams.put("page", mPage + "");
+        requestParams.put("cvName", cvName);
         requestParams.put("id", mId);
         if (mStatus != 11)
             requestParams.put("status", mStatus + "");

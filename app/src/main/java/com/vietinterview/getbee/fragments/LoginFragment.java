@@ -54,6 +54,8 @@ import com.vietinterview.getbee.utils.FragmentUtil;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -312,13 +314,13 @@ public class LoginFragment extends BaseFragment {
     GetCUSProfileRequest getCUSProfileRequest;
 
     public void getMyProfile() {
-        if (AccountManager.getUserInfoBean().getType() == 7) {
-            getMyProfileRequest = new GetCTVProfileRequest();
-            getMyProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
+        if (AccountManager.getUserInfoBean().getType() == 2) {
+            getCUSProfileRequest = new GetCUSProfileRequest();
+            getCUSProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<ProfileCustomerResponse, ErrorResponse>() {
                 @Override
-                public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
-                    if (dataSuccess.getFullNameColl() != null) {
-                        userInfoBean.name = dataSuccess.getFullNameColl();
+                public void onSuccess(int status, ProfileCustomerResponse dataSuccess, List<ProfileCustomerResponse> listDataSuccess, String message) {
+                    if (dataSuccess.getCompanyName() != null) {
+                        userInfoBean.name = dataSuccess.getCompanyName();
                     } else {
                         userInfoBean.name = edtEmail.getText().toString().trim().split("[$&<@%*]")[0];
                     }
@@ -331,13 +333,13 @@ public class LoginFragment extends BaseFragment {
 
                 }
             });
-        } else if (AccountManager.getUserInfoBean().getType() == 2) {
-            getCUSProfileRequest = new GetCUSProfileRequest();
-            getCUSProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<ProfileCustomerResponse, ErrorResponse>() {
+        } else {
+            getMyProfileRequest = new GetCTVProfileRequest();
+            getMyProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
                 @Override
-                public void onSuccess(int status, ProfileCustomerResponse dataSuccess, List<ProfileCustomerResponse> listDataSuccess, String message) {
-                    if (dataSuccess.getCompanyName() != null) {
-                        userInfoBean.name = dataSuccess.getCompanyName();
+                public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
+                    if (dataSuccess.getFullNameColl() != null) {
+                        userInfoBean.name = dataSuccess.getFullNameColl();
                     } else {
                         userInfoBean.name = edtEmail.getText().toString().trim().split("[$&<@%*]")[0];
                     }
@@ -418,12 +420,29 @@ public class LoginFragment extends BaseFragment {
     public void getAccount() {
         getAccountRequest = new GetAccountRequest();
         getAccountRequest.callRequest(getActivity(), new ApiObjectCallBack<AccountResponse, ErrorResponse>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onSuccess(int status, AccountResponse dataSuccess, List<AccountResponse> listDataSuccess, String message) {
                 if (status == 200) {
-                    List<LstMenuAuthority> lstMenuAuthorities = dataSuccess.getLstMenuAuthority().stream().collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparingInt(LstMenuAuthority::getId))), ArrayList::new));
-                    DebugLog.showLogCat(lstMenuAuthorities.size() + "");
+                    List<LstMenuAuthority> lstMenuAuthorities = null;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                        lstMenuAuthorities = dataSuccess.getLstMenuAuthority().stream().distinct().collect(Collectors.toList());
+                    } else {
+                        ArrayList<String> listCode = new ArrayList<>();
+                        ArrayList<String> listName = new ArrayList<>();
+                        ArrayList<Integer> listId = new ArrayList<>();
+                        for (int i = 0; i < dataSuccess.getLstMenuAuthority().size(); i++) {
+                            listCode.add(dataSuccess.getLstMenuAuthority().get(i).getCode());
+                            listName.add(dataSuccess.getLstMenuAuthority().get(i).getName());
+                            listId.add(dataSuccess.getLstMenuAuthority().get(i).getId());
+                        }
+                        listCode = removeDuplicates(listCode);
+                        listName = removeDuplicates(listName);
+                        listId = removeDuplicatesInt(listId);
+                        lstMenuAuthorities = new ArrayList<>();
+                        for (int i = 0; i < listCode.size(); i++) {
+                            lstMenuAuthorities.add(new LstMenuAuthority(listId.get(i), listName.get(i), listCode.get(i)));
+                        }
+                    }
                     for (int i = 0; i < lstMenuAuthorities.size(); i++) {
                         if (lstMenuAuthorities.get(i).getId() == 999)
                             lstMenuAuthorities.remove(lstMenuAuthorities.get(i));
@@ -447,25 +466,35 @@ public class LoginFragment extends BaseFragment {
             }
 
             @Override
-            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+            public void onFail(int status, ErrorResponse
+                    dataFail, List<ErrorResponse> listDataFail, String message) {
                 DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
             }
         });
     }
 
-    public static ArrayList<LstMenuAuthority> removeDuplicates(ArrayList<LstMenuAuthority> list) {
-        ArrayList<LstMenuAuthority> newList = new ArrayList<LstMenuAuthority>();
-//        for (LstMenuAuthority element : list) {
-//            if (!newList.contains(element)) {
-//                newList.add(element);
-//            }
-//        }
-        for (int i = 0; i < list.size(); i++) {
-            if (!newList.get(i).getCode().equalsIgnoreCase(list.get(i).getCode())) {
-                newList.add(list.get(i));
+    static ArrayList<String> removeDuplicates(ArrayList<String> list) {
+        ArrayList<String> result = new ArrayList<>();
+        HashSet<String> set = new HashSet<>();
+        for (String item : list) {
+            if (!set.contains(item)) {
+                result.add(item);
+                set.add(item);
             }
         }
-        return newList;
+        return result;
+    }
+
+    static ArrayList<Integer> removeDuplicatesInt(ArrayList<Integer> list) {
+        ArrayList<Integer> result = new ArrayList<>();
+        HashSet<Integer> set = new HashSet<>();
+        for (Integer item : list) {
+            if (!set.contains(item)) {
+                result.add(item);
+                set.add(item);
+            }
+        }
+        return result;
     }
 
     @Override

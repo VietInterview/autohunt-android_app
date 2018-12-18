@@ -46,4 +46,22 @@ public class LstMenuAuthority {
         this.code = code;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        // TODO Auto-generated method stub
+        if (obj instanceof LstMenuAuthority) {
+            LstMenuAuthority temp = (LstMenuAuthority) obj;
+            if (this.name == temp.name && this.code == temp.code && this.id == temp.id)
+                return true;
+        }
+        return false;
+
+    }
+
+    @Override
+    public int hashCode() {
+        // TODO Auto-generated method stub
+
+        return (this.name.hashCode() + this.code.hashCode() + this.id.hashCode());
+    }
 }

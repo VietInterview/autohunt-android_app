@@ -7,12 +7,15 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,6 +32,7 @@ import com.vietinterview.getbee.constant.ApiConstant;
 import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.utils.SharedPrefUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,12 +57,15 @@ public class ResumesEmployerFragment extends BaseFragment implements SwipeRefres
     LinearLayout llSearch;
     @BindView(R.id.tvStatus)
     TextView tvStatus;
-    JobList mJobList;
+    @BindView(R.id.edtJobTitle)
+    EditText edtJobTitle;
+//    JobList mJobList;
     private int page = 0;
     private GetListCVByJobCustomerRequest getListCVByJobCustomerRequest;
     private ResumesEmployerAdapter cvsEmployerAdapter;
     private ArrayList<CvList> cvLists = new ArrayList<>();
     private ArrayList<CvList> cvListsServer = new ArrayList<>();
+    private int jobID;
 
     public static ResumesEmployerFragment newInstance(JobList jobList) {
         ResumesEmployerFragment fm = new ResumesEmployerFragment();
@@ -75,7 +82,7 @@ public class ResumesEmployerFragment extends BaseFragment implements SwipeRefres
 
     @Override
     protected void getArgument(Bundle bundle) {
-        mJobList = bundle.getParcelable("jobList");
+//        mJobList = bundle.getParcelable("jobList");
     }
 
     @Override
@@ -83,6 +90,7 @@ public class ResumesEmployerFragment extends BaseFragment implements SwipeRefres
         setCustomToolbar(true);
         setHasOptionsMenu(true);
         setCustomToolbarVisible(true);
+        jobID = SharedPrefUtils.getInt("jobIdCus", 0);
         getEventBaseFragment().doFillBackground("Danh sách ứng viên");
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -92,6 +100,23 @@ public class ResumesEmployerFragment extends BaseFragment implements SwipeRefres
                 android.R.color.holo_green_dark,
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
+        edtJobTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                page = 0;
+                getResumeEmployer(page);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     @Override
@@ -102,7 +127,7 @@ public class ResumesEmployerFragment extends BaseFragment implements SwipeRefres
     public void getResumeEmployer(final int page) {
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
             showCoverNetworkLoading();
-        getListCVByJobCustomerRequest = new GetListCVByJobCustomerRequest(page, String.valueOf(mJobList.getId()), Integer.parseInt(mStatusId));
+        getListCVByJobCustomerRequest = new GetListCVByJobCustomerRequest(page, String.valueOf(jobID), Integer.parseInt(mStatusId), edtJobTitle.getText().toString().trim());
         getListCVByJobCustomerRequest.callRequest(getActivity(), new ApiObjectCallBack<CvsCustomerResponse, ErrorResponse>() {
             @Override
             public void onSuccess(int status, CvsCustomerResponse data, List<CvsCustomerResponse> dataArrayList, String message) {
@@ -118,7 +143,7 @@ public class ResumesEmployerFragment extends BaseFragment implements SwipeRefres
                     }
                     cvLists.addAll(data.getCvList());
                     if (page == 0) {
-                        cvsEmployerAdapter = new ResumesEmployerAdapter(recyclerView, getActivity(), data.getTotal(), cvLists, ResumesEmployerFragment.this);
+                        cvsEmployerAdapter = new ResumesEmployerAdapter(recyclerView, getActivity(), data.getTotal(), cvLists, jobID, ResumesEmployerFragment.this);
                         recyclerView.setAdapter(cvsEmployerAdapter);
                     }
                     cvsEmployerAdapter.setOnLoadMoreListener(ResumesEmployerFragment.this);

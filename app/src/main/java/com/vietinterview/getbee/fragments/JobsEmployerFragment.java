@@ -7,6 +7,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -56,7 +58,6 @@ public class JobsEmployerFragment extends BaseFragment implements SwipeRefreshLa
     @BindView(R.id.edtJobTitle)
     ClearableRegularEditText edtJobTitle;
     private int page = 0;
-    int mStatus = -1;
     private GetJobCustomerRequest getJobCustomerRequest;
     private JobsEmployerAdapter jobsEmployerAdapter;
     private ArrayList<JobList> jobLists = new ArrayList<>();
@@ -95,6 +96,23 @@ public class JobsEmployerFragment extends BaseFragment implements SwipeRefreshLa
                 android.R.color.holo_green_dark,
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
+        edtJobTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                page = 0;
+                getJobCustomer(page);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     @Override
@@ -105,7 +123,7 @@ public class JobsEmployerFragment extends BaseFragment implements SwipeRefreshLa
     public void getJobCustomer(final int page) {
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
             showCoverNetworkLoading();
-        getJobCustomerRequest = new GetJobCustomerRequest(page, edtJobTitle.getText().toString().trim(), mStatus);
+        getJobCustomerRequest = new GetJobCustomerRequest(page, edtJobTitle.getText().toString().trim(), Integer.parseInt(mStatusId));
         getJobCustomerRequest.callRequest(getActivity(), new ApiObjectCallBack<JobCustomerResponse, ErrorResponse>() {
             @Override
             public void onSuccess(int status, JobCustomerResponse data, List<JobCustomerResponse> dataArrayList, String message) {
@@ -115,8 +133,9 @@ public class JobsEmployerFragment extends BaseFragment implements SwipeRefreshLa
                     jobListsServer.clear();
                     jobListsServer.addAll(data.getJobList());
                     tvNodata.setVisibility(data.getTotal() == 0 ? View.VISIBLE : View.GONE);
-                    if (page == 0) jobLists.clear();
-                    else {
+                    if (page == 0) {
+                        jobLists.clear();
+                    } else {
                         jobsEmployerAdapter.notifyItemRemoved(jobLists.size());
                     }
                     jobLists.addAll(data.getJobList());
@@ -169,7 +188,7 @@ public class JobsEmployerFragment extends BaseFragment implements SwipeRefreshLa
 
     }
 
-    private String mStatusId = "11";
+    private String mStatusId = "-1";
     private String mStatusName = "";
 
     @OnClick(R.id.llStatus)

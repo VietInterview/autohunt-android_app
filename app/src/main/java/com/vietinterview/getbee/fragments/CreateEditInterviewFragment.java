@@ -32,6 +32,7 @@ import com.vietinterview.getbee.api.response.detailprocessresume.DetailProcessRe
 import com.vietinterview.getbee.api.response.detailprocessresume.LstInterviewHi;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.utils.DebugLog;
+import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.UiUtil;
 
@@ -210,25 +211,29 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
 
     @OnClick(R.id.btnSendMail)
     public void onSendMailClick() {
-        new SendInterviewRequest(detailProcessResumeResponse.getCvId(), lstInterviewHi == null ? -1 : lstInterviewHi.getId(), edtPlaceInterview.getText().toString().trim(), edtDateInterview.getText().toString().trim(), detailProcessResumeResponse.getJobId(), edtNote.getText().toString().trim(), edtRound.getText().toString().trim(), lstInterviewHi == null ? 0 : statusInterview).callRequest(getActivity(), new ApiObjectCallBack<ViewEmailInterviewResponse, ErrorResponse>() {
-            @Override
-            public void onSuccess(int status, ViewEmailInterviewResponse dataSuccess, List<ViewEmailInterviewResponse> listDataSuccess, String message) {
-                if (isAdded()) {
-                    lstInterviewHi = new LstInterviewHi(dataSuccess.getCvId(), dataSuccess.getEmailTemplate(), dataSuccess.getId(), dataSuccess.getInterviewAddress(), dataSuccess.getInterviewDate(), dataSuccess.getJobId(), dataSuccess.getNote(), dataSuccess.getRound(), dataSuccess.getStatus());
-                    Intent intent = new Intent(getActivity(), CreateEditInterviewFragment.class);
-                    intent.putExtra("lstInterviewHi", lstInterviewHi);
-                    getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
-                    FragmentUtil.popBackStack(CreateEditInterviewFragment.this);
+        if (!edtDateInterview.getText().toString().equalsIgnoreCase("") && !edtPlaceInterview.getText().toString().equalsIgnoreCase("")) {
+            new SendInterviewRequest(detailProcessResumeResponse.getCvId(), lstInterviewHi == null ? -1 : lstInterviewHi.getId(), edtPlaceInterview.getText().toString().trim(), edtDateInterview.getText().toString().trim(), detailProcessResumeResponse.getJobId(), edtNote.getText().toString().trim(), edtRound.getText().toString().trim(), lstInterviewHi == null ? 0 : statusInterview).callRequest(getActivity(), new ApiObjectCallBack<ViewEmailInterviewResponse, ErrorResponse>() {
+                @Override
+                public void onSuccess(int status, ViewEmailInterviewResponse dataSuccess, List<ViewEmailInterviewResponse> listDataSuccess, String message) {
+                    if (isAdded()) {
+                        lstInterviewHi = new LstInterviewHi(dataSuccess.getCvId(), dataSuccess.getEmailTemplate(), dataSuccess.getId(), dataSuccess.getInterviewAddress(), dataSuccess.getInterviewDate(), dataSuccess.getJobId(), dataSuccess.getNote(), dataSuccess.getRound(), dataSuccess.getStatus());
+                        Intent intent = new Intent(getActivity(), CreateEditInterviewFragment.class);
+                        intent.putExtra("lstInterviewHi", lstInterviewHi);
+                        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+                        FragmentUtil.popBackStack(CreateEditInterviewFragment.this);
+                    }
                 }
-            }
 
-            @Override
-            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
-                if (isAdded()) {
-                    hideCoverNetworkLoading();
+                @Override
+                public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                    if (isAdded()) {
+                        hideCoverNetworkLoading();
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.pleaseinputdata));
+        }
     }
 
     @OnClick(R.id.btnSeeInvite)

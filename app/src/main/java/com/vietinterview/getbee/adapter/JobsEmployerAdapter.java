@@ -29,6 +29,7 @@ import com.vietinterview.getbee.fragments.ResumesEmployerFragment;
 import com.vietinterview.getbee.fragments.DetailJobCustomerFragment;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.utils.SharedPrefUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,7 +135,8 @@ public class JobsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new ResumesEmployerFragment().newInstance(jobLists.get(position)), null);
+                    SharedPrefUtils.putInt("jobIdCus", jobLists.get(position).getId());
+                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new ResumesEmployerFragment(), null);
                 }
             });
             binderHelper.bind((SwipeRevealLayout) ((MyViewHolder) holder).swipeLayout, jobLists.get(position).getId().toString());

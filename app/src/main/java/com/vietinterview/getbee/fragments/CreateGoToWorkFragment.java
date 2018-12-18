@@ -24,7 +24,9 @@ import com.vietinterview.getbee.api.response.detailprocessresume.JobCvGotoWorkDt
 import com.vietinterview.getbee.api.response.detailprocessresume.LstInterviewHi;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.utils.DebugLog;
+import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.utils.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -95,42 +97,46 @@ public class CreateGoToWorkFragment extends BaseFragment implements DatePickerDi
 
     @OnClick(R.id.btnUpdateWork)
     public void onUpdateWorkClick() {
-        showCoverNetworkLoading();
-        if (jobCvGotoWorkDto == null) {
-            goToWorkUpdateRequest = new GoToWorkUpdateRequest(detailProcessResumeResponse.getCvId(), -1, 0, detailProcessResumeResponse.getJobId(), edtWorkTime.getText().toString().trim());
-        } else {
-            goToWorkUpdateRequest = new GoToWorkUpdateRequest(jobCvGotoWorkDto.getCvId(), jobCvGotoWorkDto.getId(), jobCvGotoWorkDto.getCountUpdate(), jobCvGotoWorkDto.getJobId(), edtWorkTime.getText().toString().trim());
-        }
-        goToWorkUpdateRequest.callRequest(getActivity(), new ApiObjectCallBack<GoToWorkUpdateResponse, ErrorResponse>() {
-            @Override
-            public void onSuccess(int status, GoToWorkUpdateResponse dataSuccess, List<GoToWorkUpdateResponse> listDataSuccess, String message) {
-                if (isAdded()) {
-                    hideCoverNetworkLoading();
-                    Integer countUpdate = dataSuccess.getCountUpdate();
-                    Integer cvId = dataSuccess.getCvId();
-                    Integer id = dataSuccess.getId();
-                    Integer jobId = dataSuccess.getJobId();
-                    String note = dataSuccess.getNote();
-                    Integer numDayWarranty = dataSuccess.getNumDayWarranty();
-                    String startWorkDate = dataSuccess.getStartWorkDate();
-                    Integer updateBy = dataSuccess.getUpdateBy();
-                    String updateDate = dataSuccess.getUpdateDate();
-                    String warrantyExpireDate = dataSuccess.getWarrantyExpireDate();
-                    jobCvGotoWorkDto = new JobCvGotoWorkDto(countUpdate, cvId, id, jobId, note, numDayWarranty, startWorkDate, updateBy, updateDate, warrantyExpireDate);
-                    Intent intent = new Intent(getActivity(), CreateGoToWorkFragment.class);
-                    intent.putExtra("jobCvGotoWorkDto", jobCvGotoWorkDto);
-                    getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
-                    FragmentUtil.popBackStack(CreateGoToWorkFragment.this);
-                }
+        if (!StringUtils.isEmpty(edtWorkTime.getText().toString())) {
+            showCoverNetworkLoading();
+            if (jobCvGotoWorkDto == null) {
+                goToWorkUpdateRequest = new GoToWorkUpdateRequest(detailProcessResumeResponse.getCvId(), -1, 0, detailProcessResumeResponse.getJobId(), edtWorkTime.getText().toString().trim());
+            } else {
+                goToWorkUpdateRequest = new GoToWorkUpdateRequest(jobCvGotoWorkDto.getCvId(), jobCvGotoWorkDto.getId(), jobCvGotoWorkDto.getCountUpdate(), jobCvGotoWorkDto.getJobId(), edtWorkTime.getText().toString().trim());
             }
+            goToWorkUpdateRequest.callRequest(getActivity(), new ApiObjectCallBack<GoToWorkUpdateResponse, ErrorResponse>() {
+                @Override
+                public void onSuccess(int status, GoToWorkUpdateResponse dataSuccess, List<GoToWorkUpdateResponse> listDataSuccess, String message) {
+                    if (isAdded()) {
+                        hideCoverNetworkLoading();
+                        Integer countUpdate = dataSuccess.getCountUpdate();
+                        Integer cvId = dataSuccess.getCvId();
+                        Integer id = dataSuccess.getId();
+                        Integer jobId = dataSuccess.getJobId();
+                        String note = dataSuccess.getNote();
+                        Integer numDayWarranty = dataSuccess.getNumDayWarranty();
+                        String startWorkDate = dataSuccess.getStartWorkDate();
+                        Integer updateBy = dataSuccess.getUpdateBy();
+                        String updateDate = dataSuccess.getUpdateDate();
+                        String warrantyExpireDate = dataSuccess.getWarrantyExpireDate();
+                        jobCvGotoWorkDto = new JobCvGotoWorkDto(countUpdate, cvId, id, jobId, note, numDayWarranty, startWorkDate, updateBy, updateDate, warrantyExpireDate);
+                        Intent intent = new Intent(getActivity(), CreateGoToWorkFragment.class);
+                        intent.putExtra("jobCvGotoWorkDto", jobCvGotoWorkDto);
+                        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+                        FragmentUtil.popBackStack(CreateGoToWorkFragment.this);
+                    }
+                }
 
-            @Override
-            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
-                if (isAdded()) {
-                    hideCoverNetworkLoading();
+                @Override
+                public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                    if (isAdded()) {
+                        hideCoverNetworkLoading();
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.pleaseinputdata));
+        }
     }
 
     @OnClick({R.id.edtWorkTime, R.id.imgChooseDate, R.id.llDate})

@@ -16,12 +16,12 @@ import java.util.List;
  */
 public class GetJobCustomerRequest extends BaseRequest<JobCustomerResponse, ErrorResponse> {
     private int mPage;
-    private String cusName;
+    private String jobtile;
     private int mStatus;
 
     public GetJobCustomerRequest(int mPage, String cusName, int mStatus) {
         this.mPage = mPage;
-        this.cusName = cusName;
+        this.jobtile = cusName;
         this.mStatus = mStatus;
     }
 
@@ -57,7 +57,7 @@ public class GetJobCustomerRequest extends BaseRequest<JobCustomerResponse, Erro
         RequestParams requestParams = new RequestParams();
         requestParams.put("itemPerPage", ApiConstant.LIMIT + "");
         requestParams.put("page", mPage + "");
-        requestParams.put("cusName", cusName );
+        requestParams.put("jobtile", jobtile);
         if (mStatus != -1)
             requestParams.put("status", mStatus + "");
         return requestParams;

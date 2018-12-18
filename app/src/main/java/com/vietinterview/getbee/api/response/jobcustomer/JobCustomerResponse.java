@@ -1,7 +1,9 @@
 
 package com.vietinterview.getbee.api.response.jobcustomer;
 
+import java.util.ArrayList;
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -12,7 +14,7 @@ public class JobCustomerResponse {
     private Integer total;
     @SerializedName("jobList")
     @Expose
-    private List<JobList> jobList = null;
+    private ArrayList<JobList> jobList = null;
 
     public Integer getTotal() {
         return total;
@@ -22,11 +24,11 @@ public class JobCustomerResponse {
         this.total = total;
     }
 
-    public List<JobList> getJobList() {
+    public ArrayList<JobList> getJobList() {
         return jobList;
     }
 
-    public void setJobList(List<JobList> jobList) {
+    public void setJobList(ArrayList<JobList> jobList) {
         this.jobList = jobList;
     }
 
