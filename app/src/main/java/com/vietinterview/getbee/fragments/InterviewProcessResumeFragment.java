@@ -104,6 +104,7 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                 getEventBaseFragment().reject();
                 btnNext.setEnabled(false);
                 flowListInterview.setEnabled(false);
+                btnNotAccept.setEnabled(false);
                 tvAddRound.setEnabled(false);
             } else cardReject.setVisibility(View.GONE);
         } else cardReject.setVisibility(View.GONE);

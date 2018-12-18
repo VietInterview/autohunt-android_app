@@ -61,6 +61,8 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
     TextView tvDate;
     @BindView(R.id.tvWarranty)
     TextView tvWarranty;
+    @BindView(R.id.tvRound)
+    TextView tvRound;
     DetailProcessResumeResponse detailProcessResumeResponse;
 
     public static GoToWorkProcessResumeFragment newInstance(DetailProcessResumeResponse detailProcessResumeResponse) {
@@ -89,7 +91,10 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
                 cardReject.setVisibility(View.VISIBLE);
                 getEventBaseFragment().reject();
                 btnNext.setEnabled(false);
+                rlGotoworkDate.setEnabled(false);
+                tvDate.setEnabled(false);
                 btnReject.setEnabled(false);
+                tvRound.setEnabled(false);
             } else cardReject.setVisibility(View.GONE);
         } else cardReject.setVisibility(View.GONE);
     }
@@ -173,6 +178,8 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
                                             btnNext.setEnabled(false);
                                             btnReject.setEnabled(false);
                                             rlGotoworkDate.setEnabled(false);
+                                            tvRound.setEnabled(false);
+                                            tvDate.setEnabled(false);
                                             getEventBaseFragment().reject();
                                         }
                                     }

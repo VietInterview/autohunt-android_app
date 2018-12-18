@@ -86,6 +86,8 @@ public class OfferProcessResumeFragment extends BaseFragment {
                 cardReject.setVisibility(View.VISIBLE);
                 getEventBaseFragment().reject();
                 btnNext.setEnabled(false);
+                flowListOffer.setEnabled(false);
+                btnReject.setEnabled(false);
                 tvAddOffer.setEnabled(false);
             } else cardReject.setVisibility(View.GONE);
         } else cardReject.setVisibility(View.GONE);

@@ -424,6 +424,10 @@ public class LoginFragment extends BaseFragment {
                 if (status == 200) {
                     List<LstMenuAuthority> lstMenuAuthorities = dataSuccess.getLstMenuAuthority().stream().collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparingInt(LstMenuAuthority::getId))), ArrayList::new));
                     DebugLog.showLogCat(lstMenuAuthorities.size() + "");
+                    for (int i = 0; i < lstMenuAuthorities.size(); i++) {
+                        if (lstMenuAuthorities.get(i).getId() == 999)
+                            lstMenuAuthorities.remove(lstMenuAuthorities.get(i));
+                    }
                     userInfoBean.setLstMenuAuthority(lstMenuAuthorities);
                     userInfoBean.getLstMenuAuthority().add(new LstMenuAuthority(0, getResources().getString(R.string.info_acc_tit), "PROFILE"));
                     userInfoBean.setLstFunctionAuthority(dataSuccess.getLstFunctionAuthority());

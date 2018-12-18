@@ -145,7 +145,6 @@ public class ContractProcessResumeFragment extends BaseFragment {
                                             DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Gửi từ chối thành công");
                                             cardReject.setVisibility(View.VISIBLE);
                                             btnReject.setEnabled(false);
-                                            btnReject.setEnabled(false);
                                             getEventBaseFragment().reject();
                                         }
                                     }
