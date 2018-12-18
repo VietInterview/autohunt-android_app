@@ -25,6 +25,7 @@ import com.vietinterview.getbee.api.response.listcvcustomer.CvList;
 import com.vietinterview.getbee.api.response.listcvcustomer.CvsCustomerResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
+import com.vietinterview.getbee.constant.ApiConstant;
 import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
@@ -225,7 +226,11 @@ public class ResumesEmployerFragment extends BaseFragment implements SwipeRefres
 
     @Override
     public void onLoadMore() {
-
+        if (cvListsServer.size() >= ApiConstant.LIMIT) {
+            page++;
+            getResumeEmployer(page);
+            cvsEmployerAdapter.setOnLoadMoreListener(this);
+        }
     }
 
     @Override

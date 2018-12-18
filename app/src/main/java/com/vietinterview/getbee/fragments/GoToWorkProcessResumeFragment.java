@@ -89,6 +89,7 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
                 cardReject.setVisibility(View.VISIBLE);
                 getEventBaseFragment().reject();
                 btnNext.setEnabled(false);
+                btnReject.setEnabled(false);
             } else cardReject.setVisibility(View.GONE);
         } else cardReject.setVisibility(View.GONE);
     }

@@ -74,6 +74,8 @@ public class InfoProcessResumeFragment extends BaseFragment {
     Button btnInviteInterview;
     @BindView(R.id.imgInfo)
     ImageView imgInfo;
+    @BindView(R.id.btnReject)
+    Button btnReject;
     DetailProcessResumeResponse detailProcessResumeResponse;
     private Dialog mRejectDialog;
     private Dialog mNotifyDialog;
@@ -119,6 +121,7 @@ public class InfoProcessResumeFragment extends BaseFragment {
                 cardReject.setVisibility(View.VISIBLE);
                 getEventBaseFragment().reject();
                 btnInviteInterview.setEnabled(false);
+                btnReject.setEnabled(false);
             } else cardReject.setVisibility(View.GONE);
         } else cardReject.setVisibility(View.GONE);
     }
@@ -256,6 +259,7 @@ public class InfoProcessResumeFragment extends BaseFragment {
                                             DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Gửi từ chối thành công");
                                             cardReject.setVisibility(View.VISIBLE);
                                             btnInviteInterview.setEnabled(false);
+                                            btnReject.setEnabled(false);
                                             getEventBaseFragment().reject();
                                         }
                                     }

@@ -5,6 +5,7 @@
     Copyright © 2018 Vietinterview. All rights reserved.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -24,15 +25,13 @@
             <com.vietinterview.getbee.customview.RoundRectCornerImageView
                 android:id="@+id/imgCompany"
                 android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:src="@drawable/cannon" />
+                android:layout_height="70dp" />
 
             <com.vietinterview.getbee.customview.RobotoMediumTextView
                 android:id="@+id/tvCompanyName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="FPT Software"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -60,6 +59,7 @@
             <com.vietinterview.getbee.customview.RobotoMediumTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:text="Video công ty"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
@@ -67,7 +67,10 @@
             <RelativeLayout
                 android:id="@+id/relVideo"
                 android:layout_width="match_parent"
-                android:layout_height="154dp">
+                android:layout_height="154dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/rounded_border"
+                android:padding="2dp">
 
                 <VideoView
                     android:id="@+id/vv"
@@ -116,7 +119,6 @@
                     android:id="@+id/tvHumanResource"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Vòng 1"
                     android:textColor="#677B8D"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -140,7 +142,6 @@
                     android:id="@+id/tvCarrer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="11/12/2018, 08:00PM"
                     android:textColor="#677B8D"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -164,7 +165,6 @@
                     android:id="@+id/tvCompanyAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tòa Báo Nông Thôn Ngày Ngay, Dương Đình Nghệ, Cầu Giấy, Hà Nội"
                     android:textColor="#677B8D"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -188,7 +188,6 @@
                     android:id="@+id/tvWorkTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Thí sinh không đến"
                     android:textColor="#677B8D"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -221,8 +220,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:background="@drawable/main_header_selector"
-                        android:maxLines="6"
-                        android:text="Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure? On the other hand, we." />
+                        android:maxLines="6" />
 
                     <LinearLayout
                         android:id="@+id/gradientView"
@@ -259,11 +257,15 @@
                     android:textColor="#042E51"
                     android:textSize="16sp" />
 
-                <com.vietinterview.getbee.customview.ClearableRegularEditText
+                <com.vietinterview.getbee.customview.FlowLayout
+                    android:id="@+id/flowListWelfare"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_marginTop="14dp"
-                    android:background="@drawable/border_gray_disable" />
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="true"
+                    android:orientation="vertical"
+                    android:scrollbars="vertical"
+                    app:horizontalSpacing="5dp"
+                    app:verticalSpacing="0dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -287,7 +289,6 @@
                 android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="tungnguyen@vietinterview.com"
                 android:textColor="#677B8D"
                 android:textSize="14sp" />
         </LinearLayout>

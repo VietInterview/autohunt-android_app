@@ -24,6 +24,7 @@ import com.vietinterview.getbee.api.response.jobcustomer.JobCustomerResponse;
 import com.vietinterview.getbee.api.response.jobcustomer.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
+import com.vietinterview.getbee.constant.ApiConstant;
 import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.customview.ClearableRegularEditText;
 import com.vietinterview.getbee.utils.DialogUtil;
@@ -228,7 +229,11 @@ public class JobsEmployerFragment extends BaseFragment implements SwipeRefreshLa
 
     @Override
     public void onLoadMore() {
-
+        if (jobListsServer.size() >= ApiConstant.LIMIT) {
+            page++;
+            getJobCustomer(page);
+            jobsEmployerAdapter.setOnLoadMoreListener(JobsEmployerFragment.this);
+        }
     }
 
     @Override

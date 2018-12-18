@@ -7,7 +7,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -37,24 +39,32 @@ import com.vietinterview.getbee.api.request.LoginRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.account.AccountResponse;
 import com.vietinterview.getbee.api.response.account.LstMenuAuthority;
+import com.vietinterview.getbee.api.response.ctvprofile.MyProfileResponse;
 import com.vietinterview.getbee.api.response.customerprofile.ProfileCustomerResponse;
 import com.vietinterview.getbee.api.response.login.ErrorLoginResponse;
 import com.vietinterview.getbee.api.response.login.LoginResponse;
-import com.vietinterview.getbee.api.response.ctvprofile.MyProfileResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.constant.ApiConstant;
 import com.vietinterview.getbee.constant.ApiConstantTest;
+import com.vietinterview.getbee.customview.RobotoEditText;
 import com.vietinterview.getbee.model.UserInfoBean;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
-import com.vietinterview.getbee.customview.RobotoEditText;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toCollection;
 
 /**
  * Created by hiepnguyennghia on 10/8/18.
@@ -408,10 +418,13 @@ public class LoginFragment extends BaseFragment {
     public void getAccount() {
         getAccountRequest = new GetAccountRequest();
         getAccountRequest.callRequest(getActivity(), new ApiObjectCallBack<AccountResponse, ErrorResponse>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onSuccess(int status, AccountResponse dataSuccess, List<AccountResponse> listDataSuccess, String message) {
                 if (status == 200) {
-                    userInfoBean.setLstMenuAuthority(dataSuccess.getLstMenuAuthority());
+                    List<LstMenuAuthority> lstMenuAuthorities = dataSuccess.getLstMenuAuthority().stream().collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparingInt(LstMenuAuthority::getId))), ArrayList::new));
+                    DebugLog.showLogCat(lstMenuAuthorities.size() + "");
+                    userInfoBean.setLstMenuAuthority(lstMenuAuthorities);
                     userInfoBean.getLstMenuAuthority().add(new LstMenuAuthority(0, getResources().getString(R.string.info_acc_tit), "PROFILE"));
                     userInfoBean.setLstFunctionAuthority(dataSuccess.getLstFunctionAuthority());
                     userInfoBean.setType(dataSuccess.getType());
@@ -434,6 +447,21 @@ public class LoginFragment extends BaseFragment {
                 DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
             }
         });
+    }
+
+    public static ArrayList<LstMenuAuthority> removeDuplicates(ArrayList<LstMenuAuthority> list) {
+        ArrayList<LstMenuAuthority> newList = new ArrayList<LstMenuAuthority>();
+//        for (LstMenuAuthority element : list) {
+//            if (!newList.contains(element)) {
+//                newList.add(element);
+//            }
+//        }
+        for (int i = 0; i < list.size(); i++) {
+            if (!newList.get(i).getCode().equalsIgnoreCase(list.get(i).getCode())) {
+                newList.add(list.get(i));
+            }
+        }
+        return newList;
     }
 
     @Override

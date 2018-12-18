@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.adapter.JobsEmployerAdapter;
 import com.vietinterview.getbee.api.response.detailjobcustomer.DetailJobCustomerResponse;
 import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
@@ -76,17 +77,21 @@ public class DetailJobCustomerFragment extends BaseFragment {
     LinearLayout gradientView;
     @BindView(R.id.gradientView1)
     LinearLayout gradientView1;
+    @BindView(R.id.tvStatus)
+    TextView tvStatus;
     private CollapsingToolbarLayout collapsingToolbar;
     private AppBarLayout appBarLayout;
     private RecyclerView recyclerView;
     private Menu collapsedMenu;
     private boolean appBarExpanded = true;
+    private int limited;
     private DetailJobCustomerResponse detailJobCustomerResponse;
 
-    public static DetailJobCustomerFragment newInstance(DetailJobCustomerResponse detailJobCustomerResponse) {
+    public static DetailJobCustomerFragment newInstance(DetailJobCustomerResponse detailJobCustomerResponse, int limited) {
         DetailJobCustomerFragment fm = new DetailJobCustomerFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable("detailJobCustomerResponse", detailJobCustomerResponse);
+        bundle.putInt("limited", limited);
         fm.setArguments(bundle);
         return fm;
     }
@@ -99,6 +104,7 @@ public class DetailJobCustomerFragment extends BaseFragment {
     @Override
     protected void getArgument(Bundle bundle) {
         detailJobCustomerResponse = bundle.getParcelable("detailJobCustomerResponse");
+        limited = bundle.getInt("limited");
     }
 
     @Override
@@ -160,16 +166,24 @@ public class DetailJobCustomerFragment extends BaseFragment {
         tvDatePublic.setText(DateUtil.convertToMyFormatFull(detailJobCustomerResponse.getSubmitDate()));
         tvExpireDate.setText(DateUtil.convertToMyFormatFull(detailJobCustomerResponse.getExpireDate()));
         tvKeyWord.setText(detailJobCustomerResponse.getTag());
-        tvLanCV.setText("Ngon ngu");
+        tvLanCV.setText(detailJobCustomerResponse.getLanguage() == null ? "Bất kỳ" : detailJobCustomerResponse.getLanguage().getName());
         tvContact.setText(detailJobCustomerResponse.getCustomers().getContactName());
         tvEmail.setText(detailJobCustomerResponse.getCustomers().getContactEmail());
         tvJobDes.setText(Html.fromHtml(detailJobCustomerResponse.getJobDescription()));
         tvjobRequirement.setText(Html.fromHtml(detailJobCustomerResponse.getJobRequirements()));
         tvJobDes.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_header_selector));
+        if (detailJobCustomerResponse.getStatus() == 1 && limited > 0 && limited < 8) {
+            tvStatus.setText("Sắp hết hạn");
+        } else if (detailJobCustomerResponse.getStatus() == 1 && limited > 7) {
+            tvStatus.setText("Còn " + limited + " ngày");
+        } else if (detailJobCustomerResponse.getStatus() == 1 && limited == 0) {
+            tvStatus.setText("Đã hết hạn");
+        } else if (detailJobCustomerResponse.getStatus() == 0) {
+            tvStatus.setText("Nháp");
+        }
         btShowmore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (btShowmore.getText().toString().equalsIgnoreCase("Xem thêm  ")) {
                     tvJobDes.setMaxLines(Integer.MAX_VALUE);//your TextView
                     btShowmore.setText("Rút gọn  ");
@@ -187,7 +201,6 @@ public class DetailJobCustomerFragment extends BaseFragment {
         btShowmore1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (btShowmore1.getText().toString().equalsIgnoreCase("Xem thêm  ")) {
                     tvjobRequirement.setMaxLines(Integer.MAX_VALUE);//your TextView
                     btShowmore1.setText("Rút gọn  ");

@@ -4,85 +4,90 @@
     Created by Hiep Nguyen Nghia.
     Copyright © 2018 Vietinterview. All rights reserved.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-    android:orientation="vertical"
-    android:paddingHorizontal="@dimen/activity_horizontal_margin">
+    android:nestedScrollingEnabled="true">
 
-    <com.vietinterview.getbee.customview.RobotoMediumTextView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="4dp"
-        android:fontFamily="@string/font_fontFamily_medium"
-        android:gravity="left"
-        android:text="@string/skill_main"
-        android:textColor="#042E51"
-        android:textSize="16sp" />
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:orientation="vertical">
 
-    <com.vietinterview.getbee.customview.RobotoMediumTextView
-        android:id="@+id/tvSkillPrimary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="4dp"
-        android:fontFamily="@string/font_fontFamily_medium"
-        android:gravity="left"
-        android:textColor="#677B8D"
-        android:textSize="16sp" />
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:gravity="left"
+            android:text="@string/skill_main"
+            android:textColor="#042E51"
+            android:textSize="16sp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/background_icon_not_focus" />
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:id="@+id/tvSkillPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:gravity="left"
+            android:textColor="#677B8D"
+            android:textSize="16sp" />
 
-    <com.vietinterview.getbee.customview.RobotoMediumTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="4dp"
-        android:fontFamily="@string/font_fontFamily_medium"
-        android:gravity="left"
-        android:text="@string/other_skill"
-        android:textColor="#042E51"
-        android:textSize="16sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background_icon_not_focus" />
 
-    <com.vietinterview.getbee.customview.RobotoMediumTextView
-        android:id="@+id/tvSkillOther"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="4dp"
-        android:fontFamily="@string/font_fontFamily_medium"
-        android:gravity="left"
-        android:textColor="#677B8D"
-        android:textSize="16sp" />
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:gravity="left"
+            android:text="@string/other_skill"
+            android:textColor="#042E51"
+            android:textSize="16sp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/background_icon_not_focus" />
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:id="@+id/tvSkillOther"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:gravity="left"
+            android:textColor="#677B8D"
+            android:textSize="16sp" />
 
-    <com.vietinterview.getbee.customview.RobotoMediumTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="4dp"
-        android:fontFamily="@string/font_fontFamily_medium"
-        android:gravity="left"
-        android:text="@string/hobby"
-        android:textColor="#042E51"
-        android:textSize="16sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background_icon_not_focus" />
 
-    <com.vietinterview.getbee.customview.RobotoMediumTextView
-        android:id="@+id/tvHobby"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="4dp"
-        android:fontFamily="@string/font_fontFamily_medium"
-        android:gravity="left"
-        android:textColor="#677B8D"
-        android:textSize="16sp" />
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:gravity="left"
+            android:text="@string/hobby"
+            android:textColor="#042E51"
+            android:textSize="16sp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/background_icon_not_focus" />
-</LinearLayout>
+        <com.vietinterview.getbee.customview.RobotoMediumTextView
+            android:id="@+id/tvHobby"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:gravity="left"
+            android:textColor="#677B8D"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background_icon_not_focus" />
+    </LinearLayout>
+</ScrollView>

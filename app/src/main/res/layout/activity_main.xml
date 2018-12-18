@@ -27,10 +27,9 @@
 
         <com.vietinterview.getbee.customview.RobotoTextView
             android:id="@+id/tvLogout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="32dp"
             android:drawableLeft="@drawable/ic_logout"
             android:drawablePadding="32dp"
             android:gravity="center|left"

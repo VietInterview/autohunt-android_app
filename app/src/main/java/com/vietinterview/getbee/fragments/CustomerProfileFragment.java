@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -23,8 +24,12 @@ import com.vietinterview.getbee.api.request.GetCUSProfileRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.customerprofile.ProfileCustomerResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.customview.FlowLayout;
 import com.vietinterview.getbee.model.ImageCustomer;
+import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.DialogUtil;
+import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.utils.LayoutUtils;
 import com.vietinterview.getbee.utils.ShowImageUtils;
 
 import java.util.ArrayList;
@@ -59,6 +64,10 @@ public class CustomerProfileFragment extends BaseFragment {
     Button btShowmore;
     @BindView(R.id.tvEmail)
     TextView tvEmail;
+    @BindView(R.id.flowListWelfare)
+    FlowLayout flowListWelfare;
+    @BindView(R.id.gradientView)
+    LinearLayout gradientView;
     HorizontalAdapter horizontalAdapter;
     private MediaController mediacontroller;
     private Uri uri;
@@ -86,7 +95,7 @@ public class CustomerProfileFragment extends BaseFragment {
         horizontal_recycler_view.setLayoutManager(horizontalLayoutManager);
         mediacontroller = new MediaController(getActivity());
         mediacontroller.setAnchorView(vv);
-        getEventBaseFragment().doFillBackground("Thôn tin nhà tuyển dụng");
+        getEventBaseFragment().doFillBackground("Thông tin nhà tuyển dụng");
         vv.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
@@ -106,6 +115,23 @@ public class CustomerProfileFragment extends BaseFragment {
         vv.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             public void onPrepared(MediaPlayer mp) {
                 progressBar.setVisibility(View.GONE);
+            }
+        });
+        btShowmore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (btShowmore.getText().toString().equalsIgnoreCase("Xem thêm  ")) {
+                    tvInfoCompany.setMaxLines(Integer.MAX_VALUE);//your TextView
+                    btShowmore.setText("Rút gọn  ");
+                    gradientView.setVisibility(View.GONE);
+                    btShowmore.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up_blue, 0);
+                } else {
+                    tvInfoCompany.setMaxLines(6);
+                    tvInfoCompany.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_header_selector));
+                    btShowmore.setText("Xem thêm  ");
+                    gradientView.setVisibility(View.VISIBLE);
+                    btShowmore.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_down_blue, 0);
+                }
             }
         });
     }
@@ -131,15 +157,17 @@ public class CustomerProfileFragment extends BaseFragment {
                     if (profileCustomerResponse.getHumanResources().size() > 0) {
                         tvHumanResource.setText(profileCustomerResponse.getHumanResources().get(0).getName());
                     }
-                    StringBuffer carrerBuffer = new StringBuffer("");
-                    for (int i = 0; i < profileCustomerResponse.getCareerSelectedItems().size(); i++) {
-                        if (i == profileCustomerResponse.getCareerSelectedItems().size() - 1) {
-                            carrerBuffer.append(profileCustomerResponse.getCareerSelectedItems().get(i).getName() + "");
-                        } else {
-                            carrerBuffer.append(profileCustomerResponse.getCareerSelectedItems().get(i).getName() + ", ");
+                    if (profileCustomerResponse.getCareerSelectedItems() != null) {
+                        StringBuffer carrerBuffer = new StringBuffer("");
+                        for (int i = 0; i < profileCustomerResponse.getCareerSelectedItems().size(); i++) {
+                            if (i == profileCustomerResponse.getCareerSelectedItems().size() - 1) {
+                                carrerBuffer.append(profileCustomerResponse.getCareerSelectedItems().get(i).getName() + "");
+                            } else {
+                                carrerBuffer.append(profileCustomerResponse.getCareerSelectedItems().get(i).getName() + ", ");
+                            }
                         }
+                        tvCarrer.setText(carrerBuffer.toString());
                     }
-                    tvCarrer.setText(carrerBuffer.toString());
                     tvCompanyAddress.setText(profileCustomerResponse.getAddress());
                     StringBuffer timeBuffer = new StringBuffer("");
                     for (int i = 0; i < profileCustomerResponse.getTimeservingSelectedItems().size(); i++) {
@@ -151,12 +179,17 @@ public class CustomerProfileFragment extends BaseFragment {
                     }
                     tvWorkTime.setText(timeBuffer.toString());
                     tvInfoCompany.setText(profileCustomerResponse.getDescripstion());
-                    String uriPath = profileCustomerResponse.getVideoLink();
-                    uri = Uri.parse(uriPath);
-                    data = fill_with_data(dataSuccess);
-                    horizontalAdapter = new HorizontalAdapter(data, getActivity());
-                    horizontal_recycler_view.setAdapter(horizontalAdapter);
+                    if (profileCustomerResponse.getVideoLink() != null) {
+                        String uriPath = profileCustomerResponse.getVideoLink();
+                        uri = Uri.parse(uriPath);
+                    }
+                    if (dataSuccess.getCustomerImg() != null) {
+                        data = fill_with_data(dataSuccess);
+                        horizontalAdapter = new HorizontalAdapter(data, getActivity());
+                        horizontal_recycler_view.setAdapter(horizontalAdapter);
+                    }
                     tvEmail.setText(profileCustomerResponse.getContactEmail());
+                    showListWelfare();
                 }
             }
 
@@ -168,6 +201,22 @@ public class CustomerProfileFragment extends BaseFragment {
                 }
             }
         });
+    }
+
+    public void showListWelfare() {
+        flowListWelfare.removeAllViews();
+        if (profileCustomerResponse.getCustomerWelfare() != null) {
+            for (int i = 0; i < profileCustomerResponse.getCustomerWelfare().size(); i++) {
+                if (profileCustomerResponse.getCustomerWelfare().get(i).getLstWelfare() != null) {
+                    for (int j = 0; j < profileCustomerResponse.getCustomerWelfare().get(i).getLstWelfare().size(); j++) {
+                        LinearLayout linearLayout = (LinearLayout) LayoutUtils.inflate(flowListWelfare, R.layout.welfare_item_view, false);
+                        TextView tvWelfare = (TextView) linearLayout.findViewById(R.id.tvWelfare);
+                        tvWelfare.setText(profileCustomerResponse.getCustomerWelfare().get(i).getLstWelfare().get(j).getName());
+                        flowListWelfare.addView(linearLayout);
+                    }
+                }
+            }
+        }
     }
 
     public List<ImageCustomer> fill_with_data(ProfileCustomerResponse dataSuccess) {
