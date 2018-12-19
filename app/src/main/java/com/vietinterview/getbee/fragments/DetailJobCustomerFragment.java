@@ -136,7 +136,7 @@ public class DetailJobCustomerFragment extends BaseFragment {
             }
         });
         tvJobTitle.setText(detailJobCustomerResponse.getJobTitle());
-        tvLevel.setText(detailJobCustomerResponse.getCurrentLevel().getName());//note
+        tvLevel.setText(detailJobCustomerResponse.getCurrentLevel().getName());
         tvworkingForm.setText(detailJobCustomerResponse.getWorkingForm().getName());
 
         StringBuilder s0 = new StringBuilder("");
@@ -150,11 +150,11 @@ public class DetailJobCustomerFragment extends BaseFragment {
         tvCarrer.setText(s0.toString());
         tvRequireExp.setText(detailJobCustomerResponse.getWorkExperience());
         StringBuilder s1 = new StringBuilder("");
-        for (int i = 0; i < detailJobCustomerResponse.getLstCareer().size(); i++) {
-            if (i == detailJobCustomerResponse.getLstCareer().size() - 1) {
-                s1.append(detailJobCustomerResponse.getLstCareer().get(i).getName() + "");
+        for (int i = 0; i < detailJobCustomerResponse.getLstJobCity().size(); i++) {
+            if (i == detailJobCustomerResponse.getLstJobCity().size() - 1) {
+                s1.append(detailJobCustomerResponse.getLstJobCity().get(i).getName() + "");
             } else {
-                s1.append(detailJobCustomerResponse.getLstCareer().get(i).getName() + ", ");
+                s1.append(detailJobCustomerResponse.getLstJobCity().get(i).getName() + ", ");
             }
         }
         tvWorkPlace.setText(s1.toString());

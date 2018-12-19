@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -65,8 +66,6 @@ public class InterviewProcessResumeFragment extends BaseFragment {
     TextView tvAddRound;
     @BindView(R.id.btnNotAccept)
     Button btnNotAccept;
-    @BindView(R.id.scrInterview)
-    ScrollView scrInterview;
     DetailProcessResumeResponse detailProcessResumeResponse;
     private Dialog mReasonNotAcceptDialog;
     private Dialog mRejectDialog;
@@ -108,21 +107,18 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                 tvAddRound.setEnabled(false);
             } else cardReject.setVisibility(View.GONE);
         } else cardReject.setVisibility(View.GONE);
-//        if (detailProcessResumeResponse.getLstInterviewHis().size() > 0) {
-//            if (detailProcessResumeResponse.getLstInterviewHis().get(detailProcessResumeResponse.getLstInterviewHis().size() - 1).getStatus() == 1) {
-//                btnNotAccept.setVisibility(View.GONE);
-//            } else {
-//                btnNotAccept.setVisibility(View.VISIBLE);
-//            }
-//        }
     }
 
     @OnClick(R.id.tvAddRound)
     public void onAddRoundClick() {
-        if (detailProcessResumeResponse.getLstInterviewHis().get(detailProcessResumeResponse.getLstInterviewHis().size() - 1).getStatus() == 1) {
-            FragmentUtil.pushFragment(getActivity(), this, new CreateEditInterviewFragment().newInstance(null, detailProcessResumeResponse), null);
+        if (detailProcessResumeResponse.getLstInterviewHis().size() > 0) {
+            if (detailProcessResumeResponse.getLstInterviewHis().get(detailProcessResumeResponse.getLstInterviewHis().size() - 1).getStatus() == 1) {
+                FragmentUtil.pushFragment(getActivity(), this, new CreateEditInterviewFragment().newInstance(null, detailProcessResumeResponse), null);
+            } else {
+                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Vòng phỏng vấn gần nhất ứng viên không đạt vì vậy bạn không thể thêm mới vòng phỏng vấn");
+            }
         } else {
-            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Vòng phỏng vấn gần nhất ứng viên không đạt vì vậy bạn không thể thêm mới vòng phỏng vấn");
+            FragmentUtil.pushFragment(getActivity(), this, new CreateEditInterviewFragment().newInstance(null, detailProcessResumeResponse), null);
         }
     }
 

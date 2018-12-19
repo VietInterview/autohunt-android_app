@@ -57,7 +57,7 @@ public class ApiConstantTest {
     public String REJECT = "svccustomer/api/cvProcess/reject";
     public String INVITE_INTERVIEW = "svccustomer/api/cvProcess/inviteInterview";
     public String SEND_INTERVIEW = "svccustomer/api/cvProcess/sendInterview";
-    public String UPDATE_INTERVIEW_STATUS = "svccustomer/api/cvProcess/updateOfferStatus";
+    public String UPDATE_INTERVIEW_STATUS = "svccustomer/api/cvProcess/updateInterviewStatus";
     public String OFFER_STATUS = "svccustomer/api/cvProcess/offerStatus";
     public String SEND_OFFER = "svccustomer/api/cvProcess/sendOffer";
     public String UPDATE_OFFER_STATUS = "svccustomer/api/cvProcess/updateOfferStatus";

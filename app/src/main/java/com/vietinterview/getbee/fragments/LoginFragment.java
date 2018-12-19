@@ -398,8 +398,10 @@ public class LoginFragment extends BaseFragment {
                         wlp.y = 300;
                         window.setAttributes(wlp);
                         TextView tvContent = mNotifydialog.findViewById(R.id.tvContent);
-                        if (errorResponse.getDetail().equalsIgnoreCase("userLock")) {
-                            tvContent.setText(getResources().getString(R.string.user_locked));
+                        if (errorResponse.getDetail() != null) {
+                            if (errorResponse.getDetail().equalsIgnoreCase("userLock")) {
+                                tvContent.setText(getResources().getString(R.string.user_locked));
+                            }
                         }
                         Button btnOK = (Button) mNotifydialog.findViewById(R.id.btnOK);
                         btnOK.setOnClickListener(new View.OnClickListener() {

@@ -80,7 +80,7 @@ public class InfoDetailResumeCustomerFragment extends BaseFragment {
         tvMarried.setText(mDetailCVCustomerResponse.getMaritalStatus() == 1 ? getResources().getString(R.string.not_have_married) : getResources().getString(R.string.have_married));
         tvCity.setText(mDetailCVCustomerResponse.getCity().getName());
         tvPositionWish.setText(mDetailCVCustomerResponse.getDesiredPosition());
-        tvCurrentLevel.setText(mDetailCVCustomerResponse.getCurrentLevel().getName());
+        tvCurrentLevel.setText(mDetailCVCustomerResponse.getCurrentLevel() == null ? "" : mDetailCVCustomerResponse.getCurrentLevel().getName());
         tvLevelWish.setText(mDetailCVCustomerResponse.getDesiredLevel().getName());
         StringBuffer carrerBuffer = new StringBuffer("");
         for (int i = 0; i < mDetailCVCustomerResponse.getLstCareer().size(); i++) {
