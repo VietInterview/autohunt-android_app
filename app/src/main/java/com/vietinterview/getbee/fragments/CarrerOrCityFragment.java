@@ -28,6 +28,7 @@ import com.vietinterview.getbee.api.response.CareerResponse;
 import com.vietinterview.getbee.api.response.CityResponse;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.customview.RobotoEditText;
 import com.vietinterview.getbee.customview.RobotoTextView;
 import com.vietinterview.getbee.utils.DebugLog;
@@ -89,6 +90,7 @@ public class CarrerOrCityFragment extends BaseFragment {
         tvHeader.setText(mIsCity ? getResources().getString(R.string.all_city) : getResources().getString(R.string.all_carrer));
         setCustomToolbar(true);
         setHasOptionsMenu(true);
+        GlobalDefine.currentFragment = this;
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {

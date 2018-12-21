@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ViewPagerAdapter;
 import com.vietinterview.getbee.api.response.detailcvcustomer.DetailCVCustomerResponse;
+import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.ShowImageUtils;
 
@@ -57,6 +58,7 @@ public class DetailResumeCustomerFragment extends BaseFragment {
 //        btnProcessCV.setVisibility(StringUtils.checkFunction("CUS_HOME_PAGE_VIEW_CV_DETAIL") ? View.VISIBLE : View.GONE);
         final ViewPager viewPager = (ViewPager) root.findViewById(R.id.tabanim_viewpager);
         setupViewPager(viewPager);
+        GlobalDefine.currentFragment = this;
         tvFullname.setText(mDetailCVCustomerResponse.getFullName());
         ShowImageUtils.showImage(getActivity(), mDetailCVCustomerResponse.getPictureUrl(), R.drawable.ic_ava_null, imgAva);
         TabLayout tabLayout = (TabLayout) root.findViewById(R.id.tabanim_tabs);

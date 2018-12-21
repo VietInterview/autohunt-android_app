@@ -146,7 +146,36 @@
                 android:layout_marginVertical="4dp"
                 android:background="#D8D8D8" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:orientation="vertical">
 
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
+                android:text="Yêu cầu giới tính"
+                android:textColor="#042E51"
+                android:textSize="16sp" />
+
+            <com.vietinterview.getbee.customview.RobotoTextView
+                android:id="@+id/tvRequireSex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
+                android:text="Nhân viên"
+                android:textColor="#677B8D"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="4dp"
+                android:background="#D8D8D8" />
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -220,7 +249,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Bằng cấp"
+                android:text="Yêu cầu bằng cấp"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -251,7 +280,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Độ tuổi"
+                android:text="Yêu cầu độ tuổi"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -561,7 +590,7 @@
                 android:id="@+id/btShowmore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
                 android:background="@android:color/transparent"
                 android:drawableRight="@drawable/ic_arrow_down_blue"
                 android:text="Xem thêm  "
@@ -617,7 +646,62 @@
                 android:id="@+id/btShowmore1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:background="@android:color/transparent"
+                android:drawableRight="@drawable/ic_arrow_down_blue"
+                android:text="Xem thêm  "
+                android:textAllCaps="false"
+                android:textColor="@android:color/holo_blue_light" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="4dp"
+                android:background="#D8D8D8" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_header_selector"
+            android:orientation="vertical">
+
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_vertical_margin"
+                android:layout_marginVertical="4dp"
+                android:text="Đãi ngộ đặc biệt"
+                android:textColor="#042E51"
+                android:textSize="16sp" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvSpecialTreatment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/main_header_selector"
+                    android:maxLines="6"
+                    android:text="Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure? On the other hand, we." />
+
+                <LinearLayout
+                    android:id="@+id/gradientViewSpecialTreatment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/main_header_selector"
+                    android:orientation="vertical" />
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/btShowmoreSpecialTreatment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
                 android:background="@android:color/transparent"
                 android:drawableRight="@drawable/ic_arrow_down_blue"
                 android:text="Xem thêm  "

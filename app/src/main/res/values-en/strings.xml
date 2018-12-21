@@ -139,7 +139,7 @@
     <string name="graduation_type">Qualification</string>
     <string name="greeting">Hello, </string>
     <string name="update">Updated on: </string>
-    <string name="error_please_try">Error occured, please try again.</string>
+    <string name="error_please_try">The system is busy, please wait..</string>
     <string name="good">Excellent</string>
     <string name="rather">Advanced</string>
     <string name="medium">Intermediate</string>
@@ -197,4 +197,7 @@
     <string name="not_enought_exp">You have not entered the work experience, please check again</string>
     <string name="not_enought_edu">You have not entered a working level, please check again</string>
     <string name="before_day">days ago</string>
+    <string name="done">Done</string>
+    <string name="draft">Draft</string>
+    <string name="not_seen">Not Seen</string>
 </resources>

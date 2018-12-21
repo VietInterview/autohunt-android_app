@@ -100,6 +100,8 @@
             android:layout_alignParentBottom="true"
             android:background="@color/white"
             android:paddingTop="0dp"
+            app:tabMaxWidth="140dp"
+            app:tabMinWidth="120dp"
             app:tabMode="scrollable" />
     </android.support.design.widget.AppBarLayout>
 

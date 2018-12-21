@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.detailcvcustomer.DetailCVCustomerResponse;
 import com.vietinterview.getbee.utils.DateUtil;
+import com.vietinterview.getbee.utils.StringUtils;
 
 import butterknife.BindView;
 
@@ -74,9 +75,9 @@ public class InfoDetailResumeCustomerFragment extends BaseFragment {
         tvBirthDay.setText(DateUtil.convertToMyFormatFull(mDetailCVCustomerResponse.getBirthday() + ""));
         if (mDetailCVCustomerResponse.getSex() == 1) {
             tvGender.setText(getResources().getString(R.string.male));
-        } else if (mDetailCVCustomerResponse.getSex() == 2) {
+        } else if (mDetailCVCustomerResponse.getSex() == 0) {
             tvGender.setText(getResources().getString(R.string.female));
-        } else tvGender.setText(getResources().getString(R.string.other_sex));
+        }
         tvMarried.setText(mDetailCVCustomerResponse.getMaritalStatus() == 1 ? getResources().getString(R.string.not_have_married) : getResources().getString(R.string.have_married));
         tvCity.setText(mDetailCVCustomerResponse.getCity().getName());
         tvPositionWish.setText(mDetailCVCustomerResponse.getDesiredPosition());
@@ -91,10 +92,14 @@ public class InfoDetailResumeCustomerFragment extends BaseFragment {
             }
         }
         tvCarrer.setText(carrerBuffer.toString());
-        tvWorkPLace.setText(mDetailCVCustomerResponse.getJobListcityName());
+        StringBuffer workPlace = new StringBuffer("");
+        for (int i = 0; i < mDetailCVCustomerResponse.getLstJobCity().size(); i++) {
+            workPlace.append(i == mDetailCVCustomerResponse.getLstJobCity().size() - 1 ? mDetailCVCustomerResponse.getLstJobCity().get(i).getName() + "" : mDetailCVCustomerResponse.getLstJobCity().get(i).getName() + ", ");
+        }
+        tvWorkPLace.setText(workPlace.toString());
         tvCertificate.setText(mDetailCVCustomerResponse.getEducationLevel().getName());
         tvExpYear.setText(mDetailCVCustomerResponse.getExperienceYear().getName());
-        tvSalaryWish.setText(mDetailCVCustomerResponse.getDesiredSalary() + "");
+        tvSalaryWish.setText(StringUtils.filterCurrencyString(mDetailCVCustomerResponse.getDesiredSalary()) + " " + StringUtils.genStringCurrency(mDetailCVCustomerResponse.getCurrencyId()));
         tvTarget.setText(mDetailCVCustomerResponse.getCareerObjectives());
         btShowmore.setOnClickListener(new View.OnClickListener() {
             @Override

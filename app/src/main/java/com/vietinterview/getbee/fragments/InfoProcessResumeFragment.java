@@ -222,7 +222,6 @@ public class InfoProcessResumeFragment extends BaseFragment {
                     spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            DebugLog.showLogCat(listReasonName.get(position).getName());
                             if (listReasonName.get(position).getCode().equalsIgnoreCase("other")) {
                                 edtReasonOther.setFocusable(true);
                                 edtReasonOther.setFocusableInTouchMode(true); // user touches widget on phone with touch screen

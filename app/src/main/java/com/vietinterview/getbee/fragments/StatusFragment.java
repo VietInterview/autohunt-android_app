@@ -23,6 +23,7 @@ import com.vietinterview.getbee.adapter.StatusAdapter;
 import com.vietinterview.getbee.customview.RobotoEditText;
 import com.vietinterview.getbee.customview.RobotoTextView;
 import com.vietinterview.getbee.model.CVStatus;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
 import java.util.ArrayList;
@@ -50,12 +51,23 @@ public class StatusFragment extends BaseFragment {
     String mName;
     List<CVStatus> cvStatuses;
     List<CVStatus> cvStatusesFilter;
+    private boolean isEmplyer = false;
 
     public static StatusFragment newInstance(String Id, String Name) {
         StatusFragment fm = new StatusFragment();
         Bundle bundle = new Bundle();
         bundle.putString("statusId", Id);
         bundle.putString("statusName", Name);
+        fm.setArguments(bundle);
+        return fm;
+    }
+
+    public static StatusFragment newInstance(String Id, String Name, boolean isEmployer) {
+        StatusFragment fm = new StatusFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("statusId", Id);
+        bundle.putString("statusName", Name);
+        bundle.putBoolean("isEmployer", isEmployer);
         fm.setArguments(bundle);
         return fm;
     }
@@ -119,6 +131,7 @@ public class StatusFragment extends BaseFragment {
     protected void getArgument(Bundle bundle) {
         mId = bundle.getString("statusId");
         mName = bundle.getString("statusName");
+        isEmplyer = bundle.getBoolean("isEmployer");
     }
 
     @Override
@@ -127,15 +140,26 @@ public class StatusFragment extends BaseFragment {
         cvStatuses = new ArrayList<>();
 //        cvStatuses.add(new CVStatus(0, getResources().getString(R.string.not_save)));
 //        cvStatuses.add(new CVStatus(1, getResources().getString(R.string.saved)));
-        cvStatuses.add(new CVStatus(1, getResources().getString(R.string.sent)));
-        cvStatuses.add(new CVStatus(3, getResources().getString(R.string.seen)));
-        cvStatuses.add(new CVStatus(4, getResources().getString(R.string.not_accept)));
-        cvStatuses.add(new CVStatus(5, getResources().getString(R.string.invite_interview)));
-        cvStatuses.add(new CVStatus(6, getResources().getString(R.string.interviewed)));
-        cvStatuses.add(new CVStatus(7, getResources().getString(R.string.offered)));
-        cvStatuses.add(new CVStatus(8, getResources().getString(R.string.go_to_work)));
-        cvStatuses.add(new CVStatus(9, getResources().getString(R.string.contract)));
-        cvStatuses.add(new CVStatus(11, getResources().getString(R.string.default_key)));
+        if (!isEmplyer) {
+            cvStatuses.add(new CVStatus(1, getResources().getString(R.string.sent)));
+            cvStatuses.add(new CVStatus(3, getResources().getString(R.string.seen)));
+            cvStatuses.add(new CVStatus(4, getResources().getString(R.string.not_accept)));
+            cvStatuses.add(new CVStatus(5, getResources().getString(R.string.invite_interview)));
+            cvStatuses.add(new CVStatus(6, getResources().getString(R.string.interviewed)));
+            cvStatuses.add(new CVStatus(7, getResources().getString(R.string.offered)));
+            cvStatuses.add(new CVStatus(8, getResources().getString(R.string.go_to_work)));
+            cvStatuses.add(new CVStatus(9, getResources().getString(R.string.contract)));
+            cvStatuses.add(new CVStatus(11, getResources().getString(R.string.default_key)));
+        } else {
+            edtSearchJob.setVisibility(View.GONE);
+            cvStatuses.add(new CVStatus(11, "Tất cả"));
+            cvStatuses.add(new CVStatus(0, "Nháp"));
+            cvStatuses.add(new CVStatus(1, "Đang tuyển"));
+            cvStatuses.add(new CVStatus(2, "Đã ẩn"));
+            cvStatuses.add(new CVStatus(3, "Sắp hết hạn trong 7 ngày"));
+            cvStatuses.add(new CVStatus(4, "Đã hết hạn"));
+            cvStatuses.add(new CVStatus(6, "Ngưng tuyển"));
+        }
         cvStatusesFilter = cvStatuses;
         statusAdapter = new StatusAdapter(getActivity(), cvStatuses);
         listView.setAdapter(statusAdapter);

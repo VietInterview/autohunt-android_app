@@ -103,6 +103,9 @@ public class DetailJobCustomerResponse implements Parcelable {
     @SerializedName("lstJobCity")
     @Expose
     private List<LstJobCity> lstJobCity = null;
+    @SerializedName("lstJobCountry")
+    @Expose
+    private List<LstJobCountry> lstJobCountry = null;
     @SerializedName("quantity")
     @Expose
     private Integer quantity;
@@ -541,6 +544,14 @@ public class DetailJobCustomerResponse implements Parcelable {
 
     public void setLstJobCity(List<LstJobCity> lstJobCity) {
         this.lstJobCity = lstJobCity;
+    }
+
+    public List<LstJobCountry> getLstJobCountry() {
+        return lstJobCountry;
+    }
+
+    public void setLstJobCountry(List<LstJobCountry> lstJobCountry) {
+        this.lstJobCountry = lstJobCountry;
     }
 
     public Integer getQuantity() {

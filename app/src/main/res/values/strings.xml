@@ -139,7 +139,7 @@
     <string name="graduation_type">Loại tốt nghiệp</string>
     <string name="greeting">Xin chào,</string>
     <string name="update">Cập nhật: </string>
-    <string name="error_please_try">Đã có lỗi xảy ra, xin thử lại sau.</string>
+    <string name="error_please_try">Hệ thống đang bận, xin vui lòng chờ..</string>
     <string name="good">Tốt</string>
     <string name="rather">Khá</string>
     <string name="medium">Trung bình</string>
@@ -197,9 +197,10 @@
     <string name="not_enought_exp">Bạn chưa nhập kinh nghiệm làm việc, vui lòng kiểm tra lại</string>
     <string name="not_enought_edu">Bạn chưa nhập trình độ làm việc, vui lòng kiểm tra lại</string>
     <string name="before_day">ngày trước</string>
-
+    <string name="done">Kết thúc tuyển dụng</string>
     <string name="country_prompt">Choose a reason</string>
-
+    <string name="draft">Nháp</string>
+    <string name="not_seen">Chưa xem</string>
     <string-array name="country_arrays">
         <item>Malaysia</item>
         <item>United States</item>

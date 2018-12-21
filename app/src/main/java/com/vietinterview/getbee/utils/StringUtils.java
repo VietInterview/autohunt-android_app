@@ -411,9 +411,75 @@ public class StringUtils {
         return valueString;
     }
 
+    public static String genStringSex(int valueSex, Context context) {
+        String Sex = "";
+        switch (valueSex) {
+            case 0:
+                Sex = "Không yêu cầu";
+                break;
+            case 1:
+                Sex = context.getResources().getString(R.string.male);
+                break;
+            case 2:
+                Sex = context.getResources().getString(R.string.female);
+                break;
+            default:
+                Sex = "";
+                break;
+        }
+        return Sex;
+    }
+
+    public static String genStringAge(int valueAge) {
+        String age = "";
+        switch (valueAge) {
+            case 1:
+                age = "Không giới hạn tuổi";
+                break;
+            case 2:
+                age = "Dưới 25 tuổi";
+                break;
+            case 3:
+                age = "Từ 25 - 30 tuổi";
+                break;
+            case 4:
+                age = "Trên 30 tuổi";
+                break;
+            default:
+                age = "";
+                break;
+        }
+        return age;
+    }
+
+    public static String genStringExperience(String valueExperience) {
+        String Experience = "";
+        switch (valueExperience) {
+            case "1":
+                Experience = "Không yêu cầu";
+                break;
+            case "2":
+                Experience = "Dưới 1 năm";
+                break;
+            case "3":
+                Experience = "Từ 1 - 3 năm";
+                break;
+            case "4":
+                Experience = "Trên 3 năm";
+                break;
+            default:
+                Experience = "";
+                break;
+        }
+        return Experience;
+    }
+
     public static StatusCV genStringStatus(int status, Context context) {
         StatusCV statusCV = null;
         switch (status) {
+            case -1:
+                statusCV = new StatusCV(context.getResources().getString(R.string.draft), context.getResources().getDrawable(R.drawable.border_gray), context.getColor(R.color.background_icon_not_focus));
+                break;
             case 0:
                 statusCV = new StatusCV(context.getResources().getString(R.string.not_send), context.getResources().getDrawable(R.drawable.border_gray), context.getColor(R.color.background_icon_not_focus));
                 break;
@@ -421,7 +487,7 @@ public class StringUtils {
                 statusCV = new StatusCV(context.getResources().getString(R.string.sent), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
                 break;
             case 2:
-                statusCV = new StatusCV(context.getResources().getString(R.string.sent), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
+                statusCV = new StatusCV(context.getResources().getString(R.string.approved), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
                 break;
             case 3:
                 statusCV = new StatusCV(context.getResources().getString(R.string.seen), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
@@ -445,7 +511,7 @@ public class StringUtils {
                 statusCV = new StatusCV(context.getResources().getString(R.string.contract), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
                 break;
             case 10:
-                statusCV = new StatusCV(context.getResources().getString(R.string.not_accept), context.getResources().getDrawable(R.drawable.border_gray), context.getColor(R.color.background_icon_not_focus));
+                statusCV = new StatusCV(context.getResources().getString(R.string.done), context.getResources().getDrawable(R.drawable.border_gray), context.getColor(R.color.background_icon_not_focus));
                 break;
         }
         return statusCV;
@@ -454,6 +520,9 @@ public class StringUtils {
     public static StatusCV genStringStatusCVNTD(int status, Context context) {
         StatusCV statusCV = null;
         switch (status) {
+            case -1:
+                statusCV = new StatusCV(context.getResources().getString(R.string.draft), context.getResources().getDrawable(R.drawable.border_gray), context.getColor(R.color.background_icon_not_focus));
+                break;
             case 0:
                 statusCV = new StatusCV(context.getResources().getString(R.string.not_send), context.getResources().getDrawable(R.drawable.border_gray), context.getColor(R.color.background_icon_not_focus));
                 break;
@@ -461,7 +530,7 @@ public class StringUtils {
                 statusCV = new StatusCV(context.getResources().getString(R.string.sent), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
                 break;
             case 2:
-                statusCV = new StatusCV(context.getResources().getString(R.string.sent), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
+                statusCV = new StatusCV(context.getResources().getString(R.string.not_seen), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
                 break;
             case 3:
                 statusCV = new StatusCV(context.getResources().getString(R.string.seen), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
@@ -485,7 +554,7 @@ public class StringUtils {
                 statusCV = new StatusCV(context.getResources().getString(R.string.contract), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
                 break;
             case 10:
-                statusCV = new StatusCV(context.getResources().getString(R.string.not_accept), context.getResources().getDrawable(R.drawable.border_gray), context.getColor(R.color.background_icon_not_focus));
+                statusCV = new StatusCV(context.getResources().getString(R.string.done), context.getResources().getDrawable(R.drawable.border_gray), context.getColor(R.color.background_icon_not_focus));
                 break;
         }
         return statusCV;

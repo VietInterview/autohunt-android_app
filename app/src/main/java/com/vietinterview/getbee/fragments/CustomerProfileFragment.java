@@ -145,6 +145,7 @@ public class CustomerProfileFragment extends BaseFragment {
     ProfileCustomerResponse profileCustomerResponse;
 
     public void getCustomerProfile() {
+        showCoverNetworkLoading();
         getCUSProfileRequest = new GetCUSProfileRequest();
         getCUSProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<ProfileCustomerResponse, ErrorResponse>() {
             @Override
@@ -207,14 +208,10 @@ public class CustomerProfileFragment extends BaseFragment {
         flowListWelfare.removeAllViews();
         if (profileCustomerResponse.getCustomerWelfare() != null) {
             for (int i = 0; i < profileCustomerResponse.getCustomerWelfare().size(); i++) {
-                if (profileCustomerResponse.getCustomerWelfare().get(i).getLstWelfare() != null) {
-                    for (int j = 0; j < profileCustomerResponse.getCustomerWelfare().get(i).getLstWelfare().size(); j++) {
-                        LinearLayout linearLayout = (LinearLayout) LayoutUtils.inflate(flowListWelfare, R.layout.welfare_item_view, false);
-                        TextView tvWelfare = (TextView) linearLayout.findViewById(R.id.tvWelfare);
-                        tvWelfare.setText(profileCustomerResponse.getCustomerWelfare().get(i).getLstWelfare().get(j).getName());
-                        flowListWelfare.addView(linearLayout);
-                    }
-                }
+                LinearLayout linearLayout = (LinearLayout) LayoutUtils.inflate(flowListWelfare, R.layout.welfare_item_view, false);
+                TextView tvWelfare = (TextView) linearLayout.findViewById(R.id.tvWelfare);
+                tvWelfare.setText(profileCustomerResponse.getCustomerWelfare().get(i).getName() + " - " + profileCustomerResponse.getCustomerWelfare().get(i).getNote());
+                flowListWelfare.addView(linearLayout);
             }
         }
     }

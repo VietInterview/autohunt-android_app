@@ -99,7 +99,7 @@
                         android:layout_gravity="bottom"
                         android:layout_marginLeft="8dp"
                         android:layout_marginBottom="8dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.5"
                         android:drawableLeft="@drawable/ic_time_experi"
                         android:drawablePadding="8dp"
                         android:gravity="top"

@@ -104,7 +104,7 @@ public class ExpDetailResumeCustomerAdapter extends RecyclerView.Adapter<Recycle
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof MyViewHolder) {
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCompanyName)).setText(lstEmploymentHis.get(position).getCompanyName());
-            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvContent)).setText(lstEmploymentHis.get(position).getTitle() + "\n" + StringUtils.genString(lstEmploymentHis.get(position).getHumanResources(), mContext) + "\nTháng" + DateUtil.convertToMyFormatVacant(lstEmploymentHis.get(position).getFromMonth() + "") + " - " + DateUtil.convertToMyFormatVacant(lstEmploymentHis.get(position).getToMonth() + "") + "\n" + lstEmploymentHis.get(position).getJobDescription());
+            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvContent)).setText(lstEmploymentHis.get(position).getTitle() + "\n" + StringUtils.genString(lstEmploymentHis.get(position).getHumanResources(), mContext) + "\nTháng " + DateUtil.convertToMyFormatVacant(lstEmploymentHis.get(position).getFromMonth() + "") + " - " + DateUtil.convertToMyFormatVacant(lstEmploymentHis.get(position).getToMonth() + "") + "\n" + lstEmploymentHis.get(position).getJobDescription());
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.progressBar.setIndeterminate(true);

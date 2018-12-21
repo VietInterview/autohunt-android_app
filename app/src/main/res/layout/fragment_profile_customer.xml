@@ -285,7 +285,7 @@
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
-            <com.vietinterview.getbee.customview.RobotoTextView
+            <com.vietinterview.getbee.customview.RobotoItalicTextView
                 android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

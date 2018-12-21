@@ -28,6 +28,7 @@ import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.constant.ApiConstant;
 import com.vietinterview.getbee.constant.AppConstant;
+import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.customview.ClearableRegularEditText;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
@@ -88,6 +89,7 @@ public class JobsEmployerFragment extends BaseFragment implements SwipeRefreshLa
         setHasOptionsMenu(true);
         setCustomToolbarVisible(true);
         getEventBaseFragment().doFillBackground("Danh sách công việc");
+        GlobalDefine.currentFragment = this;
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -193,8 +195,8 @@ public class JobsEmployerFragment extends BaseFragment implements SwipeRefreshLa
 
     @OnClick(R.id.llStatus)
     public void onllStatusClick() {
-        visibleSearch = true;
-        FragmentUtil.pushFragment(getActivity(), this, new StatusFragment().newInstance(mStatusId, mStatusName), null);
+//        visibleSearch = true;
+        FragmentUtil.pushFragment(getActivity(), this, new StatusFragment().newInstance(mStatusId, mStatusName, true), null);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -225,7 +227,7 @@ public class JobsEmployerFragment extends BaseFragment implements SwipeRefreshLa
     public boolean onOptionsItemSelected(MenuItem item) {
         mItem = item;
         int id = mItem.getItemId();
-        if (id == R.id.search) {
+        if (id == R.id.search || id == R.id.save) {
             if (visibleSearch) {
                 visibleSearch = false;
                 llSearch.setVisibility(View.GONE);

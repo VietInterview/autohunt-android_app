@@ -267,10 +267,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             FragmentUtil.replaceFragment(MainActivity.this, new IntroFragment(), null);
         } else {
             if (AccountManager.getUserInfoBean() != null) {
-                if (GlobalDefine.currentFragment == null || GlobalDefine.currentFragment instanceof HomeFragment) {
+                if (GlobalDefine.currentFragment == null || GlobalDefine.currentFragment instanceof HomeFragment || GlobalDefine.currentFragment instanceof JobsEmployerFragment) {
                     drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                     navigationView.setCheckedItem(R.id.nav_home);
-                    if (AccountManager.getUserInfoBean().getType() == 7)
+                    if (AccountManager.getUserInfoBean().getType() == 7 || AccountManager.getUserInfoBean().getType() == 5)
                         FragmentUtil.replaceFragment(this, new HomeFragment(), null);
                     else FragmentUtil.replaceFragment(this, new JobsEmployerFragment(), null);
                 } else {
@@ -459,7 +459,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                             FragmentUtil.replaceFragment(MainActivity.this, new CollaboratorProfileFragment(), null);
                         else if (AccountManager.getUserInfoBean().getType() == 2)
                             FragmentUtil.replaceFragment(MainActivity.this, new CustomerProfileFragment(), null);
-                        else FragmentUtil.replaceFragment(MainActivity.this, new CollaboratorProfileFragment(), null);
+                        else
+                            FragmentUtil.replaceFragment(MainActivity.this, new CollaboratorProfileFragment(), null);
                         break;
                 }
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

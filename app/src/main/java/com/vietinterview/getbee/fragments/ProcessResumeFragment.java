@@ -22,6 +22,7 @@ import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnChangeStepExpListener;
 import com.vietinterview.getbee.callback.OnRejectListener;
 import com.vietinterview.getbee.constant.AppConstant;
+import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.customview.NonSwipeableViewPager;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
@@ -76,6 +77,7 @@ public class ProcessResumeFragment extends BaseFragment {
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         customToolbar(true);
         setMenuVisibility(true);
+        GlobalDefine.currentFragment = this;
         getEventBaseFragment().doFillBackground(getResources().getString(R.string.process_cv));
         getEventBaseFragment().setOnRejectListener(new OnRejectListener() {
             @Override

@@ -30,6 +30,7 @@ import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.constant.ApiConstant;
 import com.vietinterview.getbee.constant.AppConstant;
+import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
@@ -59,7 +60,7 @@ public class ResumesEmployerFragment extends BaseFragment implements SwipeRefres
     TextView tvStatus;
     @BindView(R.id.edtJobTitle)
     EditText edtJobTitle;
-//    JobList mJobList;
+    //    JobList mJobList;
     private int page = 0;
     private GetListCVByJobCustomerRequest getListCVByJobCustomerRequest;
     private ResumesEmployerAdapter cvsEmployerAdapter;
@@ -90,6 +91,7 @@ public class ResumesEmployerFragment extends BaseFragment implements SwipeRefres
         setCustomToolbar(true);
         setHasOptionsMenu(true);
         setCustomToolbarVisible(true);
+        GlobalDefine.currentFragment = this;
         jobID = SharedPrefUtils.getInt("jobIdCus", 0);
         getEventBaseFragment().doFillBackground("Danh sách ứng viên");
         recyclerView.setHasFixedSize(true);
@@ -228,7 +230,7 @@ public class ResumesEmployerFragment extends BaseFragment implements SwipeRefres
     public boolean onOptionsItemSelected(MenuItem item) {
         mItem = item;
         int id = mItem.getItemId();
-        if (id == R.id.search) {
+        if (id == R.id.search || id == R.id.save) {
             if (visibleSearch) {
                 visibleSearch = false;
                 llSearch.setVisibility(View.GONE);

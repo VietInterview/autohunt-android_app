@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -19,8 +20,10 @@ import android.widget.TextView;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.JobsEmployerAdapter;
 import com.vietinterview.getbee.api.response.detailjobcustomer.DetailJobCustomerResponse;
+import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.utils.SharedPrefUtils;
 import com.vietinterview.getbee.utils.StringUtils;
 
 import butterknife.BindView;
@@ -79,6 +82,16 @@ public class DetailJobCustomerFragment extends BaseFragment {
     LinearLayout gradientView1;
     @BindView(R.id.tvStatus)
     TextView tvStatus;
+    @BindView(R.id.tvRequireSex)
+    TextView tvRequireSex;
+    @BindView(R.id.btnListResume)
+    FloatingActionButton btnListResume;
+    @BindView(R.id.tvSpecialTreatment)
+    TextView tvSpecialTreatment;
+    @BindView(R.id.btShowmoreSpecialTreatment)
+    Button btShowmoreSpecialTreatment;
+    @BindView(R.id.gradientViewSpecialTreatment)
+    LinearLayout gradientViewSpecialTreatment;
     private CollapsingToolbarLayout collapsingToolbar;
     private AppBarLayout appBarLayout;
     private RecyclerView recyclerView;
@@ -111,6 +124,7 @@ public class DetailJobCustomerFragment extends BaseFragment {
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbar(false);
         setCustomToolbarVisible(false);
+        GlobalDefine.currentFragment = this;
         appBarLayout = (AppBarLayout) root.findViewById(R.id.appbar);
         collapsingToolbar = (CollapsingToolbarLayout) root.findViewById(R.id.collapsing_toolbar);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.background_header_job);
@@ -138,7 +152,7 @@ public class DetailJobCustomerFragment extends BaseFragment {
         tvJobTitle.setText(detailJobCustomerResponse.getJobTitle());
         tvLevel.setText(detailJobCustomerResponse.getCurrentLevel().getName());
         tvworkingForm.setText(detailJobCustomerResponse.getWorkingForm().getName());
-
+        tvRequireSex.setText(StringUtils.genStringSex(detailJobCustomerResponse.getSex(), getActivity()));
         StringBuilder s0 = new StringBuilder("");
         for (int i = 0; i < detailJobCustomerResponse.getLstCareer().size(); i++) {
             if (i == detailJobCustomerResponse.getLstCareer().size() - 1) {
@@ -148,21 +162,32 @@ public class DetailJobCustomerFragment extends BaseFragment {
             }
         }
         tvCarrer.setText(s0.toString());
-        tvRequireExp.setText(detailJobCustomerResponse.getWorkExperience());
+        tvRequireExp.setText(StringUtils.genStringExperience(detailJobCustomerResponse.getWorkExperience()));
         StringBuilder s1 = new StringBuilder("");
-        for (int i = 0; i < detailJobCustomerResponse.getLstJobCity().size(); i++) {
-            if (i == detailJobCustomerResponse.getLstJobCity().size() - 1) {
-                s1.append(detailJobCustomerResponse.getLstJobCity().get(i).getName() + "");
-            } else {
-                s1.append(detailJobCustomerResponse.getLstJobCity().get(i).getName() + ", ");
+        for (int i = 0; i < detailJobCustomerResponse.getLstJobCountry().size(); i++) {
+            for (int j = 0; j < detailJobCustomerResponse.getLstJobCity().size(); j++) {
+                if (detailJobCustomerResponse.getLstJobCountry().get(i).getId() == detailJobCustomerResponse.getLstJobCity().get(j).getCountryId()) {
+                    if (j == detailJobCustomerResponse.getLstJobCity().size() - 1) {
+                        s1.append(detailJobCustomerResponse.getLstJobCity().get(j).getName() + " - " + detailJobCustomerResponse.getLstJobCountry().get(i).getName() + "");
+                    } else {
+                        s1.append(detailJobCustomerResponse.getLstJobCity().get(j).getName() + " - " + detailJobCustomerResponse.getLstJobCountry().get(i).getName() + ", ");
+                    }
+                }
             }
         }
+//        for (int i = 0; i < detailJobCustomerResponse.getLstJobCity().size(); i++) {
+//            if (i == detailJobCustomerResponse.getLstJobCity().size() - 1) {
+//                s1.append(detailJobCustomerResponse.getLstJobCity().get(i).getName() + "");
+//            } else {
+//                s1.append(detailJobCustomerResponse.getLstJobCity().get(i).getName() + ", ");
+//            }
+//        }
         tvWorkPlace.setText(s1.toString());
         tvQuantityHiring.setText(detailJobCustomerResponse.getQuantity() + "");
         tvCertificate.setText(detailJobCustomerResponse.getEducationLevel().getName());
-        tvAge.setText(detailJobCustomerResponse.getAge() + "");
-        tvSalary.setText(StringUtils.filterCurrencyString(detailJobCustomerResponse.getFromSalary()) + " - " + StringUtils.filterCurrencyString(detailJobCustomerResponse.getToSalary()));
-        tvFee.setText(StringUtils.filterCurrencyString(detailJobCustomerResponse.getFee()));
+        tvAge.setText(StringUtils.genStringAge(detailJobCustomerResponse.getAge()));
+        tvSalary.setText(StringUtils.filterCurrencyString(detailJobCustomerResponse.getFromSalary()) + " - " + StringUtils.filterCurrencyString(detailJobCustomerResponse.getToSalary()) + " " + StringUtils.genStringCurrency(detailJobCustomerResponse.getCurrency()));
+        tvFee.setText(StringUtils.filterCurrencyString(detailJobCustomerResponse.getFee()) + " VND");
         tvDatePublic.setText(DateUtil.convertToMyFormatFull(detailJobCustomerResponse.getSubmitDate()));
         tvExpireDate.setText(DateUtil.convertToMyFormatFull(detailJobCustomerResponse.getExpireDate()));
         tvKeyWord.setText(detailJobCustomerResponse.getTag());
@@ -172,6 +197,7 @@ public class DetailJobCustomerFragment extends BaseFragment {
         tvJobDes.setText(Html.fromHtml(detailJobCustomerResponse.getJobDescription()));
         tvjobRequirement.setText(Html.fromHtml(detailJobCustomerResponse.getJobRequirements()));
         tvJobDes.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_header_selector));
+        tvSpecialTreatment.setText(Html.fromHtml(detailJobCustomerResponse.getSpecialTreatment()));
         if (detailJobCustomerResponse.getStatus() == 1 && limited > 0 && limited < 8) {
             tvStatus.setText("Sắp hết hạn");
         } else if (detailJobCustomerResponse.getStatus() == 1 && limited > 7) {
@@ -215,7 +241,23 @@ public class DetailJobCustomerFragment extends BaseFragment {
                 }
             }
         });
-
+        btShowmoreSpecialTreatment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (btShowmoreSpecialTreatment.getText().toString().equalsIgnoreCase("Xem thêm  ")) {
+                    tvSpecialTreatment.setMaxLines(Integer.MAX_VALUE);//your TextView
+                    btShowmoreSpecialTreatment.setText("Rút gọn  ");
+                    gradientViewSpecialTreatment.setVisibility(View.GONE);
+                    btShowmoreSpecialTreatment.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up_blue, 0);
+                } else {
+                    tvSpecialTreatment.setMaxLines(6);
+                    tvSpecialTreatment.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_header_selector));
+                    btShowmoreSpecialTreatment.setText("Xem thêm  ");
+                    gradientViewSpecialTreatment.setVisibility(View.VISIBLE);
+                    btShowmoreSpecialTreatment.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_down_blue, 0);
+                }
+            }
+        });
     }
 
     @Override
@@ -226,6 +268,12 @@ public class DetailJobCustomerFragment extends BaseFragment {
     @OnClick(R.id.imgBack)
     public void onBackClick() {
         FragmentUtil.popBackStack(this);
+    }
+
+    @OnClick(R.id.btnListResume)
+    public void onClickListResume() {
+        SharedPrefUtils.putInt("jobIdCus", detailJobCustomerResponse.getId());
+        FragmentUtil.pushFragment(getActivity(), this, new ResumesEmployerFragment(), null);
     }
 
     @Override

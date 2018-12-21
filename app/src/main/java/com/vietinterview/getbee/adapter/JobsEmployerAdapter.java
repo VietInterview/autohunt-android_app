@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
@@ -23,10 +25,12 @@ import com.vietinterview.getbee.api.response.detailjobcustomer.DetailJobCustomer
 import com.vietinterview.getbee.api.response.jobcustomer.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
+import com.vietinterview.getbee.callback.OnSwipeTouchListener;
 import com.vietinterview.getbee.customview.RobotoRegularButton;
 import com.vietinterview.getbee.fragments.BaseFragment;
 import com.vietinterview.getbee.fragments.ResumesEmployerFragment;
 import com.vietinterview.getbee.fragments.DetailJobCustomerFragment;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
@@ -125,12 +129,18 @@ public class JobsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             } else if (jobLists.get(position).getStatus() == 1 && jobLists.get(position).getLimited() > 7) {
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Còn " + jobLists.get(position).getLimited() + " ngày");
                 limited = "Còn " + jobLists.get(position).getLimited() + " ngày";
-            } else if (jobLists.get(position).getStatus() == 1 && jobLists.get(position).getLimited() == 0) {
+            } else if (jobLists.get(position).getStatus() == 2) {
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Đã hết hạn");
                 limited = "Đã hết hạn";
             } else if (jobLists.get(position).getStatus() == 0) {
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Nháp");
                 limited = "Nháp";
+            } else if (jobLists.get(position).getStatus() == 3) {
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Ngưng tuyển");
+                limited = "Ngưng tuyển";
+            } else if (jobLists.get(position).getStatus() == 5) {
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Khóa");
+                limited = "Khóa";
             }
             ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -202,12 +212,14 @@ public class JobsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public View mView;
+        private CardView card_view1;
         private SwipeRevealLayout swipeLayout;
 
         public MyViewHolder(View v) {
             super(v);
             mView = v;
             swipeLayout = (SwipeRevealLayout) v.findViewById(R.id.swipe_layout);
+            card_view1 = v.findViewById(R.id.card_view1);
         }
     }
 
