@@ -3,6 +3,7 @@ package com.vietinterview.getbee.fragments;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -125,6 +126,11 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
             }
         } else {
             llResult.setVisibility(View.GONE);
+            for (int i = 0; i < detailProcessResumeResponse.getLstInterviewHis().size(); i++) {
+                if (detailProcessResumeResponse.getLstInterviewHis().get(i).getId() == -1) {
+                    detailProcessResumeResponse.getLstInterviewHis().remove(i);
+                }
+            }
             edtRound.setText("Vòng " + (detailProcessResumeResponse.getLstInterviewHis().size() + 1));
         }
     }
@@ -212,29 +218,40 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
     @OnClick(R.id.btnSendMail)
     public void onSendMailClick() {
         if (!edtDateInterview.getText().toString().equalsIgnoreCase("") && !edtPlaceInterview.getText().toString().equalsIgnoreCase("")) {
-            showCoverNetworkLoading();
-            new SendInterviewRequest(detailProcessResumeResponse.getCvId(), lstInterviewHi == null ? -1 : lstInterviewHi.getId(), edtPlaceInterview.getText().toString().trim(), edtDateInterview.getText().toString().trim(), detailProcessResumeResponse.getJobId(), edtNote.getText().toString().trim(), edtRound.getText().toString().trim(), lstInterviewHi == null ? 0 : statusInterview).callRequest(getActivity(), new ApiObjectCallBack<ViewEmailInterviewResponse, ErrorResponse>() {
+            DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn mời phỏng vấn ứng viên này?", "Có", "Không", new DialogInterface.OnClickListener() {
                 @Override
-                public void onSuccess(int status, ViewEmailInterviewResponse dataSuccess, List<ViewEmailInterviewResponse> listDataSuccess, String message) {
-                    if (isAdded()) {
-                        hideCoverNetworkLoading();
-                        lstInterviewHi = new LstInterviewHi(dataSuccess.getCvId(), dataSuccess.getEmailTemplate(), dataSuccess.getId(), dataSuccess.getInterviewAddress(), dataSuccess.getInterviewDate(), dataSuccess.getJobId(), dataSuccess.getNote(), dataSuccess.getRound(), dataSuccess.getStatus());
-                        Intent intent = new Intent(getActivity(), CreateEditInterviewFragment.class);
-                        intent.putExtra("lstInterviewHi", lstInterviewHi);
-                        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
-                        FragmentUtil.popBackStack(CreateEditInterviewFragment.this);
-                    }
-                }
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    showCoverNetworkLoading();
+                    new SendInterviewRequest(detailProcessResumeResponse.getCvId(), lstInterviewHi == null ? -1 : lstInterviewHi.getId(), edtPlaceInterview.getText().toString().trim(), edtDateInterview.getText().toString().trim(), detailProcessResumeResponse.getJobId(), edtNote.getText().toString().trim(), edtRound.getText().toString().trim(), lstInterviewHi == null ? 0 : statusInterview).callRequest(getActivity(), new ApiObjectCallBack<ViewEmailInterviewResponse, ErrorResponse>() {
+                        @Override
+                        public void onSuccess(int status, ViewEmailInterviewResponse dataSuccess, List<ViewEmailInterviewResponse> listDataSuccess, String message) {
+                            if (isAdded()) {
+                                hideCoverNetworkLoading();
+                                lstInterviewHi = new LstInterviewHi(dataSuccess.getCvId(), dataSuccess.getEmailTemplate(), dataSuccess.getId(), dataSuccess.getInterviewAddress(), dataSuccess.getInterviewDate(), dataSuccess.getJobId(), dataSuccess.getNote(), dataSuccess.getRound(), dataSuccess.getStatus());
+                                Intent intent = new Intent(getActivity(), CreateEditInterviewFragment.class);
+                                intent.putExtra("lstInterviewHi", lstInterviewHi);
+                                getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+                                FragmentUtil.popBackStack(CreateEditInterviewFragment.this);
+                            }
+                        }
 
+                        @Override
+                        public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                            if (isAdded()) {
+                                hideCoverNetworkLoading();
+                            }
+                        }
+                    });
+                }
+            }, new DialogInterface.OnClickListener() {
                 @Override
-                public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
-                    if (isAdded()) {
-                        hideCoverNetworkLoading();
-                    }
+                public void onClick(DialogInterface dialogInterface, int i) {
+
                 }
             });
+
         } else {
-            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.pleaseinputdata));
+            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Vui lòng nhập vào các trường bắt buộc");
         }
     }
 
@@ -279,6 +296,43 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
                     }
                 });
             }
+        } else {
+            showCoverNetworkLoading();
+            new ViewEmailInterviewRequest(detailProcessResumeResponse.getCvId(), -1, edtPlaceInterview.getText().toString().trim(), edtDateInterview.getText().toString().trim(), detailProcessResumeResponse.getJobId(), edtNote.getText().toString().trim(), edtRound.getText().toString().trim(), statusInterview).callRequest(getActivity(), new ApiObjectCallBack<ViewEmailInterviewResponse, ErrorResponse>() {
+                @Override
+                public void onSuccess(int status, ViewEmailInterviewResponse dataSuccess, List<ViewEmailInterviewResponse> listDataSuccess, String message) {
+                    if (isAdded()) {
+                        hideCoverNetworkLoading();
+                        mReasonNotAcceptDialog = new Dialog(getActivity());
+                        mReasonNotAcceptDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        mReasonNotAcceptDialog.setContentView(R.layout.dialog_see_invite);
+                        mReasonNotAcceptDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        mReasonNotAcceptDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                        Window window = mReasonNotAcceptDialog.getWindow();
+                        WindowManager.LayoutParams wlp = window.getAttributes();
+                        wlp.gravity = Gravity.TOP;
+                        wlp.y = 300;
+                        window.setAttributes(wlp);
+                        TextView tvEmailContent = mReasonNotAcceptDialog.findViewById(R.id.tvEmailContent);
+                        tvEmailContent.setText(Html.fromHtml(dataSuccess.getEmailTemplate()));
+                        Button btnOK = (Button) mReasonNotAcceptDialog.findViewById(R.id.btnOK);
+                        btnOK.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mReasonNotAcceptDialog.dismiss();
+                            }
+                        });
+                        mReasonNotAcceptDialog.show();
+                    }
+                }
+
+                @Override
+                public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                    if (isAdded()) {
+                        hideCoverNetworkLoading();
+                    }
+                }
+            });
         }
     }
 
@@ -328,11 +382,19 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
 
     @Override
     protected void processOnBackPress() {
+        lstInterviewHi = new LstInterviewHi(0, "", -1, "", "", 0, "", "", 1);
+        Intent intent = new Intent(getActivity(), CreateEditInterviewFragment.class);
+        intent.putExtra("lstInterviewHi", lstInterviewHi);
+        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
         FragmentUtil.popBackStack(this);
     }
 
     @Override
     protected void processCustomToolbar() {
+        lstInterviewHi = new LstInterviewHi(0, "", -1, "", "", 0, "", "", 1);
+        Intent intent = new Intent(getActivity(), CreateEditInterviewFragment.class);
+        intent.putExtra("lstInterviewHi", lstInterviewHi);
+        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
         FragmentUtil.popBackStack(this);
     }
 

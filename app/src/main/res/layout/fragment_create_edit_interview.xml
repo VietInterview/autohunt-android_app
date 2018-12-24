@@ -66,6 +66,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:drawableRight="@drawable/ic_calendar"
+                    android:editable="false"
                     android:paddingHorizontal="14dp" />
 
                 <ImageView

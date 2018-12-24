@@ -11,7 +11,7 @@ public class ApiConstant {
 
     public static final boolean IS_DEBUG_BUILD_TYPE = BuildConfig.BUILD_TYPE.equals("debug");
 
-    public static final int REQUEST_TIMEOUT = 20;
+    public static final int REQUEST_TIMEOUT = 5;
     public static final int LIMIT = 30;
 
     //Server KH

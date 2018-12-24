@@ -52,7 +52,7 @@ public abstract class BaseJsonRequest<T, V> {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    DebugLog.jsonFormat("response "+getAbsoluteUrl(), response);
+                    DebugLog.jsonFormat("response " + getAbsoluteUrl(), response);
                     mApiObjectCallBack.onSuccess(statusCode, GsonUtils.fromJson(response.toString(), getResponseSuccessClass()), null, "");
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -85,7 +85,10 @@ public abstract class BaseJsonRequest<T, V> {
                         e.printStackTrace();
                     }
                 } else {
-                    mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
+                    if (statusCode == 0)
+                        mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.timeout));
+                    else
+                        mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
                 }
             }
 
@@ -94,19 +97,25 @@ public abstract class BaseJsonRequest<T, V> {
                 DebugLog.jsonFormat(getAbsoluteUrl(), errorResponse);
                 vList = getListResponseFailClass();
                 vList = GsonUtils.fromJson(errorResponse.toString(), getType());
-                mApiObjectCallBack.onFail(statusCode, null, vList, throwable.toString());
+                if (statusCode == 0)
+                    mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.timeout));
+                else
+                    mApiObjectCallBack.onFail(statusCode, null, vList, throwable.toString());
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 DebugLog.showLogCat(throwable.toString() + " - " + statusCode);
-                mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
+                if (statusCode == 0)
+                    mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.timeout));
+                else
+                    mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
             }
         };
         StringEntity entity = null;
         try {
             entity = new StringEntity(putJsonParams().toString(), "UTF-8");
-            DebugLog.jsonFormat("call "+getAbsoluteUrl(), putJsonParams().toString());
+            DebugLog.jsonFormat("call " + getAbsoluteUrl(), putJsonParams().toString());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (JSONException e) {

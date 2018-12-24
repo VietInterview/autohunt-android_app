@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.StatusAdapter;
+import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.customview.RobotoEditText;
 import com.vietinterview.getbee.customview.RobotoTextView;
 import com.vietinterview.getbee.model.CVStatus;
@@ -83,6 +84,7 @@ public class StatusFragment extends BaseFragment {
         tvHeader.setText(getResources().getString(R.string.all_status));
         setCustomToolbar(true);
         setHasOptionsMenu(true);
+        GlobalDefine.currentFragment = this;
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

@@ -126,7 +126,7 @@ public class ResumesEmployerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new ProcessResumeFragment().newInstance(cvLists.get(position).getId(), jobId), null);
+                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new ProcessResumeFragment().newInstance(cvLists.get(position).getId(), jobId, false), null);
                 }
             });
             binderHelper.bind((SwipeRevealLayout) ((MyViewHolder) holder).swipeLayout, cvLists.get(position).getId().toString());

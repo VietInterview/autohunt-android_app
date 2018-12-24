@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -32,11 +34,17 @@ import com.vietinterview.getbee.api.response.detailprocessresume.DetailProcessRe
 import com.vietinterview.getbee.api.response.detailprocessresume.JobCvGotoWorkDto;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.constant.AppConstant;
+import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.utils.SharedPrefUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -63,6 +71,10 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
     TextView tvWarranty;
     @BindView(R.id.tvRound)
     TextView tvRound;
+    @BindView(R.id.llBtn)
+    LinearLayout llBtn;
+    @BindView(R.id.tvReject)
+    TextView tvReject;
     DetailProcessResumeResponse detailProcessResumeResponse;
 
     public static GoToWorkProcessResumeFragment newInstance(DetailProcessResumeResponse detailProcessResumeResponse) {
@@ -95,17 +107,48 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
                 tvDate.setEnabled(false);
                 btnReject.setEnabled(false);
                 tvRound.setEnabled(false);
+                llBtn.setVisibility(View.GONE);
             } else cardReject.setVisibility(View.GONE);
         } else cardReject.setVisibility(View.GONE);
+        if (detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() != null && detailProcessResumeResponse.getCvProcessInfo().getRejectNote() != null)
+            tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() + "\nGhi chú: " + detailProcessResumeResponse.getCvProcessInfo().getRejectNote());
+
     }
 
     @Override
     protected void initData() {
-        tvDate.setText(detailProcessResumeResponse.getJobCvGotoWorkDto().getStartWorkDate());
-        tvWarranty.setText(detailProcessResumeResponse.getJobCvGotoWorkDto().getNumDayWarranty() + "");
+        if (detailProcessResumeResponse.getJobCvGotoWorkDto().getStartWorkDate() != null) {
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            Date readDate = null;
+            try {
+                readDate = df.parse(DateUtil.convertToMyFormat3(detailProcessResumeResponse.getJobCvGotoWorkDto().getStartWorkDate()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(readDate.getTime());
+            calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH));
+            calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
+            calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
+            Calendar today = Calendar.getInstance();
+            long startDate = calendar.getTimeInMillis();
+            calendar.add(Calendar.DATE, 60);
+            long lastWarrantyDate = calendar.getTimeInMillis();
+            long difference = lastWarrantyDate - today.getTimeInMillis();
+            int days = (int) (difference / (1000 * 60 * 60 * 24));
+            tvDate.setText(detailProcessResumeResponse.getJobCvGotoWorkDto().getStartWorkDate());
+            tvWarranty.setText("Còn lại " + days + " ngày");
+        } else {
+            tvDate.setText("");
+            tvWarranty.setText("Còn lại " + 0 + " ngày");
+        }
+        if (SharedPrefUtils.getInt("step", 0) != 3) {
+            llBtn.setVisibility(View.GONE);
+        }
     }
 
     private Dialog mRejectDialog;
+    private boolean isOther = false;
 
     @OnClick(R.id.btnReject)
     public void onRejectClick() {
@@ -141,6 +184,7 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             DebugLog.showLogCat(listReasonName.get(position).getName());
                             if (listReasonName.get(position).getCode().equalsIgnoreCase("other")) {
+                                isOther = true;
                                 edtReasonOther.setFocusable(true);
                                 edtReasonOther.setFocusableInTouchMode(true); // user touches widget on phone with touch screen
                                 edtReasonOther.setClickable(true);
@@ -166,33 +210,69 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
                     btnOK.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            showCoverNetworkLoading();
-                            new RejectRequest(detailProcessResumeResponse.getCvId(), detailProcessResumeResponse.getJobId(), ((RejectReasonResponse) spinner1.getSelectedItem()).getId(), edtReasonOther.getText().toString().trim(), ((RejectReasonResponse) spinner1.getSelectedItem()).getStep()).callRequest(getActivity(), new ApiObjectCallBack<RejectResponse, ErrorResponse>() {
-                                @Override
-                                public void onSuccess(int status, RejectResponse dataSuccess, List<RejectResponse> listDataSuccess, String message) {
-                                    if (isAdded()) {
-                                        if (status == 200) {
-                                            hideCoverNetworkLoading();
-                                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Gửi từ chối thành công");
-                                            cardReject.setVisibility(View.VISIBLE);
-                                            btnNext.setEnabled(false);
-                                            btnReject.setEnabled(false);
-                                            rlGotoworkDate.setEnabled(false);
-                                            tvRound.setEnabled(false);
-                                            tvDate.setEnabled(false);
-                                            getEventBaseFragment().reject();
+                            if (isOther) {
+                                if (edtReasonOther.getText().toString().trim().equalsIgnoreCase("")) {
+                                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Xin hãy nhập lý do từ chối");
+                                } else {
+                                    showCoverNetworkLoading();
+                                    new RejectRequest(detailProcessResumeResponse.getCvId(), detailProcessResumeResponse.getJobId(), ((RejectReasonResponse) spinner1.getSelectedItem()).getId(), edtReasonOther.getText().toString().trim(), ((RejectReasonResponse) spinner1.getSelectedItem()).getStep()).callRequest(getActivity(), new ApiObjectCallBack<RejectResponse, ErrorResponse>() {
+                                        @Override
+                                        public void onSuccess(int status, RejectResponse dataSuccess, List<RejectResponse> listDataSuccess, String message) {
+                                            if (isAdded()) {
+                                                if (status == 200) {
+                                                    hideCoverNetworkLoading();
+                                                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Gửi từ chối thành công");
+                                                    cardReject.setVisibility(View.VISIBLE);
+                                                    btnNext.setEnabled(false);
+                                                    btnReject.setEnabled(false);
+                                                    rlGotoworkDate.setEnabled(false);
+                                                    tvRound.setEnabled(false);
+                                                    tvDate.setEnabled(false);
+                                                    llBtn.setVisibility(View.GONE);
+                                                    getEventBaseFragment().reject();
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                                            if (isAdded()) {
+                                                hideCoverNetworkLoading();
+                                            }
+                                        }
+                                    });
+                                    mRejectDialog.dismiss();
+                                }
+                            } else {
+                                showCoverNetworkLoading();
+                                new RejectRequest(detailProcessResumeResponse.getCvId(), detailProcessResumeResponse.getJobId(), ((RejectReasonResponse) spinner1.getSelectedItem()).getId(), edtReasonOther.getText().toString().trim(), ((RejectReasonResponse) spinner1.getSelectedItem()).getStep()).callRequest(getActivity(), new ApiObjectCallBack<RejectResponse, ErrorResponse>() {
+                                    @Override
+                                    public void onSuccess(int status, RejectResponse dataSuccess, List<RejectResponse> listDataSuccess, String message) {
+                                        if (isAdded()) {
+                                            if (status == 200) {
+                                                hideCoverNetworkLoading();
+                                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Gửi từ chối thành công");
+                                                cardReject.setVisibility(View.VISIBLE);
+                                                btnNext.setEnabled(false);
+                                                btnReject.setEnabled(false);
+                                                rlGotoworkDate.setEnabled(false);
+                                                tvRound.setEnabled(false);
+                                                tvDate.setEnabled(false);
+                                                llBtn.setVisibility(View.GONE);
+                                                getEventBaseFragment().reject();
+                                            }
                                         }
                                     }
-                                }
 
-                                @Override
-                                public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
-                                    if (isAdded()) {
-                                        hideCoverNetworkLoading();
+                                    @Override
+                                    public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                                        if (isAdded()) {
+                                            hideCoverNetworkLoading();
+                                        }
                                     }
-                                }
-                            });
-                            mRejectDialog.dismiss();
+                                });
+                                mRejectDialog.dismiss();
+                            }
                         }
                     });
                     mRejectDialog.show();
@@ -211,7 +291,10 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
     @OnClick({R.id.rlGotoworkDate, R.id.tvRound, R.id.tvDate})
     public void onGotoWorkDate() {
         if (detailProcessResumeResponse.getJobCvGotoWorkDto() != null) {
-            FragmentUtil.pushFragment(getActivity(), GoToWorkProcessResumeFragment.this, new CreateGoToWorkFragment().newInstance(detailProcessResumeResponse.getJobCvGotoWorkDto(), detailProcessResumeResponse), null);
+            if (detailProcessResumeResponse.getJobCvGotoWorkDto().getId() != null)
+                FragmentUtil.pushFragment(getActivity(), GoToWorkProcessResumeFragment.this, new CreateGoToWorkFragment().newInstance(detailProcessResumeResponse.getJobCvGotoWorkDto(), detailProcessResumeResponse), null);
+            else
+                FragmentUtil.pushFragment(getActivity(), GoToWorkProcessResumeFragment.this, new CreateGoToWorkFragment().newInstance(null, detailProcessResumeResponse), null);
 
         }
     }
@@ -233,7 +316,7 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
         Button btnOK = (Button) mNotifyDialog.findViewById(R.id.btnOK);
         Button btnNo = mNotifyDialog.findViewById(R.id.btnNo);
         TextView tvContent = mNotifyDialog.findViewById(R.id.tvContent);
-        tvContent.setText("Bạn có chắc chắn muốn gửi hợp đồng tới ứng viên này?");
+        tvContent.setText("Bạn có chắc chắn muốn cập nhật trạng thái ký hợp đồng cho ứng viên này không?");
         btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

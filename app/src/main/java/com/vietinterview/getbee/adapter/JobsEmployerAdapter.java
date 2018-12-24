@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -34,6 +35,7 @@ import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
+import com.vietinterview.getbee.utils.UiUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,27 +122,48 @@ public class JobsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (holder instanceof MyViewHolder) {
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvcountJobOffer)).setText(jobLists.get(position).getCountOffer() + "");
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvsumJob)).setText("/" + jobLists.get(position).getCountCv() + "");
-            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setText(this.mTotal == 0 ? mContext.getResources().getString(R.string.no_cv_upload) : this.mTotal + " " + mContext.getResources().getString(R.string.cv_found));
+            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setText(this.mTotal == 0 ? mContext.getResources().getString(R.string.no_data) : this.mTotal + " " + mContext.getResources().getString(R.string.job_found));
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setVisibility(position == 0 ? View.VISIBLE : View.GONE);
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvname)).setText(jobLists.get(position).getJobTitle());
+//            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvname)).post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    int lineCount = ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvname)).getLineCount();
+//                    if (lineCount == 2) {
+//                        ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvname)).setText(((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvname)).getText().toString() + "...");
+//                    }
+//                }
+//            });
             if (jobLists.get(position).getStatus() == 1 && jobLists.get(position).getLimited() > 0 && jobLists.get(position).getLimited() < 8) {
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Sắp hết hạn");
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.red));
+                ((ImageView) ((MyViewHolder) holder).mView.findViewById(R.id.imgDeadline)).setColorFilter(mContext.getResources().getColor(R.color.red));
                 limited = "Sắp hết hạn";
             } else if (jobLists.get(position).getStatus() == 1 && jobLists.get(position).getLimited() > 7) {
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Còn " + jobLists.get(position).getLimited() + " ngày");
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.background_icon_not_focus));
+                ((ImageView) ((MyViewHolder) holder).mView.findViewById(R.id.imgDeadline)).setColorFilter(mContext.getResources().getColor(R.color.background_icon_not_focus));
                 limited = "Còn " + jobLists.get(position).getLimited() + " ngày";
             } else if (jobLists.get(position).getStatus() == 2) {
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Đã hết hạn");
-                limited = "Đã hết hạn";
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.background_icon_not_focus));
+
+                ((ImageView) ((MyViewHolder) holder).mView.findViewById(R.id.imgDeadline)).setColorFilter(mContext.getResources().getColor(R.color.background_icon_not_focus));                limited = "Đã hết hạn";
             } else if (jobLists.get(position).getStatus() == 0) {
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Nháp");
-                limited = "Nháp";
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.background_icon_not_focus));
+
+                ((ImageView) ((MyViewHolder) holder).mView.findViewById(R.id.imgDeadline)).setColorFilter(mContext.getResources().getColor(R.color.background_icon_not_focus));                limited = "Nháp";
             } else if (jobLists.get(position).getStatus() == 3) {
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Ngưng tuyển");
-                limited = "Ngưng tuyển";
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.background_icon_not_focus));
+
+                ((ImageView) ((MyViewHolder) holder).mView.findViewById(R.id.imgDeadline)).setColorFilter(mContext.getResources().getColor(R.color.background_icon_not_focus));                limited = "Ngưng tuyển";
             } else if (jobLists.get(position).getStatus() == 5) {
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Khóa");
-                limited = "Khóa";
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Đã Khóa");
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.background_icon_not_focus));
+
+                ((ImageView) ((MyViewHolder) holder).mView.findViewById(R.id.imgDeadline)).setColorFilter(mContext.getResources().getColor(R.color.background_icon_not_focus));                limited = "Khóa";
             }
             ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setOnClickListener(new View.OnClickListener() {
                 @Override

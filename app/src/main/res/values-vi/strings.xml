@@ -66,7 +66,7 @@
     <string name="not_accept">Từ chối</string>
     <string name="invite_interview">Mời PV</string>
     <string name="interviewed">Đã PV</string>
-    <string name="offered">Được tuyển dụng</string>
+    <string name="offered">Offer</string>
     <string name="go_to_work">Đi làm</string>
     <string name="contract">Ký hợp đồng</string>
     <string name="default_key">Mặc định</string>
@@ -139,7 +139,7 @@
     <string name="graduation_type">Loại tốt nghiệp</string>
     <string name="greeting">Xin chào, </string>
     <string name="update">Cập nhật: </string>
-    <string name="error_please_try">Hệ thống đang bận, xin vui lòng chờ.</string>
+    <string name="error_please_try">Không kết nối được tới server, bạn vui lòng thử lại</string>
     <string name="good">Tốt</string>
     <string name="rather">Khá</string>
     <string name="medium">Trung bình</string>
@@ -200,4 +200,5 @@
     <string name="done">Kết thúc tuyển dụng</string>
     <string name="draft">Nháp</string>
     <string name="not_seen">Chưa xem</string>
+    <string name="timeout">Đường truyền bị gián đoạn. Vui lòng kiểm tra kết nối mạng</string>
 </resources>

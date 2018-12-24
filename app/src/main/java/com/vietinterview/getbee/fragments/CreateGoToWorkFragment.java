@@ -2,6 +2,7 @@ package com.vietinterview.getbee.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -98,44 +99,55 @@ public class CreateGoToWorkFragment extends BaseFragment implements DatePickerDi
     @OnClick(R.id.btnUpdateWork)
     public void onUpdateWorkClick() {
         if (!StringUtils.isEmpty(edtWorkTime.getText().toString())) {
-            showCoverNetworkLoading();
-            if (jobCvGotoWorkDto == null) {
-                goToWorkUpdateRequest = new GoToWorkUpdateRequest(detailProcessResumeResponse.getCvId(), -1, 0, detailProcessResumeResponse.getJobId(), edtWorkTime.getText().toString().trim());
-            } else {
-                goToWorkUpdateRequest = new GoToWorkUpdateRequest(jobCvGotoWorkDto.getCvId(), jobCvGotoWorkDto.getId(), jobCvGotoWorkDto.getCountUpdate(), jobCvGotoWorkDto.getJobId(), edtWorkTime.getText().toString().trim());
-            }
-            goToWorkUpdateRequest.callRequest(getActivity(), new ApiObjectCallBack<GoToWorkUpdateResponse, ErrorResponse>() {
+            DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn gửi lịch làm việc đến ứng viên này?", "Có", "Không", new DialogInterface.OnClickListener() {
                 @Override
-                public void onSuccess(int status, GoToWorkUpdateResponse dataSuccess, List<GoToWorkUpdateResponse> listDataSuccess, String message) {
-                    if (isAdded()) {
-                        hideCoverNetworkLoading();
-                        Integer countUpdate = dataSuccess.getCountUpdate();
-                        Integer cvId = dataSuccess.getCvId();
-                        Integer id = dataSuccess.getId();
-                        Integer jobId = dataSuccess.getJobId();
-                        String note = dataSuccess.getNote();
-                        Integer numDayWarranty = dataSuccess.getNumDayWarranty();
-                        String startWorkDate = dataSuccess.getStartWorkDate();
-                        Integer updateBy = dataSuccess.getUpdateBy();
-                        String updateDate = dataSuccess.getUpdateDate();
-                        String warrantyExpireDate = dataSuccess.getWarrantyExpireDate();
-                        jobCvGotoWorkDto = new JobCvGotoWorkDto(countUpdate, cvId, id, jobId, note, numDayWarranty, startWorkDate, updateBy, updateDate, warrantyExpireDate);
-                        Intent intent = new Intent(getActivity(), CreateGoToWorkFragment.class);
-                        intent.putExtra("jobCvGotoWorkDto", jobCvGotoWorkDto);
-                        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
-                        FragmentUtil.popBackStack(CreateGoToWorkFragment.this);
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    showCoverNetworkLoading();
+                    if (jobCvGotoWorkDto == null) {
+                        goToWorkUpdateRequest = new GoToWorkUpdateRequest(detailProcessResumeResponse.getCvId(), -1, 0, detailProcessResumeResponse.getJobId(), edtWorkTime.getText().toString().trim());
+                    } else {
+                        goToWorkUpdateRequest = new GoToWorkUpdateRequest(jobCvGotoWorkDto.getCvId(), jobCvGotoWorkDto.getId(), jobCvGotoWorkDto.getCountUpdate(), jobCvGotoWorkDto.getJobId(), edtWorkTime.getText().toString().trim());
                     }
-                }
+                    goToWorkUpdateRequest.callRequest(getActivity(), new ApiObjectCallBack<GoToWorkUpdateResponse, ErrorResponse>() {
+                        @Override
+                        public void onSuccess(int status, GoToWorkUpdateResponse dataSuccess, List<GoToWorkUpdateResponse> listDataSuccess, String message) {
+                            if (isAdded()) {
+                                hideCoverNetworkLoading();
+                                Integer countUpdate = dataSuccess.getCountUpdate();
+                                Integer cvId = dataSuccess.getCvId();
+                                Integer id = dataSuccess.getId();
+                                Integer jobId = dataSuccess.getJobId();
+                                String note = dataSuccess.getNote();
+                                Integer numDayWarranty = dataSuccess.getNumDayWarranty();
+                                String startWorkDate = dataSuccess.getStartWorkDate();
+                                Integer updateBy = dataSuccess.getUpdateBy();
+                                String updateDate = dataSuccess.getUpdateDate();
+                                String warrantyExpireDate = dataSuccess.getWarrantyExpireDate();
+                                jobCvGotoWorkDto = new JobCvGotoWorkDto(countUpdate, cvId, id, jobId, note, numDayWarranty, startWorkDate, updateBy, updateDate, warrantyExpireDate);
+                                Intent intent = new Intent(getActivity(), CreateGoToWorkFragment.class);
+                                intent.putExtra("jobCvGotoWorkDto", jobCvGotoWorkDto);
+                                getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+                                FragmentUtil.popBackStack(CreateGoToWorkFragment.this);
+                            }
+                        }
 
+                        @Override
+                        public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                            if (isAdded()) {
+                                hideCoverNetworkLoading();
+                            }
+                        }
+                    });
+                }
+            }, new DialogInterface.OnClickListener() {
                 @Override
-                public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
-                    if (isAdded()) {
-                        hideCoverNetworkLoading();
-                    }
+                public void onClick(DialogInterface dialogInterface, int i) {
+
                 }
             });
+
         } else {
-            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.pleaseinputdata));
+            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Vui lòng nhập vào các trường bắt buộc");
         }
     }
 

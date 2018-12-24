@@ -27,6 +27,7 @@
 
 
             <LinearLayout
+                android:id="@+id/llBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -75,6 +76,7 @@
                     android:textSize="20sp" />
 
                 <com.vietinterview.getbee.customview.RobotoMediumTextView
+                    android:id="@+id/tvReject"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

@@ -92,6 +92,8 @@ public class DetailJobCustomerFragment extends BaseFragment {
     Button btShowmoreSpecialTreatment;
     @BindView(R.id.gradientViewSpecialTreatment)
     LinearLayout gradientViewSpecialTreatment;
+    @BindView(R.id.llTreatment)
+    LinearLayout llTreatment;
     private CollapsingToolbarLayout collapsingToolbar;
     private AppBarLayout appBarLayout;
     private RecyclerView recyclerView;
@@ -137,6 +139,7 @@ public class DetailJobCustomerFragment extends BaseFragment {
                 collapsingToolbar.setStatusBarScrimColor(R.color.black_trans80);
             }
         });
+        llTreatment.setVisibility(detailJobCustomerResponse.getSpecialTreatment() == null ? View.GONE : View.VISIBLE);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -197,7 +200,7 @@ public class DetailJobCustomerFragment extends BaseFragment {
         tvJobDes.setText(Html.fromHtml(detailJobCustomerResponse.getJobDescription()));
         tvjobRequirement.setText(Html.fromHtml(detailJobCustomerResponse.getJobRequirements()));
         tvJobDes.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_header_selector));
-        tvSpecialTreatment.setText(Html.fromHtml(detailJobCustomerResponse.getSpecialTreatment()));
+        tvSpecialTreatment.setText(Html.fromHtml(detailJobCustomerResponse.getSpecialTreatment() == null ? "" : detailJobCustomerResponse.getSpecialTreatment()));
         if (detailJobCustomerResponse.getStatus() == 1 && limited > 0 && limited < 8) {
             tvStatus.setText("Sắp hết hạn");
         } else if (detailJobCustomerResponse.getStatus() == 1 && limited > 7) {

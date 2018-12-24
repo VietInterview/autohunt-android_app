@@ -139,7 +139,7 @@
     <string name="graduation_type">Qualification</string>
     <string name="greeting">Hello, </string>
     <string name="update">Updated on: </string>
-    <string name="error_please_try">The system is busy, please wait..</string>
+    <string name="error_please_try">Cannot connect to server. Please try again</string>
     <string name="good">Excellent</string>
     <string name="rather">Advanced</string>
     <string name="medium">Intermediate</string>
@@ -200,4 +200,5 @@
     <string name="done">Done</string>
     <string name="draft">Draft</string>
     <string name="not_seen">Not Seen</string>
+    <string name="timeout">Your network connection was interrupted. Please check again.</string>
 </resources>

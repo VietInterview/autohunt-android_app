@@ -4,13 +4,14 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
+import android.widget.TextView;
 
 
 /**
  * Created by V4-OS01 on 25/10/2016.
  */
 
-public class RobotoTextView extends AppCompatTextView {
+public class RobotoTextView extends TextView {
     public Typeface FONT_NAME;
 
 

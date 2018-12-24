@@ -67,7 +67,7 @@ public class ViewEmailInterviewRequest extends BaseJsonRequest<ViewEmailIntervie
     protected JSONObject putJsonParams() throws JSONException {
         JSONObject jsonParams = new JSONObject();
         jsonParams.put("cvId", cvId);
-        jsonParams.put("id", id);
+        jsonParams.put("id", id == -1 ? null : id);
         jsonParams.put("interviewAddress", interviewAddress);
         jsonParams.put("interviewDate", interviewDate);
         jsonParams.put("jobId", jobId);

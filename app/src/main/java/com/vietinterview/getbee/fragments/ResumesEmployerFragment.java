@@ -102,29 +102,36 @@ public class ResumesEmployerFragment extends BaseFragment implements SwipeRefres
                 android.R.color.holo_green_dark,
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
-        edtJobTitle.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                page = 0;
-                getResumeEmployer(page);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
     }
 
     @Override
     protected void initData() {
         getResumeEmployer(0);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        edtJobTitle.addTextChangedListener(textWatcher);
+    }
+
+    TextWatcher textWatcher = new TextWatcher() {
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            page = 0;
+            getResumeEmployer(page);
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+    };
 
     public void getResumeEmployer(final int page) {
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())

@@ -35,7 +35,24 @@ public class DateUtil {
         }
         return converted_date;
     }
-
+    public synchronized static Date convertToDate(String Date) {
+        Date converted_date = null;
+        try {
+            SimpleDateFormat utcFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm a");
+            utcFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+            Date date = utcFormat.parse(Date);
+            converted_date = date;
+        } catch (Exception e) {
+        }
+        try {
+            SimpleDateFormat utcFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm a");
+            utcFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+            Date date = utcFormat.parse(Date);
+            converted_date = date;
+        } catch (Exception e) {
+        }
+        return converted_date;
+    }
     public synchronized static String convertToGMTTimeZone(String Date) {
         dateFormat = DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault());
         String converted_date = null;
