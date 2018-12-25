@@ -20,7 +20,7 @@ public class SendOfferResponse {
     private String round;
     @SerializedName("salary")
     @Expose
-    private Integer salary;
+    private Long salary;
     @SerializedName("curency")
     @Expose
     private Integer curency;
@@ -75,11 +75,11 @@ public class SendOfferResponse {
         this.round = round;
     }
 
-    public Integer getSalary() {
+    public Long getSalary() {
         return salary;
     }
 
-    public void setSalary(Integer salary) {
+    public void setSalary(Long salary) {
         this.salary = salary;
     }
 

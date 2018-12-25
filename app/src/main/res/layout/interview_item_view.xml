@@ -8,7 +8,7 @@
         android:id="@+id/rlRound"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/border_top_bottom"
+        android:background="@drawable/border_top"
         android:orientation="vertical"
         android:padding="14dp">
 

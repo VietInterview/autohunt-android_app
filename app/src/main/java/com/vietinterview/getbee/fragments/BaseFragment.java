@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -40,25 +39,15 @@ import butterknife.ButterKnife;
  * Created by Envy 15T on 6/4/2015.
  */
 public abstract class BaseFragment extends Fragment {
-    private static ProgressDialog progressDlg;
-    protected View rootView;
-    protected static final String PARAM_BUNDLE = "PARAM_BUNDLE";
-    private Bundle savedState;
-    protected ViewGroup fragmentViewParent;
-    BaseActivity baseActivity;
 
     @BindView(R.id.initialProgressBar)
     View initialProgressBar;
-
     @BindView(R.id.initialNetworkError)
     View initialNetworkError;
-
     @BindView(R.id.initialEmptyList)
     View initialEmptyList;
-
     @BindView(R.id.coverNetworkLoading)
     View coverNetworkLoading;
-
     @BindView(R.id.common_layout)
     LinearLayout linearLayoutEmpty;
     @BindView(R.id.common_txt_empty)
@@ -66,8 +55,12 @@ public abstract class BaseFragment extends Fragment {
     LayoutInflater mInflater;
     ViewGroup mContainer;
     MainActivity mainActivity;
-    //    CreateNewCVActivity createNewCVActivity;
-    private GestureDetectorCompat gestureDetectorCompat = null;
+    private static ProgressDialog progressDlg;
+    protected View rootView;
+    protected static final String PARAM_BUNDLE = "PARAM_BUNDLE";
+    private Bundle savedState;
+    protected ViewGroup fragmentViewParent;
+    BaseActivity baseActivity;
 
     protected boolean isLoading = false;
 
@@ -87,14 +80,10 @@ public abstract class BaseFragment extends Fragment {
         return coverNetworkLoading;
     }
 
-    public TextView getTvEmpty() {
-        return tvEmpty;
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        baseActivity = baseActivity;
+//        baseActivity = baseActivity;
         if (context instanceof BaseActivity)
             baseActivity = (BaseActivity) context;
     }
@@ -115,10 +104,6 @@ public abstract class BaseFragment extends Fragment {
         } else {
             onRestore();
         }
-    }
-
-    protected boolean isDisableOnHeaderIconClickListenerAttach() {
-        return false;
     }
 
     private View createRootView(LayoutInflater inflater, ViewGroup container) {
@@ -159,10 +144,6 @@ public abstract class BaseFragment extends Fragment {
         baseActivity = (BaseActivity) getActivity();
         initView(rootView, mInflater, mContainer);
         initData();
-    }
-
-    public GestureDetectorCompat getGestureDetectorCompat() {
-        return gestureDetectorCompat;
     }
 
     public void setCustomToolbar(boolean isCustom) {
@@ -221,7 +202,6 @@ public abstract class BaseFragment extends Fragment {
     public MainActivity getMainActivity() {
         return mainActivity;
     }
-
 
     public void showProgressDialog(boolean cancleable) {
         if (progressDlg != null && progressDlg.isShowing()) {
@@ -417,10 +397,6 @@ public abstract class BaseFragment extends Fragment {
 
     protected void processCustomToolbar() {
 
-    }
-
-    public boolean isInterceptBackButton() {
-        return false;
     }
 
     protected boolean isStartWithLoading() {

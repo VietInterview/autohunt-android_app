@@ -233,7 +233,6 @@ public class CarrerOrCityFragment extends BaseFragment {
 
         for (int i = 0; i < checkedItems.size(); i++) {
             if (checkedItems.size() > 0) {
-                DebugLog.showLogCat(checkedItems.size() + " - " + listView.getCount() + " - " + i);
                 if (checkedItems.valueAt(i)) {
                     result.add((CareerResponse) listView.getItemAtPosition(checkedItems.keyAt(i)));
                 }

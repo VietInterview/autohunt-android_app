@@ -45,7 +45,7 @@
                     android:id="@+id/rlGotoworkDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_top_bottom"
+                    android:background="@drawable/border_top"
                     android:orientation="vertical"
                     android:padding="14dp">
 
@@ -78,7 +78,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_top_bottom"
+                    android:background="@drawable/border_top"
                     android:orientation="vertical"
                     android:padding="14dp">
 
@@ -106,6 +106,7 @@
                     android:id="@+id/llBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/border_top"
                     android:orientation="horizontal"
                     android:padding="10dp">
 
@@ -154,7 +155,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-
                 <com.vietinterview.getbee.customview.RobotoMediumTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -175,7 +175,6 @@
                     android:layout_marginVertical="8dp"
                     android:fontFamily="@string/font_fontFamily_medium"
                     android:gravity="center"
-                    android:text="Ứng viên này đã bị từ chối vì lý do kinh nghiệm chưa đáp ứng!"
                     android:textColor="#FF5A5A"
                     android:textSize="16sp" />
             </LinearLayout>

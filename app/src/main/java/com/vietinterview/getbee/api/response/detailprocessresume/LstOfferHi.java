@@ -35,7 +35,7 @@ public class LstOfferHi implements Parcelable {
     private String round;
     @SerializedName("salary")
     @Expose
-    private Integer salary;
+    private Long salary;
     @SerializedName("status")
     @Expose
     private Integer status;
@@ -74,7 +74,7 @@ public class LstOfferHi implements Parcelable {
         if (in.readByte() == 0) {
             salary = null;
         } else {
-            salary = in.readInt();
+            salary = in.readLong();
         }
         if (in.readByte() == 0) {
             status = null;
@@ -85,7 +85,7 @@ public class LstOfferHi implements Parcelable {
         workTime = in.readString();
     }
 
-    public LstOfferHi(Integer curency, Integer cvId, String emailTemplate, Integer id, Integer jobId, String note, String position, String round, Integer salary, Integer status, String workAddress, String workTime) {
+    public LstOfferHi(Integer curency, Integer cvId, String emailTemplate, Integer id, Integer jobId, String note, String position, String round, Long salary, Integer status, String workAddress, String workTime) {
         this.curency = curency;
         this.cvId = cvId;
         this.emailTemplate = emailTemplate;
@@ -176,11 +176,11 @@ public class LstOfferHi implements Parcelable {
         this.round = round;
     }
 
-    public Integer getSalary() {
+    public Long getSalary() {
         return salary;
     }
 
-    public void setSalary(Integer salary) {
+    public void setSalary(Long salary) {
         this.salary = salary;
     }
 
@@ -247,7 +247,7 @@ public class LstOfferHi implements Parcelable {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeInt(salary);
+            parcel.writeLong(salary);
         }
         if (status == null) {
             parcel.writeByte((byte) 0);

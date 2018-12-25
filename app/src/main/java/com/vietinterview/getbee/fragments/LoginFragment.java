@@ -146,7 +146,6 @@ public class LoginFragment extends BaseFragment {
                     apiConstant.setBASE_URL(ApiConstant.REAL_URL);
                     apiConstant.setIMG_URL(ApiConstant.IMG_URL_REAL);
                     AccountManager.setApiConstantTest(apiConstant);
-                    DebugLog.showLogCat(AccountManager.getApiConstantTest().getBASE_URL() + "\n" + AccountManager.getApiConstantTest().getLOGIN());
                     tvLogin.setText(getResources().getString(R.string.login));
                     tvLogin.setTextColor(getResources().getColor(R.color.black));
                 } else {
@@ -154,7 +153,6 @@ public class LoginFragment extends BaseFragment {
                     apiConstant.setBASE_URL(ApiConstant.DEV_URL);
                     apiConstant.setIMG_URL(ApiConstant.IMG_URL_DEV);
                     AccountManager.setApiConstantTest(apiConstant);
-                    DebugLog.showLogCat(AccountManager.getApiConstantTest().getBASE_URL() + "\n" + AccountManager.getApiConstantTest().getLOGIN());
                     tvLogin.setText(tvLogin.getText() + " Dev Mode");
                     tvLogin.setTextColor(getResources().getColor(R.color.red));
                 }

@@ -146,7 +146,6 @@ public class MyResumeFragment extends BaseFragment {
             mPosition = 0;
         else if (SharedPrefUtils.getString("menu", "").equalsIgnoreCase("CTV_CV_SEND"))
             mPosition = 1;
-        DebugLog.showLogCat(mPosition + "");
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setCurrentItem(mPosition);
     }

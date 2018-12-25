@@ -58,7 +58,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="58dp"
-                    android:background="@drawable/border_top_bottom"
+                    android:background="@drawable/border_top"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="14dp">
@@ -78,9 +78,10 @@
                     android:id="@+id/llBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
+                    android:background="@drawable/border_top"
                     android:orientation="horizontal"
-                    android:paddingHorizontal="10dp">
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="10dp">
 
                     <com.vietinterview.getbee.customview.RobotoMediumButton
                         android:id="@+id/btnNotAccept"
@@ -174,7 +175,6 @@
                     android:layout_marginVertical="8dp"
                     android:fontFamily="@string/font_fontFamily_medium"
                     android:gravity="center"
-                    android:text="Ứng viên này đã bị từ chối vì lý do kinh nghiệm chưa đáp ứng!"
                     android:textColor="#FF5A5A"
                     android:textSize="16sp" />
             </LinearLayout>

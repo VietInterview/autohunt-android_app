@@ -48,7 +48,6 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
-
         <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/cardReject"
             android:layout_width="match_parent"
@@ -84,8 +83,47 @@
                     android:layout_marginVertical="8dp"
                     android:fontFamily="@string/font_fontFamily_medium"
                     android:gravity="center"
-                    android:text="Ứng viên này đã bị từ chối vì lý do kinh nghiệm chưa đáp ứng!"
                     android:textColor="#FF5A5A"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardContract"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/listInterview"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.vietinterview.getbee.customview.RobotoMediumTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="8dp"
+                    android:fontFamily="@string/font_fontFamily_medium"
+                    android:text="Thông báo"
+                    android:textColor="#042E51"
+                    android:textSize="20sp" />
+
+                <com.vietinterview.getbee.customview.RobotoMediumTextView
+                    android:id="@+id/tvContract"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="8dp"
+                    android:fontFamily="@string/font_fontFamily_medium"
+                    android:gravity="center"
+                    android:text="Ứng viên đã được ký hợp đồng"
+                    android:textColor="@color/green"
                     android:textSize="16sp" />
             </LinearLayout>
         </android.support.v7.widget.CardView>

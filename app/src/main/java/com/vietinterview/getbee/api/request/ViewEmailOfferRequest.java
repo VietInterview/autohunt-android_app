@@ -24,11 +24,11 @@ public class ViewEmailOfferRequest extends BaseJsonRequest<ViewEmailInterviewRes
     private String note;
     private String round;
     private int status;
-    private int salary;
+    private long salary;
     private String workAddress;
     private String workTime;
 
-    public ViewEmailOfferRequest(int cvId, int id, int curency, String position, int jobId, String note, String round, int status, int salary, String workAddress, String workTime) {
+    public ViewEmailOfferRequest(int cvId, int id, int curency, String position, int jobId, String note, String round, int status, long salary, String workAddress, String workTime) {
         this.cvId = cvId;
         this.id = id;
         this.curency = curency;

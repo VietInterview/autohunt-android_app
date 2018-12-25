@@ -133,6 +133,7 @@ public class CreateEditOfferFragment extends BaseFragment implements DatePickerD
             edtWorkAddress.setText(lstOfferHi.getWorkAddress());
             edtPosition.setText(lstOfferHi.getPosition());
             edtSalary.setText(StringUtils.filterCurrencyString(lstOfferHi.getSalary()));
+            currency = lstOfferHi.getCurency();
             tvCurrency.setText(StringUtils.genStringCurrency(lstOfferHi.getCurency()));
             switchResult(lstOfferHi.getStatus());
             if (lstOfferHi.getStatus() == 0) {
@@ -195,14 +196,34 @@ public class CreateEditOfferFragment extends BaseFragment implements DatePickerD
 
     @OnClick(R.id.tvAchieve)
     public void onAchieveClick() {
-        statusOffer = 1;
-        updateOfferStatus();
+        DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn cập nhật kết quả cho lần offer này?", "Có", "Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                statusOffer = 1;
+                updateOfferStatus();
+            }
+        }, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
     }
 
     @OnClick(R.id.tvCandidateNotCome)
     public void onCandidateNotComeClick() {
-        statusOffer = 2;
-        updateOfferStatus();
+        DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn cập nhật kết quả cho lần offer này?", "Có", "Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                statusOffer = 2;
+                updateOfferStatus();
+            }
+        }, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
     }
 
     public void updateOfferStatus() {
@@ -215,7 +236,7 @@ public class CreateEditOfferFragment extends BaseFragment implements DatePickerD
         String note = edtNote.getText().toString().trim();
         String round = edtRound.getText().toString().trim();
         int status = lstOfferHi == null ? 0 : statusOffer;
-        int salary = lstOfferHi.getSalary();
+        long salary = lstOfferHi.getSalary();
         String workAddress = edtWorkAddress.getText().toString().trim();
         String workTime = edtWorkTime.getText().toString().trim();
         new UpdateOfferStatusRequest(cvId, id, mCurrency, position, jobId, note, round, status, salary, workAddress, workTime).callRequest(getActivity(), new ApiObjectCallBack<SendOfferResponse, ErrorResponse>() {
@@ -273,7 +294,7 @@ public class CreateEditOfferFragment extends BaseFragment implements DatePickerD
     @OnClick(R.id.btnSendMail)
     public void onSendMailClick() {
         if (!StringUtils.isEmpty(edtSalary.getText().toString()) && !StringUtils.isEmpty(edtWorkTime.getText().toString()) && !StringUtils.isEmpty(edtWorkAddress.getText().toString()) && !StringUtils.isEmpty(edtPosition.getText().toString())) {
-            DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn gửi offer ứng viên này?", "Có", "Không", new DialogInterface.OnClickListener() {
+            DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn gửi offer tới ứng viên này không?", "Có", "Không", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     int cvId = detailProcessResumeResponse.getCvId();
@@ -284,13 +305,15 @@ public class CreateEditOfferFragment extends BaseFragment implements DatePickerD
                     String note = edtNote.getText().toString().trim();
                     String round = edtRound.getText().toString().trim();
                     int status = lstOfferHi == null ? 0 : statusOffer;
-                    int salary = Integer.parseInt(edtSalary.getText().toString());
+                    long salary = lstOfferHi == null ? Integer.parseInt(edtSalary.getText().toString()) : lstOfferHi.getSalary();
                     String workAddress = edtWorkAddress.getText().toString().trim();
                     String workTime = edtWorkTime.getText().toString().trim();
+                    showCoverNetworkLoading();
                     new SendOfferRequest(cvId, id, mCurrency, position, jobId, note, round, status, salary, workAddress, workTime).callRequest(getActivity(), new ApiObjectCallBack<SendOfferResponse, ErrorResponse>() {
                         @Override
                         public void onSuccess(int status, SendOfferResponse dataSuccess, List<SendOfferResponse> listDataSuccess, String message) {
                             if (isAdded()) {
+                                hideCoverNetworkLoading();
                                 lstOfferHi = new LstOfferHi(dataSuccess.getCurency(), dataSuccess.getCvId(), dataSuccess.getEmailTemplate(), dataSuccess.getId(), dataSuccess.getJobId(), dataSuccess.getNote(), dataSuccess.getPosition(), dataSuccess.getRound(), dataSuccess.getSalary(), dataSuccess.getStatus(), dataSuccess.getWorkAddress(), dataSuccess.getWorkTime());
                                 Intent intent = new Intent(getActivity(), CreateEditInterviewFragment.class);
                                 intent.putExtra("lstOfferHi", lstOfferHi);
@@ -303,6 +326,7 @@ public class CreateEditOfferFragment extends BaseFragment implements DatePickerD
                         public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
                             if (isAdded()) {
                                 hideCoverNetworkLoading();
+                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
                             }
                         }
                     });
@@ -331,9 +355,10 @@ public class CreateEditOfferFragment extends BaseFragment implements DatePickerD
                 String note = edtNote.getText().toString().trim();
                 String round = edtRound.getText().toString().trim();
                 int status = lstOfferHi == null ? 0 : statusOffer;
-                int salary = lstOfferHi.getSalary();
+                long salary = lstOfferHi.getSalary();
                 String workAddress = edtWorkAddress.getText().toString().trim();
                 String workTime = edtWorkTime.getText().toString().trim();
+                showCoverNetworkLoading();
                 new ViewEmailOfferRequest(cvId, id, mCurrency, position, jobId, note, round, status, salary, workAddress, workTime).callRequest(getActivity(), new ApiObjectCallBack<ViewEmailInterviewResponse, ErrorResponse>() {
                     @Override
                     public void onSuccess(int status, ViewEmailInterviewResponse dataSuccess, List<ViewEmailInterviewResponse> listDataSuccess, String message) {
@@ -366,6 +391,7 @@ public class CreateEditOfferFragment extends BaseFragment implements DatePickerD
                     public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
                         if (isAdded()) {
                             hideCoverNetworkLoading();
+                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
                         }
                     }
                 });
@@ -414,6 +440,7 @@ public class CreateEditOfferFragment extends BaseFragment implements DatePickerD
                 public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
                     if (isAdded()) {
                         hideCoverNetworkLoading();
+                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
                     }
                 }
             });
@@ -448,7 +475,7 @@ public class CreateEditOfferFragment extends BaseFragment implements DatePickerD
 
     @Override
     protected void processOnBackPress() {
-        lstOfferHi = new LstOfferHi(currency, 0, "", -1, 0, "", "", "", 0, -1, "", "");
+        lstOfferHi = new LstOfferHi(currency, 0, "", -1, 0, "", "", "", (long) 0, -1, "", "");
         Intent intent = new Intent(getActivity(), CreateEditInterviewFragment.class);
         intent.putExtra("lstOfferHi", lstOfferHi);
         getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
@@ -457,7 +484,7 @@ public class CreateEditOfferFragment extends BaseFragment implements DatePickerD
 
     @Override
     protected void processCustomToolbar() {
-        lstOfferHi = new LstOfferHi(currency, 0, "", -1, 0, "", "", "", 0, -1, "", "");
+        lstOfferHi = new LstOfferHi(currency, 0, "", -1, 0, "", "", "", (long) 0, -1, "", "");
         Intent intent = new Intent(getActivity(), CreateEditInterviewFragment.class);
         intent.putExtra("lstOfferHi", lstOfferHi);
         getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
@@ -472,7 +499,6 @@ public class CreateEditOfferFragment extends BaseFragment implements DatePickerD
     private void update() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         edtWorkTime.setText(sdf.format(calendar.getTime()) + " " + timeFormat.format(calendar.getTime()));
-        DebugLog.showLogCat(edtWorkTime.getText().toString());
     }
 
     @Override

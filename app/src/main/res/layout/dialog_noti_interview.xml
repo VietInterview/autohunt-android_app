@@ -70,7 +70,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/borderbutton_blue"
-                android:text="Đồng ý"
+                android:text="Có"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
         </LinearLayout>

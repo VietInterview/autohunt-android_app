@@ -137,20 +137,50 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
 
     @OnClick(R.id.tvAchieve)
     public void onAchieveClick() {
-        statusInterview = 1;
-        updateInterviewStatus();
+        DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn cập nhật kết quả cho vòng phỏng vấn này?", "Có", "Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                statusInterview = 1;
+                updateInterviewStatus();
+            }
+        }, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
     }
 
     @OnClick(R.id.tvNotAchieved)
     public void onNotAchieveClick() {
-        statusInterview = 2;
-        updateInterviewStatus();
+        DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn cập nhật kết quả cho vòng phỏng vấn này?", "Có", "Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                statusInterview = 2;
+                updateInterviewStatus();
+            }
+        }, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
     }
 
     @OnClick(R.id.tvCandidateNotCome)
     public void onCandidateNotComeClick() {
-        statusInterview = 3;
-        updateInterviewStatus();
+        DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn cập nhật kết quả cho vòng phỏng vấn này?", "Có", "Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                statusInterview = 3;
+                updateInterviewStatus();
+            }
+        }, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
     }
 
     public void updateInterviewStatus() {

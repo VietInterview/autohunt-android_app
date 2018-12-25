@@ -24,13 +24,16 @@ import com.vietinterview.getbee.api.response.detailprocessresume.DetailProcessRe
 import com.vietinterview.getbee.api.response.detailprocessresume.JobCvGotoWorkDto;
 import com.vietinterview.getbee.api.response.detailprocessresume.LstInterviewHi;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.StringUtils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -91,7 +94,24 @@ public class CreateGoToWorkFragment extends BaseFragment implements DatePickerDi
         if (jobCvGotoWorkDto != null) {
             if (jobCvGotoWorkDto.getStartWorkDate() != null) {
                 edtWorkTime.setText(jobCvGotoWorkDto.getStartWorkDate());
-                edtWarranty.setText(jobCvGotoWorkDto.getNumDayWarranty() + "");
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                Date readDate = null;
+                try {
+                    readDate = df.parse(DateUtil.convertToMyFormat3(detailProcessResumeResponse.getJobCvGotoWorkDto().getStartWorkDate()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(readDate.getTime());
+                calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH));
+                calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
+                calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
+                Calendar today = Calendar.getInstance();
+                calendar.add(Calendar.DATE, 60);
+                long lastWarrantyDate = calendar.getTimeInMillis();
+                long difference = lastWarrantyDate - today.getTimeInMillis();
+                int days = (int) (difference / (1000 * 60 * 60 * 24));
+                edtWarranty.setText("Còn lại " + days + " ngày");
             }
         }
     }
@@ -99,7 +119,7 @@ public class CreateGoToWorkFragment extends BaseFragment implements DatePickerDi
     @OnClick(R.id.btnUpdateWork)
     public void onUpdateWorkClick() {
         if (!StringUtils.isEmpty(edtWorkTime.getText().toString())) {
-            DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn gửi lịch làm việc đến ứng viên này?", "Có", "Không", new DialogInterface.OnClickListener() {
+            DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn cập nhập bản ghi này", "Có", "Không", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     showCoverNetworkLoading();
@@ -160,7 +180,6 @@ public class CreateGoToWorkFragment extends BaseFragment implements DatePickerDi
     private void update() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         edtWorkTime.setText(sdf.format(calendar.getTime()) + " " + timeFormat.format(calendar.getTime()));
-        DebugLog.showLogCat(edtWorkTime.getText().toString());
     }
 
     @Override

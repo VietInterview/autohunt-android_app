@@ -244,7 +244,7 @@
                     android:drawableTop="@drawable/ic_not_accept"
                     android:drawableTint="#677B8D"
                     android:gravity="center"
-                    android:text="Từ chối" />
+                    android:text="Không đồng ý" />
             </LinearLayout>
         </LinearLayout>
 

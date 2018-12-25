@@ -53,7 +53,7 @@ public class CvList implements Parcelable {
     private Integer workingFormId;
     @SerializedName("desiredSalary")
     @Expose
-    private Integer desiredSalary;
+    private Long desiredSalary;
     @SerializedName("careerObjectives")
     @Expose
     private String careerObjectives;
@@ -104,10 +104,10 @@ public class CvList implements Parcelable {
     private String jobTitle;
     @SerializedName("toSalary")
     @Expose
-    private Integer toSalary;
+    private Long toSalary;
     @SerializedName("fromSalary")
     @Expose
-    private Integer fromSalary;
+    private Long fromSalary;
     @SerializedName("fee")
     @Expose
     private Long fee;
@@ -153,7 +153,7 @@ public class CvList implements Parcelable {
         if (in.readByte() == 0) {
             desiredSalary = null;
         } else {
-            desiredSalary = in.readInt();
+            desiredSalary = in.readLong();
         }
         careerObjectives = in.readString();
         if (in.readByte() == 0) {
@@ -197,12 +197,12 @@ public class CvList implements Parcelable {
         if (in.readByte() == 0) {
             toSalary = null;
         } else {
-            toSalary = in.readInt();
+            toSalary = in.readLong();
         }
         if (in.readByte() == 0) {
             fromSalary = null;
         } else {
-            fromSalary = in.readInt();
+            fromSalary = in.readLong();
         }
         if (in.readByte() == 0) {
             fee = null;
@@ -336,11 +336,11 @@ public class CvList implements Parcelable {
         this.workingFormId = workingFormId;
     }
 
-    public Integer getDesiredSalary() {
+    public Long getDesiredSalary() {
         return desiredSalary;
     }
 
-    public void setDesiredSalary(Integer desiredSalary) {
+    public void setDesiredSalary(Long desiredSalary) {
         this.desiredSalary = desiredSalary;
     }
 
@@ -472,19 +472,19 @@ public class CvList implements Parcelable {
         this.jobTitle = jobTitle;
     }
 
-    public Integer getToSalary() {
+    public Long getToSalary() {
         return toSalary;
     }
 
-    public void setToSalary(Integer toSalary) {
+    public void setToSalary(Long toSalary) {
         this.toSalary = toSalary;
     }
 
-    public Integer getFromSalary() {
+    public Long getFromSalary() {
         return fromSalary;
     }
 
-    public void setFromSalary(Integer fromSalary) {
+    public void setFromSalary(Long fromSalary) {
         this.fromSalary = fromSalary;
     }
 
@@ -554,7 +554,7 @@ public class CvList implements Parcelable {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeInt(desiredSalary);
+            parcel.writeLong(desiredSalary);
         }
         parcel.writeString(careerObjectives);
         if (collaboratorId == null) {
@@ -605,13 +605,13 @@ public class CvList implements Parcelable {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeInt(toSalary);
+            parcel.writeLong(toSalary);
         }
         if (fromSalary == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeInt(fromSalary);
+            parcel.writeLong(fromSalary);
         }
         if (fee == null) {
             parcel.writeByte((byte) 0);

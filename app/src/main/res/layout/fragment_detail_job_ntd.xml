@@ -62,27 +62,38 @@
                 android:id="@+id/anim_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:layout_gravity="center|top"
                 android:background="@color/background"
-                android:gravity="center"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways|snap"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+                app:popupTheme="@style/AppTheme.PopupOverlay">
 
                 <ImageView
                     android:id="@+id/imgBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:paddingVertical="10dp"
+                    android:paddingRight="10dp"
                     android:src="@drawable/ic_back_svg" />
 
                 <com.vietinterview.getbee.customview.RobotoMediumTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:fontFamily="@string/font_fontFamily_medium"
                     android:gravity="center"
                     android:text="@string/detail_job"
                     android:textColor="@android:color/white"
                     android:textSize="20sp" />
+
+                <ImageView
+                    android:id="@+id/imgRight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:paddingVertical="10dp"
+                    android:paddingRight="10dp"
+                    android:src="@drawable/ic_back_svg" />
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>

@@ -18,7 +18,6 @@ import com.vietinterview.getbee.model.StatusCV;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -521,10 +520,10 @@ public class StringUtils {
         StatusCV statusCV = null;
         switch (status) {
             case -1:
-                statusCV = new StatusCV(context.getResources().getString(R.string.draft), context.getResources().getDrawable(R.drawable.border_gray), context.getColor(R.color.background_icon_not_focus));
+                statusCV = new StatusCV(context.getResources().getString(R.string.draft), context.getResources().getDrawable(R.drawable.border_gray_12), context.getColor(R.color.background_icon_not_focus));
                 break;
             case 0:
-                statusCV = new StatusCV(context.getResources().getString(R.string.not_send), context.getResources().getDrawable(R.drawable.border_gray), context.getColor(R.color.background_icon_not_focus));
+                statusCV = new StatusCV(context.getResources().getString(R.string.not_send), context.getResources().getDrawable(R.drawable.border_gray_12), context.getColor(R.color.background_icon_not_focus));
                 break;
             case 1:
                 statusCV = new StatusCV(context.getResources().getString(R.string.sent), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
@@ -536,7 +535,7 @@ public class StringUtils {
                 statusCV = new StatusCV(context.getResources().getString(R.string.seen), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
                 break;
             case 4:
-                statusCV = new StatusCV(context.getResources().getString(R.string.not_accept), context.getResources().getDrawable(R.drawable.border_gray), context.getColor(R.color.background_icon_not_focus));
+                statusCV = new StatusCV(context.getResources().getString(R.string.not_accept), context.getResources().getDrawable(R.drawable.border_gray_12), context.getColor(R.color.background_icon_not_focus));
                 break;
             case 5:
                 statusCV = new StatusCV(context.getResources().getString(R.string.invite_interview), context.getResources().getDrawable(R.drawable.border_red), context.getColor(R.color.red));
@@ -552,9 +551,6 @@ public class StringUtils {
                 break;
             case 9:
                 statusCV = new StatusCV(context.getResources().getString(R.string.contract), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
-                break;
-            case 10:
-                statusCV = new StatusCV(context.getResources().getString(R.string.done), context.getResources().getDrawable(R.drawable.border_gray), context.getColor(R.color.background_icon_not_focus));
                 break;
         }
         return statusCV;

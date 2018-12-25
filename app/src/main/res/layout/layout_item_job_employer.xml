@@ -9,45 +9,50 @@
     <com.vietinterview.getbee.customview.RobotoTextView
         android:id="@+id/tvCountCV"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:gravity="center"
-        android:textColor="#B1B1BA" />
+        android:textColor="#9FB6CB"
+        android:textSize="14sp" />
 
     <com.chauthai.swipereveallayout.SwipeRevealLayout
         android:id="@+id/swipe_layout"
         android:layout_width="match_parent"
-        android:layout_height="108dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginHorizontal="4dp"
+        android:layout_marginTop="-5dp"
         app:dragEdge="right"
         app:mode="same_level">
 
         <android.support.v7.widget.CardView
             android:id="@+id/card_view1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="118dp"
+            android:layout_height="118dp"
             android:background="@android:color/transparent"
             app:cardBackgroundColor="@android:color/transparent"
-            card_view:cardCornerRadius="0dp"
+            card_view:cardCornerRadius="10dp"
             card_view:cardElevation="0dp">
 
             <LinearLayout
                 android:id="@+id/secondaryContentFrameLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:background="@drawable/borderbutton_blue"
+                android:layout_gravity="center"
+                android:layout_margin="4dp"
+                android:background="@drawable/borderbutton_blue_10"
                 android:gravity="center|right"
                 android:orientation="horizontal">
 
                 <com.vietinterview.getbee.customview.RobotoRegularButton
                     android:id="@+id/btnShowDetailJob"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="118dp"
+                    android:layout_height="118dp"
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
                     android:drawableTop="@drawable/ic_info_white"
-                    android:drawablePadding="-30dp"
-                    android:paddingTop="35dp"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="45dp"
                     android:textColor="@color/white" />
 
             </LinearLayout>
@@ -56,10 +61,10 @@
         <android.support.v7.widget.CardView
             android:id="@+id/card_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="118dp"
             app:cardBackgroundColor="@color/white"
-            card_view:cardCornerRadius="5dp"
-            card_view:cardElevation="5dp"
+            card_view:cardCornerRadius="10dp"
+            card_view:cardElevation="2dp"
             card_view:cardUseCompatPadding="true">
 
             <LinearLayout
@@ -73,7 +78,7 @@
                     android:id="@+id/primaryContentCardView2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0.7"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -114,7 +119,7 @@
                         android:gravity="left"
                         android:text="Hồ sơ mới gửi"
                         android:textColor="#9FB6CB"
-                        android:textSize="16sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <View
@@ -125,7 +130,8 @@
                 <LinearLayout
                     android:id="@+id/primaryContentCardView3"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="6dp"
                     android:layout_weight="2"
                     android:orientation="vertical">
 
@@ -150,12 +156,14 @@
                         android:layout_height="0dp"
                         android:layout_margin="8dp"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:orientation="horizontal">
 
                         <ImageView
                             android:id="@+id/imgDeadline"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_weight="0.1"
                             android:src="@drawable/ic_time_experi" />
 

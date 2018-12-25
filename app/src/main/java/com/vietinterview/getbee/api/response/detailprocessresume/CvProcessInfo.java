@@ -53,7 +53,7 @@ public class CvProcessInfo {
     private Integer rejectStep;
     @SerializedName("salary")
     @Expose
-    private Integer salary;
+    private Long salary;
     @SerializedName("status")
     @Expose
     private Integer status;
@@ -184,11 +184,11 @@ public class CvProcessInfo {
         this.rejectStep = rejectStep;
     }
 
-    public Integer getSalary() {
+    public Long getSalary() {
         return salary;
     }
 
-    public void setSalary(Integer salary) {
+    public void setSalary(Long salary) {
         this.salary = salary;
     }
 

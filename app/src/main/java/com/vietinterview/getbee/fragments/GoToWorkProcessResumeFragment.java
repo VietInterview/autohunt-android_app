@@ -1,6 +1,7 @@
 package com.vietinterview.getbee.fragments;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -33,6 +34,7 @@ import com.vietinterview.getbee.api.response.RejectResponse;
 import com.vietinterview.getbee.api.response.detailprocessresume.DetailProcessResumeResponse;
 import com.vietinterview.getbee.api.response.detailprocessresume.JobCvGotoWorkDto;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.callback.OnSwitchToFourListener;
 import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.DebugLog;
@@ -98,18 +100,59 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
 
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-        if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() != null) {
-            if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 4) {
-                cardReject.setVisibility(View.VISIBLE);
-                getEventBaseFragment().reject();
-                btnNext.setEnabled(false);
-                rlGotoworkDate.setEnabled(false);
-                tvDate.setEnabled(false);
-                btnReject.setEnabled(false);
-                tvRound.setEnabled(false);
-                llBtn.setVisibility(View.GONE);
+        getEventBaseFragment().setOnSwitchToFourListener(new OnSwitchToFourListener() {
+            @Override
+            public void onSwitchToFour() {
+                if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 8 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 4)) {
+
+                    btnNext.setEnabled(true);
+                    rlGotoworkDate.setEnabled(true);
+                    tvDate.setEnabled(true);
+                    btnReject.setEnabled(true);
+                    tvRound.setEnabled(true);
+                    llBtn.setVisibility(View.VISIBLE);
+                } else {
+                    btnNext.setEnabled(false);
+                    rlGotoworkDate.setEnabled(false);
+                    tvDate.setEnabled(false);
+                    btnReject.setEnabled(false);
+                    tvRound.setEnabled(false);
+                    llBtn.setVisibility(View.GONE);
+                }
+                if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4) {
+                    if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() != null) {
+                        if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 4) {
+                            cardReject.setVisibility(View.VISIBLE);
+                            getEventBaseFragment().reject();
+                            btnNext.setEnabled(false);
+                            rlGotoworkDate.setEnabled(false);
+                            tvDate.setEnabled(false);
+                            btnReject.setEnabled(false);
+                            tvRound.setEnabled(false);
+                            llBtn.setVisibility(View.GONE);
+                        } else cardReject.setVisibility(View.GONE);
+                    } else cardReject.setVisibility(View.GONE);
+                } else {
+                    cardReject.setVisibility(View.GONE);
+                }
+            }
+        });
+        if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4) {
+            if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() != null) {
+                if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 4) {
+                    cardReject.setVisibility(View.VISIBLE);
+                    getEventBaseFragment().reject();
+                    btnNext.setEnabled(false);
+                    rlGotoworkDate.setEnabled(false);
+                    tvDate.setEnabled(false);
+                    btnReject.setEnabled(false);
+                    tvRound.setEnabled(false);
+                    llBtn.setVisibility(View.GONE);
+                } else cardReject.setVisibility(View.GONE);
             } else cardReject.setVisibility(View.GONE);
-        } else cardReject.setVisibility(View.GONE);
+        } else {
+            cardReject.setVisibility(View.GONE);
+        }
         if (detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() != null && detailProcessResumeResponse.getCvProcessInfo().getRejectNote() != null)
             tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() + "\nGhi chú: " + detailProcessResumeResponse.getCvProcessInfo().getRejectNote());
 
@@ -131,7 +174,6 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
             calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
             calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
             Calendar today = Calendar.getInstance();
-            long startDate = calendar.getTimeInMillis();
             calendar.add(Calendar.DATE, 60);
             long lastWarrantyDate = calendar.getTimeInMillis();
             long difference = lastWarrantyDate - today.getTimeInMillis();
@@ -142,13 +184,11 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
             tvDate.setText("");
             tvWarranty.setText("Còn lại " + 0 + " ngày");
         }
-        if (SharedPrefUtils.getInt("step", 0) != 3) {
-            llBtn.setVisibility(View.GONE);
-        }
     }
 
     private Dialog mRejectDialog;
     private boolean isOther = false;
+    private String rejectName;
 
     @OnClick(R.id.btnReject)
     public void onRejectClick() {
@@ -179,10 +219,11 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
                     final Spinner spinner1 = (Spinner) mRejectDialog.findViewById(R.id.spinner1);
                     final EditText edtReasonOther = mRejectDialog.findViewById(R.id.edtReasonOther);
                     spinner1.setAdapter(dataAdapter);
+                    rejectName = ((RejectReasonResponse) spinner1.getSelectedItem()).getName();
                     spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            DebugLog.showLogCat(listReasonName.get(position).getName());
+                            rejectName = listReasonName.get(position).getName();
                             if (listReasonName.get(position).getCode().equalsIgnoreCase("other")) {
                                 isOther = true;
                                 edtReasonOther.setFocusable(true);
@@ -214,64 +255,103 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
                                 if (edtReasonOther.getText().toString().trim().equalsIgnoreCase("")) {
                                     DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Xin hãy nhập lý do từ chối");
                                 } else {
-                                    showCoverNetworkLoading();
-                                    new RejectRequest(detailProcessResumeResponse.getCvId(), detailProcessResumeResponse.getJobId(), ((RejectReasonResponse) spinner1.getSelectedItem()).getId(), edtReasonOther.getText().toString().trim(), ((RejectReasonResponse) spinner1.getSelectedItem()).getStep()).callRequest(getActivity(), new ApiObjectCallBack<RejectResponse, ErrorResponse>() {
+                                    DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn gửi email và cập nhật trạng thái từ chối cho hồ sơ này?", "Có", "Không", new DialogInterface.OnClickListener() {
                                         @Override
-                                        public void onSuccess(int status, RejectResponse dataSuccess, List<RejectResponse> listDataSuccess, String message) {
-                                            if (isAdded()) {
-                                                if (status == 200) {
-                                                    hideCoverNetworkLoading();
-                                                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Gửi từ chối thành công");
-                                                    cardReject.setVisibility(View.VISIBLE);
-                                                    btnNext.setEnabled(false);
-                                                    btnReject.setEnabled(false);
-                                                    rlGotoworkDate.setEnabled(false);
-                                                    tvRound.setEnabled(false);
-                                                    tvDate.setEnabled(false);
-                                                    llBtn.setVisibility(View.GONE);
-                                                    getEventBaseFragment().reject();
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            showCoverNetworkLoading();
+                                            new RejectRequest(detailProcessResumeResponse.getCvId(), detailProcessResumeResponse.getJobId(), ((RejectReasonResponse) spinner1.getSelectedItem()).getId(), edtReasonOther.getText().toString().trim(), ((RejectReasonResponse) spinner1.getSelectedItem()).getStep()).callRequest(getActivity(), new ApiObjectCallBack<RejectResponse, ErrorResponse>() {
+                                                @Override
+                                                public void onSuccess(int status, RejectResponse dataSuccess, List<RejectResponse> listDataSuccess, String message) {
+                                                    if (isAdded()) {
+                                                        if (status == 200) {
+                                                            hideCoverNetworkLoading();
+                                                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Gửi từ chối thành công", new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                                    cardReject.setVisibility(View.VISIBLE);
+                                                                    tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + rejectName + "\nGhi chú: " + dataSuccess.getReasonNote());
+                                                                }
+                                                            });
+                                                            btnNext.setEnabled(false);
+                                                            btnReject.setEnabled(false);
+                                                            rlGotoworkDate.setEnabled(false);
+                                                            detailProcessResumeResponse.getCvProcessInfo().setStatus(4);
+                                                            detailProcessResumeResponse.getCvProcessInfo().setRejectStep(4);
+                                                            tvRound.setEnabled(false);
+                                                            tvDate.setEnabled(false);
+                                                            llBtn.setVisibility(View.GONE);
+                                                            getEventBaseFragment().reject();
+                                                        }
+                                                    }
                                                 }
-                                            }
-                                        }
 
+                                                @Override
+                                                public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                                                    if (isAdded()) {
+                                                        hideCoverNetworkLoading();
+                                                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+                                                    }
+                                                }
+                                            });
+                                            mRejectDialog.dismiss();
+                                        }
+                                    }, new DialogInterface.OnClickListener() {
                                         @Override
-                                        public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
-                                            if (isAdded()) {
-                                                hideCoverNetworkLoading();
-                                            }
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+
                                         }
                                     });
-                                    mRejectDialog.dismiss();
+
                                 }
                             } else {
-                                showCoverNetworkLoading();
-                                new RejectRequest(detailProcessResumeResponse.getCvId(), detailProcessResumeResponse.getJobId(), ((RejectReasonResponse) spinner1.getSelectedItem()).getId(), edtReasonOther.getText().toString().trim(), ((RejectReasonResponse) spinner1.getSelectedItem()).getStep()).callRequest(getActivity(), new ApiObjectCallBack<RejectResponse, ErrorResponse>() {
+                                DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn gửi email và cập nhật trạng thái từ chối cho hồ sơ này?", "Có", "Không", new DialogInterface.OnClickListener() {
                                     @Override
-                                    public void onSuccess(int status, RejectResponse dataSuccess, List<RejectResponse> listDataSuccess, String message) {
-                                        if (isAdded()) {
-                                            if (status == 200) {
-                                                hideCoverNetworkLoading();
-                                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Gửi từ chối thành công");
-                                                cardReject.setVisibility(View.VISIBLE);
-                                                btnNext.setEnabled(false);
-                                                btnReject.setEnabled(false);
-                                                rlGotoworkDate.setEnabled(false);
-                                                tvRound.setEnabled(false);
-                                                tvDate.setEnabled(false);
-                                                llBtn.setVisibility(View.GONE);
-                                                getEventBaseFragment().reject();
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        showCoverNetworkLoading();
+                                        new RejectRequest(detailProcessResumeResponse.getCvId(), detailProcessResumeResponse.getJobId(), ((RejectReasonResponse) spinner1.getSelectedItem()).getId(), edtReasonOther.getText().toString().trim(), ((RejectReasonResponse) spinner1.getSelectedItem()).getStep()).callRequest(getActivity(), new ApiObjectCallBack<RejectResponse, ErrorResponse>() {
+                                            @Override
+                                            public void onSuccess(int status, RejectResponse dataSuccess, List<RejectResponse> listDataSuccess, String message) {
+                                                if (isAdded()) {
+                                                    if (status == 200) {
+                                                        hideCoverNetworkLoading();
+                                                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Gửi từ chối thành công", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                                cardReject.setVisibility(View.VISIBLE);
+                                                                tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + rejectName + "\nGhi chú: " + dataSuccess.getReasonNote());
+                                                            }
+                                                        });
+                                                        cardReject.setVisibility(View.VISIBLE);
+                                                        btnNext.setEnabled(false);
+                                                        btnReject.setEnabled(false);
+                                                        rlGotoworkDate.setEnabled(false);
+                                                        tvRound.setEnabled(false);
+                                                        detailProcessResumeResponse.getCvProcessInfo().setStatus(4);
+                                                        detailProcessResumeResponse.getCvProcessInfo().setRejectStep(4);
+                                                        tvDate.setEnabled(false);
+                                                        llBtn.setVisibility(View.GONE);
+                                                        getEventBaseFragment().reject();
+                                                    }
+                                                }
                                             }
-                                        }
-                                    }
 
+                                            @Override
+                                            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                                                if (isAdded()) {
+                                                    hideCoverNetworkLoading();
+                                                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+                                                }
+                                            }
+                                        });
+                                        mRejectDialog.dismiss();
+                                    }
+                                }, new DialogInterface.OnClickListener() {
                                     @Override
-                                    public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
-                                        if (isAdded()) {
-                                            hideCoverNetworkLoading();
-                                        }
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+
                                     }
                                 });
-                                mRejectDialog.dismiss();
+
                             }
                         }
                     });
@@ -283,6 +363,7 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
             public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
                 if (isAdded()) {
                     hideCoverNetworkLoading();
+                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
                 }
             }
         });
@@ -290,11 +371,18 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
 
     @OnClick({R.id.rlGotoworkDate, R.id.tvRound, R.id.tvDate})
     public void onGotoWorkDate() {
-        if (detailProcessResumeResponse.getJobCvGotoWorkDto() != null) {
-            if (detailProcessResumeResponse.getJobCvGotoWorkDto().getId() != null)
-                FragmentUtil.pushFragment(getActivity(), GoToWorkProcessResumeFragment.this, new CreateGoToWorkFragment().newInstance(detailProcessResumeResponse.getJobCvGotoWorkDto(), detailProcessResumeResponse), null);
-            else
-                FragmentUtil.pushFragment(getActivity(), GoToWorkProcessResumeFragment.this, new CreateGoToWorkFragment().newInstance(null, detailProcessResumeResponse), null);
+        if (detailProcessResumeResponse.getJobCvGotoWorkDto().getCountUpdate() != null) {
+            if (detailProcessResumeResponse.getJobCvGotoWorkDto().getCountUpdate() < 3) {
+                if (detailProcessResumeResponse.getJobCvGotoWorkDto() != null) {
+                    if (detailProcessResumeResponse.getJobCvGotoWorkDto().getId() != null)
+                        FragmentUtil.pushFragment(getActivity(), GoToWorkProcessResumeFragment.this, new CreateGoToWorkFragment().newInstance(detailProcessResumeResponse.getJobCvGotoWorkDto(), detailProcessResumeResponse), null);
+                    else
+                        FragmentUtil.pushFragment(getActivity(), GoToWorkProcessResumeFragment.this, new CreateGoToWorkFragment().newInstance(null, detailProcessResumeResponse), null);
+
+                }
+            }
+        } else {
+            FragmentUtil.pushFragment(getActivity(), GoToWorkProcessResumeFragment.this, new CreateGoToWorkFragment().newInstance(null, detailProcessResumeResponse), null);
 
         }
     }
@@ -328,6 +416,7 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
             public void onClick(View v) {
                 if (detailProcessResumeResponse.getJobCvGotoWorkDto().getStartWorkDate() == null) {
                     mNotifyDialog.dismiss();
+                    detailProcessResumeResponse.getCvProcessInfo().setStatus(9);
                     getEventBaseFragment().changeStepExp(4);
                 } else {
                     new ContractStatusRequest(detailProcessResumeResponse.getCvId(), detailProcessResumeResponse.getJobId()).callRequest(getActivity(), new ApiObjectCallBack<ErrorResponse, ErrorResponse>() {
@@ -336,6 +425,7 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
                             if (isAdded()) {
                                 if (status == 200) {
                                     mNotifyDialog.dismiss();
+                                    detailProcessResumeResponse.getCvProcessInfo().setStatus(9);
                                     getEventBaseFragment().changeStepExp(4);
                                 }
                             }
@@ -346,7 +436,9 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
                             if (isAdded()) {
                                 if (status == 200) {
                                     mNotifyDialog.dismiss();
+                                    detailProcessResumeResponse.getCvProcessInfo().setStatus(9);
                                     getEventBaseFragment().changeStepExp(4);
+
                                 } else {
                                     mNotifyDialog.dismiss();
                                 }
