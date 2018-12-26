@@ -18,11 +18,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.adapter.ListInterviewAdapter;
 import com.vietinterview.getbee.api.request.GetListRejectReasonRequest;
 import com.vietinterview.getbee.api.request.OfferStatusRequest;
 import com.vietinterview.getbee.api.request.RejectRequest;
@@ -36,13 +37,9 @@ import com.vietinterview.getbee.api.response.detailprocessresume.LstInterviewHi;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnSwitchToTwoListener;
 import com.vietinterview.getbee.constant.AppConstant;
-import com.vietinterview.getbee.customview.FlowLayout;
-import com.vietinterview.getbee.utils.DateUtil;
-import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.LayoutUtils;
-import com.vietinterview.getbee.utils.SharedPrefUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,8 +54,10 @@ import static android.app.Activity.RESULT_OK;
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 public class InterviewProcessResumeFragment extends BaseFragment {
-    @BindView(R.id.flowListInterview)
-    FlowLayout flowListInterview;
+    //    @BindView(R.id.flowListInterview)
+//    FlowLayout flowListInterview;
+    @BindView(R.id.list)
+    public ListView listView;
     @BindView(R.id.btnNext)
     Button btnNext;
     @BindView(R.id.cardReject)
@@ -75,6 +74,7 @@ public class InterviewProcessResumeFragment extends BaseFragment {
     private Dialog mReasonNotAcceptDialog;
     private Dialog mRejectDialog;
     private LstInterviewHi lstInterviewHi;
+    private ListInterviewAdapter listInterviewOfferAdapter;
 
     public static InterviewProcessResumeFragment newInstance(DetailProcessResumeResponse detailProcessResumeResponse) {
         InterviewProcessResumeFragment fm = new InterviewProcessResumeFragment();
@@ -150,14 +150,14 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                     llBtn.setVisibility(View.VISIBLE);
                     tvAddRound.setVisibility(View.VISIBLE);
                     btnNext.setEnabled(true);
-                    flowListInterview.setEnabled(true);
+                    listView.setEnabled(true);
                     btnNotAccept.setEnabled(true);
                     tvAddRound.setEnabled(true);
                 } else {
                     llBtn.setVisibility(View.GONE);
                     tvAddRound.setVisibility(View.GONE);
                     btnNext.setEnabled(false);
-                    flowListInterview.setEnabled(true);
+                    listView.setEnabled(true);
                     btnNotAccept.setEnabled(false);
                     tvAddRound.setEnabled(false);
                 }
@@ -169,9 +169,10 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                             cardReject.setVisibility(View.VISIBLE);
                             getEventBaseFragment().reject();
                             btnNext.setEnabled(false);
-                            flowListInterview.setEnabled(false);
+                            listView.setEnabled(true);
                             btnNotAccept.setEnabled(false);
                             tvAddRound.setEnabled(false);
+                            tvAddRound.setVisibility(View.GONE);
                             llBtn.setVisibility(View.GONE);
                         } else cardReject.setVisibility(View.GONE);
                     } else cardReject.setVisibility(View.GONE);
@@ -188,18 +189,23 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                     cardReject.setVisibility(View.VISIBLE);
                     getEventBaseFragment().reject();
                     btnNext.setEnabled(false);
-                    flowListInterview.setEnabled(false);
+                    listView.setEnabled(true);
                     btnNotAccept.setEnabled(false);
                     tvAddRound.setEnabled(false);
+                    tvAddRound.setVisibility(View.GONE);
                     llBtn.setVisibility(View.GONE);
                 } else cardReject.setVisibility(View.GONE);
             } else cardReject.setVisibility(View.GONE);
         } else {
             cardReject.setVisibility(View.GONE);
         }
-        if (detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() != null && detailProcessResumeResponse.getCvProcessInfo().getRejectNote() != null)
-            tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() + "\nGhi chú: " + detailProcessResumeResponse.getCvProcessInfo().getRejectNote());
+        if (detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() != null && detailProcessResumeResponse.getCvProcessInfo().getRejectNote() != null) {
+            if (detailProcessResumeResponse.getCvProcessInfo().getRejectNote() != null && !detailProcessResumeResponse.getCvProcessInfo().getRejectNote().equalsIgnoreCase(""))
+                tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() + "\nGhi chú: " + detailProcessResumeResponse.getCvProcessInfo().getRejectNote());
+            else
+                tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName());
 
+        }
     }
 
     @OnClick(R.id.tvAddRound)
@@ -408,7 +414,7 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                                                             detailProcessResumeResponse.getCvProcessInfo().setRejectStep(2);
                                                             btnNext.setEnabled(false);
                                                             tvAddRound.setEnabled(false);
-                                                            flowListInterview.setEnabled(false);
+                                                            listView.setEnabled(true);
                                                             btnNotAccept.setEnabled(false);
                                                             llBtn.setVisibility(View.GONE);
                                                             getEventBaseFragment().reject();
@@ -460,13 +466,14 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                                                         }
                                                         if (count > 0) {
                                                             updateInterviewStatus(count);
-                                                        } detailProcessResumeResponse.getCvProcessInfo().setStatus(4);
+                                                        }
+                                                        detailProcessResumeResponse.getCvProcessInfo().setStatus(4);
                                                         detailProcessResumeResponse.getCvProcessInfo().setRejectStep(2);
                                                         cardReject.setVisibility(View.VISIBLE);
                                                         btnNext.setEnabled(false);
                                                         tvAddRound.setEnabled(false);
                                                         tvAddRound.setVisibility(View.GONE);
-                                                        flowListInterview.setEnabled(false);
+                                                        listView.setEnabled(true);
                                                         btnNotAccept.setEnabled(false);
                                                         llBtn.setVisibility(View.GONE);
                                                         getEventBaseFragment().reject();
@@ -543,46 +550,78 @@ public class InterviewProcessResumeFragment extends BaseFragment {
     }
 
     public void showListInterview() {
-        flowListInterview.removeAllViews();
+        List<LstInterviewHi> lstInterviewHis = new ArrayList<>();
         for (int i = 0; i < detailProcessResumeResponse.getLstInterviewHis().size(); i++) {
-            LinearLayout linearLayout = (LinearLayout) LayoutUtils.inflate(flowListInterview, R.layout.interview_item_view, false);
             if (detailProcessResumeResponse.getLstInterviewHis().get(i).getId() != -1) {
-                final int position = i;
-                RelativeLayout rlRound = (RelativeLayout) linearLayout.findViewById(R.id.rlRound);
-                TextView tvRound = (TextView) linearLayout.findViewById(R.id.tvRound);
-                TextView tvDate = (TextView) linearLayout.findViewById(R.id.tvDate);
-                TextView tvContentReason = (TextView) linearLayout.findViewById(R.id.tvContentReason);
-                tvRound.setText(detailProcessResumeResponse.getLstInterviewHis().get(i).getRound());
-                tvDate.setText(DateUtil.convertToMyFormat3(detailProcessResumeResponse.getLstInterviewHis().get(i).getInterviewDate()));
-                tvContentReason.setText(switchResult(detailProcessResumeResponse.getLstInterviewHis().get(i).getStatus()));
-                rlRound.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        int count = detailProcessResumeResponse.getLstInterviewHis().size();
-                        for (int i = 0; i < count; i++) {
-                            if (detailProcessResumeResponse.getLstInterviewHis().get(i).getId() == -1) {
-                                count--;
-                            }
-                        }
-                        if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 5 || detailProcessResumeResponse.getCvProcessInfo().getStatus() == 6 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 2)) {
+                lstInterviewHis.add(detailProcessResumeResponse.getLstInterviewHis().get(i));
+            }
+        }
+        listInterviewOfferAdapter = new ListInterviewAdapter(getActivity(), lstInterviewHis);
+        listView.setAdapter(listInterviewOfferAdapter);
+        LayoutUtils.setListViewHeightBasedOnChildren(listView);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 5 || detailProcessResumeResponse.getCvProcessInfo().getStatus() == 6 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 2)) {
+                    if (lstInterviewHis.get(position).getId() != -1) {
+                        if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4) {
+                            FragmentUtil.pushFragment(getActivity(), InterviewProcessResumeFragment.this, new DetailInterviewFragment().newInstance(detailProcessResumeResponse.getLstInterviewHis().get(position)), null);
 
-                            if (detailProcessResumeResponse.getLstInterviewHis().get(position).getId() != -1) {
-                                if (position == count - 1) {
-                                    FragmentUtil.pushFragment(getActivity(), InterviewProcessResumeFragment.this, new CreateEditInterviewFragment().newInstance(detailProcessResumeResponse.getLstInterviewHis().get(position), detailProcessResumeResponse), null);
-                                } else {
-                                    FragmentUtil.pushFragment(getActivity(), InterviewProcessResumeFragment.this, new DetailInterviewFragment().newInstance(detailProcessResumeResponse.getLstInterviewHis().get(position)), null);
-                                }
-                            }
                         } else {
-                            if (detailProcessResumeResponse.getLstInterviewHis().get(position).getId() != -1) {
+                            if (position == lstInterviewHis.size() - 1) {
+                                FragmentUtil.pushFragment(getActivity(), InterviewProcessResumeFragment.this, new CreateEditInterviewFragment().newInstance(detailProcessResumeResponse.getLstInterviewHis().get(position), detailProcessResumeResponse), null);
+                            } else {
                                 FragmentUtil.pushFragment(getActivity(), InterviewProcessResumeFragment.this, new DetailInterviewFragment().newInstance(detailProcessResumeResponse.getLstInterviewHis().get(position)), null);
                             }
                         }
                     }
-                });
-                flowListInterview.addView(linearLayout);
+                } else {
+                    if (lstInterviewHis.get(position).getId() != -1) {
+                        FragmentUtil.pushFragment(getActivity(), InterviewProcessResumeFragment.this, new DetailInterviewFragment().newInstance(detailProcessResumeResponse.getLstInterviewHis().get(position)), null);
+                    }
+                }
             }
-        }
+        });
+//        flowListInterview.removeAllViews();
+//        for (int i = 0; i < detailProcessResumeResponse.getLstInterviewHis().size(); i++) {
+//            LinearLayout linearLayout = (LinearLayout) LayoutUtils.inflate(flowListInterview, R.layout.interview_item_view, false);
+//            if (detailProcessResumeResponse.getLstInterviewHis().get(i).getId() != -1) {
+//                final int position = i;
+//                RelativeLayout rlRound = (RelativeLayout) linearLayout.findViewById(R.id.rlRound);
+//                TextView tvRound = (TextView) linearLayout.findViewById(R.id.tvRound);
+//                TextView tvDate = (TextView) linearLayout.findViewById(R.id.tvDate);
+//                TextView tvContentReason = (TextView) linearLayout.findViewById(R.id.tvContentReason);
+//                tvRound.setText(detailProcessResumeResponse.getLstInterviewHis().get(i).getRound());
+//                tvDate.setText(DateUtil.convertToMyFormat3(detailProcessResumeResponse.getLstInterviewHis().get(i).getInterviewDate()));
+//                tvContentReason.setText(switchResult(detailProcessResumeResponse.getLstInterviewHis().get(i).getStatus()));
+//                rlRound.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        int count = detailProcessResumeResponse.getLstInterviewHis().size();
+//                        for (int i = 0; i < count; i++) {
+//                            if (detailProcessResumeResponse.getLstInterviewHis().get(i).getId() == -1) {
+//                                count--;
+//                            }
+//                        }
+//                        if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 5 || detailProcessResumeResponse.getCvProcessInfo().getStatus() == 6 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 2)) {
+//
+//                            if (detailProcessResumeResponse.getLstInterviewHis().get(position).getId() != -1) {
+//                                if (position == count - 1) {
+//                                    FragmentUtil.pushFragment(getActivity(), InterviewProcessResumeFragment.this, new CreateEditInterviewFragment().newInstance(detailProcessResumeResponse.getLstInterviewHis().get(position), detailProcessResumeResponse), null);
+//                                } else {
+//                                    FragmentUtil.pushFragment(getActivity(), InterviewProcessResumeFragment.this, new DetailInterviewFragment().newInstance(detailProcessResumeResponse.getLstInterviewHis().get(position)), null);
+//                                }
+//                            }
+//                        } else {
+//                            if (detailProcessResumeResponse.getLstInterviewHis().get(position).getId() != -1) {
+//                                FragmentUtil.pushFragment(getActivity(), InterviewProcessResumeFragment.this, new DetailInterviewFragment().newInstance(detailProcessResumeResponse.getLstInterviewHis().get(position)), null);
+//                            }
+//                        }
+//                    }
+//                });
+//                flowListInterview.addView(linearLayout);
+//            }
+//        }
     }
 
     public String switchResult(int status) {

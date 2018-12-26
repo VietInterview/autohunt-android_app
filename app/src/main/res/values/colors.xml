@@ -41,4 +41,5 @@
     <color name="black_trans80">#33000000</color>
     <color name="blue">#3C84F7</color>
     <color name="not_like">#677B8D</color>
+    <color name="shadowColor">#4D042E51</color>
 </resources>

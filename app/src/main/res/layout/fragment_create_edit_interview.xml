@@ -149,18 +149,20 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="75dp"
                 android:background="@drawable/border_fill"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <com.vietinterview.getbee.customview.RobotoTextView
                     android:id="@+id/tvAchieve"
-                    android:layout_width="114dp"
-                    android:layout_height="65dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
                     android:drawableTop="@drawable/ic_like"
                     android:gravity="center"
-                    android:text="Đạt" />
+                    android:text="Đạt"
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="1dp"
@@ -169,12 +171,13 @@
 
                 <com.vietinterview.getbee.customview.RobotoTextView
                     android:id="@+id/tvNotAchieved"
-                    android:layout_width="114dp"
-                    android:layout_height="65dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
                     android:drawableTop="@drawable/ic_dislike"
                     android:gravity="center"
-                    android:text="Không đạt" />
+                    android:text="Không đạt"
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="1dp"
@@ -183,12 +186,14 @@
 
                 <com.vietinterview.getbee.customview.RobotoTextView
                     android:id="@+id/tvCandidateNotCome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="65dp"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
                     android:drawableTop="@drawable/ic_not_accept"
                     android:drawableTint="#677B8D"
                     android:gravity="center"
-                    android:text="Ứng viên không đi" />
+                    android:text="Ứng viên không đi"
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
 

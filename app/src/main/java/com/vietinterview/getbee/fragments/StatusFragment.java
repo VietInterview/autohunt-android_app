@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.StatusAdapter;
 import com.vietinterview.getbee.constant.GlobalDefine;
@@ -143,14 +144,14 @@ public class StatusFragment extends BaseFragment {
 //        cvStatuses.add(new CVStatus(0, getResources().getString(R.string.not_save)));
 //        cvStatuses.add(new CVStatus(1, getResources().getString(R.string.saved)));
         if (!isEmplyer) {
-            cvStatuses.add(new CVStatus(1, getResources().getString(R.string.sent)));
+            cvStatuses.add(AccountManager.getUserInfoBean().getType() == 7 ? new CVStatus(1, getResources().getString(R.string.sent)) : new CVStatus(2, getResources().getString(R.string.not_seen)));
             cvStatuses.add(new CVStatus(3, getResources().getString(R.string.seen)));
-            cvStatuses.add(new CVStatus(4, getResources().getString(R.string.not_accept)));
             cvStatuses.add(new CVStatus(5, getResources().getString(R.string.invite_interview)));
             cvStatuses.add(new CVStatus(6, getResources().getString(R.string.interviewed)));
             cvStatuses.add(new CVStatus(7, getResources().getString(R.string.offered)));
             cvStatuses.add(new CVStatus(8, getResources().getString(R.string.go_to_work)));
             cvStatuses.add(new CVStatus(9, getResources().getString(R.string.contract)));
+            cvStatuses.add(new CVStatus(4, getResources().getString(R.string.not_accept)));
             cvStatuses.add(new CVStatus(11, getResources().getString(R.string.default_key)));
         } else {
             edtSearchJob.setVisibility(View.GONE);

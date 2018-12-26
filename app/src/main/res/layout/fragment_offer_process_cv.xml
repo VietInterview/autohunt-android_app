@@ -40,15 +40,13 @@
                     android:textColor="#9FB6CB"
                     android:textSize="14sp" />
 
-                <com.vietinterview.getbee.customview.FlowLayout
-                    android:id="@+id/flowListOffer"
+                <ListView
+                    android:id="@+id/list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="true"
-                    android:orientation="vertical"
-                    android:scrollbars="vertical"
-                    app:horizontalSpacing="5dp"
-                    app:verticalSpacing="0dp" />
+                    android:nestedScrollingEnabled="true">
+
+                </ListView>
 
                 <LinearLayout
                     android:layout_width="match_parent"

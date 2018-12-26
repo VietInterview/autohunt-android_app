@@ -424,9 +424,6 @@ public class LoginFragment extends BaseFragment {
             public void onSuccess(int status, AccountResponse dataSuccess, List<AccountResponse> listDataSuccess, String message) {
                 if (status == 200) {
                     List<LstMenuAuthority> lstMenuAuthorities = null;
-//                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-//                        lstMenuAuthorities = dataSuccess.getLstMenuAuthority().stream().distinct().collect(Collectors.toList());
-//                    } else {
                     ArrayList<String> listCode = new ArrayList<>();
                     ArrayList<String> listName = new ArrayList<>();
                     ArrayList<Integer> listId = new ArrayList<>();
@@ -442,7 +439,6 @@ public class LoginFragment extends BaseFragment {
                     for (int i = 0; i < listCode.size(); i++) {
                         lstMenuAuthorities.add(new LstMenuAuthority(listId.get(i), listName.get(i), listCode.get(i)));
                     }
-//                    }
                     for (int i = 0; i < lstMenuAuthorities.size(); i++) {
                         if (lstMenuAuthorities.get(i).getId() == 999)
                             lstMenuAuthorities.remove(lstMenuAuthorities.get(i));
@@ -460,8 +456,9 @@ public class LoginFragment extends BaseFragment {
                     getMainActivity().navigationView.setCheckedItem(R.id.nav_home);
                     if (AccountManager.getUserInfoBean().getType() == 7 || AccountManager.getUserInfoBean().getType() == 5)
                         FragmentUtil.replaceFragment(getActivity(), new HomeFragment(), null);
-                    else
+                    else if (AccountManager.getUserInfoBean().getType() == 2)
                         FragmentUtil.replaceFragment(getActivity(), new JobsEmployerFragment(), null);
+                    else FragmentUtil.replaceFragment(getActivity(), new HomeFragment(), null);
                 }
             }
 

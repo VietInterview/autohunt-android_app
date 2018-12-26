@@ -70,6 +70,8 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
     TextView tvCandidateNotCome;
     @BindView(R.id.btnSendMail)
     Button btnSendMail;
+    @BindView(R.id.llDate)
+    LinearLayout llDate;
     private LstInterviewHi lstInterviewHi;
     private Dialog mReasonNotAcceptDialog;
     private Calendar calendar;
@@ -281,6 +283,16 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
             });
 
         } else {
+            if (edtDateInterview.getText().toString().equalsIgnoreCase("")) {
+                llDate.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_red_5));
+            } else {
+                llDate.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_gray));
+            }
+            if (edtPlaceInterview.getText().toString().equalsIgnoreCase("")) {
+                edtPlaceInterview.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_red_5));
+            } else {
+                edtPlaceInterview.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_gray));
+            }
             DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Vui lòng nhập vào các trường bắt buộc");
         }
     }

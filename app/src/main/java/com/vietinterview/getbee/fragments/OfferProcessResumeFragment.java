@@ -18,11 +18,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.adapter.ListOfferAdapter;
 import com.vietinterview.getbee.api.request.GetListRejectReasonRequest;
 import com.vietinterview.getbee.api.request.GoToWorkStatusRequest;
 import com.vietinterview.getbee.api.request.RejectRequest;
@@ -55,8 +57,8 @@ import static android.app.Activity.RESULT_OK;
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 public class OfferProcessResumeFragment extends BaseFragment {
-    @BindView(R.id.flowListOffer)
-    FlowLayout flowListOffer;
+    @BindView(R.id.list)
+    public ListView listView;
     @BindView(R.id.btnNext)
     Button btnNext;
     @BindView(R.id.tvAddOffer)
@@ -71,6 +73,7 @@ public class OfferProcessResumeFragment extends BaseFragment {
     TextView tvReject;
     DetailProcessResumeResponse detailProcessResumeResponse;
     LstOfferHi lstOfferHi;
+    ListOfferAdapter listOfferAdapter;
 
     public static OfferProcessResumeFragment newInstance(DetailProcessResumeResponse detailProcessResumeResponse) {
         OfferProcessResumeFragment fm = new OfferProcessResumeFragment();
@@ -130,14 +133,14 @@ public class OfferProcessResumeFragment extends BaseFragment {
             public void onSwitchToThree() {
                 if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 7 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 3)) {
                     btnNext.setEnabled(true);
-                    flowListOffer.setEnabled(true);
+                    listView.setEnabled(true);
                     btnReject.setEnabled(true);
                     tvAddOffer.setEnabled(true);
                     tvAddOffer.setVisibility(View.VISIBLE);
                     llBtn.setVisibility(View.VISIBLE);
                 } else {
                     btnNext.setEnabled(false);
-                    flowListOffer.setEnabled(true);
+                    listView.setEnabled(true);
                     btnReject.setEnabled(false);
                     tvAddOffer.setEnabled(false);
                     tvAddOffer.setVisibility(View.GONE);
@@ -149,9 +152,10 @@ public class OfferProcessResumeFragment extends BaseFragment {
                             cardReject.setVisibility(View.VISIBLE);
                             getEventBaseFragment().reject();
                             btnNext.setEnabled(false);
-                            flowListOffer.setEnabled(false);
+                            listView.setEnabled(true);
                             btnReject.setEnabled(false);
                             tvAddOffer.setEnabled(false);
+                            tvAddOffer.setVisibility(View.GONE);
                             llBtn.setVisibility(View.GONE);
                         } else cardReject.setVisibility(View.GONE);
                     } else cardReject.setVisibility(View.GONE);
@@ -166,18 +170,23 @@ public class OfferProcessResumeFragment extends BaseFragment {
                     cardReject.setVisibility(View.VISIBLE);
                     getEventBaseFragment().reject();
                     btnNext.setEnabled(false);
-                    flowListOffer.setEnabled(false);
+                    listView.setEnabled(true);
                     btnReject.setEnabled(false);
                     tvAddOffer.setEnabled(false);
+                    tvAddOffer.setVisibility(View.GONE);
                     llBtn.setVisibility(View.GONE);
                 } else cardReject.setVisibility(View.GONE);
             } else cardReject.setVisibility(View.GONE);
         } else {
             cardReject.setVisibility(View.GONE);
         }
-        if (detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() != null && detailProcessResumeResponse.getCvProcessInfo().getRejectNote() != null)
-            tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() + "\nGhi chú: " + detailProcessResumeResponse.getCvProcessInfo().getRejectNote());
+        if (detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() != null && detailProcessResumeResponse.getCvProcessInfo().getRejectNote() != null) {
+            if (detailProcessResumeResponse.getCvProcessInfo().getRejectNote() != null && !detailProcessResumeResponse.getCvProcessInfo().getRejectNote().equalsIgnoreCase(""))
+                tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() + "\nGhi chú: " + detailProcessResumeResponse.getCvProcessInfo().getRejectNote());
+            else
+                tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName());
 
+        }
     }
 
     @Override
@@ -191,43 +200,75 @@ public class OfferProcessResumeFragment extends BaseFragment {
     }
 
     public void showListOffer() {
-        flowListOffer.removeAllViews();
+        List<LstOfferHi> lstInterviewHis = new ArrayList<>();
         for (int i = 0; i < detailProcessResumeResponse.getLstOfferHis().size(); i++) {
-            LinearLayout linearLayout = (LinearLayout) LayoutUtils.inflate(flowListOffer, R.layout.offer_item_view, false);
             if (detailProcessResumeResponse.getLstOfferHis().get(i).getId() != -1) {
-                final int position = i;
-                RelativeLayout rlRound = (RelativeLayout) linearLayout.findViewById(R.id.rlRound);
-                TextView tvRound = (TextView) linearLayout.findViewById(R.id.tvRound);
-                TextView tvDate = (TextView) linearLayout.findViewById(R.id.tvDate);
-                TextView tvContentReason = (TextView) linearLayout.findViewById(R.id.tvContentReason);
+                lstInterviewHis.add(detailProcessResumeResponse.getLstOfferHis().get(i));
+            }
+        }
+        listOfferAdapter = new ListOfferAdapter(getActivity(), lstInterviewHis);
+        listView.setAdapter(listOfferAdapter);
+        LayoutUtils.setListViewHeightBasedOnChildren(listView);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 7 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 3)) {
+                    if (lstInterviewHis.get(position).getId() != -1) {
+                        if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4) {
+                            FragmentUtil.pushFragment(getActivity(), OfferProcessResumeFragment.this, new DetailOfferFragment().newInstance(detailProcessResumeResponse.getLstOfferHis().get(position)), null);
 
-                tvRound.setText(detailProcessResumeResponse.getLstOfferHis().get(i).getRound());
-                tvDate.setText(DateUtil.convertToMyFormat3(detailProcessResumeResponse.getLstOfferHis().get(i).getWorkTime()));
-                tvContentReason.setText(switchResult(detailProcessResumeResponse.getLstOfferHis().get(i).getStatus()));
-
-                rlRound.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        int count = detailProcessResumeResponse.getLstOfferHis().size();
-                        for (int i = 0; i < count; i++) {
-                            if (detailProcessResumeResponse.getLstOfferHis().get(i).getId() == -1) {
-                                count--;
-                            }
-                        }
-                        if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 7 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 3)) {
-                            if (position == count - 1) {
+                        } else {
+                            if (position == lstInterviewHis.size() - 1) {
                                 FragmentUtil.pushFragment(getActivity(), OfferProcessResumeFragment.this, new CreateEditOfferFragment().newInstance(detailProcessResumeResponse.getLstOfferHis().get(position), detailProcessResumeResponse), null);
                             } else {
                                 FragmentUtil.pushFragment(getActivity(), OfferProcessResumeFragment.this, new DetailOfferFragment().newInstance(detailProcessResumeResponse.getLstOfferHis().get(position)), null);
                             }
-                        } else {
-                            FragmentUtil.pushFragment(getActivity(), OfferProcessResumeFragment.this, new DetailOfferFragment().newInstance(detailProcessResumeResponse.getLstOfferHis().get(position)), null);
                         }
                     }
-                });
-                flowListOffer.addView(linearLayout);
+                } else {
+                    if (lstInterviewHis.get(position).getId() != -1) {
+                        FragmentUtil.pushFragment(getActivity(), OfferProcessResumeFragment.this, new DetailOfferFragment().newInstance(detailProcessResumeResponse.getLstOfferHis().get(position)), null);
+                    }
+                }
             }
-        }
+        });
+//        flowListOffer.removeAllViews();
+//        for (int i = 0; i < detailProcessResumeResponse.getLstOfferHis().size(); i++) {
+//            LinearLayout linearLayout = (LinearLayout) LayoutUtils.inflate(flowListOffer, R.layout.offer_item_view, false);
+//            if (detailProcessResumeResponse.getLstOfferHis().get(i).getId() != -1) {
+//                final int position = i;
+//                RelativeLayout rlRound = (RelativeLayout) linearLayout.findViewById(R.id.rlRound);
+//                TextView tvRound = (TextView) linearLayout.findViewById(R.id.tvRound);
+//                TextView tvDate = (TextView) linearLayout.findViewById(R.id.tvDate);
+//                TextView tvContentReason = (TextView) linearLayout.findViewById(R.id.tvContentReason);
+//
+//                tvRound.setText(detailProcessResumeResponse.getLstOfferHis().get(i).getRound());
+//                tvDate.setText(DateUtil.convertToMyFormat3(detailProcessResumeResponse.getLstOfferHis().get(i).getWorkTime()));
+//                tvContentReason.setText(switchResult(detailProcessResumeResponse.getLstOfferHis().get(i).getStatus()));
+//
+//                rlRound.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        int count = detailProcessResumeResponse.getLstOfferHis().size();
+//                        for (int i = 0; i < count; i++) {
+//                            if (detailProcessResumeResponse.getLstOfferHis().get(i).getId() == -1) {
+//                                count--;
+//                            }
+//                        }
+//                        if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 7 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 3)) {
+//                            if (position == count - 1) {
+//                                FragmentUtil.pushFragment(getActivity(), OfferProcessResumeFragment.this, new CreateEditOfferFragment().newInstance(detailProcessResumeResponse.getLstOfferHis().get(position), detailProcessResumeResponse), null);
+//                            } else {
+//                                FragmentUtil.pushFragment(getActivity(), OfferProcessResumeFragment.this, new DetailOfferFragment().newInstance(detailProcessResumeResponse.getLstOfferHis().get(position)), null);
+//                            }
+//                        } else {
+//                            FragmentUtil.pushFragment(getActivity(), OfferProcessResumeFragment.this, new DetailOfferFragment().newInstance(detailProcessResumeResponse.getLstOfferHis().get(position)), null);
+//                        }
+//                    }
+//                });
+//                flowListOffer.addView(linearLayout);
+//            }
+//        }
     }
 
     public String switchResult(int status) {
@@ -427,7 +468,7 @@ public class OfferProcessResumeFragment extends BaseFragment {
                                                             detailProcessResumeResponse.getCvProcessInfo().setRejectStep(3);
                                                             btnNext.setEnabled(false);
                                                             tvAddOffer.setEnabled(false);
-                                                            flowListOffer.setEnabled(false);
+                                                            listView.setEnabled(true);
                                                             btnReject.setEnabled(false);
                                                             llBtn.setVisibility(View.GONE);
                                                             getEventBaseFragment().reject();
@@ -486,7 +527,7 @@ public class OfferProcessResumeFragment extends BaseFragment {
                                                         btnNext.setEnabled(false);
                                                         tvAddOffer.setEnabled(false);
                                                         tvAddOffer.setVisibility(View.GONE);
-                                                        flowListOffer.setEnabled(false);
+                                                        listView.setEnabled(true);
                                                         btnReject.setEnabled(false);
                                                         llBtn.setVisibility(View.GONE);
                                                         getEventBaseFragment().reject();
