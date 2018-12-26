@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -77,6 +78,8 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
     LinearLayout llBtn;
     @BindView(R.id.tvReject)
     TextView tvReject;
+    @BindView(R.id.imgArrow)
+    ImageView imgArrow;
     DetailProcessResumeResponse detailProcessResumeResponse;
 
     public static GoToWorkProcessResumeFragment newInstance(DetailProcessResumeResponse detailProcessResumeResponse) {
@@ -135,6 +138,15 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
                 } else {
                     cardReject.setVisibility(View.GONE);
                 }
+                if (detailProcessResumeResponse.getJobCvGotoWorkDto() != null) {
+                    if (detailProcessResumeResponse.getJobCvGotoWorkDto().getCountUpdate() != null) {
+                        if (detailProcessResumeResponse.getJobCvGotoWorkDto().getCountUpdate() < 3) {
+                            imgArrow.setVisibility(View.VISIBLE);
+                        } else {
+                            imgArrow.setVisibility(View.GONE);
+                        }
+                    }
+                }
             }
         });
         if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4) {
@@ -159,6 +171,15 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
             else
                 tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName());
 
+        }
+        if (detailProcessResumeResponse.getJobCvGotoWorkDto() != null) {
+            if (detailProcessResumeResponse.getJobCvGotoWorkDto().getCountUpdate() != null) {
+                if (detailProcessResumeResponse.getJobCvGotoWorkDto().getCountUpdate() < 3) {
+                    imgArrow.setVisibility(View.VISIBLE);
+                } else {
+                    imgArrow.setVisibility(View.GONE);
+                }
+            }
         }
     }
 

@@ -68,13 +68,10 @@ public class ListOfferAdapter extends BaseAdapter {
         String statusInterview = "";
         switch (status) {
             case 1:
-                statusInterview = "Đạt";
+                statusInterview = "Đồng ý";
                 break;
             case 2:
-                statusInterview = "Không đạt";
-                break;
-            case 3:
-                statusInterview = "Ứng viên không đến";
+                statusInterview = "Không đồng ý";
                 break;
             default:
                 statusInterview = "Chưa có kết quả";

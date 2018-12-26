@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.detailprocessresume.DetailProcessResumeResponse;
 import com.vietinterview.getbee.api.response.detailprocessresume.LstInterviewHi;
+import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.utils.FragmentUtil;
 
 import butterknife.BindView;
@@ -53,6 +54,7 @@ public class DetailInterviewFragment extends BaseFragment {
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbar(true);
         setCustomToolbarVisible(true);
+        GlobalDefine.currentFragment = this;
         getEventBaseFragment().doFillBackground("Thông tin phỏng vấn");
     }
 

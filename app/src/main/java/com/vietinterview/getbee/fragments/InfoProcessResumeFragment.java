@@ -138,6 +138,8 @@ public class InfoProcessResumeFragment extends BaseFragment {
                     llButton.setVisibility(View.VISIBLE);
                 } else {
                     llButton.setVisibility(View.GONE);
+                    btnInviteInterview.setVisibility(View.GONE);
+                    btnReject.setVisibility(View.GONE);
                 }
                 if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4) {
                     if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() != null) {
@@ -154,6 +156,13 @@ public class InfoProcessResumeFragment extends BaseFragment {
                 }
             }
         });
+        if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 3 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 1)) {
+            llButton.setVisibility(View.VISIBLE);
+        } else {
+            llButton.setVisibility(View.GONE);
+            btnInviteInterview.setVisibility(View.GONE);
+            btnReject.setVisibility(View.GONE);
+        }
         if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4) {
             if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() != null) {
                 if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 1) {

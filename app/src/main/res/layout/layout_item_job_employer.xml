@@ -19,8 +19,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginHorizontal="10dp" android:layout_marginBottom="5dp"
-        android:layout_marginTop="-5dp"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginTop="-4dp"
         app:dragEdge="right"
         app:mode="same_level">
 
@@ -58,16 +58,16 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
-        <!--<android.support.v7.widget.CardView-->
-            <!--android:id="@+id/card_view"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="118dp"-->
-            <!--app:cardBackgroundColor="@color/white"-->
-            <!--card_view:cardCornerRadius="10dp"-->
-            <!--card_view:cardElevation="2dp"-->
-            <!--card_view:cardUseCompatPadding="true">-->
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view"
+            android:layout_width="match_parent"
+            android:layout_height="118dp"
+            app:cardBackgroundColor="@color/white"
+            card_view:cardCornerRadius="10dp"
+            card_view:cardElevation="2dp"
+            card_view:cardUseCompatPadding="true">
 
-            <com.vietinterview.getbee.customview.RoundLinerLayoutNormal
+            <LinearLayout
                 android:id="@+id/primaryContentCardView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -179,7 +179,7 @@
                             android:textSize="14sp" />
                     </LinearLayout>
                 </LinearLayout>
-            </com.vietinterview.getbee.customview.RoundLinerLayoutNormal>
-        <!--</android.support.v7.widget.CardView>-->
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
     </com.chauthai.swipereveallayout.SwipeRevealLayout>
 </LinearLayout>

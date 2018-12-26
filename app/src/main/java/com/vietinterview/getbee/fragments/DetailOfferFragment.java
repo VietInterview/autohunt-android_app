@@ -11,6 +11,7 @@ import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.response.detailprocessresume.DetailProcessResumeResponse;
 import com.vietinterview.getbee.api.response.detailprocessresume.LstInterviewHi;
 import com.vietinterview.getbee.api.response.detailprocessresume.LstOfferHi;
+import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.StringUtils;
 
@@ -60,13 +61,30 @@ public class DetailOfferFragment extends BaseFragment {
         setCustomToolbar(true);
         setCustomToolbarVisible(true);
         getEventBaseFragment().doFillBackground("Thông tin Offer");
+        GlobalDefine.currentFragment = this;
         tvRound.setText(lstOfferHi.getRound());
         tvSalary.setText(StringUtils.filterCurrencyString(lstOfferHi.getSalary()) + " " + StringUtils.genStringCurrency(lstOfferHi.getCurency()));
         tvWorkTime.setText(lstOfferHi.getWorkTime());
         tvWorkAddress.setText(lstOfferHi.getWorkAddress());
         tvPosition.setText(lstOfferHi.getPosition());
         tvNote.setText(lstOfferHi.getNote());
-        tvResult.setText(lstOfferHi.getStatus() == 1 ? "Đồng ý" : "Không đồng ý");
+        tvResult.setText(switchResult(lstOfferHi.getStatus()));
+    }
+
+    public String switchResult(int status) {
+        String statusInterview = "";
+        switch (status) {
+            case 1:
+                statusInterview = "Đồng ý";
+                break;
+            case 2:
+                statusInterview = "Không đồng ý";
+                break;
+            default:
+                statusInterview = "Chưa có kết quả";
+                break;
+        }
+        return statusInterview;
     }
 
     @Override

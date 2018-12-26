@@ -91,6 +91,22 @@ public class ProcessResumeFragment extends BaseFragment {
 //                stepView2.setEnabled(false);
             }
         });
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                DebugLog.showLogCat(i + "");
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
@@ -193,6 +209,28 @@ public class ProcessResumeFragment extends BaseFragment {
             setupViewPager(mViewPager);
             stepView2.go(mStep, true);
             mViewPager.setCurrentItem(mStep, true);
+//            switch (mStep) {
+//                case 0:
+//                    SharedPrefUtils.putInt("step", mStep);
+//                    getEventBaseFragment().setSwitchToOne();
+//                    break;
+//                case 1:
+//                    SharedPrefUtils.putInt("step", mStep);
+//                    getEventBaseFragment().setSwitchToTwo();
+//                    break;
+//                case 2:
+//                    SharedPrefUtils.putInt("step", mStep);
+//                    getEventBaseFragment().setSwitchToThree();
+//                    break;
+//                case 3:
+//                    SharedPrefUtils.putInt("step", mStep);
+//                    getEventBaseFragment().setSwitchToFour();
+//                    break;
+//                case 4:
+//                    SharedPrefUtils.putInt("step", mStep);
+//                    getEventBaseFragment().setSwitchToFive();
+//                    break;
+//            }
         }
     }
 
@@ -284,7 +322,6 @@ public class ProcessResumeFragment extends BaseFragment {
         adapter.addFrag(new OfferProcessResumeFragment().newInstance(detailProcessResumeResponse), "Offer");
         adapter.addFrag(new GoToWorkProcessResumeFragment().newInstance(detailProcessResumeResponse), "Đi làm");
         adapter.addFrag(new ContractProcessResumeFragment().newInstance(detailProcessResumeResponse), "Ký hợp đồng");
-        assert viewPager != null;
         viewPager.setOffscreenPageLimit(0);
         viewPager.setAdapter(adapter);
     }

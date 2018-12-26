@@ -83,7 +83,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        baseActivity = baseActivity;
         if (context instanceof BaseActivity)
             baseActivity = (BaseActivity) context;
     }

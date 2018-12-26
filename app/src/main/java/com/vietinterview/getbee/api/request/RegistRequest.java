@@ -64,6 +64,7 @@ public class RegistRequest extends BaseJsonRequest<ErrorResponse, ErrorResponse>
         jsonParams.put("email", mEmail);
         jsonParams.put("fullName", mName);
         jsonParams.put("phone", mPhone);
+        jsonParams.put("os", "ANDROID");
         return jsonParams;
     }
 

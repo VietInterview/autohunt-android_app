@@ -24,6 +24,7 @@ import com.vietinterview.getbee.api.response.detailprocessresume.DetailProcessRe
 import com.vietinterview.getbee.api.response.detailprocessresume.JobCvGotoWorkDto;
 import com.vietinterview.getbee.api.response.detailprocessresume.LstInterviewHi;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
@@ -85,6 +86,7 @@ public class CreateGoToWorkFragment extends BaseFragment implements DatePickerDi
         setCustomToolbar(true);
         setCustomToolbarVisible(true);
         getEventBaseFragment().doFillBackground("Thông tin đi làm");
+        GlobalDefine.currentFragment = this;
         calendar = Calendar.getInstance();
         timeFormat = new SimpleDateFormat(TIME_PATTERN, Locale.US);
     }

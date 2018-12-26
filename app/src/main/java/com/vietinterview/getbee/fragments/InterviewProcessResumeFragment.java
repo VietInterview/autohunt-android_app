@@ -54,8 +54,8 @@ import static android.app.Activity.RESULT_OK;
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 public class InterviewProcessResumeFragment extends BaseFragment {
-    //    @BindView(R.id.flowListInterview)
-//    FlowLayout flowListInterview;
+    @BindView(R.id.llAdd)
+    LinearLayout llAdd;
     @BindView(R.id.list)
     public ListView listView;
     @BindView(R.id.btnNext)
@@ -140,6 +140,7 @@ public class InterviewProcessResumeFragment extends BaseFragment {
             } else {
                 btnNext.setVisibility(View.GONE);
                 tvAddRound.setVisibility(View.GONE);
+                llAdd.setVisibility(View.GONE);
                 btnNotAccept.setVisibility(View.GONE);
             }
         }
@@ -149,6 +150,7 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                 if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 5 || detailProcessResumeResponse.getCvProcessInfo().getStatus() == 6 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 2)) {
                     llBtn.setVisibility(View.VISIBLE);
                     tvAddRound.setVisibility(View.VISIBLE);
+                    llAdd.setVisibility(View.VISIBLE);
                     btnNext.setEnabled(true);
                     listView.setEnabled(true);
                     btnNotAccept.setEnabled(true);
@@ -156,6 +158,7 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                 } else {
                     llBtn.setVisibility(View.GONE);
                     tvAddRound.setVisibility(View.GONE);
+                    llAdd.setVisibility(View.GONE);
                     btnNext.setEnabled(false);
                     listView.setEnabled(true);
                     btnNotAccept.setEnabled(false);
@@ -165,6 +168,7 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                     if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() != null) {
                         llBtn.setVisibility(View.GONE);
                         tvAddRound.setVisibility(View.GONE);
+                        llAdd.setVisibility(View.GONE);
                         if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 2) {
                             cardReject.setVisibility(View.VISIBLE);
                             getEventBaseFragment().reject();
@@ -173,6 +177,7 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                             btnNotAccept.setEnabled(false);
                             tvAddRound.setEnabled(false);
                             tvAddRound.setVisibility(View.GONE);
+                            llAdd.setVisibility(View.GONE);
                             llBtn.setVisibility(View.GONE);
                         } else cardReject.setVisibility(View.GONE);
                     } else cardReject.setVisibility(View.GONE);
@@ -185,6 +190,7 @@ public class InterviewProcessResumeFragment extends BaseFragment {
             if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() != null) {
                 llBtn.setVisibility(View.GONE);
                 tvAddRound.setVisibility(View.GONE);
+                llAdd.setVisibility(View.GONE);
                 if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 2) {
                     cardReject.setVisibility(View.VISIBLE);
                     getEventBaseFragment().reject();
@@ -194,6 +200,7 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                     tvAddRound.setEnabled(false);
                     tvAddRound.setVisibility(View.GONE);
                     llBtn.setVisibility(View.GONE);
+                    llAdd.setVisibility(View.GONE);
                 } else cardReject.setVisibility(View.GONE);
             } else cardReject.setVisibility(View.GONE);
         } else {
@@ -410,10 +417,21 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                                                                     tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + rejectName + "\nGhi chú: " + dataSuccess.getReasonNote());
                                                                 }
                                                             });
+                                                            int count = detailProcessResumeResponse.getLstInterviewHis().size();
+                                                            for (int i = 0; i < detailProcessResumeResponse.getLstInterviewHis().size(); i++) {
+                                                                if (detailProcessResumeResponse.getLstInterviewHis().get(i).getId() == -1) {
+                                                                    count--;
+                                                                }
+                                                            }
+                                                            if (count > 0) {
+                                                                updateInterviewStatus(count);
+                                                            }
                                                             detailProcessResumeResponse.getCvProcessInfo().setStatus(4);
                                                             detailProcessResumeResponse.getCvProcessInfo().setRejectStep(2);
                                                             btnNext.setEnabled(false);
                                                             tvAddRound.setEnabled(false);
+                                                            tvAddRound.setVisibility(View.GONE);
+                                                            llAdd.setVisibility(View.GONE);
                                                             listView.setEnabled(true);
                                                             btnNotAccept.setEnabled(false);
                                                             llBtn.setVisibility(View.GONE);
@@ -472,6 +490,7 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                                                         cardReject.setVisibility(View.VISIBLE);
                                                         btnNext.setEnabled(false);
                                                         tvAddRound.setEnabled(false);
+                                                        llAdd.setVisibility(View.GONE);
                                                         tvAddRound.setVisibility(View.GONE);
                                                         listView.setEnabled(true);
                                                         btnNotAccept.setEnabled(false);

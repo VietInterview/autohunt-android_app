@@ -24,6 +24,7 @@ import com.vietinterview.getbee.api.request.GetCUSProfileRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.customerprofile.ProfileCustomerResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.customview.FlowLayout;
 import com.vietinterview.getbee.model.ImageCustomer;
 import com.vietinterview.getbee.utils.DateUtil;
@@ -89,6 +90,7 @@ public class CustomerProfileFragment extends BaseFragment {
     @Override
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbar(true);
+        GlobalDefine.currentFragment = this;
         setCustomToolbarVisible(true);
         progressBar = (ProgressBar) root.findViewById(R.id.progrss);
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
@@ -169,7 +171,20 @@ public class CustomerProfileFragment extends BaseFragment {
                         }
                         tvCarrer.setText(carrerBuffer.toString());
                     }
-                    tvCompanyAddress.setText(profileCustomerResponse.getAddress());
+                    StringBuffer address = new StringBuffer("");
+                    address.append(profileCustomerResponse.getAddress() + " ");
+                    for (int i = 0; i < profileCustomerResponse.getCountry().size(); i++) {
+                        for (int j = 0; j < profileCustomerResponse.getCity().size(); j++) {
+                            if (profileCustomerResponse.getCity().get(j).getCountryId() == profileCustomerResponse.getCountry().get(i).getId()) {
+                                if (j == profileCustomerResponse.getCity().size() - 1) {
+                                    address.append(profileCustomerResponse.getCity().get(j).getName() + " - " + profileCustomerResponse.getCountry().get(i).getName());
+                                } else {
+                                    address.append(profileCustomerResponse.getCity().get(j).getName() + " - " + profileCustomerResponse.getCountry().get(i).getName() + ", ");
+                                }
+                            }
+                        }
+                    }
+                    tvCompanyAddress.setText(address.toString());
                     StringBuffer timeBuffer = new StringBuffer("");
                     for (int i = 0; i < profileCustomerResponse.getTimeservingSelectedItems().size(); i++) {
                         if (i == profileCustomerResponse.getTimeservingSelectedItems().size() - 1) {

@@ -240,7 +240,7 @@
                         android:layout_height="60dp"
                         android:layout_marginRight="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/borderbutton_notyet_send"
+                        android:background="@drawable/borderbutton_reject"
                         android:drawableTop="@drawable/ic_not_accept"
                         android:padding="10dp"
                         android:text="@string/not_accept"

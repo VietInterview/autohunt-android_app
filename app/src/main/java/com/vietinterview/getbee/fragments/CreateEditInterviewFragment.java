@@ -32,13 +32,18 @@ import com.vietinterview.getbee.api.response.ViewEmailInterviewResponse;
 import com.vietinterview.getbee.api.response.detailprocessresume.DetailProcessResumeResponse;
 import com.vietinterview.getbee.api.response.detailprocessresume.LstInterviewHi;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.constant.GlobalDefine;
+import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.UiUtil;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -104,6 +109,7 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbar(true);
         setCustomToolbarVisible(true);
+        GlobalDefine.currentFragment = this;
         getEventBaseFragment().doFillBackground("Thông tin phỏng vấn");
         calendar = Calendar.getInstance();
         timeFormat = new SimpleDateFormat(TIME_PATTERN, Locale.US);
@@ -250,38 +256,103 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
     @OnClick(R.id.btnSendMail)
     public void onSendMailClick() {
         if (!edtDateInterview.getText().toString().equalsIgnoreCase("") && !edtPlaceInterview.getText().toString().equalsIgnoreCase("")) {
-            DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn mời phỏng vấn ứng viên này?", "Có", "Không", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    showCoverNetworkLoading();
-                    new SendInterviewRequest(detailProcessResumeResponse.getCvId(), lstInterviewHi == null ? -1 : lstInterviewHi.getId(), edtPlaceInterview.getText().toString().trim(), edtDateInterview.getText().toString().trim(), detailProcessResumeResponse.getJobId(), edtNote.getText().toString().trim(), edtRound.getText().toString().trim(), lstInterviewHi == null ? 0 : statusInterview).callRequest(getActivity(), new ApiObjectCallBack<ViewEmailInterviewResponse, ErrorResponse>() {
+            List<LstInterviewHi> lstInterviewHis = new ArrayList<>();
+            for (int i = 0; i < detailProcessResumeResponse.getLstInterviewHis().size(); i++) {
+                if (detailProcessResumeResponse.getLstInterviewHis().get(i).getId() != -1) {
+                    lstInterviewHis.add(detailProcessResumeResponse.getLstInterviewHis().get(i));
+                }
+            }
+            if (lstInterviewHis.size() > 0) {
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                Date readDate = null;
+                Date readDateChoose = null;
+                try {
+                    readDate = df.parse(DateUtil.convertToMyFormat3(lstInterviewHis.get(lstInterviewHis.size() - 1).getInterviewDate()));
+                    readDateChoose = df.parse(DateUtil.convertToMyFormat3(edtDateInterview.getText().toString().trim()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Calendar last = Calendar.getInstance();
+                last.setTimeInMillis(readDate.getTime());
+                last.set(Calendar.DAY_OF_MONTH, last.get(Calendar.DAY_OF_MONTH));
+                last.set(Calendar.MONTH, last.get(Calendar.MONTH));
+                last.set(Calendar.YEAR, last.get(Calendar.YEAR));
+                Calendar choose = Calendar.getInstance();
+                choose.setTimeInMillis(readDateChoose.getTime());
+                choose.set(Calendar.DAY_OF_MONTH, choose.get(Calendar.DAY_OF_MONTH));
+                choose.set(Calendar.MONTH, choose.get(Calendar.MONTH));
+                choose.set(Calendar.YEAR, choose.get(Calendar.YEAR));
+                long lastWarrantyDate = last.getTimeInMillis();
+                long chooseTime = choose.getTimeInMillis();
+                long difference = chooseTime - lastWarrantyDate;
+                if (difference > 0) {
+                    DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn mời phỏng vấn ứng viên này?", "Có", "Không", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onSuccess(int status, ViewEmailInterviewResponse dataSuccess, List<ViewEmailInterviewResponse> listDataSuccess, String message) {
-                            if (isAdded()) {
-                                hideCoverNetworkLoading();
-                                lstInterviewHi = new LstInterviewHi(dataSuccess.getCvId(), dataSuccess.getEmailTemplate(), dataSuccess.getId(), dataSuccess.getInterviewAddress(), dataSuccess.getInterviewDate(), dataSuccess.getJobId(), dataSuccess.getNote(), dataSuccess.getRound(), dataSuccess.getStatus());
-                                Intent intent = new Intent(getActivity(), CreateEditInterviewFragment.class);
-                                intent.putExtra("lstInterviewHi", lstInterviewHi);
-                                getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
-                                FragmentUtil.popBackStack(CreateEditInterviewFragment.this);
-                            }
-                        }
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            showCoverNetworkLoading();
+                            new SendInterviewRequest(detailProcessResumeResponse.getCvId(), lstInterviewHi == null ? -1 : lstInterviewHi.getId(), edtPlaceInterview.getText().toString().trim(), edtDateInterview.getText().toString().trim(), detailProcessResumeResponse.getJobId(), edtNote.getText().toString().trim(), edtRound.getText().toString().trim(), lstInterviewHi == null ? 0 : statusInterview).callRequest(getActivity(), new ApiObjectCallBack<ViewEmailInterviewResponse, ErrorResponse>() {
+                                @Override
+                                public void onSuccess(int status, ViewEmailInterviewResponse dataSuccess, List<ViewEmailInterviewResponse> listDataSuccess, String message) {
+                                    if (isAdded()) {
+                                        hideCoverNetworkLoading();
+                                        lstInterviewHi = new LstInterviewHi(dataSuccess.getCvId(), dataSuccess.getEmailTemplate(), dataSuccess.getId(), dataSuccess.getInterviewAddress(), dataSuccess.getInterviewDate(), dataSuccess.getJobId(), dataSuccess.getNote(), dataSuccess.getRound(), dataSuccess.getStatus());
+                                        Intent intent = new Intent(getActivity(), CreateEditInterviewFragment.class);
+                                        intent.putExtra("lstInterviewHi", lstInterviewHi);
+                                        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+                                        FragmentUtil.popBackStack(CreateEditInterviewFragment.this);
+                                    }
+                                }
 
+                                @Override
+                                public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                                    if (isAdded()) {
+                                        hideCoverNetworkLoading();
+                                    }
+                                }
+                            });
+                        }
+                    }, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
-                            if (isAdded()) {
-                                hideCoverNetworkLoading();
-                            }
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
                         }
                     });
+                } else {
+                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Bạn không thể chọn ngày phòng vấn trước hoặc bằng ngày phỏng vấn trước");
                 }
-            }, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
+            } else {
+                DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn mời phỏng vấn ứng viên này?", "Có", "Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        showCoverNetworkLoading();
+                        new SendInterviewRequest(detailProcessResumeResponse.getCvId(), lstInterviewHi == null ? -1 : lstInterviewHi.getId(), edtPlaceInterview.getText().toString().trim(), edtDateInterview.getText().toString().trim(), detailProcessResumeResponse.getJobId(), edtNote.getText().toString().trim(), edtRound.getText().toString().trim(), lstInterviewHi == null ? 0 : statusInterview).callRequest(getActivity(), new ApiObjectCallBack<ViewEmailInterviewResponse, ErrorResponse>() {
+                            @Override
+                            public void onSuccess(int status, ViewEmailInterviewResponse dataSuccess, List<ViewEmailInterviewResponse> listDataSuccess, String message) {
+                                if (isAdded()) {
+                                    hideCoverNetworkLoading();
+                                    lstInterviewHi = new LstInterviewHi(dataSuccess.getCvId(), dataSuccess.getEmailTemplate(), dataSuccess.getId(), dataSuccess.getInterviewAddress(), dataSuccess.getInterviewDate(), dataSuccess.getJobId(), dataSuccess.getNote(), dataSuccess.getRound(), dataSuccess.getStatus());
+                                    Intent intent = new Intent(getActivity(), CreateEditInterviewFragment.class);
+                                    intent.putExtra("lstInterviewHi", lstInterviewHi);
+                                    getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+                                    FragmentUtil.popBackStack(CreateEditInterviewFragment.this);
+                                }
+                            }
 
-                }
-            });
+                            @Override
+                            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                                if (isAdded()) {
+                                    hideCoverNetworkLoading();
+                                }
+                            }
+                        });
+                    }
+                }, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
+                    }
+                });
+            }
         } else {
             if (edtDateInterview.getText().toString().equalsIgnoreCase("")) {
                 llDate.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_red_5));

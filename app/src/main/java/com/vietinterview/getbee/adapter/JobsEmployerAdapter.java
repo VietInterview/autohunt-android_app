@@ -125,15 +125,6 @@ public class JobsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setText(this.mTotal == 0 ? mContext.getResources().getString(R.string.no_data) : this.mTotal + " " + mContext.getResources().getString(R.string.job_found));
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setVisibility(position == 0 ? View.VISIBLE : View.GONE);
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvname)).setText(jobLists.get(position).getJobTitle());
-//            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvname)).post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    int lineCount = ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvname)).getLineCount();
-//                    if (lineCount == 2) {
-//                        ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvname)).setText(((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvname)).getText().toString() + "...");
-//                    }
-//                }
-//            });
             if (jobLists.get(position).getStatus() == 1 && jobLists.get(position).getLimited() > 0 && jobLists.get(position).getLimited() < 8) {
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Sắp hết hạn");
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.red));

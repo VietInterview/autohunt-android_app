@@ -57,7 +57,7 @@ public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.My
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
 //        holder.imageView.setImageResource(horizontalList.get(position).imageId);
-        ShowImageUtils.showImage(context,horizontalList.get(position).imageId,R.drawable.ic_company_null,holder.imageView);
+        ShowImageUtils.showImage(context, horizontalList.get(position).imageId, R.drawable.ic_company_null, holder.imageView);
         holder.txtview.setText(horizontalList.get(position).txt);
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {

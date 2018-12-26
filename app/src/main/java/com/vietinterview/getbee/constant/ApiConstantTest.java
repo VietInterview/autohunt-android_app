@@ -66,6 +66,7 @@ public class ApiConstantTest {
     public String CONTRACT_STATUS = "svccustomer/api/cvProcess/contractStatus";
     public String VIEW_EMAIL_INTERVIEW = "svccustomer/api/cvProcess/viewEmailInterview";
     public String VIEW_EMAIL_OFFER = "svccustomer/api/cvProcess/viewEmailOffer";
+    public String UPDATE_OS = "api/updateOs";
 
     public int getPOST() {
         return POST;
@@ -245,5 +246,9 @@ public class ApiConstantTest {
 
     public String getVIEW_EMAIL_OFFER() {
         return getBASE_URL() + VIEW_EMAIL_OFFER;
+    }
+
+    public String getUPDATE_OS() {
+        return getBASE_URL() + UPDATE_OS;
     }
 }

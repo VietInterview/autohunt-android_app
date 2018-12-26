@@ -48,16 +48,9 @@
                     android:nestedScrollingEnabled="true">
 
                 </ListView>
-                <!--<com.vietinterview.getbee.customview.FlowLayout-->
-                <!--android:id="@+id/flowListInterview"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="vertical"-->
-                <!--android:scrollbars="vertical"-->
-                <!--app:horizontalSpacing="5dp"-->
-                <!--app:verticalSpacing="0dp" />-->
 
                 <LinearLayout
+                    android:id="@+id/llAdd"
                     android:layout_width="match_parent"
                     android:layout_height="58dp"
                     android:background="@drawable/border_top"
@@ -91,7 +84,7 @@
                         android:layout_height="50dp"
                         android:layout_marginRight="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/borderbutton_notyet_send"
+                        android:background="@drawable/borderbutton_reject"
                         android:drawableLeft="@drawable/ic_not_accept"
                         android:padding="10dp"
                         android:text="@string/not_accept"
