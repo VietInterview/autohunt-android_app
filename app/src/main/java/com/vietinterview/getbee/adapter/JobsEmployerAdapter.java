@@ -3,7 +3,6 @@ package com.vietinterview.getbee.adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,11 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.chauthai.swipereveallayout.SwipeRevealLayout;
-import com.chauthai.swipereveallayout.ViewBinderHelper;
+import com.daimajia.swipe.SwipeLayout;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.GetDetailJobCustomerRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
@@ -26,16 +23,13 @@ import com.vietinterview.getbee.api.response.detailjobcustomer.DetailJobCustomer
 import com.vietinterview.getbee.api.response.jobcustomer.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
-import com.vietinterview.getbee.callback.OnSwipeTouchListener;
 import com.vietinterview.getbee.customview.RobotoRegularButton;
 import com.vietinterview.getbee.fragments.BaseFragment;
-import com.vietinterview.getbee.fragments.ResumesEmployerFragment;
 import com.vietinterview.getbee.fragments.DetailJobCustomerFragment;
-import com.vietinterview.getbee.utils.DebugLog;
+import com.vietinterview.getbee.fragments.ResumesEmployerFragment;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
-import com.vietinterview.getbee.utils.UiUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +59,6 @@ public class JobsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private BaseFragment baseFragment;
     private int mTotal;
     private String limited;
-    private final ViewBinderHelper binderHelper = new ViewBinderHelper();
 
     public JobsEmployerAdapter(RecyclerView recyclerView, Context context, int total, ArrayList<JobList> cvLists, BaseFragment homeFragment) {
         this.jobLists = cvLists;
@@ -163,7 +156,7 @@ public class JobsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new ResumesEmployerFragment(), null);
                 }
             });
-            binderHelper.bind((SwipeRevealLayout) ((MyViewHolder) holder).swipeLayout, jobLists.get(position).getId().toString());
+//            binderHelper.bind((SwipeLayout) ((MyViewHolder) holder).swipeLayout, jobLists.get(position).getId().toString());
             ((RobotoRegularButton) ((MyViewHolder) holder).mView.findViewById(R.id.btnShowDetailJob)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -175,22 +168,6 @@ public class JobsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.progressBar.setIndeterminate(true);
         }
-    }
-
-    /**
-     * Only if you need to restore open/close state when the orientation is changed.
-     * Call this method in {@link android.app.Activity#onSaveInstanceState(Bundle)}
-     */
-    public void saveStates(Bundle outState) {
-        binderHelper.saveStates(outState);
-    }
-
-    /**
-     * Only if you need to restore open/close state when the orientation is changed.
-     * Call this method in {@link android.app.Activity#onRestoreInstanceState(Bundle)}
-     */
-    public void restoreStates(Bundle inState) {
-        binderHelper.restoreStates(inState);
     }
 
     @Override
@@ -227,12 +204,12 @@ public class JobsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public View mView;
         private CardView card_view1;
-        private SwipeRevealLayout swipeLayout;
+        private SwipeLayout swipeLayout;
 
         public MyViewHolder(View v) {
             super(v);
             mView = v;
-            swipeLayout = (SwipeRevealLayout) v.findViewById(R.id.swipe_layout);
+            swipeLayout = (SwipeLayout) v.findViewById(R.id.swipe_layout);
             card_view1 = v.findViewById(R.id.card_view1);
         }
     }

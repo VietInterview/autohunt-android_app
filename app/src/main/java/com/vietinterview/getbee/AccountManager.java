@@ -87,6 +87,7 @@ public class AccountManager {
     public static void logout() {
         accessToken = null;
         userInfoBean = null;
+        SharedPrefUtils.removeKey("deviceId");
         SharedPrefUtils.removeKey(KEY_ACCESS_TOKEN);
         SharedPrefUtils.removeKey(KEY_USER_INFO);
     }

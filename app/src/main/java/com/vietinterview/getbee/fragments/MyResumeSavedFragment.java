@@ -190,16 +190,10 @@ public class MyResumeSavedFragment extends BaseFragment implements SwipeRefreshL
 
     @Override
     protected void onSaveState(final Bundle bundle) {
-        if (myCVSavedAdapter != null) {
-            myCVSavedAdapter.saveStates(bundle);
-        }
     }
 
     @Override
     protected void onRestoreState(Bundle bundle) {
-        if (myCVSavedAdapter != null) {
-            myCVSavedAdapter.restoreStates(bundle);
-        }
     }
 
     @Override

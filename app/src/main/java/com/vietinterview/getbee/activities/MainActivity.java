@@ -202,14 +202,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             public void onSetMenu() {
                 navigationView.getMenu().clear();
                 for (LstMenuAuthority lstMenuAuthority : AccountManager.getUserInfoBean().getLstMenuAuthority()) {
-                    menu.add(0, lstMenuAuthority.getId(), 0, lstMenuAuthority.getName());
+                    menu.add(lstMenuAuthority.getId(), lstMenuAuthority.getId(), 0, lstMenuAuthority.getName());
 
                 }
-//                for (int i = 0; i < AccountManager.getUserInfoBean().getLstMenuAuthority().size(); i++) {
-//                    menu.add(0, AccountManager.getUserInfoBean().getLstMenuAuthority().get(i).getId(), 0, AccountManager.getUserInfoBean().getLstMenuAuthority().get(i).getName());
-//                }
                 for (int i = 0; i < menu.size(); i++) {
                     MenuItem mi = menu.getItem(i);
+                    mi.setCheckable(true);
+                    mi.setChecked(true);
                     setIcon(mi);
                     SubMenu subMenu = mi.getSubMenu();
                     if (subMenu != null && subMenu.size() > 0) {
@@ -224,16 +223,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         });
         if (AccountManager.getUserInfoBean() != null) {
             for (LstMenuAuthority lstMenuAuthority : AccountManager.getUserInfoBean().getLstMenuAuthority()) {
-                menu.add(0, lstMenuAuthority.getId(), 0, lstMenuAuthority.getName());
+                menu.add(lstMenuAuthority.getId(), lstMenuAuthority.getId(), 0, lstMenuAuthority.getName());
 
             }
-//            for (int i = 0; i < AccountManager.getUserInfoBean().getLstMenuAuthority().size(); i++) {
-//                menu.add(0, AccountManager.getUserInfoBean().getLstMenuAuthority().get(i).getId(), 0, AccountManager.getUserInfoBean().getLstMenuAuthority().get(i).getName());
-//            }
         } else
             navigationView.inflateMenu(R.menu.menu_left_ctv_drawer);
         for (int i = 0; i < menu.size(); i++) {
             MenuItem mi = menu.getItem(i);
+            mi.setCheckable(true);
+            mi.setChecked(true);
             if (AccountManager.getUserInfoBean() != null) setIcon(mi);
             SubMenu subMenu = mi.getSubMenu();
             if (subMenu != null && subMenu.size() > 0) {
@@ -279,18 +277,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 updateOs();
                 if (GlobalDefine.currentFragment == null || GlobalDefine.currentFragment instanceof HomeFragment || GlobalDefine.currentFragment instanceof JobsEmployerFragment) {
                     drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                    navigationView.setCheckedItem(R.id.nav_home);
+                    if (mItem != null)
+                        mItem.setChecked(true);
+                    else {
+                        navigationView.getMenu().getItem(0).setChecked(true);
+                    }
                     if (AccountManager.getUserInfoBean().getType() == 7 || AccountManager.getUserInfoBean().getType() == 5)
                         FragmentUtil.replaceFragment(this, new HomeFragment(), null);
                     else FragmentUtil.replaceFragment(this, new JobsEmployerFragment(), null);
                 } else {
-                    if (GlobalDefine.currentFragment instanceof MyJobFragment) {
-                        navigationView.setCheckedItem(R.id.nav_job);
-                    } else if (GlobalDefine.currentFragment instanceof MyResumeFragment) {
-                        navigationView.setCheckedItem(R.id.nav_cv);
-                    } else if (GlobalDefine.currentFragment instanceof CollaboratorProfileFragment) {
-                        navigationView.setCheckedItem(R.id.nav_profile);
-                    }
+                    if (mItem != null)
+                        mItem.setChecked(true);
                     FragmentUtil.replaceFragment(this, GlobalDefine.currentFragment, null);
                 }
             } else {
@@ -356,6 +353,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
+    MenuItem mItem;
+
     public void setIcon(MenuItem item) {
         for (LstMenuAuthority lstMenuAuthority : AccountManager.getUserInfoBean().getLstMenuAuthority()) {
             if (item.getItemId() == lstMenuAuthority.getId()) {
@@ -363,13 +362,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     case "CTV_HOME_PAGE":
                         item.setIcon(R.drawable.ic_home);
                         break;
-                    case "CTV_JOB_SAVE":
+                    case "CTV_JOB":
                         item.setIcon(R.drawable.ic_vali);
                         break;
                     case "CTV_JOB_SENT":
                         item.setIcon(R.drawable.ic_vali);
                         break;
-                    case "CTV_CV_SAVE":
+                    case "CTV_CV":
                         item.setIcon(R.drawable.ic_mycv_menuleft);
                         break;
                     case "CTV_CV_SEND":
@@ -403,20 +402,22 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         int accType = AccountManager.getUserInfoBean().getType();
         for (LstMenuAuthority lstMenuAuthority : AccountManager.getUserInfoBean().getLstMenuAuthority()) {
             if (item.getItemId() == lstMenuAuthority.getId()) {
+                mItem = item;
+                item.setChecked(true);
                 switch (lstMenuAuthority.getCode()) {
                     case "CTV_HOME_PAGE":
                         FragmentUtil.replaceFragment(this, new HomeFragment(), null);
                         break;
-                    case "CTV_JOB_SAVE":
-                        SharedPrefUtils.putString("menu", lstMenuAuthority.getCode());
+                    case "CTV_JOB":
+                        SharedPrefUtils.putString("menu", "CTV_JOB");
                         FragmentUtil.replaceFragment(this, new MyJobFragment(), null);
                         break;
                     case "CTV_JOB_SENT":
                         SharedPrefUtils.putString("menu", lstMenuAuthority.getCode());
                         FragmentUtil.replaceFragment(this, new MyJobFragment(), null);
                         break;
-                    case "CTV_CV_SAVE":
-                        SharedPrefUtils.putString("menu", lstMenuAuthority.getCode());
+                    case "CTV_CV":
+                        SharedPrefUtils.putString("menu", "CTV_CV");
                         FragmentUtil.replaceFragment(this, new MyResumeFragment(), null);
                         break;
                     case "CTV_CV_SEND":

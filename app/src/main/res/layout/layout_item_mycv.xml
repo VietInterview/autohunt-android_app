@@ -11,13 +11,10 @@
         android:gravity="center"
         android:textColor="#B1B1BA" />
 
-    <com.chauthai.swipereveallayout.SwipeRevealLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.daimajia.swipe.SwipeLayout
         android:id="@+id/swipe_layout"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        app:dragEdge="right"
-        app:mode="same_level">
+        android:layout_height="90dp">
 
 
         <LinearLayout
@@ -115,5 +112,5 @@
                     android:textSize="12sp" />
             </LinearLayout>
         </RelativeLayout>
-    </com.chauthai.swipereveallayout.SwipeRevealLayout>
+    </com.daimajia.swipe.SwipeLayout>
 </LinearLayout>

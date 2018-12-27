@@ -14,8 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.chauthai.swipereveallayout.SwipeRevealLayout;
-import com.chauthai.swipereveallayout.ViewBinderHelper;
+import com.daimajia.swipe.SwipeLayout;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.GetDetailCVByJobCustomerRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
@@ -59,7 +58,6 @@ public class ResumesEmployerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private BaseFragment baseFragment;
     private int mTotal;
     private int jobId;
-    private final ViewBinderHelper binderHelper = new ViewBinderHelper();
 
     public ResumesEmployerAdapter(RecyclerView recyclerView, Context context, int total, ArrayList<CvList> cvLists, int jobId, BaseFragment homeFragment) {
         this.cvLists = cvLists;
@@ -129,7 +127,7 @@ public class ResumesEmployerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new ProcessResumeFragment().newInstance(cvLists.get(position).getId(), jobId, false), null);
                 }
             });
-            binderHelper.bind((SwipeRevealLayout) ((MyViewHolder) holder).swipeLayout, cvLists.get(position).getId().toString());
+//            binderHelper.bind((SwipeLayout) ((MyViewHolder) holder).swipeLayout, cvLists.get(position).getId().toString());
             ((RobotoRegularButton) ((MyViewHolder) holder).mView.findViewById(R.id.btnShowDetailJob)).setEnabled(StringUtils.checkFunction("CUS_HOME_PAGE_VIEW_CV_DETAIL"));
             ((RobotoRegularButton) ((MyViewHolder) holder).mView.findViewById(R.id.btnShowDetailJob)).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -142,22 +140,6 @@ public class ResumesEmployerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.progressBar.setIndeterminate(true);
         }
-    }
-
-    /**
-     * Only if you need to restore open/close state when the orientation is changed.
-     * Call this method in {@link android.app.Activity#onSaveInstanceState(Bundle)}
-     */
-    public void saveStates(Bundle outState) {
-        binderHelper.saveStates(outState);
-    }
-
-    /**
-     * Only if you need to restore open/close state when the orientation is changed.
-     * Call this method in {@link android.app.Activity#onRestoreInstanceState(Bundle)}
-     */
-    public void restoreStates(Bundle inState) {
-        binderHelper.restoreStates(inState);
     }
 
     @Override
@@ -193,12 +175,12 @@ public class ResumesEmployerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public View mView;
-        private SwipeRevealLayout swipeLayout;
+        private SwipeLayout swipeLayout;
 
         public MyViewHolder(View v) {
             super(v);
             mView = v;
-            swipeLayout = (SwipeRevealLayout) v.findViewById(R.id.swipe_layout);
+            swipeLayout = (SwipeLayout) v.findViewById(R.id.swipe_layout);
         }
     }
 

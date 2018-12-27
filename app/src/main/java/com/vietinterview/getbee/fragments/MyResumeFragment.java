@@ -129,7 +129,7 @@ public class MyResumeFragment extends BaseFragment {
     private void setupTabIcons() {
         TextView tabOne = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
         tabOne.setText(getResources().getString(R.string.cv_saved));
-        tabOne.setTextColor(SharedPrefUtils.getString("menu", "").equalsIgnoreCase("CTV_CV_SAVE") ? getResources().getColor(R.color.black) : getResources().getColor(R.color.background_icon_not_focus));
+        tabOne.setTextColor(SharedPrefUtils.getString("menu", "").equalsIgnoreCase("CTV_CV") ? getResources().getColor(R.color.black) : getResources().getColor(R.color.background_icon_not_focus));
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
@@ -142,7 +142,7 @@ public class MyResumeFragment extends BaseFragment {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         viewPagerAdapter.addFrag(visibleFilter ? new MyResumeSavedFragment().newInstance(Integer.parseInt(mCarrerId), Integer.parseInt(mCityId)) : new MyResumeSavedFragment(), "CV đã lưu");
         viewPagerAdapter.addFrag(new MyResumeApplyedFragment().newInstance(Integer.parseInt(mStatusId), Integer.parseInt(mCarrerId), Integer.parseInt(mCityId)), "CV đã nộp");
-        if (SharedPrefUtils.getString("menu", "").equalsIgnoreCase("CTV_CV_SAVE"))
+        if (SharedPrefUtils.getString("menu", "").equalsIgnoreCase("CTV_CV"))
             mPosition = 0;
         else if (SharedPrefUtils.getString("menu", "").equalsIgnoreCase("CTV_CV_SEND"))
             mPosition = 1;

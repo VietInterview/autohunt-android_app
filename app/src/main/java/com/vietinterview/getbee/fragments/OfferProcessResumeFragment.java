@@ -121,7 +121,8 @@ public class OfferProcessResumeFragment extends BaseFragment {
                         btnReject.setVisibility(View.VISIBLE);
                     } else {
                         btnNext.setVisibility(View.GONE);
-                        btnReject.setVisibility(View.VISIBLE);
+                        btnReject.setVisibility(View.GONE);
+                        llBtn.setVisibility(View.GONE);
                     }
                 }
             } else {
@@ -187,11 +188,10 @@ public class OfferProcessResumeFragment extends BaseFragment {
         } else {
             cardReject.setVisibility(View.GONE);
         }
-        if (detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() != null && detailProcessResumeResponse.getCvProcessInfo().getRejectNote() != null) {
+        if (detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() != null ) {
+            tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName());
             if (detailProcessResumeResponse.getCvProcessInfo().getRejectNote() != null && !detailProcessResumeResponse.getCvProcessInfo().getRejectNote().equalsIgnoreCase(""))
                 tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() + "\nGhi chú: " + detailProcessResumeResponse.getCvProcessInfo().getRejectNote());
-            else
-                tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName());
 
         }
     }
@@ -434,15 +434,15 @@ public class OfferProcessResumeFragment extends BaseFragment {
                                                             DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Gửi từ chối thành công");
                                                             cardReject.setVisibility(View.VISIBLE);
                                                             tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + rejectName + "\nGhi chú: " + dataSuccess.getReasonNote());
-                                                            int count = detailProcessResumeResponse.getLstOfferHis().size();
-                                                            for (int i = 0; i < detailProcessResumeResponse.getLstOfferHis().size(); i++) {
-                                                                if (detailProcessResumeResponse.getLstOfferHis().get(i).getId() == -1) {
-                                                                    count--;
-                                                                }
-                                                            }
-                                                            if (count > 0) {
-                                                                updateOfferStatus(count);
-                                                            }
+//                                                            int count = detailProcessResumeResponse.getLstOfferHis().size();
+//                                                            for (int i = 0; i < detailProcessResumeResponse.getLstOfferHis().size(); i++) {
+//                                                                if (detailProcessResumeResponse.getLstOfferHis().get(i).getId() == -1) {
+//                                                                    count--;
+//                                                                }
+//                                                            }
+//                                                            if (count > 0) {
+//                                                                updateOfferStatus(count);
+//                                                            }
                                                             detailProcessResumeResponse.getCvProcessInfo().setStatus(4);
                                                             detailProcessResumeResponse.getCvProcessInfo().setRejectStep(3);
                                                             btnNext.setEnabled(false);
@@ -493,15 +493,15 @@ public class OfferProcessResumeFragment extends BaseFragment {
                                                                 tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + rejectName + "\nGhi chú: " + dataSuccess.getReasonNote());
                                                             }
                                                         });
-                                                        int count = detailProcessResumeResponse.getLstOfferHis().size();
-                                                        for (int i = 0; i < detailProcessResumeResponse.getLstOfferHis().size(); i++) {
-                                                            if (detailProcessResumeResponse.getLstOfferHis().get(i).getId() == -1) {
-                                                                count--;
-                                                            }
-                                                        }
-                                                        if (count > 0) {
-                                                            updateOfferStatus(count);
-                                                        }
+//                                                        int count = detailProcessResumeResponse.getLstOfferHis().size();
+//                                                        for (int i = 0; i < detailProcessResumeResponse.getLstOfferHis().size(); i++) {
+//                                                            if (detailProcessResumeResponse.getLstOfferHis().get(i).getId() == -1) {
+//                                                                count--;
+//                                                            }
+//                                                        }
+//                                                        if (count > 0) {
+//                                                            updateOfferStatus(count);
+//                                                        }
                                                         detailProcessResumeResponse.getCvProcessInfo().setStatus(4);
                                                         detailProcessResumeResponse.getCvProcessInfo().setRejectStep(3);
                                                         cardReject.setVisibility(View.VISIBLE);

@@ -134,7 +134,8 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                         btnNotAccept.setVisibility(View.VISIBLE);
                     } else {
                         btnNext.setVisibility(View.GONE);
-                        btnNotAccept.setVisibility(View.VISIBLE);
+                        btnNotAccept.setVisibility(View.GONE);
+                        llBtn.setVisibility(View.GONE);
                     }
                 }
             } else {
@@ -206,11 +207,10 @@ public class InterviewProcessResumeFragment extends BaseFragment {
         } else {
             cardReject.setVisibility(View.GONE);
         }
-        if (detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() != null && detailProcessResumeResponse.getCvProcessInfo().getRejectNote() != null) {
+        if (detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() != null ) {
+            tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName());
             if (detailProcessResumeResponse.getCvProcessInfo().getRejectNote() != null && !detailProcessResumeResponse.getCvProcessInfo().getRejectNote().equalsIgnoreCase(""))
                 tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() + "\nGhi chú: " + detailProcessResumeResponse.getCvProcessInfo().getRejectNote());
-            else
-                tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName());
 
         }
     }
@@ -417,15 +417,15 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                                                                     tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + rejectName + "\nGhi chú: " + dataSuccess.getReasonNote());
                                                                 }
                                                             });
-                                                            int count = detailProcessResumeResponse.getLstInterviewHis().size();
-                                                            for (int i = 0; i < detailProcessResumeResponse.getLstInterviewHis().size(); i++) {
-                                                                if (detailProcessResumeResponse.getLstInterviewHis().get(i).getId() == -1) {
-                                                                    count--;
-                                                                }
-                                                            }
-                                                            if (count > 0) {
-                                                                updateInterviewStatus(count);
-                                                            }
+//                                                            int count = detailProcessResumeResponse.getLstInterviewHis().size();
+//                                                            for (int i = 0; i < detailProcessResumeResponse.getLstInterviewHis().size(); i++) {
+//                                                                if (detailProcessResumeResponse.getLstInterviewHis().get(i).getId() == -1) {
+//                                                                    count--;
+//                                                                }
+//                                                            }
+//                                                            if (count > 0) {
+//                                                                updateInterviewStatus(count);
+//                                                            }
                                                             detailProcessResumeResponse.getCvProcessInfo().setStatus(4);
                                                             detailProcessResumeResponse.getCvProcessInfo().setRejectStep(2);
                                                             btnNext.setEnabled(false);
@@ -476,15 +476,15 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                                                                 tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + rejectName + "\nGhi chú: " + dataSuccess.getReasonNote());
                                                             }
                                                         });
-                                                        int count = detailProcessResumeResponse.getLstInterviewHis().size();
-                                                        for (int i = 0; i < detailProcessResumeResponse.getLstInterviewHis().size(); i++) {
-                                                            if (detailProcessResumeResponse.getLstInterviewHis().get(i).getId() == -1) {
-                                                                count--;
-                                                            }
-                                                        }
-                                                        if (count > 0) {
-                                                            updateInterviewStatus(count);
-                                                        }
+//                                                        int count = detailProcessResumeResponse.getLstInterviewHis().size();
+//                                                        for (int i = 0; i < detailProcessResumeResponse.getLstInterviewHis().size(); i++) {
+//                                                            if (detailProcessResumeResponse.getLstInterviewHis().get(i).getId() == -1) {
+//                                                                count--;
+//                                                            }
+//                                                        }
+//                                                        if (count > 0) {
+//                                                            updateInterviewStatus(count);
+//                                                        }
                                                         detailProcessResumeResponse.getCvProcessInfo().setStatus(4);
                                                         detailProcessResumeResponse.getCvProcessInfo().setRejectStep(2);
                                                         cardReject.setVisibility(View.VISIBLE);

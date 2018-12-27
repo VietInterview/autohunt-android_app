@@ -3,7 +3,6 @@ package com.vietinterview.getbee.adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -15,8 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.chauthai.swipereveallayout.SwipeRevealLayout;
-import com.chauthai.swipereveallayout.ViewBinderHelper;
+import com.daimajia.swipe.SwipeLayout;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.DeleteCVRequest;
 import com.vietinterview.getbee.api.request.GetDetailCVRequest;
@@ -62,7 +60,6 @@ public class MyResumeSavedAdapter extends RecyclerView.Adapter<RecyclerView.View
     private boolean isLoading;
     private BaseFragment baseFragment;
     private int mTotal;
-    private final ViewBinderHelper binderHelper = new ViewBinderHelper();
 
     public MyResumeSavedAdapter(RecyclerView recyclerView, Context context, int total, ArrayList<CvList> cvLists, BaseFragment homeFragment) {
         this.cvLists = cvLists;
@@ -129,7 +126,7 @@ public class MyResumeSavedAdapter extends RecyclerView.Adapter<RecyclerView.View
                     getDetailCV(cvLists.get(position).getId());
                 }
             });
-            binderHelper.bind((SwipeRevealLayout) ((MyViewHolder) holder).swipeLayout, cvLists.get(position).getId().toString());
+//            binderHelper.bind((SwipeRevealLayout) ((MyViewHolder) holder).swipeLayout, cvLists.get(position).getId().toString());
             if (position % 2 == 0) {
                 ((RelativeLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setBackgroundColor(mContext.getResources().getColor(R.color.row_not_white));
             } else {
@@ -168,22 +165,6 @@ public class MyResumeSavedAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
-    /**
-     * Only if you need to restore open/close state when the orientation is changed.
-     * Call this method in {@link android.app.Activity#onSaveInstanceState(Bundle)}
-     */
-    public void saveStates(Bundle outState) {
-        binderHelper.saveStates(outState);
-    }
-
-    /**
-     * Only if you need to restore open/close state when the orientation is changed.
-     * Call this method in {@link android.app.Activity#onRestoreInstanceState(Bundle)}
-     */
-    public void restoreStates(Bundle inState) {
-        binderHelper.restoreStates(inState);
-    }
-
     @Override
     public int getItemCount() {
         return cvLists.size();
@@ -217,12 +198,12 @@ public class MyResumeSavedAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public View mView;
-        private SwipeRevealLayout swipeLayout;
+        private SwipeLayout swipeLayout;
 
         public MyViewHolder(View v) {
             super(v);
             mView = v;
-            swipeLayout = (SwipeRevealLayout) v.findViewById(R.id.swipe_layout);
+            swipeLayout = (SwipeLayout) v.findViewById(R.id.swipe_layout);
         }
     }
 

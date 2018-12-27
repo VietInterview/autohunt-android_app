@@ -169,7 +169,7 @@ public class MyJobFragment extends BaseFragment {
     private void setupTabIcons() {
         TextView tabOne = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
         tabOne.setText(getResources().getString(R.string.job_saved_tit));
-        tabOne.setTextColor(SharedPrefUtils.getString("menu", "").equalsIgnoreCase("CTV_JOB_SAVE") ? getResources().getColor(R.color.black) : getResources().getColor(R.color.background_icon_not_focus));
+        tabOne.setTextColor(SharedPrefUtils.getString("menu", "").equalsIgnoreCase("CTV_JOB") ? getResources().getColor(R.color.black) : getResources().getColor(R.color.background_icon_not_focus));
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
@@ -186,7 +186,7 @@ public class MyJobFragment extends BaseFragment {
         adapter.addFrag(jobsApplyedFragment, getResources().getString(R.string.job_applyed));
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(adapter);
-        if (SharedPrefUtils.getString("menu", "").equalsIgnoreCase("CTV_JOB_SAVE"))
+        if (SharedPrefUtils.getString("menu", "").equalsIgnoreCase("CTV_JOB"))
             viewPager.setCurrentItem(0);
         else if (SharedPrefUtils.getString("menu", "").equalsIgnoreCase("CTV_JOB_SENT"))
             viewPager.setCurrentItem(1);

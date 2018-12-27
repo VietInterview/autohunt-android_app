@@ -437,7 +437,16 @@ public class LoginFragment extends BaseFragment {
                     listId = removeDuplicatesInt(listId);
                     lstMenuAuthorities = new ArrayList<>();
                     for (int i = 0; i < listCode.size(); i++) {
-                        lstMenuAuthorities.add(new LstMenuAuthority(listId.get(i), listName.get(i), listCode.get(i)));
+                        if (listCode.get(i).equalsIgnoreCase("CTV_JOB_SAVE")) {
+                            lstMenuAuthorities.add(new LstMenuAuthority(listId.get(i), getResources().getString(R.string.my_job), "CTV_JOB"));
+                        } else if (listCode.get(i).equalsIgnoreCase("CTV_JOB_SENT")) {
+
+                        } else if (listCode.get(i).equalsIgnoreCase("CTV_CV_SAVE")) {
+                            lstMenuAuthorities.add(new LstMenuAuthority(listId.get(i), getResources().getString(R.string.mycv), "CTV_CV"));
+                        } else if (listCode.get(i).equalsIgnoreCase("CTV_CV_SEND")) {
+
+                        } else
+                            lstMenuAuthorities.add(new LstMenuAuthority(listId.get(i), listName.get(i), listCode.get(i)));
                     }
                     for (int i = 0; i < lstMenuAuthorities.size(); i++) {
                         if (lstMenuAuthorities.get(i).getId() == 999)
