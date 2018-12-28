@@ -35,7 +35,24 @@ public class DateUtil {
         }
         return converted_date;
     }
-
+    public synchronized static Date convertToDate(String Date) {
+        Date converted_date = null;
+        try {
+            SimpleDateFormat utcFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm a");
+            utcFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+            Date date = utcFormat.parse(Date);
+            converted_date = date;
+        } catch (Exception e) {
+        }
+        try {
+            SimpleDateFormat utcFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm a");
+            utcFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+            Date date = utcFormat.parse(Date);
+            converted_date = date;
+        } catch (Exception e) {
+        }
+        return converted_date;
+    }
     public synchronized static String convertToGMTTimeZone(String Date) {
         dateFormat = DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault());
         String converted_date = null;
@@ -78,6 +95,30 @@ public class DateUtil {
             Date date = sdf.parse(Date);
 
             SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
+            converted_date = sdf2.format(date.getTime());
+        } catch (Exception e) {
+        }
+        return converted_date;
+    }
+    public synchronized static String convertToMyFormat3(String Date) {
+        String converted_date = "";
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm a", Locale.US);
+            Date date = sdf.parse(Date);
+
+            SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
+            converted_date = sdf2.format(date.getTime());
+        } catch (Exception e) {
+        }
+        return converted_date;
+    }
+    public synchronized static String convertToMyFormat4(String Date) {
+        String converted_date = "";
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US);
+            Date date = sdf.parse(Date);
+
+            SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm aa");
             converted_date = sdf2.format(date.getTime());
         } catch (Exception e) {
         }

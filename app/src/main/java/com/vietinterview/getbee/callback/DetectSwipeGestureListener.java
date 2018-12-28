@@ -58,22 +58,13 @@ public class DetectSwipeGestureListener extends GestureDetector.SimpleOnGestureL
         // Only when swipe distance between minimal and maximal distance value then we treat it as effective swipe
         if ((deltaXAbs >= MIN_SWIPE_DISTANCE_X) && (deltaXAbs <= MAX_SWIPE_DISTANCE_X)) {
             if (deltaX > 0) {
-//                this.activity.displayMessage("Swipe to left");
-                DebugLog.showLogCat("Swipe to left");
             } else {
-//                this.activity.displayMessage("Swipe to right");
-                DebugLog.showLogCat("Swipe to right");
-//                getBaseFragment().swipeToRight();
             }
         }
 
         if ((deltaYAbs >= MIN_SWIPE_DISTANCE_Y) && (deltaYAbs <= MAX_SWIPE_DISTANCE_Y)) {
             if (deltaY > 0) {
-//                this.activity.displayMessage("Swipe to up");
-                DebugLog.showLogCat("Swipe to up");
             } else {
-//                this.activity.displayMessage("Swipe to down");
-                DebugLog.showLogCat("Swipe to down");
             }
         }
 
@@ -84,16 +75,12 @@ public class DetectSwipeGestureListener extends GestureDetector.SimpleOnGestureL
     // Invoked when single tap screen.
     @Override
     public boolean onSingleTapConfirmed(MotionEvent e) {
-//        this.activity.displayMessage("Single tap occurred.");
-        DebugLog.showLogCat("Single tap occurred.");
         return true;
     }
 
     // Invoked when double tap screen.
     @Override
     public boolean onDoubleTap(MotionEvent e) {
-//        this.activity.displayMessage("Double tap occurred.");
-        DebugLog.showLogCat("Double tap occurred.");
         return true;
     }
 }

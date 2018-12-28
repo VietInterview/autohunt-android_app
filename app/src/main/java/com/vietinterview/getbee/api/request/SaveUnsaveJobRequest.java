@@ -69,6 +69,6 @@ public class SaveUnsaveJobRequest extends BaseJsonRequest<AddRemoveJobResponse, 
 
     @Override
     protected String getAbsoluteUrl() {
-        return ApiConstant.SAVE_UNSAVE_JOB;
+        return AccountManager.getApiConstantTest().getSAVE_UNSAVE_JOB();
     }
 }

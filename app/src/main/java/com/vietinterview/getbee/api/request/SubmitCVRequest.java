@@ -72,6 +72,6 @@ public class SubmitCVRequest extends BaseJsonRequest<SubmitCVResponse, ErrorResp
 
     @Override
     protected String getAbsoluteUrl() {
-        return ApiConstant.SUBMIT_CV;
+        return AccountManager.getApiConstantTest().getSUBMIT_CV();
     }
 }

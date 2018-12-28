@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.vietinterview.getbee.customview.NunitoBoldTextView
+        <com.vietinterview.getbee.customview.RobotoBoldTextView
             android:id="@+id/tvName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -18,11 +18,12 @@
             android:textColor="#000000"
             android:textSize="16sp" />
 
-        <com.vietinterview.getbee.customview.NunitoTextView
+        <com.vietinterview.getbee.customview.RobotoTextView
             android:id="@+id/tvDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true" android:layout_below="@+id/tvName"
+            android:layout_below="@+id/tvName"
+            android:layout_alignParentBottom="true"
             android:layout_toLeftOf="@+id/llStatus"
             android:padding="@dimen/activity_vertical_margin"
             android:textColor="#191830"
@@ -37,7 +38,7 @@
             android:layout_marginRight="@dimen/activity_vertical_margin"
             android:gravity="center">
 
-            <com.vietinterview.getbee.customview.NunitoTextView
+            <com.vietinterview.getbee.customview.RobotoTextView
                 android:id="@+id/tvStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

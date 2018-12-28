@@ -12,4 +12,9 @@
     <dimen name="fab_circle_radius">25dp</dimen>
     <dimen name="font_greeting">30sp</dimen>
     <dimen name="font_menu_left">16sp</dimen>
+    <dimen name="toolbar_double_height">112dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
+    <dimen name="appbar_header_height">256dp</dimen>
+    <dimen name="activity_margin_half">8dp</dimen>
+    <dimen name="activity_margin_content">24dp</dimen>
 </resources>

@@ -66,6 +66,6 @@ public class DeleteCVRequest extends BaseRequest<DeleteCVResponse, ErrorResponse
 
     @Override
     protected String getAbsoluteUrl() {
-        return ApiConstant.DELETE_MY_CV + "/" + mId;
+        return AccountManager.getApiConstantTest().getDELETE_MY_CV() + "/" + mId;
     }
 }

@@ -3,11 +3,8 @@ package com.vietinterview.getbee.fragments;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,15 +26,16 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.adapter.JobsAdapter;
 import com.vietinterview.getbee.api.request.BaseRequest;
-import com.vietinterview.getbee.api.request.GetMyProfileRequest;
+import com.vietinterview.getbee.api.request.GetCTVProfileRequest;
+import com.vietinterview.getbee.api.request.GetCUSProfileRequest;
 import com.vietinterview.getbee.api.request.GetSearchJobsRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
+import com.vietinterview.getbee.api.response.customerprofile.ProfileCustomerResponse;
 import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.api.response.jobs.JobsResponse;
-import com.vietinterview.getbee.api.response.myprofile.MyProfileResponse;
+import com.vietinterview.getbee.api.response.ctvprofile.MyProfileResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
 import com.vietinterview.getbee.callback.OnRefreshHomeListener;
@@ -45,7 +43,6 @@ import com.vietinterview.getbee.constant.ApiConstant;
 import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.customview.ClearableRegularEditText;
-import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
@@ -148,6 +145,20 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 android.R.color.holo_green_dark,
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    if (jobsListServer.size() >= ApiConstant.LIMIT) {
+                        mPage++;
+                        getSearchJob(mCarrerId, mCityId, strSearch, mPage);
+                        jobsAdapter.setOnLoadMoreListener(HomeFragment.this);
+                    }
+                }
+            }
+        });
     }
 
     TextWatcher textWatcher = new TextWatcher() {
@@ -260,24 +271,42 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         });
     }
 
-    GetMyProfileRequest getMyProfileRequest;
+    GetCTVProfileRequest getCTVProfileRequest;
+    GetCUSProfileRequest getCUSProfileRequest;
 
     public void getMyProfile() {
         showCoverNetworkLoading();
-        getMyProfileRequest = new GetMyProfileRequest();
-        getMyProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
-            @Override
-            public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
-                hideCoverNetworkLoading();
-                AccountManager.getUserInfoBean().setName(dataSuccess.getFullNameColl());
-                getAct().getTvGreeting().setText(getResources().getString(R.string.greeting) + AccountManager.getUserInfoBean().getName() + "!");
-            }
+        if(AccountManager.getUserInfoBean().getType() == 7) {
+            getCTVProfileRequest = new GetCTVProfileRequest();
+            getCTVProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
+                @Override
+                public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
+                    hideCoverNetworkLoading();
+                    AccountManager.getUserInfoBean().setName(dataSuccess.getFullNameColl());
+                    getMainActivity().getTvGreeting().setText(getResources().getString(R.string.greeting) + AccountManager.getUserInfoBean().getName() + "!");
+                }
 
-            @Override
-            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
-                hideCoverNetworkLoading();
-            }
-        });
+                @Override
+                public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                    hideCoverNetworkLoading();
+                }
+            });
+        } else if (AccountManager.getUserInfoBean().getType() == 2){
+            getCUSProfileRequest = new GetCUSProfileRequest();
+            getCUSProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<ProfileCustomerResponse, ErrorResponse>() {
+                @Override
+                public void onSuccess(int status, ProfileCustomerResponse dataSuccess, List<ProfileCustomerResponse> listDataSuccess, String message) {
+                    hideCoverNetworkLoading();
+                    AccountManager.getUserInfoBean().setName(dataSuccess.getCompanyName());
+                    getMainActivity().getTvGreeting().setText(getResources().getString(R.string.greeting) + AccountManager.getUserInfoBean().getName() + "!");
+                }
+
+                @Override
+                public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                    hideCoverNetworkLoading();
+                }
+            });
+        }
     }
 
     @OnClick(R.id.llCarrer)
@@ -419,7 +448,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 visibleCondition = false;
                 llSearch.setVisibility(View.GONE);
                 llCondition.setVisibility(View.GONE);
-                menu.getItem(0).setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_search_black));
+                menu.getItem(0).setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_search));
             } else {
                 visibleSearch = true;
                 visibleCondition = false;
@@ -451,7 +480,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     public ArrayList<BaseRequest> getArrayBaseRequest() {
         ArrayList<BaseRequest> baseRequests = new ArrayList<>();
         baseRequests.add(getSearchJobsRequest);
-        baseRequests.add(getMyProfileRequest);
+        baseRequests.add(getCTVProfileRequest);
         return baseRequests;
     }
 }

@@ -8,7 +8,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp">
 
-    <com.vietinterview.getbee.customview.NunitoTextView
+    <com.vietinterview.getbee.customview.RobotoTextView
         android:id="@+id/item_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

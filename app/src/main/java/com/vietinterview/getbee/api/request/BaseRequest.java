@@ -59,7 +59,10 @@ public abstract class BaseRequest<T, V> {
                     mApiObjectCallBack.onSuccess(statusCode, GsonUtils.fromJson(response.toString(), getResponseSuccessClass()), null, "");
                 } else {
                     DebugLog.showLogCat(statusCode + "");
-                    mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
+                    if (statusCode == 0)
+                        mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.timeout));
+                    else
+                        mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
                 }
             }
 
@@ -72,7 +75,10 @@ public abstract class BaseRequest<T, V> {
                     mApiObjectCallBack.onSuccess(statusCode, null, tList, "");
                 } else {
                     DebugLog.showLogCat(statusCode + "");
-                    mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
+                    if (statusCode == 0)
+                        mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.timeout));
+                    else
+                        mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
                 }
             }
 
@@ -91,7 +97,10 @@ public abstract class BaseRequest<T, V> {
                     mApiObjectCallBack.onFail(statusCode, null, vList, throwable.getMessage());
                 } else {
                     DebugLog.showLogCat(statusCode + "");
-                    mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
+                    if (statusCode == 0)
+                        mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.timeout));
+                    else
+                        mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
                 }
             }
 
@@ -108,7 +117,10 @@ public abstract class BaseRequest<T, V> {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 DebugLog.showLogCat(throwable.toString());
-                mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
+                if (statusCode == 0)
+                    mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.timeout));
+                else
+                    mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
             }
         };
         DebugLog.showLogCat(getAbsoluteUrl() + "\n" + putParams() + "\nBearer " + getAccessToken());

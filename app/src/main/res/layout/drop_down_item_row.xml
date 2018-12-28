@@ -11,7 +11,7 @@
     android:gravity="center"
     android:orientation="horizontal">
 
-    <com.vietinterview.getbee.customview.NunitoTextView
+    <com.vietinterview.getbee.customview.RobotoTextView
         android:id="@+id/dropDownItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

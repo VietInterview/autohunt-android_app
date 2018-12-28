@@ -27,7 +27,7 @@
         </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
 
-    <com.vietinterview.getbee.customview.NunitoBoldButton
+    <com.vietinterview.getbee.customview.RobotoBoldButton
         android:id="@+id/btnDelete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

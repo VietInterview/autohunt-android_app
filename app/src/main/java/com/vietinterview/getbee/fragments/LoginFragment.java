@@ -12,18 +12,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
-import android.text.Layout;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,26 +30,32 @@ import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.api.request.BaseJsonRequest;
-import com.vietinterview.getbee.api.request.GetMyProfileRequest;
+import com.vietinterview.getbee.api.request.GetAccountRequest;
+import com.vietinterview.getbee.api.request.GetCTVProfileRequest;
+import com.vietinterview.getbee.api.request.GetCUSProfileRequest;
 import com.vietinterview.getbee.api.request.LoginRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
+import com.vietinterview.getbee.api.response.account.AccountResponse;
+import com.vietinterview.getbee.api.response.account.LstMenuAuthority;
+import com.vietinterview.getbee.api.response.ctvprofile.MyProfileResponse;
+import com.vietinterview.getbee.api.response.customerprofile.ProfileCustomerResponse;
 import com.vietinterview.getbee.api.response.login.ErrorLoginResponse;
 import com.vietinterview.getbee.api.response.login.LoginResponse;
-import com.vietinterview.getbee.api.response.myprofile.MyProfileResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.constant.ApiConstant;
+import com.vietinterview.getbee.constant.ApiConstantTest;
+import com.vietinterview.getbee.customview.RobotoEditText;
 import com.vietinterview.getbee.model.UserInfoBean;
-import com.vietinterview.getbee.utils.DebugLog;
+import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
-import com.vietinterview.getbee.customview.NunitoEditText;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.vietinterview.getbee.utils.EventBusHelper.post;
 
 /**
  * Created by hiepnguyennghia on 10/8/18.
@@ -63,9 +66,9 @@ public class LoginFragment extends BaseFragment {
     private Dialog mForgotPassdialog;
     LoginRequest loginRequest;
     @BindView(R.id.edtEmail)
-    NunitoEditText edtEmail;
+    RobotoEditText edtEmail;
     @BindView(R.id.edtPass)
-    NunitoEditText edtPass;
+    RobotoEditText edtPass;
     @BindView(R.id.icRightEmail)
     ImageView icRightEmail;
     @BindView(R.id.icRightPass)
@@ -83,6 +86,10 @@ public class LoginFragment extends BaseFragment {
     @BindView(R.id.imgPass)
     ImageView imgPass;
     private String edtMailData;
+    @BindView(R.id.tvLogin)
+    TextView tvLogin;
+    private int dem = 0;
+    ApiConstantTest apiConstant = new ApiConstantTest();
 
     @Override
     protected int getLayoutId() {
@@ -112,6 +119,33 @@ public class LoginFragment extends BaseFragment {
             @Override
             public void afterTextChanged(Editable editable) {
 
+            }
+        });
+        if (AccountManager.getApiConstantTest().getBASE_URL().equalsIgnoreCase(ApiConstant.REAL_URL)) {
+            tvLogin.setText(getResources().getString(R.string.login));
+            tvLogin.setTextColor(getResources().getColor(R.color.black));
+        } else {
+            tvLogin.setText(tvLogin.getText() + " Dev Mode");
+            tvLogin.setTextColor(getResources().getColor(R.color.red));
+        }
+        tvLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (dem < 7) {
+                    dem++;
+                    apiConstant.setBASE_URL(ApiConstant.REAL_URL);
+                    apiConstant.setIMG_URL(ApiConstant.IMG_URL_REAL);
+                    AccountManager.setApiConstantTest(apiConstant);
+                    tvLogin.setText(getResources().getString(R.string.login));
+                    tvLogin.setTextColor(getResources().getColor(R.color.black));
+                } else {
+                    dem--;
+                    apiConstant.setBASE_URL(ApiConstant.DEV_URL);
+                    apiConstant.setIMG_URL(ApiConstant.IMG_URL_DEV);
+                    AccountManager.setApiConstantTest(apiConstant);
+                    tvLogin.setText(tvLogin.getText() + " Dev Mode");
+                    tvLogin.setTextColor(getResources().getColor(R.color.red));
+                }
             }
         });
         edtEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -184,7 +218,6 @@ public class LoginFragment extends BaseFragment {
 
     @OnClick(R.id.tvForgotPass)
     public void onForgotpassClick() {
-
         mForgotPassdialog = new Dialog(getActivity());
         mForgotPassdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         mForgotPassdialog.setContentView(R.layout.dialog_forgotpass);
@@ -204,7 +237,6 @@ public class LoginFragment extends BaseFragment {
                 String number = ("tel:02466629448");
                 mIntent = new Intent(Intent.ACTION_CALL);
                 mIntent.setData(Uri.parse(number));
-// Here, thisActivity is the current activity
                 if (ContextCompat.checkSelfPermission(getActivity(),
                         Manifest.permission.CALL_PHONE)
                         != PackageManager.PERMISSION_GRANTED) {
@@ -212,12 +244,7 @@ public class LoginFragment extends BaseFragment {
                     ActivityCompat.requestPermissions(getActivity(),
                             new String[]{Manifest.permission.CALL_PHONE},
                             MY_PERMISSIONS_REQUEST_CALL_PHONE);
-
-                    // MY_PERMISSIONS_REQUEST_CALL_PHONE is an
-                    // app-defined int constant. The callback method gets the
-                    // result of the request.
                 } else {
-                    //You already have permission
                     try {
                         startActivity(mIntent);
                     } catch (SecurityException e) {
@@ -259,47 +286,59 @@ public class LoginFragment extends BaseFragment {
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_CALL_PHONE: {
-                // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted, yay! Do the phone call
-
                 } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
                 }
                 return;
             }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
         }
     }
 
     UserInfoBean userInfoBean;
-    GetMyProfileRequest getMyProfileRequest;
+    GetCTVProfileRequest getMyProfileRequest;
+    GetCUSProfileRequest getCUSProfileRequest;
 
     public void getMyProfile() {
-        getMyProfileRequest = new GetMyProfileRequest();
-        getMyProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
-            @Override
-            public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
-                if (dataSuccess.getFullNameColl() != null) {
-                    userInfoBean.name = dataSuccess.getFullNameColl();
-                } else {
-                    userInfoBean.name = edtEmail.getText().toString().trim().split("[$&<@%*]")[0];
+        if (AccountManager.getUserInfoBean().getType() == 2) {
+            getCUSProfileRequest = new GetCUSProfileRequest();
+            getCUSProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<ProfileCustomerResponse, ErrorResponse>() {
+                @Override
+                public void onSuccess(int status, ProfileCustomerResponse dataSuccess, List<ProfileCustomerResponse> listDataSuccess, String message) {
+//                    if (dataSuccess.getCompanyName() != null) {
+//                        userInfoBean.name = dataSuccess.get();
+//                    } else {
+//                        userInfoBean.name = edtEmail.getText().toString().trim().split("[$&<@%*]")[0];
+//                    }
+                    AccountManager.setUserInfoBean(userInfoBean);
+                    getEventBaseFragment().setTextGreeting(AccountManager.getUserInfoBean().name);
                 }
-                AccountManager.setUserInfoBean(userInfoBean);
-                getEventBaseFragment().setTextGreeting(AccountManager.getUserInfoBean().name);
-            }
 
-            @Override
-            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                @Override
+                public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
 
-            }
-        });
+                }
+            });
+        } else {
+            getMyProfileRequest = new GetCTVProfileRequest();
+            getMyProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
+                @Override
+                public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
+                    if (dataSuccess.getFullNameColl() != null) {
+                        userInfoBean.name = dataSuccess.getFullNameColl();
+                    } else {
+                        userInfoBean.name = edtEmail.getText().toString().trim().split("[$&<@%*]")[0];
+                    }
+                    AccountManager.setUserInfoBean(userInfoBean);
+                    getEventBaseFragment().setTextGreeting(AccountManager.getUserInfoBean().name);
+                }
+
+                @Override
+                public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+
+                }
+            });
+        }
     }
 
     @OnClick(R.id.btnLogin)
@@ -325,12 +364,7 @@ public class LoginFragment extends BaseFragment {
                             userInfoBean.nickname = edtEmail.getText().toString().trim();
                             userInfoBean.access_token = data.getApiToken();
                             AccountManager.setUserInfoBean(userInfoBean);
-                            getMyProfile();
-                            if (getActivity() instanceof MainActivity) {
-                                ((MainActivity) getActivity()).drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                            }
-                            getAct().navigationView.setCheckedItem(R.id.nav_home);
-                            FragmentUtil.replaceFragment(getActivity(), new HomeFragment(), null);
+                            getAccount();
                         }
                     }
                 }
@@ -350,8 +384,10 @@ public class LoginFragment extends BaseFragment {
                         wlp.y = 300;
                         window.setAttributes(wlp);
                         TextView tvContent = mNotifydialog.findViewById(R.id.tvContent);
-                        if (errorResponse.getDetail().equalsIgnoreCase("userLock")) {
-                            tvContent.setText(getResources().getString(R.string.user_locked));
+                        if (errorResponse.getDetail() != null) {
+                            if (errorResponse.getDetail().equalsIgnoreCase("userLock")) {
+                                tvContent.setText(getResources().getString(R.string.user_locked));
+                            }
                         }
                         Button btnOK = (Button) mNotifydialog.findViewById(R.id.btnOK);
                         btnOK.setOnClickListener(new View.OnClickListener() {
@@ -365,6 +401,101 @@ public class LoginFragment extends BaseFragment {
                 }
             });
         }
+    }
+
+    private GetAccountRequest getAccountRequest;
+
+    public void getAccount() {
+        getAccountRequest = new GetAccountRequest();
+        getAccountRequest.callRequest(getActivity(), new ApiObjectCallBack<AccountResponse, ErrorResponse>() {
+            @Override
+            public void onSuccess(int status, AccountResponse dataSuccess, List<AccountResponse> listDataSuccess, String message) {
+                if (status == 200) {
+                    hideCoverNetworkLoading();
+                    List<LstMenuAuthority> lstMenuAuthorities = null;
+                    ArrayList<String> listCode = new ArrayList<>();
+                    ArrayList<String> listName = new ArrayList<>();
+                    ArrayList<Integer> listId = new ArrayList<>();
+                    for (int i = 0; i < dataSuccess.getLstMenuAuthority().size(); i++) {
+                        listCode.add(dataSuccess.getLstMenuAuthority().get(i).getCode());
+                        listName.add(dataSuccess.getLstMenuAuthority().get(i).getName());
+                        listId.add(dataSuccess.getLstMenuAuthority().get(i).getId());
+                    }
+                    listCode = removeDuplicates(listCode);
+                    listName = removeDuplicates(listName);
+                    listId = removeDuplicatesInt(listId);
+                    lstMenuAuthorities = new ArrayList<>();
+                    for (int i = 0; i < listCode.size(); i++) {
+                        if (listCode.get(i).equalsIgnoreCase("CTV_JOB_SAVE")) {
+                            lstMenuAuthorities.add(new LstMenuAuthority(listId.get(i), getResources().getString(R.string.my_job), "CTV_JOB"));
+                        } else if (listCode.get(i).equalsIgnoreCase("CTV_JOB_SENT")) {
+
+                        } else if (listCode.get(i).equalsIgnoreCase("CTV_CV_SAVE")) {
+                            lstMenuAuthorities.add(new LstMenuAuthority(listId.get(i), getResources().getString(R.string.mycv), "CTV_CV"));
+                        } else if (listCode.get(i).equalsIgnoreCase("CTV_CV_SEND")) {
+
+                        } else
+                            lstMenuAuthorities.add(new LstMenuAuthority(listId.get(i), listName.get(i), listCode.get(i)));
+                    }
+                    for (int i = 0; i < lstMenuAuthorities.size(); i++) {
+                        if (lstMenuAuthorities.get(i).getId() == 999)
+                            lstMenuAuthorities.remove(lstMenuAuthorities.get(i));
+                    }
+                    userInfoBean.setLstMenuAuthority(lstMenuAuthorities);
+                    userInfoBean.getLstMenuAuthority().add(new LstMenuAuthority(0, getResources().getString(R.string.info_acc_tit), "PROFILE"));
+                    userInfoBean.setLstFunctionAuthority(dataSuccess.getLstFunctionAuthority());
+                    userInfoBean.setType(dataSuccess.getType());
+                    if (dataSuccess.getFirstName() != null) {
+                        userInfoBean.name = dataSuccess.getFirstName();
+                    } else {
+                        userInfoBean.name = edtEmail.getText().toString().trim().split("[$&<@%*]")[0];
+                    }
+                    getMyProfile();
+                    AccountManager.setUserInfoBean(userInfoBean);
+                    getEventBaseFragment().setMenu();
+                    if (getActivity() instanceof MainActivity) {
+                        ((MainActivity) getActivity()).drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                    }
+                    getMainActivity().navigationView.setCheckedItem(R.id.nav_home);
+                    if (AccountManager.getUserInfoBean().getType() == 7 || AccountManager.getUserInfoBean().getType() == 5)
+                        FragmentUtil.replaceFragment(getActivity(), new HomeFragment(), null);
+                    else if (AccountManager.getUserInfoBean().getType() == 2)
+                        FragmentUtil.replaceFragment(getActivity(), new JobsEmployerFragment(), null);
+                    else FragmentUtil.replaceFragment(getActivity(), new HomeFragment(), null);
+                }
+            }
+
+            @Override
+            public void onFail(int status, ErrorResponse
+                    dataFail, List<ErrorResponse> listDataFail, String message) {
+                hideCoverNetworkLoading();
+                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+            }
+        });
+    }
+
+    static ArrayList<String> removeDuplicates(ArrayList<String> list) {
+        ArrayList<String> result = new ArrayList<>();
+        HashSet<String> set = new HashSet<>();
+        for (String item : list) {
+            if (!set.contains(item)) {
+                result.add(item);
+                set.add(item);
+            }
+        }
+        return result;
+    }
+
+    static ArrayList<Integer> removeDuplicatesInt(ArrayList<Integer> list) {
+        ArrayList<Integer> result = new ArrayList<>();
+        HashSet<Integer> set = new HashSet<>();
+        for (Integer item : list) {
+            if (!set.contains(item)) {
+                result.add(item);
+                set.add(item);
+            }
+        }
+        return result;
     }
 
     @Override

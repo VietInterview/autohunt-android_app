@@ -1,5 +1,6 @@
 package com.vietinterview.getbee.api.request;
 
+import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
 
@@ -63,6 +64,7 @@ public class RegistRequest extends BaseJsonRequest<ErrorResponse, ErrorResponse>
         jsonParams.put("email", mEmail);
         jsonParams.put("fullName", mName);
         jsonParams.put("phone", mPhone);
+        jsonParams.put("os", "ANDROID");
         return jsonParams;
     }
 
@@ -78,6 +80,6 @@ public class RegistRequest extends BaseJsonRequest<ErrorResponse, ErrorResponse>
 
     @Override
     protected String getAbsoluteUrl() {
-        return ApiConstant.REGIST;
+        return AccountManager.getApiConstantTest().getREGIST();
     }
 }
