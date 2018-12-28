@@ -14,7 +14,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/ic_pic1_intro" />
 
-    <com.vietinterview.getbee.customview.NunitoBoldTextView
+    <com.vietinterview.getbee.customview.RobotoBoldTextView
         android:id="@+id/tvIntro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <com.vietinterview.getbee.customview.NunitoBoldButton
+        <com.vietinterview.getbee.customview.RobotoBoldButton
             android:id="@+id/btnLogin"
             android:layout_width="155dp"
             android:layout_height="40dp"
@@ -42,7 +42,7 @@
             android:text="@string/login"
             android:textColor="@color/white" />
 
-        <com.vietinterview.getbee.customview.NunitoBoldButton
+        <com.vietinterview.getbee.customview.RobotoBoldButton
             android:id="@+id/btnRegist"
             android:layout_width="155dp"
             android:layout_height="40dp"

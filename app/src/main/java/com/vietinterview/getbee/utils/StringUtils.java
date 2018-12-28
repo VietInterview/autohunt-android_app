@@ -5,15 +5,19 @@ package com.vietinterview.getbee.utils;
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 
+import android.content.Context;
 import android.text.Spannable;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.Patterns;
 
+import com.vietinterview.getbee.AccountManager;
+import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.model.StatusCV;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -324,6 +328,232 @@ public class StringUtils {
         DecimalFormat df = (DecimalFormat) nf;
         df.applyPattern("#,###");
         return df.format(number);
+    }
+
+    public static boolean checkFunction(String code) {
+        boolean isHave = false;
+        for (int i = 0; i < AccountManager.getUserInfoBean().getLstFunctionAuthority().size(); i++) {
+            if (AccountManager.getUserInfoBean().getLstFunctionAuthority().get(i).getCode().equalsIgnoreCase(code)) {
+                isHave = true;
+                break;
+            } else {
+                isHave = false;
+            }
+        }
+        return isHave;
+    }
+
+    public static String genStringLan(int value, Context context) {
+        String valueString;
+        switch (value) {
+            case 1:
+                valueString = context.getResources().getString(R.string.good);
+                break;
+            case 2:
+                valueString = context.getResources().getString(R.string.rather);
+                break;
+            case 3:
+                valueString = context.getResources().getString(R.string.medium);
+                break;
+            case 4:
+                valueString = context.getResources().getString(R.string.least);
+                break;
+
+            default:
+                valueString = "";
+                break;
+        }
+        return valueString;
+    }
+
+    public static String genStringCurrency(int value) {
+        String valueString;
+        switch (value) {
+            case 1:
+                valueString = "VND";
+                break;
+            case 2:
+                valueString = "USD";
+                break;
+            case 3:
+                valueString = "JPY";
+                break;
+            default:
+                valueString = "";
+                break;
+        }
+        return valueString;
+    }
+
+    public static String genString(int value, Context context) {
+        String valueString;
+        switch (value) {
+            case 1:
+                valueString = context.getResources().getString(R.string.below_50);
+                break;
+            case 2:
+                valueString = context.getResources().getString(R.string.from_50_to_100);
+                break;
+            case 3:
+                valueString = context.getResources().getString(R.string.above_100);
+                break;
+            case 4:
+                valueString = context.getResources().getString(R.string.above_500);
+                break;
+            case 5:
+                valueString = context.getResources().getString(R.string.average);
+                break;
+            default:
+                valueString = "";
+                break;
+        }
+        return valueString;
+    }
+
+    public static String genStringSex(int valueSex, Context context) {
+        String Sex = "";
+        switch (valueSex) {
+            case 0:
+                Sex = "Không yêu cầu";
+                break;
+            case 1:
+                Sex = context.getResources().getString(R.string.male);
+                break;
+            case 2:
+                Sex = context.getResources().getString(R.string.female);
+                break;
+            default:
+                Sex = "";
+                break;
+        }
+        return Sex;
+    }
+
+    public static String genStringAge(int valueAge) {
+        String age = "";
+        switch (valueAge) {
+            case 1:
+                age = "Không giới hạn tuổi";
+                break;
+            case 2:
+                age = "Dưới 25 tuổi";
+                break;
+            case 3:
+                age = "Từ 25 - 30 tuổi";
+                break;
+            case 4:
+                age = "Trên 30 tuổi";
+                break;
+            default:
+                age = "";
+                break;
+        }
+        return age;
+    }
+
+    public static String genStringExperience(String valueExperience) {
+        String Experience = "";
+        switch (valueExperience) {
+            case "1":
+                Experience = "Không yêu cầu";
+                break;
+            case "2":
+                Experience = "Dưới 1 năm";
+                break;
+            case "3":
+                Experience = "Từ 1 - 3 năm";
+                break;
+            case "4":
+                Experience = "Trên 3 năm";
+                break;
+            default:
+                Experience = "";
+                break;
+        }
+        return Experience;
+    }
+
+    public static StatusCV genStringStatus(int status, Context context) {
+        StatusCV statusCV = null;
+        switch (status) {
+            case -1:
+                statusCV = new StatusCV(context.getResources().getString(R.string.draft), context.getResources().getDrawable(R.drawable.border_gray), context.getColor(R.color.background_icon_not_focus));
+                break;
+            case 0:
+                statusCV = new StatusCV(context.getResources().getString(R.string.not_send), context.getResources().getDrawable(R.drawable.border_gray), context.getColor(R.color.background_icon_not_focus));
+                break;
+            case 1:
+                statusCV = new StatusCV(context.getResources().getString(R.string.sent), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
+                break;
+            case 2:
+                statusCV = new StatusCV(context.getResources().getString(R.string.approved), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
+                break;
+            case 3:
+                statusCV = new StatusCV(context.getResources().getString(R.string.seen), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
+                break;
+            case 4:
+                statusCV = new StatusCV(context.getResources().getString(R.string.not_accept), context.getResources().getDrawable(R.drawable.border_gray), context.getColor(R.color.background_icon_not_focus));
+                break;
+            case 5:
+                statusCV = new StatusCV(context.getResources().getString(R.string.invite_interview), context.getResources().getDrawable(R.drawable.border_red), context.getColor(R.color.red));
+                break;
+            case 6:
+                statusCV = new StatusCV(context.getResources().getString(R.string.interviewed), context.getResources().getDrawable(R.drawable.border_green), context.getColor(R.color.green));
+                break;
+            case 7:
+                statusCV = new StatusCV(context.getResources().getString(R.string.offered), context.getResources().getDrawable(R.drawable.border_green), context.getColor(R.color.green));
+                break;
+            case 8:
+                statusCV = new StatusCV(context.getResources().getString(R.string.go_to_work), context.getResources().getDrawable(R.drawable.border_green), context.getColor(R.color.green));
+                break;
+            case 9:
+                statusCV = new StatusCV(context.getResources().getString(R.string.contract), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
+                break;
+            case 10:
+                statusCV = new StatusCV(context.getResources().getString(R.string.done), context.getResources().getDrawable(R.drawable.border_gray), context.getColor(R.color.background_icon_not_focus));
+                break;
+        }
+        return statusCV;
+    }
+
+    public static StatusCV genStringStatusCVNTD(int status, Context context) {
+        StatusCV statusCV = null;
+        switch (status) {
+            case -1:
+                statusCV = new StatusCV(context.getResources().getString(R.string.draft), context.getResources().getDrawable(R.drawable.border_gray_12), context.getColor(R.color.background_icon_not_focus));
+                break;
+            case 0:
+                statusCV = new StatusCV(context.getResources().getString(R.string.not_send), context.getResources().getDrawable(R.drawable.border_gray_12), context.getColor(R.color.background_icon_not_focus));
+                break;
+            case 1:
+                statusCV = new StatusCV(context.getResources().getString(R.string.sent), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
+                break;
+            case 2:
+                statusCV = new StatusCV(context.getResources().getString(R.string.not_seen), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
+                break;
+            case 3:
+                statusCV = new StatusCV(context.getResources().getString(R.string.seen), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
+                break;
+            case 4:
+                statusCV = new StatusCV(context.getResources().getString(R.string.not_accept), context.getResources().getDrawable(R.drawable.border_gray_12), context.getColor(R.color.background_icon_not_focus));
+                break;
+            case 5:
+                statusCV = new StatusCV(context.getResources().getString(R.string.invite_interview), context.getResources().getDrawable(R.drawable.border_red), context.getColor(R.color.red));
+                break;
+            case 6:
+                statusCV = new StatusCV(context.getResources().getString(R.string.interviewed), context.getResources().getDrawable(R.drawable.border_green), context.getColor(R.color.green));
+                break;
+            case 7:
+                statusCV = new StatusCV(context.getResources().getString(R.string.offered), context.getResources().getDrawable(R.drawable.border_green), context.getColor(R.color.green));
+                break;
+            case 8:
+                statusCV = new StatusCV(context.getResources().getString(R.string.go_to_work), context.getResources().getDrawable(R.drawable.border_green), context.getColor(R.color.green));
+                break;
+            case 9:
+                statusCV = new StatusCV(context.getResources().getString(R.string.contract), context.getResources().getDrawable(R.drawable.border_yellow), context.getColor(R.color.yellow_highlight));
+                break;
+        }
+        return statusCV;
     }
 }
 

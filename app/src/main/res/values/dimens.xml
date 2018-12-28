@@ -12,4 +12,6 @@
     <dimen name="fab_circle_radius">25dp</dimen>
     <dimen name="font_greeting">30sp</dimen>
     <dimen name="font_menu_left">24sp</dimen>
+    <dimen name="radius_corner">10sp</dimen>
+    <dimen name="elevation">2sp</dimen>
 </resources>

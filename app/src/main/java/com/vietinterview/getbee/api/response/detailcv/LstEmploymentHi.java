@@ -32,7 +32,7 @@ public class LstEmploymentHi {
     private String jobDescription;
     @SerializedName("salary")
     @Expose
-    private Integer salary;
+    private Long salary;
     @SerializedName("salaryCurency")
     @Expose
     private Integer salaryCurency;
@@ -118,11 +118,11 @@ public class LstEmploymentHi {
         this.jobDescription = jobDescription;
     }
 
-    public Integer getSalary() {
+    public Long getSalary() {
         return salary;
     }
 
-    public void setSalary(Integer salary) {
+    public void setSalary(Long salary) {
         this.salary = salary;
     }
 

@@ -11,7 +11,7 @@ public class ApiConstant {
 
     public static final boolean IS_DEBUG_BUILD_TYPE = BuildConfig.BUILD_TYPE.equals("debug");
 
-    public static final int REQUEST_TIMEOUT = 20;
+    public static final int REQUEST_TIMEOUT = 5;
     public static final int LIMIT = 30;
 
     //Server KH
@@ -42,8 +42,13 @@ public class ApiConstant {
     public final static String DELETE_MY_CV = BASE_URL + "svccollaborator/api/cvs/delete";
     public final static String GET_DETAIL_CV = BASE_URL + "svccollaborator/api/cvs/getCvById";
     public final static String SUBMIT_CV = BASE_URL + "svccollaborator/api/cvs/submitCvVesionMobile";
-    public final static String GET_MY_PROFILE = BASE_URL + "svccollaborator/api/getProfiles";
+    public final static String GET_CTV_PROFILE = BASE_URL + "svccollaborator/api/getProfiles";
+    public final static String GET_CUS_PROFILE = BASE_URL + "svccustomer/api/getProfiles";
     public final static String UPDATE_MY_PROFILE = BASE_URL + "svccollaborator/api/saveProfile";
     public final static String CHANGE_PASSWORD = BASE_URL + "api/account/change-password";
     public final static String GET_MY_ACCOUNT = BASE_URL + "api/account";
+    public final static String GET_JOB_CUSTOMER = BASE_URL + "svccustomer/api/searchCusHome";
+    public final static String GET_DETAIL_JOB_CUSTOMER = BASE_URL + "svccustomer/api/cusjobs/getJobById";
+    public final static String GET_CV_BY_JOB_CUSTOMER = BASE_URL + "svccustomer/api/searchCusHomeCvByJob";
+    public final static String GET_DETAIL_CV_BY_JOB_CUSTOMER = BASE_URL + "svccollaborator/api/cvs/getViewCvById";
 }

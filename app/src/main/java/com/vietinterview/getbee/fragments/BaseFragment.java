@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -28,8 +27,6 @@ import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.api.request.BaseJsonRequest;
 import com.vietinterview.getbee.api.request.BaseRequest;
 import com.vietinterview.getbee.model.Event;
-import com.vietinterview.getbee.utils.DebugLog;
-import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.KeyboardUtil;
 import com.vietinterview.getbee.utils.UiUtil;
 
@@ -42,34 +39,28 @@ import butterknife.ButterKnife;
  * Created by Envy 15T on 6/4/2015.
  */
 public abstract class BaseFragment extends Fragment {
-    private static ProgressDialog progressDlg;
-    protected View rootView;
-    protected static final String PARAM_BUNDLE = "PARAM_BUNDLE";
-    private Bundle savedState;
-    protected ViewGroup fragmentViewParent;
-    BaseActivity baseActivity;
 
     @BindView(R.id.initialProgressBar)
     View initialProgressBar;
-
     @BindView(R.id.initialNetworkError)
     View initialNetworkError;
-
     @BindView(R.id.initialEmptyList)
     View initialEmptyList;
-
     @BindView(R.id.coverNetworkLoading)
     View coverNetworkLoading;
-
     @BindView(R.id.common_layout)
     LinearLayout linearLayoutEmpty;
     @BindView(R.id.common_txt_empty)
     TextView tvEmpty;
     LayoutInflater mInflater;
     ViewGroup mContainer;
-    MainActivity act;
-    //    CreateNewCVActivity createNewCVActivity;
-    private GestureDetectorCompat gestureDetectorCompat = null;
+    MainActivity mainActivity;
+    private static ProgressDialog progressDlg;
+    protected View rootView;
+    protected static final String PARAM_BUNDLE = "PARAM_BUNDLE";
+    private Bundle savedState;
+    protected ViewGroup fragmentViewParent;
+    BaseActivity baseActivity;
 
     protected boolean isLoading = false;
 
@@ -89,14 +80,9 @@ public abstract class BaseFragment extends Fragment {
         return coverNetworkLoading;
     }
 
-    public TextView getTvEmpty() {
-        return tvEmpty;
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        baseActivity = baseActivity;
         if (context instanceof BaseActivity)
             baseActivity = (BaseActivity) context;
     }
@@ -117,10 +103,6 @@ public abstract class BaseFragment extends Fragment {
         } else {
             onRestore();
         }
-    }
-
-    protected boolean isDisableOnHeaderIconClickListenerAttach() {
-        return false;
     }
 
     private View createRootView(LayoutInflater inflater, ViewGroup container) {
@@ -161,10 +143,6 @@ public abstract class BaseFragment extends Fragment {
         baseActivity = (BaseActivity) getActivity();
         initView(rootView, mInflater, mContainer);
         initData();
-    }
-
-    public GestureDetectorCompat getGestureDetectorCompat() {
-        return gestureDetectorCompat;
     }
 
     public void setCustomToolbar(boolean isCustom) {
@@ -220,10 +198,9 @@ public abstract class BaseFragment extends Fragment {
         return baseActivity.getEventBaseActivity();
     }
 
-    public MainActivity getAct() {
-        return act;
+    public MainActivity getMainActivity() {
+        return mainActivity;
     }
-
 
     public void showProgressDialog(boolean cancleable) {
         if (progressDlg != null && progressDlg.isShowing()) {
@@ -346,11 +323,11 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void customToolbar(boolean isCustom) {
-        act = (MainActivity) getActivity();
+        mainActivity = (MainActivity) getActivity();
         if (isCustom) {
-            if (act.getSupportActionBar() != null) {
-                act.getSupportActionBar().show();
-                Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
+            if (mainActivity.getSupportActionBar() != null) {
+                mainActivity.getSupportActionBar().show();
+                Toolbar toolbar = (Toolbar) mainActivity.findViewById(R.id.toolbar);
                 toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
                 toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
 
@@ -367,20 +344,20 @@ public abstract class BaseFragment extends Fragment {
                 });
             }
         } else {
-            if (act.getSupportActionBar() != null) {
-                act.getSupportActionBar().hide();
-                Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
+            if (mainActivity.getSupportActionBar() != null) {
+                mainActivity.getSupportActionBar().hide();
+                Toolbar toolbar = (Toolbar) mainActivity.findViewById(R.id.toolbar);
                 toolbar.setNavigationIcon(null);
             }
         }
     }
 
     protected void showhidetoolbar(boolean isVisible) {
-        act = (MainActivity) getActivity();
+        mainActivity = (MainActivity) getActivity();
         if (isVisible) {
-            if (act.getSupportActionBar() != null) {
-                act.getSupportActionBar().show();
-                Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
+            if (mainActivity.getSupportActionBar() != null) {
+                mainActivity.getSupportActionBar().show();
+                Toolbar toolbar = (Toolbar) mainActivity.findViewById(R.id.toolbar);
                 toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
                 toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
                 toolbar.setVisibility(View.VISIBLE);
@@ -397,19 +374,19 @@ public abstract class BaseFragment extends Fragment {
                 });
             }
         } else {
-            if (act.getSupportActionBar() != null) {
-                act.getSupportActionBar().hide();
-                Toolbar toolbar = (Toolbar) act.findViewById(R.id.toolbar);
+            if (mainActivity.getSupportActionBar() != null) {
+                mainActivity.getSupportActionBar().hide();
+                Toolbar toolbar = (Toolbar) mainActivity.findViewById(R.id.toolbar);
                 toolbar.setVisibility(View.GONE);
             }
         }
     }
 
     protected void loadMenuLeft() {
-        if (act.drawer.isDrawerOpen(GravityCompat.START)) {
-            act.drawer.closeDrawer(GravityCompat.START);
+        if (mainActivity.drawer.isDrawerOpen(GravityCompat.START)) {
+            mainActivity.drawer.closeDrawer(GravityCompat.START);
         } else {
-            act.drawer.openDrawer(GravityCompat.START);
+            mainActivity.drawer.openDrawer(GravityCompat.START);
         }
     }
 
@@ -419,10 +396,6 @@ public abstract class BaseFragment extends Fragment {
 
     protected void processCustomToolbar() {
 
-    }
-
-    public boolean isInterceptBackButton() {
-        return false;
     }
 
     protected boolean isStartWithLoading() {

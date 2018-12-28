@@ -21,6 +21,7 @@ import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.ChangePasswordRequest;
 import com.vietinterview.getbee.api.response.ErrorChangePassResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.StringUtils;
 
@@ -62,6 +63,7 @@ public class ChangePasswordFragment extends BaseFragment {
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbar(true);
         setHasOptionsMenu(true);
+        GlobalDefine.currentFragment = this;
         edtOldPass.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

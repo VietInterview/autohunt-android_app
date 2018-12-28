@@ -61,6 +61,6 @@ public class GetListCareerRequest extends BaseRequest<CareerResponse, ErrorRespo
 
     @Override
     protected String getAbsoluteUrl() {
-        return ApiConstant.GET_LIST_CARRER;
+        return AccountManager.getApiConstantTest().getGET_LIST_CARRER();
     }
 }

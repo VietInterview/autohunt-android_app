@@ -16,7 +16,7 @@ import static org.droidparts.util.Strings.isNotEmpty;
  * Created by V4-OS01 on 25/11/2016.
  */
 
-public class ClearableRegularEditText extends NunitoEditText implements View.OnTouchListener, View.OnFocusChangeListener, TextWatcherListener {
+public class ClearableRegularEditText extends RobotoEditText implements View.OnTouchListener, View.OnFocusChangeListener, TextWatcherListener {
 
     public static enum Location {
         LEFT(0), RIGHT(2);

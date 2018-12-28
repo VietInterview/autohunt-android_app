@@ -56,12 +56,8 @@ public class NonSwipeableViewPager extends ViewPager {
 
             if (Math.abs(diffX) > SWIPE_THRESHOLD) {
                 if (diffX > 0) {
-                    // swipe from left to right detected ie.SwipeRight
-//                    DebugLog.showLogCat("Right");
                     result = false;
                 } else {
-                    // swipe from right to left detected ie.SwipeLeft
-//                    DebugLog.showLogCat("Left");
                     result = true;
                 }
             }

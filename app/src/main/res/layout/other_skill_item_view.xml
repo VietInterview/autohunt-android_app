@@ -16,7 +16,7 @@
             android:layout_marginRight="8dp"
             android:background="@drawable/dot" />
 
-        <com.vietinterview.getbee.customview.NunitoBoldTextView
+        <com.vietinterview.getbee.customview.RobotoBoldTextView
             android:id="@+id/tvSkillOther"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -10,7 +10,7 @@ import android.util.AttributeSet;
  * Created by hiepnguyennghia on 10/10/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class CircularTextView extends NunitoTextView {
+public class CircularTextView extends RobotoTextView {
     private float strokeWidth;
     int strokeColor, solidColor;
 

@@ -34,10 +34,10 @@ public class DetailJobResponse implements Parcelable {
     private Integer quantity;
     @SerializedName("fromSalary")
     @Expose
-    private Integer fromSalary;
+    private Long fromSalary;
     @SerializedName("toSalary")
     @Expose
-    private Integer toSalary;
+    private Long toSalary;
     @SerializedName("currency")
     @Expose
     private Integer currency;
@@ -144,12 +144,12 @@ public class DetailJobResponse implements Parcelable {
         if (in.readByte() == 0) {
             fromSalary = null;
         } else {
-            fromSalary = in.readInt();
+            fromSalary = in.readLong();
         }
         if (in.readByte() == 0) {
             toSalary = null;
         } else {
-            toSalary = in.readInt();
+            toSalary = in.readLong();
         }
         if (in.readByte() == 0) {
             currency = null;
@@ -325,19 +325,19 @@ public class DetailJobResponse implements Parcelable {
         this.quantity = quantity;
     }
 
-    public Integer getFromSalary() {
+    public Long getFromSalary() {
         return fromSalary;
     }
 
-    public void setFromSalary(Integer fromSalary) {
+    public void setFromSalary(Long fromSalary) {
         this.fromSalary = fromSalary;
     }
 
-    public Integer getToSalary() {
+    public Long getToSalary() {
         return toSalary;
     }
 
-    public void setToSalary(Integer toSalary) {
+    public void setToSalary(Long toSalary) {
         this.toSalary = toSalary;
     }
 
@@ -560,13 +560,13 @@ public class DetailJobResponse implements Parcelable {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeInt(fromSalary);
+            parcel.writeLong(fromSalary);
         }
         if (toSalary == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeInt(toSalary);
+            parcel.writeLong(toSalary);
         }
         if (currency == null) {
             parcel.writeByte((byte) 0);

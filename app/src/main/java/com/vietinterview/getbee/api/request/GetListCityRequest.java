@@ -59,6 +59,6 @@ public class GetListCityRequest extends BaseRequest<CityResponse, ErrorResponse>
 
     @Override
     protected String getAbsoluteUrl() {
-        return ApiConstant.GET_LIST_CITY;
+        return AccountManager.getApiConstantTest().getGET_LIST_CITY();
     }
 }

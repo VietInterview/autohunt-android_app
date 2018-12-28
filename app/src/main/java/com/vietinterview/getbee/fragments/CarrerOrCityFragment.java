@@ -28,9 +28,9 @@ import com.vietinterview.getbee.api.response.CareerResponse;
 import com.vietinterview.getbee.api.response.CityResponse;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
-import com.vietinterview.getbee.callback.OnClearCheckedListener;
-import com.vietinterview.getbee.customview.NunitoEditText;
-import com.vietinterview.getbee.customview.NunitoTextView;
+import com.vietinterview.getbee.constant.GlobalDefine;
+import com.vietinterview.getbee.customview.RobotoEditText;
+import com.vietinterview.getbee.customview.RobotoTextView;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
@@ -50,9 +50,9 @@ public class CarrerOrCityFragment extends BaseFragment {
     @BindView(R.id.list)
     public ListView listView;
     @BindView(R.id.tvHeader)
-    NunitoTextView tvHeader;
+    RobotoTextView tvHeader;
     @BindView(R.id.edtSearchJob)
-    NunitoEditText edtSearchJob;
+    RobotoEditText edtSearchJob;
     GetListCareerRequest getListCareerRequest;
     GetListCityRequest getListCityRequest;
     CarrerAdapter carrerAdapter;
@@ -90,6 +90,7 @@ public class CarrerOrCityFragment extends BaseFragment {
         tvHeader.setText(mIsCity ? getResources().getString(R.string.all_city) : getResources().getString(R.string.all_carrer));
         setCustomToolbar(true);
         setHasOptionsMenu(true);
+        GlobalDefine.currentFragment = this;
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
@@ -232,7 +233,6 @@ public class CarrerOrCityFragment extends BaseFragment {
 
         for (int i = 0; i < checkedItems.size(); i++) {
             if (checkedItems.size() > 0) {
-                DebugLog.showLogCat(checkedItems.size() + " - " + listView.getCount() + " - " + i);
                 if (checkedItems.valueAt(i)) {
                     result.add((CareerResponse) listView.getItemAtPosition(checkedItems.keyAt(i)));
                 }
@@ -282,8 +282,8 @@ public class CarrerOrCityFragment extends BaseFragment {
             textView.setText(getResources().getString(R.string.choose));
             textView.setPadding(0, 0, 16, 0);
             textView.setTextSize(18);
-            textView.setTextColor(Color.BLACK);
-            Typeface font = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "fonts/Nunito-Bold.ttf");
+            textView.setTextColor(getResources().getColor(R.color.iconcolor));
+            Typeface font = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "fonts/Roboto-Bold.ttf");
             textView.setTypeface(font);
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -362,9 +362,9 @@ public class CarrerOrCityFragment extends BaseFragment {
             TextView textView = (TextView) menuItem.getActionView();
             textView.setText(getResources().getString(R.string.choose));
             textView.setTextSize(18);
-            textView.setTextColor(Color.BLACK);
+            textView.setTextColor(getResources().getColor(R.color.iconcolor));
             textView.setPadding(0, 0, 16, 0);
-            Typeface font = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "fonts/Nunito-Bold.ttf");
+            Typeface font = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "fonts/Roboto-Bold.ttf");
             textView.setTypeface(font);
         }
     }

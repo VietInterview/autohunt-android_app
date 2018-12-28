@@ -1,6 +1,7 @@
 
 package com.vietinterview.getbee.api.response.account;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -57,7 +58,7 @@ public class AccountResponse {
     private String phone;
     @SerializedName("lstMenuAuthority")
     @Expose
-    private List<LstMenuAuthority> lstMenuAuthority = null;
+    private ArrayList<LstMenuAuthority> lstMenuAuthority = null;
     @SerializedName("lstFunctionAuthority")
     @Expose
     private List<LstFunctionAuthority> lstFunctionAuthority = null;
@@ -193,11 +194,11 @@ public class AccountResponse {
         this.phone = phone;
     }
 
-    public List<LstMenuAuthority> getLstMenuAuthority() {
+    public ArrayList<LstMenuAuthority> getLstMenuAuthority() {
         return lstMenuAuthority;
     }
 
-    public void setLstMenuAuthority(List<LstMenuAuthority> lstMenuAuthority) {
+    public void setLstMenuAuthority(ArrayList<LstMenuAuthority> lstMenuAuthority) {
         this.lstMenuAuthority = lstMenuAuthority;
     }
 

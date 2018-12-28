@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.res.Configuration;
 
 import com.bumptech.glide.request.target.ViewTarget;
+import com.vietinterview.getbee.constant.ApiConstant;
+import com.vietinterview.getbee.constant.ApiConstantTest;
 import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
 
@@ -17,6 +19,7 @@ public class GetBeeApplication extends Application {
     public static String sDefSystemLanguage;
     private static GetBeeApplication instance;
     private static SharedPrefUtils sharedPreferences;
+
     public GetBeeApplication() {
         instance = this;
     }
@@ -31,7 +34,7 @@ public class GetBeeApplication extends Application {
         ViewTarget.setTagId(R.id.glide_tag);
         sDefSystemLanguage = Locale.getDefault().getLanguage();
         sharedPreferences = new SharedPrefUtils(getApplicationContext());
-        SharedPrefUtils.putString(AppConstant.LANGUAGE, sDefSystemLanguage);
+        SharedPrefUtils.putString(AppConstant.LANGUAGE, "vi");
     }
 
     @Override

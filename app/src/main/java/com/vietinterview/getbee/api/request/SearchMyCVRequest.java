@@ -71,6 +71,6 @@ public class SearchMyCVRequest extends BaseRequest<CVResponse,ErrorResponse> {
 
     @Override
     protected String getAbsoluteUrl() {
-        return ApiConstant.SEARCH_MY_CV;
+        return AccountManager.getApiConstantTest().getSEARCH_MY_CV();
     }
 }

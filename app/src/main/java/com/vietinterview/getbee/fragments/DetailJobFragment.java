@@ -14,7 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -23,12 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.adapter.MyCVChoiceAdapter;
 import com.vietinterview.getbee.adapter.ViewPagerAdapter;
 import com.vietinterview.getbee.api.request.BaseJsonRequest;
 import com.vietinterview.getbee.api.request.BaseRequest;
@@ -38,12 +32,10 @@ import com.vietinterview.getbee.api.request.SearchMyCVRequest;
 import com.vietinterview.getbee.api.response.AddRemoveJobResponse;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.detailjob.DetailJobResponse;
-import com.vietinterview.getbee.api.response.jobs.JobList;
 import com.vietinterview.getbee.api.response.listcv.CVResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnSetHeightViewListener;
 import com.vietinterview.getbee.constant.GlobalDefine;
-import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.ShowImageUtils;
@@ -88,7 +80,7 @@ public class DetailJobFragment extends BaseFragment {
     private SearchMyCVRequest searchMyCVRequest;
     InfoFragment infoFragment;
     StatisticalFragment statisticalFragment;
-    CVSentFragment cvSentFragment;
+    ResumeSentFragment cvSentFragment;
     DetailJobResponse mDetailJobResponse;
     private int jobID;
 
@@ -213,7 +205,7 @@ public class DetailJobFragment extends BaseFragment {
             }
             infoFragment = new InfoFragment().newInstance(mDetailJobResponse);
             statisticalFragment = new StatisticalFragment().newInstance(mDetailJobResponse);
-            cvSentFragment = new CVSentFragment().newInstance(mDetailJobResponse);
+            cvSentFragment = new ResumeSentFragment().newInstance(mDetailJobResponse);
             setupViewPager(viewPager);
             tabLayout.setupWithViewPager(viewPager);
             setupTabIcons();
@@ -287,7 +279,7 @@ public class DetailJobFragment extends BaseFragment {
 
     @OnClick(R.id.btnApplyCV)
     public void onApplyCVClick() {
-//        FragmentUtil.pushFragment(getActivity(), this, new ChoiceCVFragment().newInstance(mDetailJobResponse), null);
+//        FragmentUtil.pushFragment(getActivity(), this, new ChoiceResumeFragment().newInstance(mDetailJobResponse), null);
         searchMyCV(0, 0, 0);
     }
 
@@ -300,7 +292,7 @@ public class DetailJobFragment extends BaseFragment {
                 hideCoverNetworkLoading();
                 if (isAdded()) {
                     if (data.getCvList().size() > 0)
-                        FragmentUtil.pushFragment(getActivity(), DetailJobFragment.this, new ChoiceCVFragment().newInstance(mDetailJobResponse, data), null);
+                        FragmentUtil.pushFragment(getActivity(), DetailJobFragment.this, new ChoiceResumeFragment().newInstance(mDetailJobResponse, data), null);
                     else {
                         DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.no_choice_cv));
                     }
@@ -376,7 +368,7 @@ public class DetailJobFragment extends BaseFragment {
                     }
                     infoFragment = new InfoFragment().newInstance(mDetailJobResponse);
                     statisticalFragment = new StatisticalFragment().newInstance(mDetailJobResponse);
-                    cvSentFragment = new CVSentFragment().newInstance(mDetailJobResponse);
+                    cvSentFragment = new ResumeSentFragment().newInstance(mDetailJobResponse);
                     setupViewPager(viewPager);
                     tabLayout.setupWithViewPager(viewPager);
                     setupTabIcons();

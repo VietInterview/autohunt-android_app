@@ -3,7 +3,7 @@ package com.vietinterview.getbee.api.request;
 import com.google.gson.reflect.TypeToken;
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.api.response.ErrorResponse;
-import com.vietinterview.getbee.api.response.myprofile.MyProfileResponse;
+import com.vietinterview.getbee.api.response.ctvprofile.MyProfileResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
 import com.vietinterview.getbee.model.Carrer;
 
@@ -100,6 +100,6 @@ public class SaveMyProfileRequest extends BaseJsonRequest<MyProfileResponse, Err
 
     @Override
     protected String getAbsoluteUrl() {
-        return ApiConstant.UPDATE_MY_PROFILE;
+        return AccountManager.getApiConstantTest().getUPDATE_MY_PROFILE();
     }
 }

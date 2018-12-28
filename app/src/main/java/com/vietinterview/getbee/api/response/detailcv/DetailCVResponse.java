@@ -58,7 +58,7 @@ public class DetailCVResponse implements Parcelable {
     private DesiredLevel desiredLevel;
     @SerializedName("desiredSalary")
     @Expose
-    private Integer desiredSalary;
+    private Long desiredSalary;
     @SerializedName("educationLevel")
     @Expose
     private EducationLevel educationLevel;
@@ -73,7 +73,7 @@ public class DetailCVResponse implements Parcelable {
     private Long fee;
     @SerializedName("fromSalary")
     @Expose
-    private Integer fromSalary;
+    private Long fromSalary;
     @SerializedName("fullName")
     @Expose
     private String fullName;
@@ -130,7 +130,7 @@ public class DetailCVResponse implements Parcelable {
     private Integer supporterId;
     @SerializedName("toSalary")
     @Expose
-    private Integer toSalary;
+    private Long toSalary;
     @SerializedName("updatedBy")
     @Expose
     private Integer updatedBy;
@@ -184,7 +184,7 @@ public class DetailCVResponse implements Parcelable {
         if (in.readByte() == 0) {
             desiredSalary = null;
         } else {
-            desiredSalary = in.readInt();
+            desiredSalary = in.readLong();
         }
         email = in.readString();
         if (in.readByte() == 0) {
@@ -195,7 +195,7 @@ public class DetailCVResponse implements Parcelable {
         if (in.readByte() == 0) {
             fromSalary = null;
         } else {
-            fromSalary = in.readInt();
+            fromSalary = in.readLong();
         }
         fullName = in.readString();
         if (in.readByte() == 0) {
@@ -228,7 +228,7 @@ public class DetailCVResponse implements Parcelable {
         if (in.readByte() == 0) {
             toSalary = null;
         } else {
-            toSalary = in.readInt();
+            toSalary = in.readLong();
         }
         if (in.readByte() == 0) {
             updatedBy = null;
@@ -394,11 +394,11 @@ public class DetailCVResponse implements Parcelable {
         this.desiredLevel = desiredLevel;
     }
 
-    public Integer getDesiredSalary() {
+    public Long getDesiredSalary() {
         return desiredSalary;
     }
 
-    public void setDesiredSalary(Integer desiredSalary) {
+    public void setDesiredSalary(Long desiredSalary) {
         this.desiredSalary = desiredSalary;
     }
 
@@ -434,11 +434,11 @@ public class DetailCVResponse implements Parcelable {
         this.fee = fee;
     }
 
-    public Integer getFromSalary() {
+    public Long getFromSalary() {
         return fromSalary;
     }
 
-    public void setFromSalary(Integer fromSalary) {
+    public void setFromSalary(Long fromSalary) {
         this.fromSalary = fromSalary;
     }
 
@@ -586,11 +586,11 @@ public class DetailCVResponse implements Parcelable {
         this.supporterId = supporterId;
     }
 
-    public Integer getToSalary() {
+    public Long getToSalary() {
         return toSalary;
     }
 
-    public void setToSalary(Integer toSalary) {
+    public void setToSalary(Long toSalary) {
         this.toSalary = toSalary;
     }
 
@@ -665,7 +665,7 @@ public class DetailCVResponse implements Parcelable {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeInt(desiredSalary);
+            parcel.writeLong(desiredSalary);
         }
         parcel.writeString(email);
         if (fee == null) {
@@ -678,7 +678,7 @@ public class DetailCVResponse implements Parcelable {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeInt(fromSalary);
+            parcel.writeLong(fromSalary);
         }
         parcel.writeString(fullName);
         if (id == null) {
@@ -716,7 +716,7 @@ public class DetailCVResponse implements Parcelable {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeInt(toSalary);
+            parcel.writeLong(toSalary);
         }
         if (updatedBy == null) {
             parcel.writeByte((byte) 0);

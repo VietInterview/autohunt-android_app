@@ -1,8 +1,8 @@
 package com.vietinterview.getbee.activities;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -11,9 +11,9 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -24,25 +24,30 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.api.request.GetAccountRequest;
-import com.vietinterview.getbee.api.response.ErrorResponse;
-import com.vietinterview.getbee.api.response.account.AccountResponse;
+import com.vietinterview.getbee.api.request.UpdateOSRequest;
+import com.vietinterview.getbee.api.response.account.LstMenuAuthority;
+import com.vietinterview.getbee.api.response.login.ErrorLoginResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnFillBackgroundListener;
+import com.vietinterview.getbee.callback.OnSetMenuListener;
 import com.vietinterview.getbee.callback.OnSetTextGreetingListener;
 import com.vietinterview.getbee.callback.OnShowLogoListener;
+import com.vietinterview.getbee.constant.ApiConstant;
+import com.vietinterview.getbee.constant.ApiConstantTest;
 import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.customview.CircularTextView;
 import com.vietinterview.getbee.customview.CustomTypefaceSpan;
+import com.vietinterview.getbee.fragments.CustomerProfileFragment;
 import com.vietinterview.getbee.fragments.HomeFragment;
 import com.vietinterview.getbee.fragments.IntroFragment;
+import com.vietinterview.getbee.fragments.JobsEmployerFragment;
 import com.vietinterview.getbee.fragments.LoginFragment;
-import com.vietinterview.getbee.fragments.MyCVFragment;
+import com.vietinterview.getbee.fragments.MyResumeFragment;
 import com.vietinterview.getbee.fragments.MyJobFragment;
-import com.vietinterview.getbee.fragments.MyProfileFragment;
+import com.vietinterview.getbee.fragments.CollaboratorProfileFragment;
+import com.vietinterview.getbee.model.DeviceUuidFactory;
 import com.vietinterview.getbee.utils.DebugLog;
-import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
 
@@ -69,7 +74,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public ActionBarDrawerToggle toggle;
     CircularTextView slideshow;
     CircularTextView gallery;
-    private GetAccountRequest getAccountRequest;
 
     @Override
     public int setContentViewId() {
@@ -78,6 +82,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void initView() {
+        if (AccountManager.getApiConstantTest() == null) {
+            ApiConstantTest apiConstantInit = new ApiConstantTest();
+            apiConstantInit.setBASE_URL(ApiConstant.REAL_URL);
+            apiConstantInit.setIMG_URL(ApiConstant.IMG_URL_REAL);
+            AccountManager.setApiConstantTest(apiConstantInit);
+        }
         setLanguage(SharedPrefUtils.getString(AppConstant.LANGUAGE, "vi"));
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setSupportActionBar(toolbar);
@@ -126,7 +136,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         });
         if (AccountManager.getUserInfoBean() != null)
             if (AccountManager.getUserInfoBean().getName() != null) {
-                if (AccountManager.getUserInfoBean().getName().length() <= 6) {
+                if (AccountManager.getUserInfoBean().getName().length() <= 12) {
                     tvGreeting.setText(getResources().getString(R.string.greeting) + " " + AccountManager.getUserInfoBean().getName() + "!");
                 } else {
                     tvGreeting.setText(getResources().getString(R.string.greeting) + "\n" + AccountManager.getUserInfoBean().getName() + "!");
@@ -135,7 +145,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         getEventBaseActivity().setOnSetTextGreetingListener(new OnSetTextGreetingListener() {
             @Override
             public void onSetTextGreeting(String name) {
-                if (name.length() <= 6) {
+                if (name.length() <= 12) {
                     tvGreeting.setText(getResources().getString(R.string.greeting) + " " + name + "!");
                 } else {
                     tvGreeting.setText(getResources().getString(R.string.greeting) + "\n" + name + "!");
@@ -182,12 +192,47 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 findItem(R.id.nav_cv));
         slideshow.setVisibility(View.GONE);
         gallery.setVisibility(View.GONE);
-        initializeCountDrawer();
+//        initializeCountDrawer();
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        Menu m = navigationView.getMenu();
-        for (int i = 0; i < m.size(); i++) {
-            MenuItem mi = m.getItem(i);
+        final Menu menu = navigationView.getMenu();
+        navigationView.getMenu().clear();
+        getEventBaseActivity().setOnSetMenuListener(new OnSetMenuListener() {
+            @Override
+            public void onSetMenu() {
+                navigationView.getMenu().clear();
+                for (LstMenuAuthority lstMenuAuthority : AccountManager.getUserInfoBean().getLstMenuAuthority()) {
+                    menu.add(lstMenuAuthority.getId(), lstMenuAuthority.getId(), 0, lstMenuAuthority.getName());
+
+                }
+                for (int i = 0; i < menu.size(); i++) {
+                    MenuItem mi = menu.getItem(i);
+                    mi.setCheckable(true);
+                    mi.setChecked(true);
+                    setIcon(mi);
+                    SubMenu subMenu = mi.getSubMenu();
+                    if (subMenu != null && subMenu.size() > 0) {
+                        for (int j = 0; j < subMenu.size(); j++) {
+                            MenuItem subMenuItem = subMenu.getItem(j);
+                            applyFontToMenuItem(subMenuItem);
+                        }
+                    }
+                    applyFontToMenuItem(mi);
+                }
+            }
+        });
+        if (AccountManager.getUserInfoBean() != null) {
+            for (LstMenuAuthority lstMenuAuthority : AccountManager.getUserInfoBean().getLstMenuAuthority()) {
+                menu.add(lstMenuAuthority.getId(), lstMenuAuthority.getId(), 0, lstMenuAuthority.getName());
+
+            }
+        } else
+            navigationView.inflateMenu(R.menu.menu_left_ctv_drawer);
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem mi = menu.getItem(i);
+            mi.setCheckable(true);
+            mi.setChecked(true);
+            if (AccountManager.getUserInfoBean() != null) setIcon(mi);
             SubMenu subMenu = mi.getSubMenu();
             if (subMenu != null && subMenu.size() > 0) {
                 for (int j = 0; j < subMenu.size(); j++) {
@@ -211,7 +256,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void applyFontToMenuItem(MenuItem mi) {
-        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Nunito-Regular.ttf");
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
         mNewTitle.setSpan(new CustomTypefaceSpan((int) getResources().getDimension(R.dimen.font_menu_left), "", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mi.setTitle(mNewTitle);
@@ -229,19 +274,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             FragmentUtil.replaceFragment(MainActivity.this, new IntroFragment(), null);
         } else {
             if (AccountManager.getUserInfoBean() != null) {
-                getAccount();
-                if (GlobalDefine.currentFragment == null || GlobalDefine.currentFragment instanceof HomeFragment) {
+                updateOs();
+                if (GlobalDefine.currentFragment == null || GlobalDefine.currentFragment instanceof HomeFragment || GlobalDefine.currentFragment instanceof JobsEmployerFragment) {
                     drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                    navigationView.setCheckedItem(R.id.nav_home);
-                    FragmentUtil.replaceFragment(this, new HomeFragment(), null);
-                } else {
-                    if (GlobalDefine.currentFragment instanceof MyJobFragment) {
-                        navigationView.setCheckedItem(R.id.nav_job);
-                    } else if (GlobalDefine.currentFragment instanceof MyCVFragment) {
-                        navigationView.setCheckedItem(R.id.nav_cv);
-                    } else if (GlobalDefine.currentFragment instanceof MyProfileFragment) {
-                        navigationView.setCheckedItem(R.id.nav_profile);
+                    if (mItem != null)
+                        mItem.setChecked(true);
+                    else {
+                        navigationView.getMenu().getItem(0).setChecked(true);
                     }
+                    if (AccountManager.getUserInfoBean().getType() == 7 || AccountManager.getUserInfoBean().getType() == 5)
+                        FragmentUtil.replaceFragment(this, new HomeFragment(), null);
+                    else FragmentUtil.replaceFragment(this, new JobsEmployerFragment(), null);
+                } else {
+                    if (mItem != null)
+                        mItem.setChecked(true);
                     FragmentUtil.replaceFragment(this, GlobalDefine.currentFragment, null);
                 }
             } else {
@@ -250,53 +296,53 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    public void getAccount() {
-        getAccountRequest = new GetAccountRequest();
-        getAccountRequest.callRequest(this, new ApiObjectCallBack<AccountResponse, ErrorResponse>() {
-            @Override
-            public void onSuccess(int status, AccountResponse dataSuccess, List<AccountResponse> listDataSuccess, String message) {
-                if (status == 200) {
-                    DebugLog.showLogCat(dataSuccess.getFullName());
-                }
-            }
-
-            @Override
-            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
-                DialogUtil.showDialog(MainActivity.this, getResources().getString(R.string.noti_title), message);
-            }
-        });
-    }
-
     public TextView getTvGreeting() {
         return tvGreeting;
     }
 
-    private void initializeCountDrawer() {
-        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Nunito-Regular.ttf");
-        GradientDrawable gd = new GradientDrawable();
-        gd.setCornerRadius(5);
-        gd.setSize(10, 10);
-        gallery.setGravity(Gravity.CENTER);
-        gallery.setTypeface(font, Typeface.BOLD);
-        gallery.setTextColor(getResources().getColor(R.color.black));
-        gallery.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
-        gallery.setSolidColor("#FFD215");
-        gallery.setTextSize(12);
-        gallery.setBackground(gd);
-        gallery.setStrokeColor("#00FFFFFF");
-        gallery.setStrokeWidth(10);
-        gallery.setText("99+");
-        slideshow.setGravity(Gravity.CENTER);
-        slideshow.setTypeface(font, Typeface.BOLD);
-        slideshow.setTextColor(getResources().getColor(R.color.black));
-        slideshow.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
-        slideshow.setSolidColor("#FFD215");
-        slideshow.setStrokeWidth(10);
-        slideshow.setStrokeColor("#00FFFFFF");
-        slideshow.setBackground(gd);
-        slideshow.setTextSize(12);
-        slideshow.setText("7");
+    public void updateOs() {
+        if (SharedPrefUtils.getString("deviceId", "").equalsIgnoreCase("")) {
+            String deviceId = new DeviceUuidFactory(MainActivity.this).getDeviceUuid().toString();
+            SharedPrefUtils.putString("deviceId", deviceId);
+            new UpdateOSRequest(deviceId).callRequest(this, new ApiObjectCallBack<ErrorLoginResponse, ErrorLoginResponse>() {
+                @Override
+                public void onSuccess(int status, ErrorLoginResponse dataSuccess, List<ErrorLoginResponse> listDataSuccess, String message) {
+                    DebugLog.showLogCat(status + "");
+                }
+
+                @Override
+                public void onFail(int status, ErrorLoginResponse dataFail, List<ErrorLoginResponse> listDataFail, String message) {
+                    DebugLog.showLogCat(status + "");
+                }
+            });
+        }
     }
+//    private void initializeCountDrawer() {
+//        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+//        GradientDrawable gd = new GradientDrawable();
+//        gd.setCornerRadius(5);
+//        gd.setSize(10, 10);
+//        gallery.setGravity(Gravity.CENTER);
+//        gallery.setTypeface(font, Typeface.BOLD);
+//        gallery.setTextColor(getResources().getColor(R.color.black));
+//        gallery.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
+//        gallery.setSolidColor("#FFD215");
+//        gallery.setTextSize(12);
+//        gallery.setBackground(gd);
+//        gallery.setStrokeColor("#00FFFFFF");
+//        gallery.setStrokeWidth(10);
+//        gallery.setText("99+");
+//        slideshow.setGravity(Gravity.CENTER);
+//        slideshow.setTypeface(font, Typeface.BOLD);
+//        slideshow.setTextColor(getResources().getColor(R.color.black));
+//        slideshow.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
+//        slideshow.setSolidColor("#FFD215");
+//        slideshow.setStrokeWidth(10);
+//        slideshow.setStrokeColor("#00FFFFFF");
+//        slideshow.setBackground(gd);
+//        slideshow.setTextSize(12);
+//        slideshow.setText("7");
+//    }
 
     @Override
     public void onBackPressed() {
@@ -307,25 +353,108 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
+    MenuItem mItem;
+
+    public void setIcon(MenuItem item) {
+        for (LstMenuAuthority lstMenuAuthority : AccountManager.getUserInfoBean().getLstMenuAuthority()) {
+            if (item.getItemId() == lstMenuAuthority.getId()) {
+                switch (lstMenuAuthority.getCode()) {
+                    case "CTV_HOME_PAGE":
+                        item.setIcon(R.drawable.ic_home);
+                        break;
+                    case "CTV_JOB":
+                        item.setIcon(R.drawable.ic_vali);
+                        break;
+                    case "CTV_JOB_SENT":
+                        item.setIcon(R.drawable.ic_vali);
+                        break;
+                    case "CTV_CV":
+                        item.setIcon(R.drawable.ic_mycv_menuleft);
+                        break;
+                    case "CTV_CV_SEND":
+                        item.setIcon(R.drawable.ic_mycv_menuleft);
+                        break;
+                    case "CMS_JOB_AND_CV":
+                        break;
+                    case "CMS_CTV":
+                        break;
+                    case "CMS_JOB":
+                        break;
+                    case "CMS_CUSTOMER":
+                        break;
+                    case "CMS_CV":
+                        break;
+                    case "CUSTOMER_HOME_PAGE":
+                        item.setIcon(R.drawable.ic_home);
+                        break;
+                    default:
+                        item.setIcon(R.drawable.ic_user_menuleft);
+                        break;
+                }
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        }
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.nav_home) {
-            FragmentUtil.replaceFragment(this, new HomeFragment(), null);
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            drawer.closeDrawer(GravityCompat.START);
-        } else if (id == R.id.nav_job) {
-            FragmentUtil.replaceFragment(this, new MyJobFragment(), null);
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            drawer.closeDrawer(GravityCompat.START);
-        } else if (id == R.id.nav_cv) {
-            FragmentUtil.replaceFragment(this, new MyCVFragment(), null);
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            drawer.closeDrawer(GravityCompat.START);
-        } else if (id == R.id.nav_profile) {
-            FragmentUtil.replaceFragment(MainActivity.this, new MyProfileFragment(), null);
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            drawer.closeDrawer(GravityCompat.START);
+        int accType = AccountManager.getUserInfoBean().getType();
+        for (LstMenuAuthority lstMenuAuthority : AccountManager.getUserInfoBean().getLstMenuAuthority()) {
+            if (item.getItemId() == lstMenuAuthority.getId()) {
+                mItem = item;
+                item.setChecked(true);
+                switch (lstMenuAuthority.getCode()) {
+                    case "CTV_HOME_PAGE":
+                        FragmentUtil.replaceFragment(this, new HomeFragment(), null);
+                        break;
+                    case "CTV_JOB":
+                        SharedPrefUtils.putString("menu", "CTV_JOB");
+                        FragmentUtil.replaceFragment(this, new MyJobFragment(), null);
+                        break;
+                    case "CTV_JOB_SENT":
+                        SharedPrefUtils.putString("menu", lstMenuAuthority.getCode());
+                        FragmentUtil.replaceFragment(this, new MyJobFragment(), null);
+                        break;
+                    case "CTV_CV":
+                        SharedPrefUtils.putString("menu", "CTV_CV");
+                        FragmentUtil.replaceFragment(this, new MyResumeFragment(), null);
+                        break;
+                    case "CTV_CV_SEND":
+                        SharedPrefUtils.putString("menu", lstMenuAuthority.getCode());
+                        FragmentUtil.replaceFragment(this, new MyResumeFragment(), null);
+                        break;
+                    case "CMS_JOB_AND_CV":
+                        break;
+                    case "CMS_CTV":
+                        break;
+                    case "CMS_JOB":
+                        break;
+                    case "CMS_CUSTOMER":
+                        break;
+                    case "CMS_CV":
+                        break;
+                    case "CUSTOMER_HOME_PAGE":
+                        if (accType == 2) {
+                            FragmentUtil.replaceFragment(this, new JobsEmployerFragment(), null);
+                        } else if (accType == 7) {
+                            FragmentUtil.replaceFragment(this, new HomeFragment(), null);
+                        } else {
+                            FragmentUtil.replaceFragment(this, new JobsEmployerFragment(), null);
+                        }
+                        break;
+                    default:
+                        if (AccountManager.getUserInfoBean().getType() == 7)
+                            FragmentUtil.replaceFragment(MainActivity.this, new CollaboratorProfileFragment(), null);
+                        else if (AccountManager.getUserInfoBean().getType() == 2)
+                            FragmentUtil.replaceFragment(MainActivity.this, new CustomerProfileFragment(), null);
+                        else
+                            FragmentUtil.replaceFragment(MainActivity.this, new CollaboratorProfileFragment(), null);
+                        break;
+                }
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+            }
         }
         return true;
     }
