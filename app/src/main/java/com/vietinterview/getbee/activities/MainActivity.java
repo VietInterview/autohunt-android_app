@@ -288,6 +288,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 } else {
                     if (mItem != null)
                         mItem.setChecked(true);
+                    else {
+                        navigationView.getMenu().getItem(0).setChecked(true);
+                    }
                     FragmentUtil.replaceFragment(this, GlobalDefine.currentFragment, null);
                 }
             } else {
