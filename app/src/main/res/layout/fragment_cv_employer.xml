@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="Trạng thái"
+                android:text="@string/status"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 

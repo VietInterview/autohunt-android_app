@@ -94,7 +94,6 @@
                             android:layout_gravity="bottom"
                             android:layout_weight="1"
                             android:gravity="right|bottom"
-                            android:text="59"
                             android:textColor="@color/iconcolor"
                             android:textSize="24sp" />
 
@@ -104,7 +103,6 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
                             android:layout_weight="1"
-                            android:text="/100"
                             android:textColor="@color/iconcolor"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -114,8 +112,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:gravity="left"
-                        android:text="Hồ sơ mới gửi"
+                        android:gravity="center"
+                        android:text="@string/resume_new_send"
                         android:textColor="#9FB6CB"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -145,7 +143,6 @@
                         android:inputType="none"
                         android:maxLines="2"
                         android:minLines="2"
-                        android:text="adsfadsfsadfasfasdfdafsdfasdfsafsdffasdfsadfasdfsadfasdfadsfasdf"
                         android:textColor="#042E51"
                         android:textSize="18sp" />
 
@@ -172,7 +169,6 @@
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:gravity="center|left"
-                            android:text="Sắp hết hạn"
                             android:textColor="#FF5A5A"
                             android:textSize="14sp" />
                     </LinearLayout>

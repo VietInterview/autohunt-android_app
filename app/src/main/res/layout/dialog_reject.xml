@@ -28,7 +28,7 @@
                 android:layout_weight="2.9"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="Lý do từ chối"
+                android:text="@string/reject_title"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -64,7 +64,7 @@
                 android:background="@drawable/border_gray"
                 android:editable="false"
                 android:gravity="top|left"
-                android:hint="Nhập lý do từ chối"
+                android:hint="@string/input_reason_reject"
                 android:inputType="textMultiLine"
                 android:lines="8"
                 android:maxLines="10"
@@ -87,7 +87,7 @@
                 android:layout_height="40dp"
                 android:layout_margin="10dp"
                 android:background="@drawable/borderbutton_blue"
-                android:text="Gửi từ chối"
+                android:text="@string/send_reject_label"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
         </LinearLayout>

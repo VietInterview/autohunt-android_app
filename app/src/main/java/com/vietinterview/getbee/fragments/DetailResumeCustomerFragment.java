@@ -1,5 +1,6 @@
 package com.vietinterview.getbee.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -11,10 +12,17 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.ViewPagerAdapter;
+import com.vietinterview.getbee.api.request.GetDetailProcessResumeRequest;
+import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.detailcvcustomer.DetailCVCustomerResponse;
+import com.vietinterview.getbee.api.response.detailprocessresume.DetailProcessResumeResponse;
+import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.constant.GlobalDefine;
+import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.ShowImageUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -99,12 +107,12 @@ public class DetailResumeCustomerFragment extends BaseFragment {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
-        adapter.addFrag(new InfoDetailResumeCustomerFragment().newInstance(mDetailCVCustomerResponse), "THÔNG TIN");
-        adapter.addFrag(new ExpDetailResumeCustomerFragment().newInstance(mDetailCVCustomerResponse), "KINH NGHIỆM");
-        adapter.addFrag(new EduDetailResumeCustomerFragment().newInstance(mDetailCVCustomerResponse), "BẰNG CẤP");
-        adapter.addFrag(new LanDetailResumeCustomerFragment().newInstance(mDetailCVCustomerResponse), "NGOẠI NGỮ");
-        adapter.addFrag(new ComDetailResumeCustomerFragment().newInstance(mDetailCVCustomerResponse), "TIN HỌC");
-        adapter.addFrag(new SkillDetailResumeCustomerFragment().newInstance(mDetailCVCustomerResponse), "KỸ NĂNG");
+        adapter.addFrag(new InfoDetailResumeCustomerFragment().newInstance(mDetailCVCustomerResponse), getResources().getString(R.string.info));
+        adapter.addFrag(new ExpDetailResumeCustomerFragment().newInstance(mDetailCVCustomerResponse), getResources().getString(R.string.exp));
+        adapter.addFrag(new EduDetailResumeCustomerFragment().newInstance(mDetailCVCustomerResponse), getResources().getString(R.string.cer_tit));
+        adapter.addFrag(new LanDetailResumeCustomerFragment().newInstance(mDetailCVCustomerResponse), getResources().getString(R.string.language));
+        adapter.addFrag(new ComDetailResumeCustomerFragment().newInstance(mDetailCVCustomerResponse), getResources().getString(R.string.conputer_skill_tit));
+        adapter.addFrag(new SkillDetailResumeCustomerFragment().newInstance(mDetailCVCustomerResponse), getResources().getString(R.string.skill));
         viewPager.setAdapter(adapter);
     }
 
@@ -135,6 +143,35 @@ public class DetailResumeCustomerFragment extends BaseFragment {
 
     @OnClick(R.id.btnProcessCV)
     public void onProcessClick() {
-        FragmentUtil.pushFragment(getActivity(), this, new ProcessResumeFragment().newInstance(mDetailCVCustomerResponse.getId(), mDetailCVCustomerResponse.getJobId(), true), null);
+        getDetailProcessResume(mDetailCVCustomerResponse.getId(), mDetailCVCustomerResponse.getJobId());
+    }
+
+    GetDetailProcessResumeRequest getDetailProcessResumeRequest;
+
+    public void getDetailProcessResume(int cvId, int jobId) {
+        showCoverNetworkLoading();
+        getDetailProcessResumeRequest = new GetDetailProcessResumeRequest(cvId, jobId);
+        getDetailProcessResumeRequest.callRequest(getActivity(), new ApiObjectCallBack<DetailProcessResumeResponse, ErrorResponse>() {
+            @Override
+            public void onSuccess(int status, DetailProcessResumeResponse dataSuccess, List<DetailProcessResumeResponse> listDataSuccess, String message) {
+                hideCoverNetworkLoading();
+                if (isAdded()) {
+                    FragmentUtil.pushFragment(getActivity(), DetailResumeCustomerFragment.this, new ProcessResumeFragment().newInstance(dataSuccess, true), null);
+
+                }
+            }
+
+            @Override
+            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                hideCoverNetworkLoading();
+                if (isAdded()) {
+                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
+                }
+            }
+        });
     }
 }

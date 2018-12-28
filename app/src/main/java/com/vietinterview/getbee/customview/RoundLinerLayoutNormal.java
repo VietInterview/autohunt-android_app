@@ -31,6 +31,6 @@ public class RoundLinerLayoutNormal extends LinearLayout {
 
     private void initBackground() {
         setBackground(ViewUtils.generateBackgroundWithShadow(this, R.color.white,
-                R.dimen.radius_corner, R.color.shadowColor, R.dimen.elevation, Gravity.BOTTOM));
+                R.dimen.radius_corner, R.color.shadowColor, R.dimen.elevation, Gravity.CENTER));
     }
 }

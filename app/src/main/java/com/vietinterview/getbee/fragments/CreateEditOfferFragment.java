@@ -124,7 +124,7 @@ public class CreateEditOfferFragment extends BaseFragment implements DatePickerD
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbar(true);
         setCustomToolbarVisible(true);
-        getEventBaseFragment().doFillBackground("Thông tin Offer");
+        getEventBaseFragment().doFillBackground(getResources().getString(R.string.info_offer));
         GlobalDefine.currentFragment = this;
         calendar = Calendar.getInstance();
         timeFormat = new SimpleDateFormat(TIME_PATTERN, Locale.US);
@@ -177,7 +177,7 @@ public class CreateEditOfferFragment extends BaseFragment implements DatePickerD
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
-        menu.setHeaderTitle("Chọn đơn vị tiền tệ");
+        menu.setHeaderTitle(getResources().getString(R.string.choose_currency));
         menu.add(Menu.NONE, CONTEXT_MENU_VIEW, Menu.NONE, "VND");
         menu.add(Menu.NONE, CONTEXT_MENU_EDIT, Menu.NONE, "USD");
         menu.add(Menu.NONE, CONTEXT_MENU_ARCHIVE, Menu.NONE, "JPY");
@@ -208,7 +208,7 @@ public class CreateEditOfferFragment extends BaseFragment implements DatePickerD
 
     @OnClick(R.id.tvAchieve)
     public void onAchieveClick() {
-        DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn cập nhật kết quả cho lần offer này?", "Có", "Không", new DialogInterface.OnClickListener() {
+        DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.ask_update_round_offer), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 statusOffer = 1;
@@ -224,7 +224,7 @@ public class CreateEditOfferFragment extends BaseFragment implements DatePickerD
 
     @OnClick(R.id.tvCandidateNotCome)
     public void onCandidateNotComeClick() {
-        DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn cập nhật kết quả cho lần offer này?", "Có", "Không", new DialogInterface.OnClickListener() {
+        DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title),  getResources().getString(R.string.ask_update_round_offer), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 statusOffer = 2;
@@ -336,7 +336,7 @@ public class CreateEditOfferFragment extends BaseFragment implements DatePickerD
                 long chooseTime = choose.getTimeInMillis();
                 long difference = chooseTime - lastWarrantyDate;
                 if (difference > 0) {
-                    DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn gửi offer tới ứng viên này không?", "Có", "Không", new DialogInterface.OnClickListener() {
+                    DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.ask_send_offer), getResources().getString(R.string.yes),  getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             int cvId = detailProcessResumeResponse.getCvId();
@@ -380,11 +380,11 @@ public class CreateEditOfferFragment extends BaseFragment implements DatePickerD
                         }
                     });
                 } else {
-                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Bạn không thể chọn ngày phòng vấn trước hoặc bằng ngày phỏng vấn trước");
+                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.warning_date_offer));
 
                 }
             } else {
-                DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn gửi offer tới ứng viên này không?", "Có", "Không", new DialogInterface.OnClickListener() {
+                DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title),  getResources().getString(R.string.ask_send_offer), getResources().getString(R.string.yes),  getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         int cvId = detailProcessResumeResponse.getCvId();
@@ -433,7 +433,7 @@ public class CreateEditOfferFragment extends BaseFragment implements DatePickerD
             llDate.setBackgroundDrawable(StringUtils.isEmpty(edtWorkTime.getText().toString()) ? getResources().getDrawable(R.drawable.border_red_5) : getResources().getDrawable(R.drawable.border_gray));
             edtWorkAddress.setBackgroundDrawable(StringUtils.isEmpty(edtWorkAddress.getText().toString()) ? getResources().getDrawable(R.drawable.border_red_5) : getResources().getDrawable(R.drawable.border_gray));
             edtPosition.setBackgroundDrawable(StringUtils.isEmpty(edtPosition.getText().toString()) ? getResources().getDrawable(R.drawable.border_red_5) : getResources().getDrawable(R.drawable.border_gray));
-            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Vui lòng nhập vào các trường bắt buộc");
+            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.pleaseinputdata));
         }
     }
 

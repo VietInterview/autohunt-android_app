@@ -2,14 +2,12 @@ package com.vietinterview.getbee.fragments;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -31,14 +29,12 @@ import com.vietinterview.getbee.api.response.jobcustomer.JobCustomerResponse;
 import com.vietinterview.getbee.api.response.jobcustomer.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
-import com.vietinterview.getbee.callback.SwipeControllerActions;
 import com.vietinterview.getbee.constant.ApiConstant;
 import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.customview.ClearableRegularEditText;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
-import com.vietinterview.getbee.callback.SwipeControllerResume;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +91,7 @@ public class JobsEmployerFragment extends BaseFragment implements SwipeRefreshLa
         setCustomToolbar(true);
         setHasOptionsMenu(true);
         setCustomToolbarVisible(true);
-        getEventBaseFragment().doFillBackground("Danh sách công việc");
+        getEventBaseFragment().doFillBackground(getResources().getString(R.string.jobs_list));
         GlobalDefine.currentFragment = this;
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -105,29 +101,54 @@ public class JobsEmployerFragment extends BaseFragment implements SwipeRefreshLa
                 android.R.color.holo_green_dark,
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
-        edtJobTitle.addTextChangedListener(new TextWatcher() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                page = 0;
-                getJobCustomer(page);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
+                if (!recyclerView.canScrollVertically(1)) {
+                    if (jobListsServer.size() >= ApiConstant.LIMIT) {
+                        page++;
+                        getJobCustomer(page);
+                        jobsEmployerAdapter.setOnLoadMoreListener(JobsEmployerFragment.this);
+                    }
+                }
             }
         });
     }
 
     @Override
     protected void initData() {
-        getJobCustomer(0);
+        if (jobLists.size() == 0) {
+            getJobCustomer(0);
+        } else {
+            recyclerView.setAdapter(jobsEmployerAdapter);
+        }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        edtJobTitle.addTextChangedListener(textWatcher);
+    }
+
+    TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            page = 0;
+            getJobCustomer(page);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
 
     public void getJobCustomer(final int page) {
         if (page == 0 && !mSwipeRefreshLayout.isRefreshing())
@@ -165,34 +186,6 @@ public class JobsEmployerFragment extends BaseFragment implements SwipeRefreshLa
                 if (isAdded()) {
                     mSwipeRefreshLayout.setRefreshing(false);
                     DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
-                }
-            }
-        });
-    }
-
-    private GetDetailJobCustomerRequest getDetailJobCustomerRequest;
-
-    public void getDetailCV(int id, final int limited) {
-        showCoverNetworkLoading();
-        getDetailJobCustomerRequest = new GetDetailJobCustomerRequest(id);
-        getDetailJobCustomerRequest.callRequest(getActivity(), new ApiObjectCallBack<DetailJobCustomerResponse, ErrorResponse>() {
-            @Override
-            public void onSuccess(int status, DetailJobCustomerResponse data, List<DetailJobCustomerResponse> dataArrayList, String message) {
-                hideCoverNetworkLoading();
-                if (isAdded()) {
-                    FragmentUtil.pushFragment(getActivity(), JobsEmployerFragment.this, new DetailJobCustomerFragment().newInstance(data, limited), null);
-                }
-            }
-
-            @Override
-            public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
-                hideCoverNetworkLoading();
-                if (isAdded()) {
-                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                        }
-                    });
                 }
             }
         });

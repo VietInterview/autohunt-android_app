@@ -194,7 +194,7 @@ public class DetailJobCustomerFragment extends BaseFragment {
         tvDatePublic.setText(DateUtil.convertToMyFormatFull(detailJobCustomerResponse.getSubmitDate()));
         tvExpireDate.setText(DateUtil.convertToMyFormatFull(detailJobCustomerResponse.getExpireDate()));
         tvKeyWord.setText(detailJobCustomerResponse.getTag());
-        tvLanCV.setText(detailJobCustomerResponse.getLanguage() == null ? "Bất kỳ" : detailJobCustomerResponse.getLanguage().getName());
+        tvLanCV.setText(detailJobCustomerResponse.getLanguage() == null ? getResources().getString(R.string.any) : detailJobCustomerResponse.getLanguage().getName());
         tvContact.setText(detailJobCustomerResponse.getCustomers().getContactName());
         tvEmail.setText(detailJobCustomerResponse.getCustomers().getContactEmail());
         tvJobDes.setText(Html.fromHtml(detailJobCustomerResponse.getJobDescription()));
@@ -202,26 +202,26 @@ public class DetailJobCustomerFragment extends BaseFragment {
         tvJobDes.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_header_selector));
         tvSpecialTreatment.setText(Html.fromHtml(detailJobCustomerResponse.getSpecialTreatment() == null ? "" : detailJobCustomerResponse.getSpecialTreatment()));
         if (detailJobCustomerResponse.getStatus() == 1 && limited > 0 && limited < 8) {
-            tvStatus.setText("Sắp hết hạn");
+            tvStatus.setText(getResources().getString(R.string.expiring_soon));
         } else if (detailJobCustomerResponse.getStatus() == 1 && limited > 7) {
-            tvStatus.setText("Còn " + limited + " ngày");
+            tvStatus.setText(limited + " " + getResources().getString(R.string.dayleft));
         } else if (detailJobCustomerResponse.getStatus() == 1 && limited == 0) {
-            tvStatus.setText("Đã hết hạn");
+            tvStatus.setText(getResources().getString(R.string.expired));
         } else if (detailJobCustomerResponse.getStatus() == 0) {
-            tvStatus.setText("Nháp");
+            tvStatus.setText(getResources().getString(R.string.draft));
         }
         btShowmore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (btShowmore.getText().toString().equalsIgnoreCase("Xem thêm  ")) {
+                if (btShowmore.getText().toString().equalsIgnoreCase(getResources().getString(R.string.see_more))) {
                     tvJobDes.setMaxLines(Integer.MAX_VALUE);//your TextView
-                    btShowmore.setText("Rút gọn  ");
+                    btShowmore.setText(getResources().getString(R.string.see_less));
                     gradientView.setVisibility(View.GONE);
                     btShowmore.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up_blue, 0);
                 } else {
                     tvJobDes.setMaxLines(6);
                     tvJobDes.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_header_selector));
-                    btShowmore.setText("Xem thêm  ");
+                    btShowmore.setText(getResources().getString(R.string.see_more));
                     gradientView.setVisibility(View.VISIBLE);
                     btShowmore.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_down_blue, 0);
                 }
@@ -230,15 +230,15 @@ public class DetailJobCustomerFragment extends BaseFragment {
         btShowmore1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (btShowmore1.getText().toString().equalsIgnoreCase("Xem thêm  ")) {
+                if (btShowmore1.getText().toString().equalsIgnoreCase(getResources().getString(R.string.see_more))) {
                     tvjobRequirement.setMaxLines(Integer.MAX_VALUE);//your TextView
-                    btShowmore1.setText("Rút gọn  ");
+                    btShowmore1.setText(getResources().getString(R.string.see_less));
                     gradientView1.setVisibility(View.GONE);
                     btShowmore1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up_blue, 0);
                 } else {
                     tvjobRequirement.setMaxLines(6);
                     tvjobRequirement.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_header_selector));
-                    btShowmore1.setText("Xem thêm  ");
+                    btShowmore1.setText(getResources().getString(R.string.see_more));
                     gradientView1.setVisibility(View.VISIBLE);
                     btShowmore1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_down_blue, 0);
                 }
@@ -247,15 +247,15 @@ public class DetailJobCustomerFragment extends BaseFragment {
         btShowmoreSpecialTreatment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (btShowmoreSpecialTreatment.getText().toString().equalsIgnoreCase("Xem thêm  ")) {
+                if (btShowmoreSpecialTreatment.getText().toString().equalsIgnoreCase(getResources().getString(R.string.see_more))) {
                     tvSpecialTreatment.setMaxLines(Integer.MAX_VALUE);//your TextView
-                    btShowmoreSpecialTreatment.setText("Rút gọn  ");
+                    btShowmoreSpecialTreatment.setText(getResources().getString(R.string.see_less));
                     gradientViewSpecialTreatment.setVisibility(View.GONE);
                     btShowmoreSpecialTreatment.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up_blue, 0);
                 } else {
                     tvSpecialTreatment.setMaxLines(6);
                     tvSpecialTreatment.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_header_selector));
-                    btShowmoreSpecialTreatment.setText("Xem thêm  ");
+                    btShowmoreSpecialTreatment.setText(getResources().getString(R.string.see_more));
                     gradientViewSpecialTreatment.setVisibility(View.VISIBLE);
                     btShowmoreSpecialTreatment.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_down_blue, 0);
                 }

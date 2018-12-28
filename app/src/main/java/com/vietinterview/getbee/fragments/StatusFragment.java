@@ -155,13 +155,13 @@ public class StatusFragment extends BaseFragment {
             cvStatuses.add(new CVStatus(11, getResources().getString(R.string.default_key)));
         } else {
             edtSearchJob.setVisibility(View.GONE);
-            cvStatuses.add(new CVStatus(11, "Tất cả"));
-            cvStatuses.add(new CVStatus(0, "Nháp"));
-            cvStatuses.add(new CVStatus(1, "Đang tuyển"));
-            cvStatuses.add(new CVStatus(2, "Đã ẩn"));
-            cvStatuses.add(new CVStatus(3, "Sắp hết hạn trong 7 ngày"));
-            cvStatuses.add(new CVStatus(4, "Đã hết hạn"));
-            cvStatuses.add(new CVStatus(6, "Ngưng tuyển"));
+            cvStatuses.add(new CVStatus(11, getResources().getString(R.string.all)));
+            cvStatuses.add(new CVStatus(0, getResources().getString(R.string.draft)));
+            cvStatuses.add(new CVStatus(1, getResources().getString(R.string.hiring)));
+            cvStatuses.add(new CVStatus(2, getResources().getString(R.string.hiding)));
+            cvStatuses.add(new CVStatus(3, getResources().getString(R.string.expried_in_7_day)));
+            cvStatuses.add(new CVStatus(4, getResources().getString(R.string.expired)));
+            cvStatuses.add(new CVStatus(6, getResources().getString(R.string.stop_hiring)));
         }
         cvStatusesFilter = cvStatuses;
         statusAdapter = new StatusAdapter(getActivity(), cvStatuses);

@@ -19,10 +19,12 @@ public class ListOfferAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     List<LstOfferHi> lstInterviewHis;
     List<LstOfferHi> lstInterviewHisFilter;
+    Context mContext;
 
     public ListOfferAdapter(Context context, List<LstOfferHi> cvStatuses1) {
         this.lstInterviewHis = cvStatuses1;
         lstInterviewHisFilter = cvStatuses1;
+        mContext = context;
         inflater = LayoutInflater.from(context);
     }
 
@@ -68,13 +70,13 @@ public class ListOfferAdapter extends BaseAdapter {
         String statusInterview = "";
         switch (status) {
             case 1:
-                statusInterview = "Đồng ý";
+                statusInterview = mContext.getResources().getString(R.string.accept);
                 break;
             case 2:
-                statusInterview = "Không đồng ý";
+                statusInterview = mContext.getResources().getString(R.string.not_accept);
                 break;
             default:
-                statusInterview = "Chưa có kết quả";
+                statusInterview = mContext.getResources().getString(R.string.no_results);
                 break;
         }
         return statusInterview;

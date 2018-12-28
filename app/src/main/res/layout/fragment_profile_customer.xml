@@ -32,6 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -47,7 +48,7 @@
             <com.vietinterview.getbee.customview.RobotoMediumTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Hình ảnh công ty"
+                android:text="@string/image_company"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -60,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:text="Video công ty"
+                android:text="@string/video_company"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -111,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="Quy mô công ty"
+                    android:text="@string/human_resource"
                     android:textColor="#042E51"
                     android:textSize="16sp" />
 
@@ -134,7 +135,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="Lĩnh vực/ ngành nghề"
+                    android:text="@string/carrer"
                     android:textColor="#042E51"
                     android:textSize="16sp" />
 
@@ -157,7 +158,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="Địa chỉ công ty"
+                    android:text="@string/address"
                     android:textColor="#042E51"
                     android:textSize="16sp" />
 
@@ -180,7 +181,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="Thời gian làm việc"
+                    android:text="@string/work_time"
                     android:textColor="#042E51"
                     android:textSize="16sp" />
 
@@ -204,7 +205,7 @@
                     android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                     android:layout_marginVertical="4dp"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="Thông tin công ty"
+                    android:text="@string/info"
                     android:textColor="#042E51"
                     android:textSize="16sp" />
 
@@ -237,7 +238,7 @@
                     android:layout_marginLeft="16dp"
                     android:background="@android:color/transparent"
                     android:drawableRight="@drawable/ic_arrow_down_blue"
-                    android:text="Xem thêm  "
+                    android:text="@string/see_more"
                     android:textAllCaps="false"
                     android:textColor="@android:color/holo_blue_light" />
             </LinearLayout>
@@ -253,7 +254,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="Phúc lợi công ty"
+                    android:text="@string/corporate_welfare"
                     android:textColor="#042E51"
                     android:textSize="16sp" />
 
@@ -281,7 +282,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Địa chỉ email"
+                android:text="Email"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 

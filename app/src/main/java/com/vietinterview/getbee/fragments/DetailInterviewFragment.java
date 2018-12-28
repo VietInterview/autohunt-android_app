@@ -55,7 +55,7 @@ public class DetailInterviewFragment extends BaseFragment {
         setCustomToolbar(true);
         setCustomToolbarVisible(true);
         GlobalDefine.currentFragment = this;
-        getEventBaseFragment().doFillBackground("Thông tin phỏng vấn");
+        getEventBaseFragment().doFillBackground(getResources().getString(R.string.info_interview));
     }
 
     @Override
@@ -68,22 +68,22 @@ public class DetailInterviewFragment extends BaseFragment {
     }
 
     public String switchResult(int status) {
-        String statusINterview = "";
+        String statusInterview = "";
         switch (status) {
             case 1:
-                statusINterview = "Đạt";
+                statusInterview = getResources().getString(R.string.reach);
                 break;
             case 2:
-                statusINterview = "Không đạt";
+                statusInterview = getResources().getString(R.string.not_achieved);
                 break;
             case 3:
-                statusINterview = "Ứng viên không đến";
+                statusInterview = getResources().getString(R.string.candidates_do_not_come);
                 break;
             default:
-                statusINterview = "Chưa có kết quả";
+                statusInterview = getResources().getString(R.string.no_results);
                 break;
         }
-        return statusINterview;
+        return statusInterview;
     }
 
     @Override

@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Số lần offer"
+                android:text="@string/count_offer"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Mức lương"
+                android:text="@string/salary_level"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -92,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Thời gian đi làm"
+                android:text="@string/work_time"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -139,7 +139,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Địa chỉ làm việc"
+                android:text="@string/location_work"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -162,7 +162,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Vị trí làm việc"
+                android:text="@string/position_work"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -185,7 +185,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Ghi chú"
+                android:text="@string/reject_mess3"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -210,7 +210,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Kết quả phỏng vấn"
+                android:text="@string/result_interview"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -229,7 +229,7 @@
                     android:layout_weight="1"
                     android:drawableTop="@drawable/ic_like"
                     android:gravity="center"
-                    android:text="Đồng ý" />
+                    android:text="@string/accept" />
 
                 <View
                     android:layout_width="1dp"
@@ -245,7 +245,7 @@
                     android:drawableTop="@drawable/ic_not_accept"
                     android:drawableTint="#677B8D"
                     android:gravity="center"
-                    android:text="Không đồng ý" />
+                    android:text="@string/not_accept" />
             </LinearLayout>
         </LinearLayout>
 
@@ -266,7 +266,7 @@
                 android:backgroundTint="#9FB6CB"
                 android:drawableLeft="@drawable/ic_see_eye"
                 android:padding="10dp"
-                android:text="Mẫu thư mời"
+                android:text="@string/temp_mail"
                 android:textColor="#ffffff"
                 android:textSize="16sp" />
 
@@ -281,7 +281,7 @@
                 android:drawableTint="@color/white"
                 android:fontFamily="@string/font_fontFamily_medium"
                 android:padding="10dp"
-                android:text="Mời offer"
+                android:text="@string/invite_offer"
                 android:textColor="#ffffff"
                 android:textSize="16sp" />
         </LinearLayout>

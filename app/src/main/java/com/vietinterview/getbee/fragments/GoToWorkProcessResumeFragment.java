@@ -107,7 +107,6 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
             @Override
             public void onSwitchToFour() {
                 if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 8 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 4)) {
-
                     btnNext.setEnabled(true);
                     rlGotoworkDate.setEnabled(true);
                     tvDate.setEnabled(true);
@@ -165,11 +164,10 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
         } else {
             cardReject.setVisibility(View.GONE);
         }
-        if (detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() != null ) {
-            tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName());
+        if (detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() != null) {
+            tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName());
             if (detailProcessResumeResponse.getCvProcessInfo().getRejectNote() != null && !detailProcessResumeResponse.getCvProcessInfo().getRejectNote().equalsIgnoreCase(""))
-                tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() + "\nGhi chú: " + detailProcessResumeResponse.getCvProcessInfo().getRejectNote());
-
+                tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() + "\n" + getResources().getString(R.string.reject_mess3) + ": " + detailProcessResumeResponse.getCvProcessInfo().getRejectNote());
         }
         if (detailProcessResumeResponse.getJobCvGotoWorkDto() != null) {
             if (detailProcessResumeResponse.getJobCvGotoWorkDto().getCountUpdate() != null) {
@@ -203,10 +201,10 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
             long difference = lastWarrantyDate - today.getTimeInMillis();
             int days = (int) (difference / (1000 * 60 * 60 * 24));
             tvDate.setText(detailProcessResumeResponse.getJobCvGotoWorkDto().getStartWorkDate());
-            tvWarranty.setText("Còn lại " + days + " ngày");
+            tvWarranty.setText(days + " " + getResources().getString(R.string.dayleft));
         } else {
             tvDate.setText("");
-            tvWarranty.setText("Còn lại " + 0 + " ngày");
+            tvWarranty.setText(0 + " " + getResources().getString(R.string.dayleft));
         }
     }
 
@@ -277,9 +275,9 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
                         public void onClick(View v) {
                             if (isOther) {
                                 if (edtReasonOther.getText().toString().trim().equalsIgnoreCase("")) {
-                                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Xin hãy nhập lý do từ chối");
+                                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.input_reason_reject));
                                 } else {
-                                    DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn gửi email và cập nhật trạng thái từ chối cho hồ sơ này?", "Có", "Không", new DialogInterface.OnClickListener() {
+                                    DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.ask_reject), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
                                             showCoverNetworkLoading();
@@ -289,11 +287,11 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
                                                     if (isAdded()) {
                                                         if (status == 200) {
                                                             hideCoverNetworkLoading();
-                                                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Gửi từ chối thành công", new DialogInterface.OnClickListener() {
+                                                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.send_reject_success), new DialogInterface.OnClickListener() {
                                                                 @Override
                                                                 public void onClick(DialogInterface dialogInterface, int i) {
                                                                     cardReject.setVisibility(View.VISIBLE);
-                                                                    tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + rejectName + "\nGhi chú: " + dataSuccess.getReasonNote());
+                                                                    tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
                                                                 }
                                                             });
                                                             btnNext.setEnabled(false);
@@ -328,7 +326,7 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
 
                                 }
                             } else {
-                                DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn gửi email và cập nhật trạng thái từ chối cho hồ sơ này?", "Có", "Không", new DialogInterface.OnClickListener() {
+                                DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.ask_reject), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         showCoverNetworkLoading();
@@ -338,11 +336,11 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
                                                 if (isAdded()) {
                                                     if (status == 200) {
                                                         hideCoverNetworkLoading();
-                                                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Gửi từ chối thành công", new DialogInterface.OnClickListener() {
+                                                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.send_reject_success), new DialogInterface.OnClickListener() {
                                                             @Override
                                                             public void onClick(DialogInterface dialogInterface, int i) {
                                                                 cardReject.setVisibility(View.VISIBLE);
-                                                                tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + rejectName + "\nGhi chú: " + dataSuccess.getReasonNote());
+                                                                tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
                                                             }
                                                         });
                                                         cardReject.setVisibility(View.VISIBLE);
@@ -428,7 +426,7 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
         Button btnOK = (Button) mNotifyDialog.findViewById(R.id.btnOK);
         Button btnNo = mNotifyDialog.findViewById(R.id.btnNo);
         TextView tvContent = mNotifyDialog.findViewById(R.id.tvContent);
-        tvContent.setText("Bạn có chắc chắn muốn cập nhật trạng thái ký hợp đồng cho ứng viên này không?");
+        tvContent.setText(getResources().getString(R.string.ask_update_status_contract));
         btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

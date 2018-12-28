@@ -58,7 +58,6 @@ public class JobsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private boolean isLoading;
     private BaseFragment baseFragment;
     private int mTotal;
-    private String limited;
 
     public JobsEmployerAdapter(RecyclerView recyclerView, Context context, int total, ArrayList<JobList> cvLists, BaseFragment homeFragment) {
         this.jobLists = cvLists;
@@ -119,35 +118,29 @@ public class JobsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setVisibility(position == 0 ? View.VISIBLE : View.GONE);
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvname)).setText(jobLists.get(position).getJobTitle());
             if (jobLists.get(position).getStatus() == 1 && jobLists.get(position).getLimited() > 0 && jobLists.get(position).getLimited() < 8) {
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Sắp hết hạn");
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.expiring_soon));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.red));
                 ((ImageView) ((MyViewHolder) holder).mView.findViewById(R.id.imgDeadline)).setColorFilter(mContext.getResources().getColor(R.color.red));
-                limited = "Sắp hết hạn";
             } else if (jobLists.get(position).getStatus() == 1 && jobLists.get(position).getLimited() > 7) {
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Còn " + jobLists.get(position).getLimited() + " ngày");
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(jobLists.get(position).getLimited() + " " + mContext.getResources().getString(R.string.dayleft));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.not_like));
                 ((ImageView) ((MyViewHolder) holder).mView.findViewById(R.id.imgDeadline)).setColorFilter(mContext.getResources().getColor(R.color.not_like));
-                limited = "Còn " + jobLists.get(position).getLimited() + " ngày";
             } else if (jobLists.get(position).getStatus() == 2) {
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Đã hết hạn");
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.expired));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.not_like));
-
-                ((ImageView) ((MyViewHolder) holder).mView.findViewById(R.id.imgDeadline)).setColorFilter(mContext.getResources().getColor(R.color.not_like));                limited = "Đã hết hạn";
+                ((ImageView) ((MyViewHolder) holder).mView.findViewById(R.id.imgDeadline)).setColorFilter(mContext.getResources().getColor(R.color.not_like));
             } else if (jobLists.get(position).getStatus() == 0) {
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Nháp");
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.draft));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.not_like));
-
-                ((ImageView) ((MyViewHolder) holder).mView.findViewById(R.id.imgDeadline)).setColorFilter(mContext.getResources().getColor(R.color.not_like));                limited = "Nháp";
+                ((ImageView) ((MyViewHolder) holder).mView.findViewById(R.id.imgDeadline)).setColorFilter(mContext.getResources().getColor(R.color.not_like));
             } else if (jobLists.get(position).getStatus() == 3) {
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Ngưng tuyển");
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.closed));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.not_like));
-
-                ((ImageView) ((MyViewHolder) holder).mView.findViewById(R.id.imgDeadline)).setColorFilter(mContext.getResources().getColor(R.color.not_like));                limited = "Ngưng tuyển";
+                ((ImageView) ((MyViewHolder) holder).mView.findViewById(R.id.imgDeadline)).setColorFilter(mContext.getResources().getColor(R.color.not_like));
             } else if (jobLists.get(position).getStatus() == 5) {
-                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText("Đã Khóa");
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.locked));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.not_like));
-
-                ((ImageView) ((MyViewHolder) holder).mView.findViewById(R.id.imgDeadline)).setColorFilter(mContext.getResources().getColor(R.color.not_like));                limited = "Khóa";
+                ((ImageView) ((MyViewHolder) holder).mView.findViewById(R.id.imgDeadline)).setColorFilter(mContext.getResources().getColor(R.color.not_like));
             }
             ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setOnClickListener(new View.OnClickListener() {
                 @Override

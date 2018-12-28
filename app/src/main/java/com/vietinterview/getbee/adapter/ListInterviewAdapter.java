@@ -18,11 +18,13 @@ public class ListInterviewAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     List<LstInterviewHi> lstInterviewHis;
     List<LstInterviewHi> lstInterviewHisFilter;
+    Context mContext;
 
     public ListInterviewAdapter(Context context, List<LstInterviewHi> cvStatuses1) {
         this.lstInterviewHis = cvStatuses1;
         lstInterviewHisFilter = cvStatuses1;
         inflater = LayoutInflater.from(context);
+        mContext = context;
     }
 
     @Override
@@ -67,16 +69,16 @@ public class ListInterviewAdapter extends BaseAdapter {
         String statusInterview = "";
         switch (status) {
             case 1:
-                statusInterview = "Đạt";
+                statusInterview = mContext.getResources().getString(R.string.reach);
                 break;
             case 2:
-                statusInterview = "Không đạt";
+                statusInterview = mContext.getResources().getString(R.string.not_achieved);
                 break;
             case 3:
-                statusInterview = "Ứng viên không đến";
+                statusInterview = mContext.getResources().getString(R.string.candidates_do_not_come);
                 break;
             default:
-                statusInterview = "Chưa có kết quả";
+                statusInterview = mContext.getResources().getString(R.string.no_results);
                 break;
         }
         return statusInterview;

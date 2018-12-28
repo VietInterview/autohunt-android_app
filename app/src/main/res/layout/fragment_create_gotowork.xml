@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@string/font_fontFamily_medium"
-            android:text="Thời gian đi làm"
+            android:text="@string/work_time"
             android:textColor="#042E51"
             android:textSize="16sp" />
 
@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@string/font_fontFamily_medium"
-            android:text="Thời gian bảo hành còn lại"
+            android:text="@string/warranty_time"
             android:textColor="#042E51"
             android:textSize="16sp" />
 
@@ -95,7 +95,7 @@
             android:drawableTint="@color/white"
             android:fontFamily="@string/font_fontFamily_medium"
             android:padding="10dp"
-            android:text="Cập nhật"
+            android:text="@string/update_title"
             android:textColor="#ffffff"
             android:textSize="16sp" />
     </LinearLayout>

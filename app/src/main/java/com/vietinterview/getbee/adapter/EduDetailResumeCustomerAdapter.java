@@ -104,7 +104,7 @@ public class EduDetailResumeCustomerAdapter extends RecyclerView.Adapter<Recycle
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof MyViewHolder) {
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCompanyName)).setText(lstEducationHis.get(position).getSubject());
-            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvContent)).setText(lstEducationHis.get(position).getSchool() + "\nChuyên ngành: "+lstEducationHis.get(position).getCareer() + "\n" + lstEducationHis.get(position).getGraduationTypeName());
+            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvContent)).setText(lstEducationHis.get(position).getSchool() + "\n" + mContext.getResources().getString(R.string.specialized) + ": " + lstEducationHis.get(position).getCareer() + "\n" + lstEducationHis.get(position).getGraduationTypeName());
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.progressBar.setIndeterminate(true);

@@ -40,7 +40,7 @@
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="8dp"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="Thông báo"
+                    android:text="@string/noti_title"
                     android:textColor="#042E51"
                     android:textSize="20sp" />
 
@@ -78,7 +78,7 @@
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="8dp"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="Thông báo"
+                    android:text="@string/noti_title"
                     android:textColor="#042E51"
                     android:textSize="20sp" />
 
@@ -91,7 +91,7 @@
                     android:layout_marginVertical="8dp"
                     android:fontFamily="@string/font_fontFamily_medium"
                     android:gravity="center"
-                    android:text="Ứng viên đã được ký hợp đồng"
+                    android:text="@string/contract_success"
                     android:textColor="@color/green"
                     android:textSize="16sp" />
             </LinearLayout>

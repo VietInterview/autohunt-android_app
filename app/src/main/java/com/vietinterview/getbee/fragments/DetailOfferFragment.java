@@ -60,7 +60,7 @@ public class DetailOfferFragment extends BaseFragment {
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbar(true);
         setCustomToolbarVisible(true);
-        getEventBaseFragment().doFillBackground("Thông tin Offer");
+        getEventBaseFragment().doFillBackground(getResources().getString(R.string.info_offer));
         GlobalDefine.currentFragment = this;
         tvRound.setText(lstOfferHi.getRound());
         tvSalary.setText(StringUtils.filterCurrencyString(lstOfferHi.getSalary()) + " " + StringUtils.genStringCurrency(lstOfferHi.getCurency()));
@@ -75,13 +75,13 @@ public class DetailOfferFragment extends BaseFragment {
         String statusInterview = "";
         switch (status) {
             case 1:
-                statusInterview = "Đồng ý";
+                statusInterview = getResources().getString(R.string.accept);
                 break;
             case 2:
-                statusInterview = "Không đồng ý";
+                statusInterview = getResources().getString(R.string.not_accept);
                 break;
             default:
-                statusInterview = "Chưa có kết quả";
+                statusInterview = getResources().getString(R.string.no_results);
                 break;
         }
         return statusInterview;

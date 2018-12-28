@@ -57,11 +57,10 @@ public class ProcessResumeFragment extends BaseFragment {
     int jobId;
     DetailProcessResumeResponse detailProcessResumeResponse;
 
-    public static ProcessResumeFragment newInstance(int cvId, int jobId, boolean isDetail) {
+    public static ProcessResumeFragment newInstance(DetailProcessResumeResponse detailProcessResumeResponse, boolean isDetail) {
         ProcessResumeFragment fm = new ProcessResumeFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("cvId", cvId);
-        bundle.putInt("jobId", jobId);
+        bundle.putParcelable("detailProcessResumeResponse", detailProcessResumeResponse);
         bundle.putBoolean("isDetail", isDetail);
         fm.setArguments(bundle);
         return fm;
@@ -77,6 +76,7 @@ public class ProcessResumeFragment extends BaseFragment {
         this.cvId = bundle.getInt("cvId");
         this.jobId = bundle.getInt("jobId");
         this.isDetail = bundle.getBoolean("isDetail");
+        this.detailProcessResumeResponse = bundle.getParcelable("detailProcessResumeResponse");
     }
 
     @Override
@@ -137,7 +137,7 @@ public class ProcessResumeFragment extends BaseFragment {
                         mStep = step;
                         tvNameStep.setText(switchStepName(step));
                         mViewPager.setCurrentItem(step, true);
-                        tvStep.setText("Bước " + (mStep + 1) + "/5");
+                        tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
                     }
                 } else {
                     if (step <= mStepClick) {
@@ -145,7 +145,7 @@ public class ProcessResumeFragment extends BaseFragment {
                         mStep = step;
                         tvNameStep.setText(switchStepName(step));
                         mViewPager.setCurrentItem(step, true);
-                        tvStep.setText("Bước " + (mStep + 1) + "/5");
+                        tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
                     }
                 }
             }
@@ -178,11 +178,11 @@ public class ProcessResumeFragment extends BaseFragment {
                 SharedPrefUtils.putInt("step", mStep);
                 mViewPager.setCurrentItem(mStep, true);
                 tvNameStep.setText(switchStepName(mStep));
-                tvStep.setText("Bước " + (mStep + 1) + "/5");
+                tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
             }
         });
         tvNameStep.setText(switchStepName(mStep));
-        tvStep.setText("Bước " + (mStep + 1) + "/5");
+        tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
     }
 
     @Override
@@ -190,9 +190,60 @@ public class ProcessResumeFragment extends BaseFragment {
         if (detailProcessResumeResponse == null)
             getDetailProcessResume(this.cvId, this.jobId);
         else {
-            setupViewPager(mViewPager);
-            stepView2.go(mStep, true);
-            mViewPager.setCurrentItem(mStep, true);
+            if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 3 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 1)) {
+                mStep = 0;
+                mStepClick = 0;
+                SharedPrefUtils.putInt("step", mStep);
+                stepView2.go(mStep, true);
+                setupViewPager(mViewPager);
+                mViewPager.setCurrentItem(mStep);
+                tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
+                tvNameStep.setText(switchStepName(mStep));
+            } else if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 5 || detailProcessResumeResponse.getCvProcessInfo().getStatus() == 6 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 2)) {
+                mStep = 1;
+                mStepClick = 1;
+                SharedPrefUtils.putInt("step", mStep);
+                stepView2.go(mStep, true);
+                setupViewPager(mViewPager);
+                mViewPager.setCurrentItem(mStep);
+                tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
+                tvNameStep.setText(switchStepName(mStep));
+            } else if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 7 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 3)) {
+                mStep = 2;
+                mStepClick = 2;
+                SharedPrefUtils.putInt("step", mStep);
+                stepView2.go(mStep, true);
+                setupViewPager(mViewPager);
+                mViewPager.setCurrentItem(mStep);
+                tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
+                tvNameStep.setText(switchStepName(mStep));
+            } else if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 8 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 4)) {
+                mStep = 3;
+                mStepClick = 3;
+                SharedPrefUtils.putInt("step", mStep);
+                stepView2.go(mStep, true);
+                setupViewPager(mViewPager);
+                mViewPager.setCurrentItem(mStep);
+                tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
+                tvNameStep.setText(switchStepName(mStep));
+            } else if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 9 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 5)) {
+                mStep = 4;
+                mStepClick = 4;
+                SharedPrefUtils.putInt("step", mStep);
+                stepView2.go(mStep, true);
+                setupViewPager(mViewPager);
+                mViewPager.setCurrentItem(mStep);
+                tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
+                tvNameStep.setText(switchStepName(mStep));
+            } else if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() != null) {
+                mStep = detailProcessResumeResponse.getCvProcessInfo().getRejectStep();
+                mStepClick = detailProcessResumeResponse.getCvProcessInfo().getRejectStep();
+                stepView2.go(mStep - 1, true);
+                setupViewPager(mViewPager);
+                mViewPager.setCurrentItem(mStep - 1);
+                tvStep.setText(getResources().getString(R.string.step) + " " + (mStep) + "/5");
+                tvNameStep.setText(switchStepName(mStep - 1));
+            }
         }
     }
 
@@ -212,7 +263,7 @@ public class ProcessResumeFragment extends BaseFragment {
                         stepView2.go(mStep, true);
                         setupViewPager(mViewPager);
                         mViewPager.setCurrentItem(mStep);
-                        tvStep.setText("Bước " + (mStep + 1) + "/5");
+                        tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
                         tvNameStep.setText(switchStepName(mStep));
                     } else if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 5 || detailProcessResumeResponse.getCvProcessInfo().getStatus() == 6 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 2)) {
                         mStep = 1;
@@ -221,7 +272,7 @@ public class ProcessResumeFragment extends BaseFragment {
                         stepView2.go(mStep, true);
                         setupViewPager(mViewPager);
                         mViewPager.setCurrentItem(mStep);
-                        tvStep.setText("Bước " + (mStep + 1) + "/5");
+                        tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
                         tvNameStep.setText(switchStepName(mStep));
                     } else if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 7 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 3)) {
                         mStep = 2;
@@ -230,7 +281,7 @@ public class ProcessResumeFragment extends BaseFragment {
                         stepView2.go(mStep, true);
                         setupViewPager(mViewPager);
                         mViewPager.setCurrentItem(mStep);
-                        tvStep.setText("Bước " + (mStep + 1) + "/5");
+                        tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
                         tvNameStep.setText(switchStepName(mStep));
                     } else if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 8 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 4)) {
                         mStep = 3;
@@ -239,7 +290,7 @@ public class ProcessResumeFragment extends BaseFragment {
                         stepView2.go(mStep, true);
                         setupViewPager(mViewPager);
                         mViewPager.setCurrentItem(mStep);
-                        tvStep.setText("Bước " + (mStep + 1) + "/5");
+                        tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
                         tvNameStep.setText(switchStepName(mStep));
                     } else if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 9 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 5)) {
                         mStep = 4;
@@ -248,7 +299,7 @@ public class ProcessResumeFragment extends BaseFragment {
                         stepView2.go(mStep, true);
                         setupViewPager(mViewPager);
                         mViewPager.setCurrentItem(mStep);
-                        tvStep.setText("Bước " + (mStep + 1) + "/5");
+                        tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
                         tvNameStep.setText(switchStepName(mStep));
                     } else if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() != null) {
                         mStep = detailProcessResumeResponse.getCvProcessInfo().getRejectStep();
@@ -256,7 +307,7 @@ public class ProcessResumeFragment extends BaseFragment {
                         stepView2.go(mStep - 1, true);
                         setupViewPager(mViewPager);
                         mViewPager.setCurrentItem(mStep - 1);
-                        tvStep.setText("Bước " + (mStep) + "/5");
+                        tvStep.setText(getResources().getString(R.string.step) + " " + (mStep) + "/5");
                         tvNameStep.setText(switchStepName(mStep - 1));
                     }
                 }
@@ -279,11 +330,11 @@ public class ProcessResumeFragment extends BaseFragment {
 
     private void setupViewPager(final NonSwipeableViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFrag(new InfoProcessResumeFragment().newInstance(detailProcessResumeResponse, isDetail), "Thông tin");
-        adapter.addFrag(new InterviewProcessResumeFragment().newInstance(detailProcessResumeResponse), "Phỏng vấn");
-        adapter.addFrag(new OfferProcessResumeFragment().newInstance(detailProcessResumeResponse), "Offer");
-        adapter.addFrag(new GoToWorkProcessResumeFragment().newInstance(detailProcessResumeResponse), "Đi làm");
-        adapter.addFrag(new ContractProcessResumeFragment().newInstance(detailProcessResumeResponse), "Ký hợp đồng");
+        adapter.addFrag(new InfoProcessResumeFragment().newInstance(detailProcessResumeResponse, isDetail), getResources().getString(R.string.info));
+        adapter.addFrag(new InterviewProcessResumeFragment().newInstance(detailProcessResumeResponse), getResources().getString(R.string.interview));
+        adapter.addFrag(new OfferProcessResumeFragment().newInstance(detailProcessResumeResponse), getResources().getString(R.string.offered));
+        adapter.addFrag(new GoToWorkProcessResumeFragment().newInstance(detailProcessResumeResponse), getResources().getString(R.string.go_to_work));
+        adapter.addFrag(new ContractProcessResumeFragment().newInstance(detailProcessResumeResponse), getResources().getString(R.string.contract));
         viewPager.setOffscreenPageLimit(0);
         viewPager.setAdapter(adapter);
     }
@@ -295,16 +346,16 @@ public class ProcessResumeFragment extends BaseFragment {
                 stepName = getResources().getString(R.string.info);
                 break;
             case 1:
-                stepName = "Phỏng vấn";
+                stepName = getResources().getString(R.string.interview);
                 break;
             case 2:
-                stepName = "Offer";
+                stepName = getResources().getString(R.string.offered);
                 break;
             case 3:
-                stepName = "Đi làm";
+                stepName = getResources().getString(R.string.go_to_work);
                 break;
             case 4:
-                stepName = "Ký hợp đồng";
+                stepName = getResources().getString(R.string.contract);
                 break;
             default:
                 stepName = getResources().getString(R.string.info);

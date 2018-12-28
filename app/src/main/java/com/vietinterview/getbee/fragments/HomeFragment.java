@@ -143,6 +143,20 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 android.R.color.holo_green_dark,
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    if (jobsListServer.size() >= ApiConstant.LIMIT) {
+                        mPage++;
+                        getSearchJob(mCarrerId, mCityId, strSearch, mPage);
+                        jobsAdapter.setOnLoadMoreListener(HomeFragment.this);
+                    }
+                }
+            }
+        });
     }
 
     TextWatcher textWatcher = new TextWatcher() {

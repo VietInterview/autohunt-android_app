@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Xem hồ sơ"
+                android:text="@string/view_cv"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
         </android.support.v7.widget.Toolbar>
@@ -71,7 +71,7 @@
 
             <com.vietinterview.getbee.customview.RobotoMediumButton
                 android:id="@+id/btnProcessCV"
-                android:layout_width="152dp"
+                android:layout_width="wrap_content"
                 android:layout_height="44dp"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
@@ -80,7 +80,7 @@
                 android:drawablePadding="8dp"
                 android:fontFamily="@string/font_fontFamily_medium"
                 android:paddingHorizontal="16dp"
-                android:text="Xử lý hồ sơ"
+                android:text="@string/process_cv"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp" />

@@ -85,7 +85,7 @@ public class CreateGoToWorkFragment extends BaseFragment implements DatePickerDi
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbar(true);
         setCustomToolbarVisible(true);
-        getEventBaseFragment().doFillBackground("Thông tin đi làm");
+        getEventBaseFragment().doFillBackground(getResources().getString(R.string.info_gotowork));
         GlobalDefine.currentFragment = this;
         calendar = Calendar.getInstance();
         timeFormat = new SimpleDateFormat(TIME_PATTERN, Locale.US);
@@ -113,7 +113,7 @@ public class CreateGoToWorkFragment extends BaseFragment implements DatePickerDi
                 long lastWarrantyDate = calendar.getTimeInMillis();
                 long difference = lastWarrantyDate - today.getTimeInMillis();
                 int days = (int) (difference / (1000 * 60 * 60 * 24));
-                edtWarranty.setText("Còn lại " + days + " ngày");
+                edtWarranty.setText(days + " "+getResources().getString(R.string.dayleft));
             }
         }
     }
@@ -121,7 +121,7 @@ public class CreateGoToWorkFragment extends BaseFragment implements DatePickerDi
     @OnClick(R.id.btnUpdateWork)
     public void onUpdateWorkClick() {
         if (!StringUtils.isEmpty(edtWorkTime.getText().toString())) {
-            DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn cập nhập bản ghi này", "Có", "Không", new DialogInterface.OnClickListener() {
+            DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.ask_update), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     showCoverNetworkLoading();
@@ -169,7 +169,7 @@ public class CreateGoToWorkFragment extends BaseFragment implements DatePickerDi
             });
 
         } else {
-            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Vui lòng nhập vào các trường bắt buộc");
+            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.pleaseinputdata));
         }
     }
 

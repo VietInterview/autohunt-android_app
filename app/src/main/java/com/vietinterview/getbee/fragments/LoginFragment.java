@@ -423,6 +423,7 @@ public class LoginFragment extends BaseFragment {
             @Override
             public void onSuccess(int status, AccountResponse dataSuccess, List<AccountResponse> listDataSuccess, String message) {
                 if (status == 200) {
+                    hideCoverNetworkLoading();
                     List<LstMenuAuthority> lstMenuAuthorities = null;
                     ArrayList<String> listCode = new ArrayList<>();
                     ArrayList<String> listName = new ArrayList<>();
@@ -474,6 +475,7 @@ public class LoginFragment extends BaseFragment {
             @Override
             public void onFail(int status, ErrorResponse
                     dataFail, List<ErrorResponse> listDataFail, String message) {
+                hideCoverNetworkLoading();
                 DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
             }
         });

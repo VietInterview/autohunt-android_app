@@ -59,7 +59,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/borderbutton_notyet_send"
-                android:text="Không"
+                android:text="@string/no"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -70,7 +70,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/borderbutton_blue"
-                android:text="Có"
+                android:text="@string/yes"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
         </LinearLayout>

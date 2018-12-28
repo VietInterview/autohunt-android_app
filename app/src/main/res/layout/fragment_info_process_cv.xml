@@ -38,7 +38,7 @@
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="16dp"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="Thông tin ứng viên"
+                    android:text="@string/info_candidate"
                     android:textColor="#9FB6CB"
                     android:textSize="14sp" />
 
@@ -66,7 +66,6 @@
                         android:layout_marginVertical="16dp"
                         android:layout_weight="2"
                         android:fontFamily="@string/font_fontFamily_medium"
-                        android:text="Nguyễn Sơn Tùng"
                         android:textColor="#042E51"
                         android:textSize="20sp" />
 
@@ -92,7 +91,7 @@
                     <com.vietinterview.getbee.customview.RobotoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ngày sinh"
+                        android:text="@string/date_of_birth"
                         android:textColor="#677B8D"
                         android:textSize="14sp" />
 
@@ -101,7 +100,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@string/font_fontFamily_medium"
-                        android:text="04/10/1989"
                         android:textColor="#042E51"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -116,7 +114,7 @@
                     <com.vietinterview.getbee.customview.RobotoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Trình độ học vấn"
+                        android:text="@string/level_qualification"
                         android:textColor="#677B8D"
                         android:textSize="14sp" />
 
@@ -125,7 +123,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@string/font_fontFamily_medium"
-                        android:text="Đại học"
                         android:textColor="#042E51"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -140,7 +137,7 @@
                     <com.vietinterview.getbee.customview.RobotoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Vị trí mong muốn"
+                        android:text="@string/position_wish"
                         android:textColor="#677B8D"
                         android:textSize="14sp" />
 
@@ -149,7 +146,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@string/font_fontFamily_medium"
-                        android:text="Nhân viên thiết kế"
                         android:textColor="#042E51"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -164,7 +160,7 @@
                     <com.vietinterview.getbee.customview.RobotoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Địa điểm làm việc"
+                        android:text="@string/location_work"
                         android:textColor="#677B8D"
                         android:textSize="14sp" />
 
@@ -173,7 +169,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@string/font_fontFamily_medium"
-                        android:text="Hà nội, TP. Hồ Chí Minh"
                         android:textColor="#042E51"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -188,7 +183,7 @@
                     <com.vietinterview.getbee.customview.RobotoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Số năm kinh nghiệm"
+                        android:text="@string/exp_years"
                         android:textColor="#677B8D"
                         android:textSize="14sp" />
 
@@ -197,7 +192,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@string/font_fontFamily_medium"
-                        android:text="10 năm"
                         android:textColor="#042E51"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -212,7 +206,7 @@
                     <com.vietinterview.getbee.customview.RobotoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Mức lương mong muốn"
+                        android:text="@string/salary_wish"
                         android:textColor="#677B8D"
                         android:textSize="14sp" />
 
@@ -221,7 +215,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@string/font_fontFamily_medium"
-                        android:text="8,000,000 VND"
                         android:textColor="#042E51"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -258,7 +251,7 @@
                         android:drawableTop="@drawable/ic_next_step"
                         android:fontFamily="@string/font_fontFamily_medium"
                         android:padding="10dp"
-                        android:text="Phỏng vấn"
+                        android:text="@string/interview"
                         android:textColor="#ffffff"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -284,7 +277,7 @@
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="16dp"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="Thông tin chuyên gia tuyển dụng"
+                    android:text="@string/info_ctv_title"
                     android:textColor="#9FB6CB"
                     android:textSize="14sp" />
 
@@ -303,7 +296,6 @@
                         android:layout_marginVertical="16dp"
                         android:layout_weight="2"
                         android:fontFamily="@string/font_fontFamily_medium"
-                        android:text="Nguyễn Trần Huyền My"
                         android:textColor="#042E51"
                         android:textSize="20sp" />
                 </LinearLayout>
@@ -318,7 +310,7 @@
                     <com.vietinterview.getbee.customview.RobotoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Số điện thoại"
+                        android:text="@string/phone_number"
                         android:textColor="#677B8D"
                         android:textSize="14sp" />
 
@@ -327,7 +319,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@string/font_fontFamily_medium"
-                        android:text="039 123 456"
                         android:textColor="#042E51"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -342,7 +333,7 @@
                     <com.vietinterview.getbee.customview.RobotoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Email liên hệ"
+                        android:text="Email"
                         android:textColor="#677B8D"
                         android:textSize="14sp" />
 
@@ -378,7 +369,7 @@
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="8dp"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="Thông báo"
+                    android:text="@string/noti_title"
                     android:textColor="#042E51"
                     android:textSize="20sp" />
 

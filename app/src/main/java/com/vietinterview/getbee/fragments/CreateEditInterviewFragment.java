@@ -110,7 +110,7 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
         setCustomToolbar(true);
         setCustomToolbarVisible(true);
         GlobalDefine.currentFragment = this;
-        getEventBaseFragment().doFillBackground("Thông tin phỏng vấn");
+        getEventBaseFragment().doFillBackground(getResources().getString(R.string.info_interview));
         calendar = Calendar.getInstance();
         timeFormat = new SimpleDateFormat(TIME_PATTERN, Locale.US);
     }
@@ -139,13 +139,13 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
                     detailProcessResumeResponse.getLstInterviewHis().remove(i);
                 }
             }
-            edtRound.setText("Vòng " + (detailProcessResumeResponse.getLstInterviewHis().size() + 1));
+            edtRound.setText(getResources().getString(R.string.round) + " " + (detailProcessResumeResponse.getLstInterviewHis().size() + 1));
         }
     }
 
     @OnClick(R.id.tvAchieve)
     public void onAchieveClick() {
-        DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn cập nhật kết quả cho vòng phỏng vấn này?", "Có", "Không", new DialogInterface.OnClickListener() {
+        DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.ask_update_round_interview), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 statusInterview = 1;
@@ -161,7 +161,7 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
 
     @OnClick(R.id.tvNotAchieved)
     public void onNotAchieveClick() {
-        DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn cập nhật kết quả cho vòng phỏng vấn này?", "Có", "Không", new DialogInterface.OnClickListener() {
+        DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.ask_update_round_interview), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 statusInterview = 2;
@@ -286,7 +286,7 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
                 long chooseTime = choose.getTimeInMillis();
                 long difference = chooseTime - lastWarrantyDate;
                 if (difference > 0) {
-                    DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn mời phỏng vấn ứng viên này?", "Có", "Không", new DialogInterface.OnClickListener() {
+                    DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.confirm_invite_interview), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             showCoverNetworkLoading();
@@ -318,10 +318,10 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
                         }
                     });
                 } else {
-                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Bạn không thể chọn ngày phòng vấn trước hoặc bằng ngày phỏng vấn trước");
+                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.warning_date_interview));
                 }
             } else {
-                DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn mời phỏng vấn ứng viên này?", "Có", "Không", new DialogInterface.OnClickListener() {
+                DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.confirm_invite_interview), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         showCoverNetworkLoading();
@@ -364,7 +364,7 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
             } else {
                 edtPlaceInterview.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_gray));
             }
-            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Vui lòng nhập vào các trường bắt buộc");
+            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.pleaseinputdata));
         }
     }
 

@@ -17,7 +17,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@string/font_fontFamily_medium"
-            android:text="Offer lần 3"
             android:textColor="#042E51"
             android:textSize="16sp" />
 
@@ -26,7 +25,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvRound"
-            android:text="28/12/2018"
             android:textColor="#677B8D"
             android:textSize="14sp" />
 

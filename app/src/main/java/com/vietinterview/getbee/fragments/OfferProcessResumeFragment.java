@@ -188,11 +188,10 @@ public class OfferProcessResumeFragment extends BaseFragment {
         } else {
             cardReject.setVisibility(View.GONE);
         }
-        if (detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() != null ) {
-            tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName());
+        if (detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() != null) {
+            tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName());
             if (detailProcessResumeResponse.getCvProcessInfo().getRejectNote() != null && !detailProcessResumeResponse.getCvProcessInfo().getRejectNote().equalsIgnoreCase(""))
-                tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() + "\nGhi chú: " + detailProcessResumeResponse.getCvProcessInfo().getRejectNote());
-
+                tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() + "\n" + getResources().getString(R.string.reject_mess3) + ": " + detailProcessResumeResponse.getCvProcessInfo().getRejectNote());
         }
     }
 
@@ -241,22 +240,6 @@ public class OfferProcessResumeFragment extends BaseFragment {
         });
     }
 
-    public String switchResult(int status) {
-        String statusInterview = "";
-        switch (status) {
-            case 1:
-                statusInterview = "Đồng ý";
-                break;
-            case 2:
-                statusInterview = "Không đồng ý";
-                break;
-            default:
-                statusInterview = "Chưa có kết quả";
-                break;
-        }
-        return statusInterview;
-    }
-
     private Dialog mNotifyDialog;
 
     @OnClick(R.id.btnNext)
@@ -276,7 +259,7 @@ public class OfferProcessResumeFragment extends BaseFragment {
                 Button btnOK = (Button) mNotifyDialog.findViewById(R.id.btnOK);
                 Button btnNo = mNotifyDialog.findViewById(R.id.btnNo);
                 TextView tvContent = mNotifyDialog.findViewById(R.id.tvContent);
-                tvContent.setText("Bạn có chắc chắn muốn cập nhật trạng thái đi làm cho ứng viên này không?");
+                tvContent.setText(getResources().getString(R.string.ask_update_gotowork));
                 btnNo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -322,10 +305,10 @@ public class OfferProcessResumeFragment extends BaseFragment {
                 });
                 mNotifyDialog.show();
             } else {
-                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Vòng Offer gần nhất ứng viên từ chối vì vậy bạn không thể mời ứng viên đi làm");
+                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.offer_rejected));
             }
         } else {
-            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Chưa có Offer nào, hãy thêm offer");
+            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.warning_add_offer));
         }
     }
 
@@ -341,9 +324,9 @@ public class OfferProcessResumeFragment extends BaseFragment {
             if (detailProcessResumeResponse.getLstOfferHis().get(count - 1).getStatus() == 2) {
                 FragmentUtil.pushFragment(getActivity(), this, new CreateEditOfferFragment().newInstance(null, detailProcessResumeResponse), null);
             } else if (detailProcessResumeResponse.getLstOfferHis().get(count - 1).getStatus() == 1) {
-                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Lần offer gần nhất ứng viên đã đồng ý vì vậy bạn không thể thêm mới offer");
+                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.warning_add_new_offer));
             } else if (detailProcessResumeResponse.getLstOfferHis().get(count - 1).getStatus() == 0) {
-                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Bạn phải cập nhật trạng thái offer trước, trước khi tạo offer mới");
+                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.warning_update_offer));
             } else {
                 FragmentUtil.pushFragment(getActivity(), this, new CreateEditOfferFragment().newInstance(null, detailProcessResumeResponse), null);
             }
@@ -419,9 +402,9 @@ public class OfferProcessResumeFragment extends BaseFragment {
                         public void onClick(View v) {
                             if (isOther) {
                                 if (edtReasonOther.getText().toString().trim().equalsIgnoreCase("")) {
-                                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Xin hãy nhập lý do từ chối");
+                                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.input_reason_reject));
                                 } else {
-                                    DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn gửi email và cập nhật trạng thái từ chối cho hồ sơ này?", "Có", "Không", new DialogInterface.OnClickListener() {
+                                    DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.ask_reject), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
                                             showCoverNetworkLoading();
@@ -431,9 +414,9 @@ public class OfferProcessResumeFragment extends BaseFragment {
                                                     if (isAdded()) {
                                                         if (status == 200) {
                                                             hideCoverNetworkLoading();
-                                                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Gửi từ chối thành công");
+                                                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.send_reject_success));
                                                             cardReject.setVisibility(View.VISIBLE);
-                                                            tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + rejectName + "\nGhi chú: " + dataSuccess.getReasonNote());
+                                                            tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
 //                                                            int count = detailProcessResumeResponse.getLstOfferHis().size();
 //                                                            for (int i = 0; i < detailProcessResumeResponse.getLstOfferHis().size(); i++) {
 //                                                                if (detailProcessResumeResponse.getLstOfferHis().get(i).getId() == -1) {
@@ -476,7 +459,7 @@ public class OfferProcessResumeFragment extends BaseFragment {
 
                                 }
                             } else {
-                                DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), "Bạn có chắc chắn muốn gửi email và cập nhật trạng thái từ chối cho hồ sơ này?", "Có", "Không", new DialogInterface.OnClickListener() {
+                                DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title),  getResources().getString(R.string.ask_reject), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         showCoverNetworkLoading();
@@ -486,11 +469,11 @@ public class OfferProcessResumeFragment extends BaseFragment {
                                                 if (isAdded()) {
                                                     if (status == 200) {
                                                         hideCoverNetworkLoading();
-                                                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Gửi từ chối thành công", new DialogInterface.OnClickListener() {
+                                                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.send_reject_success), new DialogInterface.OnClickListener() {
                                                             @Override
                                                             public void onClick(DialogInterface dialogInterface, int i) {
                                                                 cardReject.setVisibility(View.VISIBLE);
-                                                                tvReject.setText("Ứng viên này đã bị từ chối\nLý do: " + rejectName + "\nGhi chú: " + dataSuccess.getReasonNote());
+                                                                tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
                                                             }
                                                         });
 //                                                        int count = detailProcessResumeResponse.getLstOfferHis().size();

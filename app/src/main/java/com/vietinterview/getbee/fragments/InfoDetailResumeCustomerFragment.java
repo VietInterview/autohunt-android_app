@@ -104,16 +104,15 @@ public class InfoDetailResumeCustomerFragment extends BaseFragment {
         btShowmore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (btShowmore.getText().toString().equalsIgnoreCase("Xem thêm  ")) {
+                if (btShowmore.getText().toString().equalsIgnoreCase(getResources().getString(R.string.see_more))) {
                     tvTarget.setMaxLines(Integer.MAX_VALUE);//your TextView
-                    btShowmore.setText("Rút gọn  ");
+                    btShowmore.setText(getResources().getString(R.string.see_less));
                     gradientView.setVisibility(View.GONE);
                     btShowmore.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up_blue, 0);
                 } else {
                     tvTarget.setMaxLines(6);
                     tvTarget.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_header_selector));
-                    btShowmore.setText("Xem thêm  ");
+                    btShowmore.setText(getResources().getString(R.string.see_more));
                     gradientView.setVisibility(View.VISIBLE);
                     btShowmore.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_down_blue, 0);
                 }

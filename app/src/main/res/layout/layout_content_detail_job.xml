@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Cấp bậc"
+                android:text="@string/position"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -42,7 +42,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Nhân viên"
                 android:textColor="#677B8D"
                 android:textSize="16sp" />
 
@@ -65,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Hình thức làm việc"
+                android:text="@string/working_form"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -74,7 +73,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Nhân viên"
                 android:textColor="#677B8D"
                 android:textSize="16sp" />
 
@@ -96,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Lĩnh vực ngành nghề"
+                android:text="@string/carrer"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -105,7 +103,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Nhân viên"
                 android:textColor="#677B8D"
                 android:textSize="16sp" />
 
@@ -127,7 +124,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Yêu cầu kinh nghiệm"
+                android:text="@string/require_exp"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -136,7 +133,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Nhân viên"
                 android:textColor="#677B8D"
                 android:textSize="16sp" />
 
@@ -146,6 +142,7 @@
                 android:layout_marginVertical="4dp"
                 android:background="#D8D8D8" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -157,7 +154,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Yêu cầu giới tính"
+                android:text="@string/require_sex"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -166,7 +163,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Nhân viên"
                 android:textColor="#677B8D"
                 android:textSize="16sp" />
 
@@ -176,6 +172,7 @@
                 android:layout_marginVertical="4dp"
                 android:background="#D8D8D8" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -187,7 +184,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Nơi làm việc"
+                android:text="@string/location_work"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -196,7 +193,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Nhân viên"
                 android:textColor="#677B8D"
                 android:textSize="16sp" />
 
@@ -218,7 +214,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Số lượng tuyển"
+                android:text="@string/quantity_hiring"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -227,7 +223,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Nhân viên"
                 android:textColor="#677B8D"
                 android:textSize="16sp" />
 
@@ -249,7 +244,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Yêu cầu bằng cấp"
+                android:text="@string/require_certificate"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -258,7 +253,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Nhân viên"
                 android:textColor="#677B8D"
                 android:textSize="16sp" />
 
@@ -280,7 +274,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Yêu cầu độ tuổi"
+                android:text="@string/require_age"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -289,7 +283,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Nhân viên"
                 android:textColor="#677B8D"
                 android:textSize="16sp" />
 
@@ -311,7 +304,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Mức lương"
+                android:text="@string/salary_level"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -320,7 +313,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Nhân viên"
                 android:textColor="#677B8D"
                 android:textSize="16sp" />
 
@@ -342,7 +334,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Thưởng cộng tác viên"
+                android:text="@string/reward_ctv"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -351,7 +343,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Nhân viên"
                 android:textColor="#677B8D"
                 android:textSize="16sp" />
 
@@ -373,7 +364,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Ngày đăng"
+                android:text="@string/pub_date"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -382,7 +373,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Nhân viên"
                 android:textColor="#677B8D"
                 android:textSize="16sp" />
 
@@ -404,7 +394,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Ngày hết hạn"
+                android:text="@string/exp_date"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -413,7 +403,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Nhân viên"
                 android:textColor="#677B8D"
                 android:textSize="16sp" />
 
@@ -435,7 +424,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Từ khóa"
+                android:text="@string/tag"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -444,7 +433,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Nhân viên"
                 android:textColor="#677B8D"
                 android:textSize="16sp" />
 
@@ -466,7 +454,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Nhận hồ sơ bằng ngôn ngữ"
+                android:text="@string/language_cv"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -475,7 +463,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Nhân viên"
                 android:textColor="#677B8D"
                 android:textSize="16sp" />
 
@@ -497,7 +484,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Người liên hệ"
+                android:text="@string/contact_mem"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -506,7 +493,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Nhân viên"
                 android:textColor="#677B8D"
                 android:textSize="16sp" />
 
@@ -528,7 +514,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Email nhận thông báo"
+                android:text="@string/email_receive"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -537,7 +523,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="Nhân viên"
                 android:textColor="#677B8D"
                 android:textSize="16sp" />
 
@@ -559,7 +544,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/activity_vertical_margin"
                 android:layout_marginVertical="4dp"
-                android:text="Mô tả công việc"
+                android:text="@string/job_des"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -575,8 +560,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:background="@drawable/main_header_selector"
-                    android:maxLines="6"
-                    android:text="Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure? On the other hand, we." />
+                    android:maxLines="6"/>
 
                 <LinearLayout
                     android:id="@+id/gradientView"
@@ -593,7 +577,7 @@
                 android:layout_marginLeft="16dp"
                 android:background="@android:color/transparent"
                 android:drawableRight="@drawable/ic_arrow_down_blue"
-                android:text="Xem thêm  "
+                android:text="@string/see_more"
                 android:textAllCaps="false"
                 android:textColor="@android:color/holo_blue_light" />
 
@@ -615,7 +599,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/activity_vertical_margin"
                 android:layout_marginVertical="4dp"
-                android:text="Yêu cầu công việc"
+                android:text="@string/job_requirement"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -631,8 +615,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:background="@drawable/main_header_selector"
-                    android:maxLines="6"
-                    android:text="Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure? On the other hand, we." />
+                    android:maxLines="6"/>
 
                 <LinearLayout
                     android:id="@+id/gradientView1"
@@ -649,7 +632,7 @@
                 android:layout_marginLeft="16dp"
                 android:background="@android:color/transparent"
                 android:drawableRight="@drawable/ic_arrow_down_blue"
-                android:text="Xem thêm  "
+                android:text="@string/see_more"
                 android:textAllCaps="false"
                 android:textColor="@android:color/holo_blue_light" />
 
@@ -659,6 +642,7 @@
                 android:layout_marginVertical="4dp"
                 android:background="#D8D8D8" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/llTreatment"
             android:layout_width="match_parent"
@@ -671,7 +655,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/activity_vertical_margin"
                 android:layout_marginVertical="4dp"
-                android:text="Đãi ngộ đặc biệt"
+                android:text="@string/special_treatment"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -687,8 +671,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:background="@drawable/main_header_selector"
-                    android:maxLines="6"
-                    android:text="Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure? On the other hand, we." />
+                    android:maxLines="6" />
 
                 <LinearLayout
                     android:id="@+id/gradientViewSpecialTreatment"
@@ -705,7 +688,7 @@
                 android:layout_marginLeft="16dp"
                 android:background="@android:color/transparent"
                 android:drawableRight="@drawable/ic_arrow_down_blue"
-                android:text="Xem thêm  "
+                android:text="@string/see_more"
                 android:textAllCaps="false"
                 android:textColor="@android:color/holo_blue_light" />
 

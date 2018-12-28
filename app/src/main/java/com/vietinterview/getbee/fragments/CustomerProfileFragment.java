@@ -97,7 +97,7 @@ public class CustomerProfileFragment extends BaseFragment {
         horizontal_recycler_view.setLayoutManager(horizontalLayoutManager);
         mediacontroller = new MediaController(getActivity());
         mediacontroller.setAnchorView(vv);
-        getEventBaseFragment().doFillBackground("Thông tin nhà tuyển dụng");
+        getEventBaseFragment().doFillBackground(getResources().getString(R.string.info_customer));
         vv.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
@@ -122,15 +122,15 @@ public class CustomerProfileFragment extends BaseFragment {
         btShowmore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (btShowmore.getText().toString().equalsIgnoreCase("Xem thêm  ")) {
+                if (btShowmore.getText().toString().equalsIgnoreCase(getResources().getString(R.string.see_more))) {
                     tvInfoCompany.setMaxLines(Integer.MAX_VALUE);//your TextView
-                    btShowmore.setText("Rút gọn  ");
+                    btShowmore.setText(getResources().getString(R.string.see_less));
                     gradientView.setVisibility(View.GONE);
                     btShowmore.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up_blue, 0);
                 } else {
                     tvInfoCompany.setMaxLines(6);
                     tvInfoCompany.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_header_selector));
-                    btShowmore.setText("Xem thêm  ");
+                    btShowmore.setText(getResources().getString(R.string.see_more));
                     gradientView.setVisibility(View.VISIBLE);
                     btShowmore.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_down_blue, 0);
                 }
@@ -172,25 +172,37 @@ public class CustomerProfileFragment extends BaseFragment {
                         tvCarrer.setText(carrerBuffer.toString());
                     }
                     StringBuffer address = new StringBuffer("");
-                    address.append(profileCustomerResponse.getAddress() + " ");
-                    for (int i = 0; i < profileCustomerResponse.getCountry().size(); i++) {
-                        for (int j = 0; j < profileCustomerResponse.getCity().size(); j++) {
-                            if (profileCustomerResponse.getCity().get(j).getCountryId() == profileCustomerResponse.getCountry().get(i).getId()) {
-                                if (j == profileCustomerResponse.getCity().size() - 1) {
-                                    address.append(profileCustomerResponse.getCity().get(j).getName() + " - " + profileCustomerResponse.getCountry().get(i).getName());
-                                } else {
-                                    address.append(profileCustomerResponse.getCity().get(j).getName() + " - " + profileCustomerResponse.getCountry().get(i).getName() + ", ");
+                    if (profileCustomerResponse.getAddress() != null)
+                        address.append(profileCustomerResponse.getAddress() + " ");
+                    if (profileCustomerResponse.getCountry() != null) {
+                        for (int i = 0; i < profileCustomerResponse.getCountry().size(); i++) {
+                            if (profileCustomerResponse.getCity() != null) {
+                                for (int j = 0; j < profileCustomerResponse.getCity().size(); j++) {
+                                    if (profileCustomerResponse.getCity().get(j).getCountryId() == profileCustomerResponse.getCountry().get(i).getId()) {
+                                        if (j == profileCustomerResponse.getCity().size() - 1) {
+                                            address.append(profileCustomerResponse.getCity().get(j).getName() + ", " + profileCustomerResponse.getCountry().get(i).getName());
+                                        } else {
+                                            address.append(profileCustomerResponse.getCity().get(j).getName() + ", " + profileCustomerResponse.getCountry().get(i).getName() + ", ");
+                                        }
+                                    }
                                 }
+                            } else {
+                                if (i == profileCustomerResponse.getCountry().size() - 1)
+                                    address.append(profileCustomerResponse.getCountry().get(i).getName());
+                                else
+                                    address.append(profileCustomerResponse.getCountry().get(i).getName() + ", ");
                             }
                         }
                     }
                     tvCompanyAddress.setText(address.toString());
                     StringBuffer timeBuffer = new StringBuffer("");
-                    for (int i = 0; i < profileCustomerResponse.getTimeservingSelectedItems().size(); i++) {
-                        if (i == profileCustomerResponse.getTimeservingSelectedItems().size() - 1) {
-                            timeBuffer.append(profileCustomerResponse.getTimeservingSelectedItems().get(i).getName() + "");
-                        } else {
-                            timeBuffer.append(profileCustomerResponse.getTimeservingSelectedItems().get(i).getName() + ", ");
+                    if (profileCustomerResponse.getTimeservingSelectedItems() != null) {
+                        for (int i = 0; i < profileCustomerResponse.getTimeservingSelectedItems().size(); i++) {
+                            if (i == profileCustomerResponse.getTimeservingSelectedItems().size() - 1) {
+                                timeBuffer.append(profileCustomerResponse.getTimeservingSelectedItems().get(i).getName() + "");
+                            } else {
+                                timeBuffer.append(profileCustomerResponse.getTimeservingSelectedItems().get(i).getName() + ", ");
+                            }
                         }
                     }
                     tvWorkTime.setText(timeBuffer.toString());

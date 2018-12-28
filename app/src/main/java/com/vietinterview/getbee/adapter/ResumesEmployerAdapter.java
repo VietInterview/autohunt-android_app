@@ -17,8 +17,10 @@ import android.widget.TextView;
 import com.daimajia.swipe.SwipeLayout;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.GetDetailCVByJobCustomerRequest;
+import com.vietinterview.getbee.api.request.GetDetailProcessResumeRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.detailcvcustomer.DetailCVCustomerResponse;
+import com.vietinterview.getbee.api.response.detailprocessresume.DetailProcessResumeResponse;
 import com.vietinterview.getbee.api.response.listcvcustomer.CvList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnLoadMoreListener;
@@ -54,6 +56,7 @@ public class ResumesEmployerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private int lastVisibleItem, totalItemCount;
     private OnLoadMoreListener onLoadMoreListener;
     private GetDetailCVByJobCustomerRequest getDetailCVByJobCustomerRequest;
+    GetDetailProcessResumeRequest getDetailProcessResumeRequest;
     private boolean isLoading;
     private BaseFragment baseFragment;
     private int mTotal;
@@ -114,7 +117,7 @@ public class ResumesEmployerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof MyViewHolder) {
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvName)).setText(cvLists.get(position).getFullName());
-            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCarrer)).setText(cvLists.get(position).getCountDay() == 0 ? "Vừa gửi" : cvLists.get(position).getCountDay() + " " + baseFragment.getResources().getString(R.string.before_day));
+            ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCarrer)).setText(cvLists.get(position).getCountDay() == 0 ? mContext.getResources().getString(R.string.just_sent) : cvLists.get(position).getCountDay() + " " + baseFragment.getResources().getString(R.string.before_day));
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setText(this.mTotal == 0 ? mContext.getResources().getString(R.string.no_cv_upload) : this.mTotal + " " + mContext.getResources().getString(R.string.cv_found));
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setVisibility(position == 0 ? View.VISIBLE : View.GONE);
 //            ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.llStatus)).setVisibility(View.GONE);
@@ -124,7 +127,8 @@ public class ResumesEmployerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new ProcessResumeFragment().newInstance(cvLists.get(position).getId(), jobId, false), null);
+                    getDetailProcessResume(cvLists.get(position).getId(), jobId);
+//                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new ProcessResumeFragment().newInstance(cvLists.get(position).getId(), jobId, false), null);
                 }
             });
 //            binderHelper.bind((SwipeLayout) ((MyViewHolder) holder).swipeLayout, cvLists.get(position).getId().toString());
@@ -145,6 +149,33 @@ public class ResumesEmployerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @Override
     public int getItemCount() {
         return cvLists.size();
+    }
+
+    public void getDetailProcessResume(int cvId, int jobId) {
+        baseFragment.showCoverNetworkLoading();
+        getDetailProcessResumeRequest = new GetDetailProcessResumeRequest(cvId, jobId);
+        getDetailProcessResumeRequest.callRequest(baseFragment.getActivity(), new ApiObjectCallBack<DetailProcessResumeResponse, ErrorResponse>() {
+            @Override
+            public void onSuccess(int status, DetailProcessResumeResponse dataSuccess, List<DetailProcessResumeResponse> listDataSuccess, String message) {
+                baseFragment.hideCoverNetworkLoading();
+                if (baseFragment.isAdded()) {
+                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new ProcessResumeFragment().newInstance(dataSuccess, false), null);
+
+                }
+            }
+
+            @Override
+            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                baseFragment.hideCoverNetworkLoading();
+                if (baseFragment.isAdded()) {
+                    DialogUtil.showDialog(baseFragment.getActivity(), baseFragment.getResources().getString(R.string.noti_title), message, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
+                }
+            }
+        });
     }
 
     public void getDetailCV(int id) {

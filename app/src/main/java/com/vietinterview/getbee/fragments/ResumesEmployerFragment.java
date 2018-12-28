@@ -93,7 +93,7 @@ public class ResumesEmployerFragment extends BaseFragment implements SwipeRefres
         setCustomToolbarVisible(true);
         GlobalDefine.currentFragment = this;
         jobID = SharedPrefUtils.getInt("jobIdCus", 0);
-        getEventBaseFragment().doFillBackground("Danh sách ứng viên");
+        getEventBaseFragment().doFillBackground(getResources().getString(R.string.cv_list));
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -102,11 +102,29 @@ public class ResumesEmployerFragment extends BaseFragment implements SwipeRefres
                 android.R.color.holo_green_dark,
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    if (cvListsServer.size() >= ApiConstant.LIMIT) {
+                        page++;
+                        getResumeEmployer(page);
+                        cvsEmployerAdapter.setOnLoadMoreListener(ResumesEmployerFragment.this);
+                    }
+                }
+            }
+        });
     }
 
     @Override
     protected void initData() {
-        getResumeEmployer(0);
+        if (cvLists.size() == 0)
+            getResumeEmployer(0);
+        else {
+            recyclerView.setAdapter(cvsEmployerAdapter);
+        }
     }
 
     @Override
