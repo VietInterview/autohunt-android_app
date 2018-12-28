@@ -222,9 +222,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         });
         if (AccountManager.getUserInfoBean() != null) {
-            for (LstMenuAuthority lstMenuAuthority : AccountManager.getUserInfoBean().getLstMenuAuthority()) {
-                menu.add(lstMenuAuthority.getId(), lstMenuAuthority.getId(), 0, lstMenuAuthority.getName());
+            if (AccountManager.getUserInfoBean().getLstMenuAuthority() != null) {
+                for (LstMenuAuthority lstMenuAuthority : AccountManager.getUserInfoBean().getLstMenuAuthority()) {
+                    menu.add(lstMenuAuthority.getId(), lstMenuAuthority.getId(), 0, lstMenuAuthority.getName());
 
+                }
+            } else {
+                navigationView.inflateMenu(R.menu.menu_left_ctv_drawer);
             }
         } else
             navigationView.inflateMenu(R.menu.menu_left_ctv_drawer);
@@ -232,7 +236,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             MenuItem mi = menu.getItem(i);
             mi.setCheckable(true);
             mi.setChecked(true);
-            if (AccountManager.getUserInfoBean() != null) setIcon(mi);
+            if (AccountManager.getUserInfoBean() != null) {
+                if (AccountManager.getUserInfoBean().getLstMenuAuthority() != null) {
+                    setIcon(mi);
+                }
+            }
             SubMenu subMenu = mi.getSubMenu();
             if (subMenu != null && subMenu.size() > 0) {
                 for (int j = 0; j < subMenu.size(); j++) {
@@ -282,9 +290,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     else {
                         navigationView.getMenu().getItem(0).setChecked(true);
                     }
-                    if (AccountManager.getUserInfoBean().getType() == 7 || AccountManager.getUserInfoBean().getType() == 5)
-                        FragmentUtil.replaceFragment(this, new HomeFragment(), null);
-                    else FragmentUtil.replaceFragment(this, new JobsEmployerFragment(), null);
+                    if (AccountManager.getUserInfoBean().getType() != null) {
+                        if (AccountManager.getUserInfoBean().getType() == 7 || AccountManager.getUserInfoBean().getType() == 5)
+                            FragmentUtil.replaceFragment(this, new HomeFragment(), null);
+                        else FragmentUtil.replaceFragment(this, new JobsEmployerFragment(), null);
+                    } else {
+                        AccountManager.logout();
+                        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                        FragmentUtil.replaceFragment(MainActivity.this, new LoginFragment(), null);
+                        drawer.closeDrawer(GravityCompat.START);
+                    }
                 } else {
                     if (mItem != null)
                         mItem.setChecked(true);
@@ -359,43 +374,45 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     MenuItem mItem;
 
     public void setIcon(MenuItem item) {
-        for (LstMenuAuthority lstMenuAuthority : AccountManager.getUserInfoBean().getLstMenuAuthority()) {
-            if (item.getItemId() == lstMenuAuthority.getId()) {
-                switch (lstMenuAuthority.getCode()) {
-                    case "CTV_HOME_PAGE":
-                        item.setIcon(R.drawable.ic_home);
-                        break;
-                    case "CTV_JOB":
-                        item.setIcon(R.drawable.ic_vali);
-                        break;
-                    case "CTV_JOB_SENT":
-                        item.setIcon(R.drawable.ic_vali);
-                        break;
-                    case "CTV_CV":
-                        item.setIcon(R.drawable.ic_mycv_menuleft);
-                        break;
-                    case "CTV_CV_SEND":
-                        item.setIcon(R.drawable.ic_mycv_menuleft);
-                        break;
-                    case "CMS_JOB_AND_CV":
-                        break;
-                    case "CMS_CTV":
-                        break;
-                    case "CMS_JOB":
-                        break;
-                    case "CMS_CUSTOMER":
-                        break;
-                    case "CMS_CV":
-                        break;
-                    case "CUSTOMER_HOME_PAGE":
-                        item.setIcon(R.drawable.ic_home);
-                        break;
-                    default:
-                        item.setIcon(R.drawable.ic_user_menuleft);
-                        break;
+        if (AccountManager.getUserInfoBean().getLstMenuAuthority() != null) {
+            for (LstMenuAuthority lstMenuAuthority : AccountManager.getUserInfoBean().getLstMenuAuthority()) {
+                if (item.getItemId() == lstMenuAuthority.getId()) {
+                    switch (lstMenuAuthority.getCode()) {
+                        case "CTV_HOME_PAGE":
+                            item.setIcon(R.drawable.ic_home);
+                            break;
+                        case "CTV_JOB":
+                            item.setIcon(R.drawable.ic_vali);
+                            break;
+                        case "CTV_JOB_SENT":
+                            item.setIcon(R.drawable.ic_vali);
+                            break;
+                        case "CTV_CV":
+                            item.setIcon(R.drawable.ic_mycv_menuleft);
+                            break;
+                        case "CTV_CV_SEND":
+                            item.setIcon(R.drawable.ic_mycv_menuleft);
+                            break;
+                        case "CMS_JOB_AND_CV":
+                            break;
+                        case "CMS_CTV":
+                            break;
+                        case "CMS_JOB":
+                            break;
+                        case "CMS_CUSTOMER":
+                            break;
+                        case "CMS_CV":
+                            break;
+                        case "CUSTOMER_HOME_PAGE":
+                            item.setIcon(R.drawable.ic_home);
+                            break;
+                        default:
+                            item.setIcon(R.drawable.ic_user_menuleft);
+                            break;
+                    }
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
                 }
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
             }
         }
     }
