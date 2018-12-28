@@ -127,8 +127,8 @@ public class ResumesEmployerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    getDetailProcessResume(cvLists.get(position).getId(), jobId);
-//                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new ProcessResumeFragment().newInstance(cvLists.get(position).getId(), jobId, false), null);
+//                    getDetailProcessResume(cvLists.get(position).getId(), jobId);
+                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new ProcessResumeFragment().newInstance(cvLists.get(position).getId(), jobId, false), null);
                 }
             });
 //            binderHelper.bind((SwipeLayout) ((MyViewHolder) holder).swipeLayout, cvLists.get(position).getId().toString());
@@ -159,7 +159,7 @@ public class ResumesEmployerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             public void onSuccess(int status, DetailProcessResumeResponse dataSuccess, List<DetailProcessResumeResponse> listDataSuccess, String message) {
                 baseFragment.hideCoverNetworkLoading();
                 if (baseFragment.isAdded()) {
-                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new ProcessResumeFragment().newInstance(dataSuccess, false), null);
+//                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new ProcessResumeFragment().newInstance(dataSuccess, false), null);
 
                 }
             }

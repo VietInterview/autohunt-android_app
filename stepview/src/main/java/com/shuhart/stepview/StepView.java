@@ -826,10 +826,12 @@ public class StepView extends View {
             this.doneCircleColor = doneCircleColor;
             return this;
         }
+
         public State nextCircleColor(@ColorInt int nextCircleColor) {
             this.nextCircleColor = nextCircleColor;
             return this;
         }
+
         public State doneCircleRadius(@Dimension int doneCircleRadius) {
             this.doneCircleRadius = doneCircleRadius;
             return this;

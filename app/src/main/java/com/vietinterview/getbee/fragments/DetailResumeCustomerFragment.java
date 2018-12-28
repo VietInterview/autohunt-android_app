@@ -143,7 +143,8 @@ public class DetailResumeCustomerFragment extends BaseFragment {
 
     @OnClick(R.id.btnProcessCV)
     public void onProcessClick() {
-        getDetailProcessResume(mDetailCVCustomerResponse.getId(), mDetailCVCustomerResponse.getJobId());
+        FragmentUtil.pushFragment(getActivity(), DetailResumeCustomerFragment.this, new ProcessResumeFragment().newInstance(mDetailCVCustomerResponse.getId(), mDetailCVCustomerResponse.getJobId(), true), null);
+
     }
 
     GetDetailProcessResumeRequest getDetailProcessResumeRequest;
@@ -156,7 +157,7 @@ public class DetailResumeCustomerFragment extends BaseFragment {
             public void onSuccess(int status, DetailProcessResumeResponse dataSuccess, List<DetailProcessResumeResponse> listDataSuccess, String message) {
                 hideCoverNetworkLoading();
                 if (isAdded()) {
-                    FragmentUtil.pushFragment(getActivity(), DetailResumeCustomerFragment.this, new ProcessResumeFragment().newInstance(dataSuccess, true), null);
+//                    FragmentUtil.pushFragment(getActivity(), DetailResumeCustomerFragment.this, new ProcessResumeFragment().newInstance(dataSuccess, true), null);
 
                 }
             }

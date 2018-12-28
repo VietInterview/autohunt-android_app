@@ -317,11 +317,11 @@ public class LoginFragment extends BaseFragment {
             getCUSProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<ProfileCustomerResponse, ErrorResponse>() {
                 @Override
                 public void onSuccess(int status, ProfileCustomerResponse dataSuccess, List<ProfileCustomerResponse> listDataSuccess, String message) {
-                    if (dataSuccess.getCompanyName() != null) {
-                        userInfoBean.name = dataSuccess.getCompanyName();
-                    } else {
-                        userInfoBean.name = edtEmail.getText().toString().trim().split("[$&<@%*]")[0];
-                    }
+//                    if (dataSuccess.getCompanyName() != null) {
+//                        userInfoBean.name = dataSuccess.get();
+//                    } else {
+//                        userInfoBean.name = edtEmail.getText().toString().trim().split("[$&<@%*]")[0];
+//                    }
                     AccountManager.setUserInfoBean(userInfoBean);
                     getEventBaseFragment().setTextGreeting(AccountManager.getUserInfoBean().name);
                 }
@@ -457,6 +457,11 @@ public class LoginFragment extends BaseFragment {
                     userInfoBean.getLstMenuAuthority().add(new LstMenuAuthority(0, getResources().getString(R.string.info_acc_tit), "PROFILE"));
                     userInfoBean.setLstFunctionAuthority(dataSuccess.getLstFunctionAuthority());
                     userInfoBean.setType(dataSuccess.getType());
+                    if (dataSuccess.getFirstName() != null) {
+                        userInfoBean.name = dataSuccess.getFirstName();
+                    } else {
+                        userInfoBean.name = edtEmail.getText().toString().trim().split("[$&<@%*]")[0];
+                    }
                     getMyProfile();
                     AccountManager.setUserInfoBean(userInfoBean);
                     getEventBaseFragment().setMenu();

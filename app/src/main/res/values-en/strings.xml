@@ -253,7 +253,7 @@
     <string name="reject_title">Reason for refusing</string>
     <string name="contract_success">The applicant has been contracted</string>
     <string name="count_offer">Number of offers</string>
-    <string name="position_work">Vị trí làm việc</string>
+    <string name="position_work">Work location</string>
     <string name="result_interview">Interview result</string>
     <string name="temp_mail">Invitation form</string>
     <string name="invite_offer">Invite Offer</string>

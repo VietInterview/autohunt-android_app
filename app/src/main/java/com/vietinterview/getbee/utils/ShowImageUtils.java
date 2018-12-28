@@ -24,4 +24,12 @@ public class ShowImageUtils {
                 .priority(Priority.HIGH);
         Glide.with(context).load(AccountManager.getApiConstantTest().getIMG_URL() + urlImage).apply(options).into(imageView);
     }
+    public static void showImageCus(Context context, String urlImage, int iconError, ImageView imageView) {
+        RequestOptions options = new RequestOptions()
+                .fitCenter()
+                .error(iconError)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .priority(Priority.HIGH);
+        Glide.with(context).load( urlImage).apply(options).into(imageView);
+    }
 }

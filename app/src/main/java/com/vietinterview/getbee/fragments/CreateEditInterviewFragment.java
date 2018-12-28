@@ -285,7 +285,7 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
                 long lastWarrantyDate = last.getTimeInMillis();
                 long chooseTime = choose.getTimeInMillis();
                 long difference = chooseTime - lastWarrantyDate;
-                if (difference > 0) {
+                if (lstInterviewHi == null || lstInterviewHi.getStatus() == 0) {
                     DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.confirm_invite_interview), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -307,6 +307,7 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
                                 public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
                                     if (isAdded()) {
                                         hideCoverNetworkLoading();
+                                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
                                     }
                                 }
                             });
@@ -318,8 +319,44 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
                         }
                     });
                 } else {
-                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.warning_date_interview));
+                    if (difference > 0) {
+                        DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.confirm_invite_interview), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                showCoverNetworkLoading();
+                                new SendInterviewRequest(detailProcessResumeResponse.getCvId(), lstInterviewHi == null ? -1 : lstInterviewHi.getId(), edtPlaceInterview.getText().toString().trim(), edtDateInterview.getText().toString().trim(), detailProcessResumeResponse.getJobId(), edtNote.getText().toString().trim(), edtRound.getText().toString().trim(), lstInterviewHi == null ? 0 : statusInterview).callRequest(getActivity(), new ApiObjectCallBack<ViewEmailInterviewResponse, ErrorResponse>() {
+                                    @Override
+                                    public void onSuccess(int status, ViewEmailInterviewResponse dataSuccess, List<ViewEmailInterviewResponse> listDataSuccess, String message) {
+                                        if (isAdded()) {
+                                            hideCoverNetworkLoading();
+                                            lstInterviewHi = new LstInterviewHi(dataSuccess.getCvId(), dataSuccess.getEmailTemplate(), dataSuccess.getId(), dataSuccess.getInterviewAddress(), dataSuccess.getInterviewDate(), dataSuccess.getJobId(), dataSuccess.getNote(), dataSuccess.getRound(), dataSuccess.getStatus());
+                                            Intent intent = new Intent(getActivity(), CreateEditInterviewFragment.class);
+                                            intent.putExtra("lstInterviewHi", lstInterviewHi);
+                                            getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+                                            FragmentUtil.popBackStack(CreateEditInterviewFragment.this);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                                        if (isAdded()) {
+                                            hideCoverNetworkLoading();
+                                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+                                        }
+                                    }
+                                });
+                            }
+                        }, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+                    } else {
+                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.warning_date_interview));
+                    }
                 }
+
             } else {
                 DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.confirm_invite_interview), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
@@ -342,6 +379,7 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
                             public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
                                 if (isAdded()) {
                                     hideCoverNetworkLoading();
+                                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
                                 }
                             }
                         });
@@ -405,6 +443,7 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
                     public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
                         if (isAdded()) {
                             hideCoverNetworkLoading();
+                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
                         }
                     }
                 });
@@ -443,6 +482,7 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
                 public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
                     if (isAdded()) {
                         hideCoverNetworkLoading();
+                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
                     }
                 }
             });

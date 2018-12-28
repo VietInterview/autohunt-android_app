@@ -234,6 +234,8 @@ public class ResumesEmployerFragment extends BaseFragment implements SwipeRefres
                 mStatusId = String.valueOf(data.getIntExtra("statusId", Integer.parseInt(mStatusId)));
                 mStatusName = data.getStringExtra("statusName");
                 tvStatus.setText(mStatusName);
+                page = 0;
+                getResumeEmployer(page);
             }
         }
     }

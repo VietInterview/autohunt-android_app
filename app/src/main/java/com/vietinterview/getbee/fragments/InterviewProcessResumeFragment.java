@@ -37,6 +37,7 @@ import com.vietinterview.getbee.api.response.detailprocessresume.LstInterviewHi;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnSwitchToTwoListener;
 import com.vietinterview.getbee.constant.AppConstant;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.LayoutUtils;
@@ -592,8 +593,11 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                 if (lstInterviewHi != null) {
                     boolean isDuplicate = false;
                     for (int i = 0; i < detailProcessResumeResponse.getLstInterviewHis().size(); i++) {
-                        if (detailProcessResumeResponse.getLstInterviewHis().get(i).getId() == lstInterviewHi.getId()) {
+                        int old = detailProcessResumeResponse.getLstInterviewHis().get(i).getId();
+                        int newValue = lstInterviewHi.getId();
+                        if (old == newValue) {
                             isDuplicate = true;
+                            DebugLog.showLogCat(detailProcessResumeResponse.getLstInterviewHis().get(i).getId() + " - " + lstInterviewHi.getId());
                             detailProcessResumeResponse.getLstInterviewHis().set(i, lstInterviewHi);
                             break;
                         }

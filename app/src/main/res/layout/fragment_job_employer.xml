@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:background="#4D000000"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginRight="@dimen/activity_vertical_margin"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="right|center"
                 android:textColor="#677B8D"
                 android:textSize="16sp" />

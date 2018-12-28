@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Số lần offer"
+                android:text="@string/count_offer"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -32,7 +32,6 @@
                 android:id="@+id/tvRound"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="offer lần 1"
                 android:textColor="#677B8D"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -48,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Mức lương"
+                android:text="@string/salary_level"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -56,7 +55,6 @@
                 android:id="@+id/tvSalary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="8000000 VND"
                 android:textColor="#677B8D"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -72,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Thời gian đi làm"
+                android:text="@string/work_time"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -80,7 +78,6 @@
                 android:id="@+id/tvWorkTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="11/12/2018, 08:00 PM"
                 android:textColor="#677B8D"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -96,7 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Địa chỉ làm việc"
+                android:text="@string/location_work"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -104,7 +101,6 @@
                 android:id="@+id/tvWorkAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tòa Báo Nông Thôn Ngày Ngay, Dương Đình Nghệ, Cầu Giấy, Hà Nội"
                 android:textColor="#677B8D"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -120,7 +116,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Vị trí làm việc"
+                android:text="@string/position_work"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -128,7 +124,6 @@
                 android:id="@+id/tvPosition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nhân viên thiết kế"
                 android:textColor="#677B8D"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -144,7 +139,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Ghi chú"
+                android:text="@string/reject_mess3"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -152,7 +147,6 @@
                 android:id="@+id/tvNote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nhân viên mang theo hồ sơ và giấy khám"
                 android:textColor="#677B8D"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -168,7 +162,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="Kết quả"
+                android:text="@string/result_interview"
                 android:textColor="#042E51"
                 android:textSize="16sp" />
 
@@ -176,7 +170,6 @@
                 android:id="@+id/tvResult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Thí sinh không đến"
                 android:textColor="#677B8D"
                 android:textSize="14sp" />
         </LinearLayout>

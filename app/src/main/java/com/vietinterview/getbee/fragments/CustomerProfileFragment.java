@@ -1,14 +1,21 @@
 package com.vietinterview.getbee.fragments;
 
+import android.app.ProgressDialog;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,13 +35,28 @@ import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.customview.FlowLayout;
 import com.vietinterview.getbee.model.ImageCustomer;
 import com.vietinterview.getbee.utils.DateUtil;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.LayoutUtils;
 import com.vietinterview.getbee.utils.ShowImageUtils;
 
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import butterknife.BindView;
 
@@ -49,8 +71,8 @@ public class CustomerProfileFragment extends BaseFragment {
     TextView tvCompanyName;
     @BindView(R.id.horizontal_recycler_view)
     RecyclerView horizontal_recycler_view;
-    @BindView(R.id.vv)
-    VideoView vv;
+//    @BindView(R.id.vv)
+//    VideoView vv;
     @BindView(R.id.tvHumanResource)
     TextView tvHumanResource;
     @BindView(R.id.tvCarrer)
@@ -69,9 +91,12 @@ public class CustomerProfileFragment extends BaseFragment {
     FlowLayout flowListWelfare;
     @BindView(R.id.gradientView)
     LinearLayout gradientView;
+    @BindView(R.id.imgThumbnail)
+    ImageView imgThumbnail;
     HorizontalAdapter horizontalAdapter;
     private MediaController mediacontroller;
     private Uri uri;
+    private String videoUrl;
     private List<ImageCustomer> data;
     private ProgressBar progressBar;
     @BindView(R.id.relVideo)
@@ -96,29 +121,25 @@ public class CustomerProfileFragment extends BaseFragment {
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         horizontal_recycler_view.setLayoutManager(horizontalLayoutManager);
         mediacontroller = new MediaController(getActivity());
-        mediacontroller.setAnchorView(vv);
+//        mediacontroller.setAnchorView(vv);
         getEventBaseFragment().doFillBackground(getResources().getString(R.string.info_customer));
-        vv.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                vv.start();
-            }
-        });
+//        vv.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//            @Override
+//            public void onCompletion(MediaPlayer mp) {
+//                vv.start();
+//            }
+//        });
         relVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressBar.setVisibility(View.VISIBLE);
-                vv.setMediaController(mediacontroller);
-                vv.setVideoURI(uri);
-                vv.requestFocus();
-                vv.start();
+                displayYoutubeVideo.loadUrl(uri.toString());
             }
         });
-        vv.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            public void onPrepared(MediaPlayer mp) {
-                progressBar.setVisibility(View.GONE);
-            }
-        });
+//        vv.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//            public void onPrepared(MediaPlayer mp) {
+//                progressBar.setVisibility(View.GONE);
+//            }
+//        });
         btShowmore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,6 +164,8 @@ public class CustomerProfileFragment extends BaseFragment {
         getCustomerProfile();
     }
 
+    @BindView(R.id.webview)
+    WebView displayYoutubeVideo;
     GetCUSProfileRequest getCUSProfileRequest;
     ProfileCustomerResponse profileCustomerResponse;
 
@@ -157,8 +180,10 @@ public class CustomerProfileFragment extends BaseFragment {
                     profileCustomerResponse = dataSuccess;
                     ShowImageUtils.showImage(getActivity(), profileCustomerResponse.getLogoImg(), R.drawable.ic_company_null, imgCompany);
                     tvCompanyName.setText(profileCustomerResponse.getCompanyName());
-                    if (profileCustomerResponse.getHumanResources().size() > 0) {
-                        tvHumanResource.setText(profileCustomerResponse.getHumanResources().get(0).getName());
+                    if (profileCustomerResponse.getHumanResources() != null) {
+                        if (profileCustomerResponse.getHumanResources().size() > 0) {
+                            tvHumanResource.setText(profileCustomerResponse.getHumanResources().get(0).getName());
+                        }
                     }
                     if (profileCustomerResponse.getCareerSelectedItems() != null) {
                         StringBuffer carrerBuffer = new StringBuffer("");
@@ -210,6 +235,14 @@ public class CustomerProfileFragment extends BaseFragment {
                     if (profileCustomerResponse.getVideoLink() != null) {
                         String uriPath = profileCustomerResponse.getVideoLink();
                         uri = Uri.parse(uriPath);
+                        DebugLog.showLogCat(uri.toString());
+                        try {
+                            String id = extractYoutubeId(uri.toString());
+                            ShowImageUtils.showImageCus(getActivity(), "https://img.youtube.com/vi/" + id + "/0.jpg", R.drawable.ic_play_video, imgThumbnail);
+                            DebugLog.showLogCat("https://img.youtube.com/vi/" + id + "/0.jpg");
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        }
                     }
                     if (dataSuccess.getCustomerImg() != null) {
                         data = fill_with_data(dataSuccess);
@@ -283,5 +316,28 @@ public class CustomerProfileFragment extends BaseFragment {
     @Override
     protected void processCustomToolbar() {
         loadMenuLeft();
+    }
+
+    protected static String extractYoutubeId(String url) throws MalformedURLException {
+        String id = null;
+        try {
+            String query = new URL(url).getQuery();
+            if (query != null) {
+                String[] param = query.split("&");
+                for (String row : param) {
+                    String[] param1 = row.split("=");
+                    if (param1[0].equals("v")) {
+                        id = param1[1];
+                    }
+                }
+            } else {
+                if (url.contains("embed")) {
+                    id = url.substring(url.lastIndexOf("/") + 1);
+                }
+            }
+        } catch (Exception ex) {
+            Log.e("Exception", ex.toString());
+        }
+        return id;
     }
 }

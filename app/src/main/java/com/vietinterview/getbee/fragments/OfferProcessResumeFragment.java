@@ -459,7 +459,7 @@ public class OfferProcessResumeFragment extends BaseFragment {
 
                                 }
                             } else {
-                                DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title),  getResources().getString(R.string.ask_reject), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                                DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.ask_reject), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         showCoverNetworkLoading();
@@ -581,7 +581,9 @@ public class OfferProcessResumeFragment extends BaseFragment {
                 lstOfferHi = data.getParcelableExtra("lstOfferHi");
                 boolean isDuplicate = false;
                 for (int i = 0; i < detailProcessResumeResponse.getLstOfferHis().size(); i++) {
-                    if (detailProcessResumeResponse.getLstOfferHis().get(i).getId() == lstOfferHi.getId()) {
+                    int old = detailProcessResumeResponse.getLstOfferHis().get(i).getId();
+                    int newValue = lstOfferHi.getId();
+                    if (old == newValue) {
                         isDuplicate = true;
                         detailProcessResumeResponse.getLstOfferHis().set(i, lstOfferHi);
                         break;

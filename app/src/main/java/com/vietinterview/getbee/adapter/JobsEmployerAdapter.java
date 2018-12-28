@@ -141,6 +141,10 @@ public class JobsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.locked));
                 ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.not_like));
                 ((ImageView) ((MyViewHolder) holder).mView.findViewById(R.id.imgDeadline)).setColorFilter(mContext.getResources().getColor(R.color.not_like));
+            } else if (jobLists.get(position).getStatus() == 1 && jobLists.get(position).getLimited() == 0) {
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setText(mContext.getResources().getString(R.string.expired));
+                ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvStatus)).setTextColor(mContext.getResources().getColor(R.color.not_like));
+                ((ImageView) ((MyViewHolder) holder).mView.findViewById(R.id.imgDeadline)).setColorFilter(mContext.getResources().getColor(R.color.not_like));
             }
             ((LinearLayout) ((MyViewHolder) holder).mView.findViewById(R.id.primaryContentCardView)).setOnClickListener(new View.OnClickListener() {
                 @Override
