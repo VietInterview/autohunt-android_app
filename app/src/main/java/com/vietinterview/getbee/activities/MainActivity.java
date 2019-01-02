@@ -48,6 +48,7 @@ import com.vietinterview.getbee.fragments.MyJobFragment;
 import com.vietinterview.getbee.fragments.CollaboratorProfileFragment;
 import com.vietinterview.getbee.model.DeviceUuidFactory;
 import com.vietinterview.getbee.utils.DebugLog;
+import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
 
@@ -255,6 +256,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         tvLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mItem = null;
                 AccountManager.logout();
                 drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 FragmentUtil.replaceFragment(MainActivity.this, new LoginFragment(), null);
@@ -424,37 +426,59 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             if (item.getItemId() == lstMenuAuthority.getId()) {
                 mItem = item;
                 item.setChecked(true);
+                DrawerLayout drawer;
                 switch (lstMenuAuthority.getCode()) {
                     case "CTV_HOME_PAGE":
+                        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                        drawer.closeDrawer(GravityCompat.START);
                         FragmentUtil.replaceFragment(this, new HomeFragment(), null);
                         break;
                     case "CTV_JOB":
+                        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                        drawer.closeDrawer(GravityCompat.START);
                         SharedPrefUtils.putString("menu", "CTV_JOB");
                         FragmentUtil.replaceFragment(this, new MyJobFragment(), null);
                         break;
                     case "CTV_JOB_SENT":
+                        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                        drawer.closeDrawer(GravityCompat.START);
                         SharedPrefUtils.putString("menu", lstMenuAuthority.getCode());
                         FragmentUtil.replaceFragment(this, new MyJobFragment(), null);
                         break;
                     case "CTV_CV":
+                        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                        drawer.closeDrawer(GravityCompat.START);
                         SharedPrefUtils.putString("menu", "CTV_CV");
                         FragmentUtil.replaceFragment(this, new MyResumeFragment(), null);
                         break;
                     case "CTV_CV_SEND":
+                        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                        drawer.closeDrawer(GravityCompat.START);
                         SharedPrefUtils.putString("menu", lstMenuAuthority.getCode());
                         FragmentUtil.replaceFragment(this, new MyResumeFragment(), null);
                         break;
                     case "CMS_JOB_AND_CV":
+                        DialogUtil.showDialog(MainActivity.this, getResources().getString(R.string.noti_title), "Chức năng này đang phát triển, mời bạn quay lại sau");
                         break;
                     case "CMS_CTV":
+                        DialogUtil.showDialog(MainActivity.this, getResources().getString(R.string.noti_title), "Chức năng này đang phát triển, mời bạn quay lại sau");
+
                         break;
                     case "CMS_JOB":
+                        DialogUtil.showDialog(MainActivity.this, getResources().getString(R.string.noti_title), "Chức năng này đang phát triển, mời bạn quay lại sau");
+
                         break;
                     case "CMS_CUSTOMER":
+                        DialogUtil.showDialog(MainActivity.this, getResources().getString(R.string.noti_title), "Chức năng này đang phát triển, mời bạn quay lại sau");
+
                         break;
                     case "CMS_CV":
+                        DialogUtil.showDialog(MainActivity.this, getResources().getString(R.string.noti_title), "Chức năng này đang phát triển, mời bạn quay lại sau");
+
                         break;
                     case "CUSTOMER_HOME_PAGE":
+                        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                        drawer.closeDrawer(GravityCompat.START);
                         if (accType == 2) {
                             FragmentUtil.replaceFragment(this, new JobsEmployerFragment(), null);
                         } else if (accType == 7) {
@@ -464,6 +488,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         }
                         break;
                     default:
+                        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                        drawer.closeDrawer(GravityCompat.START);
                         if (AccountManager.getUserInfoBean().getType() == 7)
                             FragmentUtil.replaceFragment(MainActivity.this, new CollaboratorProfileFragment(), null);
                         else if (AccountManager.getUserInfoBean().getType() == 2)
@@ -472,8 +498,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                             FragmentUtil.replaceFragment(MainActivity.this, new CollaboratorProfileFragment(), null);
                         break;
                 }
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
             }
         }
         return true;

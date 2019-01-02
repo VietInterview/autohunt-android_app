@@ -434,15 +434,22 @@ public class LoginFragment extends BaseFragment {
                             lstMenuAuthorities.add(new LstMenuAuthority(listId.get(i), getResources().getString(R.string.mycv), "CTV_CV"));
                         } else if (listCode.get(i).equalsIgnoreCase("CTV_CV_SEND")) {
 
+                        } else if (listCode.get(i).equalsIgnoreCase("CUSTOMER_HOME_PAGE")) {
+                            lstMenuAuthorities.add(new LstMenuAuthority(listId.get(i), getResources().getString(R.string.manager_jobs), listCode.get(i)));
                         } else
                             lstMenuAuthorities.add(new LstMenuAuthority(listId.get(i), listName.get(i), listCode.get(i)));
                     }
                     for (int i = 0; i < lstMenuAuthorities.size(); i++) {
-                        if (lstMenuAuthorities.get(i).getId() == 999)
+                        if (lstMenuAuthorities.get(i).getName().equalsIgnoreCase("API"))
                             lstMenuAuthorities.remove(lstMenuAuthorities.get(i));
                     }
                     userInfoBean.setLstMenuAuthority(lstMenuAuthorities);
-                    userInfoBean.getLstMenuAuthority().add(new LstMenuAuthority(0, getResources().getString(R.string.info_acc_tit), "PROFILE"));
+                    if (dataSuccess.getType() == 2) {
+                        userInfoBean.getLstMenuAuthority().add(new LstMenuAuthority(0, getResources().getString(R.string.info_customer), "PROFILE"));
+
+                    } else {
+                        userInfoBean.getLstMenuAuthority().add(new LstMenuAuthority(0, getResources().getString(R.string.info_acc_tit), "PROFILE"));
+                    }
                     userInfoBean.setLstFunctionAuthority(dataSuccess.getLstFunctionAuthority());
                     userInfoBean.setType(dataSuccess.getType());
                     if (dataSuccess.getFirstName() != null) {
@@ -456,7 +463,7 @@ public class LoginFragment extends BaseFragment {
                     if (getActivity() instanceof MainActivity) {
                         ((MainActivity) getActivity()).drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                     }
-                    getMainActivity().navigationView.setCheckedItem(R.id.nav_home);
+                    getMainActivity().navigationView.getMenu().getItem(0).setChecked(true);
                     if (AccountManager.getUserInfoBean().getType() == 7 || AccountManager.getUserInfoBean().getType() == 5)
                         FragmentUtil.replaceFragment(getActivity(), new HomeFragment(), null);
                     else if (AccountManager.getUserInfoBean().getType() == 2)
