@@ -95,25 +95,27 @@ public class CreateGoToWorkFragment extends BaseFragment implements DatePickerDi
     protected void initData() {
         if (jobCvGotoWorkDto != null) {
             if (jobCvGotoWorkDto.getStartWorkDate() != null) {
-                edtWorkTime.setText(jobCvGotoWorkDto.getStartWorkDate());
-                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                Date readDate = null;
-                try {
-                    readDate = df.parse(DateUtil.convertToMyFormat3(detailProcessResumeResponse.getJobCvGotoWorkDto().getStartWorkDate()));
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                if (!jobCvGotoWorkDto.getStartWorkDate().equalsIgnoreCase("")) {
+                    edtWorkTime.setText(jobCvGotoWorkDto.getStartWorkDate());
+                    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                    Date readDate = null;
+                    try {
+                        readDate = df.parse(DateUtil.convertToMyFormat3(detailProcessResumeResponse.getJobCvGotoWorkDto().getStartWorkDate()));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(readDate.getTime());
+                    calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH));
+                    calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
+                    calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
+                    Calendar today = Calendar.getInstance();
+                    calendar.add(Calendar.DATE, 60);
+                    long lastWarrantyDate = calendar.getTimeInMillis();
+                    long difference = lastWarrantyDate - today.getTimeInMillis();
+                    int days = (int) (difference / (1000 * 60 * 60 * 24));
+                    edtWarranty.setText(days + " " + getResources().getString(R.string.dayleft));
                 }
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(readDate.getTime());
-                calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH));
-                calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
-                calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
-                Calendar today = Calendar.getInstance();
-                calendar.add(Calendar.DATE, 60);
-                long lastWarrantyDate = calendar.getTimeInMillis();
-                long difference = lastWarrantyDate - today.getTimeInMillis();
-                int days = (int) (difference / (1000 * 60 * 60 * 24));
-                edtWarranty.setText(days + " "+getResources().getString(R.string.dayleft));
             }
         }
     }
@@ -219,11 +221,39 @@ public class CreateGoToWorkFragment extends BaseFragment implements DatePickerDi
 
     @Override
     protected void processOnBackPress() {
+        Integer countUpdate = 0;
+        Integer cvId = detailProcessResumeResponse.getCvId();
+        Integer id = -1;
+        Integer jobId = detailProcessResumeResponse.getJobId();
+        String note = "";
+        Integer numDayWarranty = 0;
+        String startWorkDate = "";
+        Integer updateBy = 0;
+        String updateDate = "";
+        String warrantyExpireDate = "";
+        jobCvGotoWorkDto = new JobCvGotoWorkDto(countUpdate, cvId, id, jobId, note, numDayWarranty, startWorkDate, updateBy, updateDate, warrantyExpireDate);
+        Intent intent = new Intent(getActivity(), CreateGoToWorkFragment.class);
+        intent.putExtra("jobCvGotoWorkDto", jobCvGotoWorkDto);
+        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
         FragmentUtil.popBackStack(this);
     }
 
     @Override
     protected void processCustomToolbar() {
+        Integer countUpdate = 0;
+        Integer cvId = detailProcessResumeResponse.getCvId();
+        Integer id = -1;
+        Integer jobId = detailProcessResumeResponse.getJobId();
+        String note = "";
+        Integer numDayWarranty = 0;
+        String startWorkDate = "";
+        Integer updateBy = 0;
+        String updateDate = "";
+        String warrantyExpireDate = "";
+        jobCvGotoWorkDto = new JobCvGotoWorkDto(countUpdate, cvId, id, jobId, note, numDayWarranty, startWorkDate, updateBy, updateDate, warrantyExpireDate);
+        Intent intent = new Intent(getActivity(), CreateGoToWorkFragment.class);
+        intent.putExtra("jobCvGotoWorkDto", jobCvGotoWorkDto);
+        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
         FragmentUtil.popBackStack(this);
     }
 
