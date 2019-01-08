@@ -34,7 +34,7 @@ public class GetBeeApplication extends Application {
         ViewTarget.setTagId(R.id.glide_tag);
         sDefSystemLanguage = Locale.getDefault().getLanguage();
         sharedPreferences = new SharedPrefUtils(getApplicationContext());
-        SharedPrefUtils.putString(AppConstant.LANGUAGE, "vi");
+//        SharedPrefUtils.putString(AppConstant.LANGUAGE, "vi");
     }
 
     @Override

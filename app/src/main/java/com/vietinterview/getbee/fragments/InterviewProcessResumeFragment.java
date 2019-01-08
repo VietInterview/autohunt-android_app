@@ -597,7 +597,6 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                         int newValue = lstInterviewHi.getId();
                         if (old == newValue) {
                             isDuplicate = true;
-                            DebugLog.showLogCat(detailProcessResumeResponse.getLstInterviewHis().get(i).getId() + " - " + lstInterviewHi.getId());
                             detailProcessResumeResponse.getLstInterviewHis().set(i, lstInterviewHi);
                             break;
                         }

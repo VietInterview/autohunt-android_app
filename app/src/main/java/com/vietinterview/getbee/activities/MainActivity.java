@@ -89,7 +89,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             apiConstantInit.setIMG_URL(ApiConstant.IMG_URL_REAL);
             AccountManager.setApiConstantTest(apiConstantInit);
         }
-        setLanguage(SharedPrefUtils.getString(AppConstant.LANGUAGE, "vi"));
+//        setLanguage(SharedPrefUtils.getString(AppConstant.LANGUAGE, "vi"));
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);

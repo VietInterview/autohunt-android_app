@@ -146,8 +146,6 @@ public class InfoProcessResumeFragment extends BaseFragment {
                         if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 1) {
                             cardReject.setVisibility(View.VISIBLE);
                             getEventBaseFragment().reject();
-//                    btnInviteInterview.setEnabled(false);
-//                    btnReject.setEnabled(false);
                             llButton.setVisibility(View.GONE);
                         } else cardReject.setVisibility(View.GONE);
                     } else cardReject.setVisibility(View.GONE);
@@ -168,8 +166,6 @@ public class InfoProcessResumeFragment extends BaseFragment {
                 if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 1) {
                     cardReject.setVisibility(View.VISIBLE);
                     getEventBaseFragment().reject();
-//                    btnInviteInterview.setEnabled(false);
-//                    btnReject.setEnabled(false);
                     llButton.setVisibility(View.GONE);
                 } else cardReject.setVisibility(View.GONE);
             } else cardReject.setVisibility(View.GONE);
