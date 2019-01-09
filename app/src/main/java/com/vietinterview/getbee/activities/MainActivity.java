@@ -27,6 +27,7 @@ import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.UpdateOSRequest;
 import com.vietinterview.getbee.api.response.account.LstMenuAuthority;
 import com.vietinterview.getbee.api.response.login.ErrorLoginResponse;
+import com.vietinterview.getbee.asynctask.GetVersionCode;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.callback.OnFillBackgroundListener;
 import com.vietinterview.getbee.callback.OnSetMenuListener;
@@ -285,6 +286,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else {
             if (AccountManager.getUserInfoBean() != null) {
                 updateOs();
+                GetVersionCode getVersionCode = new GetVersionCode(this);
+                getVersionCode.execute();
                 if (GlobalDefine.currentFragment == null || GlobalDefine.currentFragment instanceof HomeFragment || GlobalDefine.currentFragment instanceof JobsEmployerFragment) {
                     drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                     if (mItem != null)
