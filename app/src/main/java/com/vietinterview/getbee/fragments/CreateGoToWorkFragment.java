@@ -115,6 +115,8 @@ public class CreateGoToWorkFragment extends BaseFragment implements DatePickerDi
                     long difference = lastWarrantyDate - today.getTimeInMillis();
                     int days = (int) (difference / (1000 * 60 * 60 * 24));
                     edtWarranty.setText(days + " " + getResources().getString(R.string.dayleft));
+                } else {
+                    jobCvGotoWorkDto = null;
                 }
             }
         }
