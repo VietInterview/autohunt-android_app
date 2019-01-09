@@ -44,6 +44,7 @@
                     android:id="@+id/tvStatus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
                     android:drawableLeft="@drawable/ic_time_experi"
                     android:drawablePadding="8dp"
                     android:text="Sắp hết hạn"
@@ -109,7 +110,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
         android:src="@drawable/ic_cv_in_job"
-        app:backgroundTint="#279AF1"
+        app:backgroundTint="#3C84F7"
         app:fabSize="normal"
         app:layout_anchor="@+id/appbar"
         app:layout_anchorGravity="bottom|right|end" />

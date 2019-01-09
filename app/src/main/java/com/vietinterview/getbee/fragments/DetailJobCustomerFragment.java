@@ -96,8 +96,6 @@ public class DetailJobCustomerFragment extends BaseFragment {
     LinearLayout llTreatment;
     private CollapsingToolbarLayout collapsingToolbar;
     private AppBarLayout appBarLayout;
-    private RecyclerView recyclerView;
-    private Menu collapsedMenu;
     private boolean appBarExpanded = true;
     private int limited;
     private DetailJobCustomerResponse detailJobCustomerResponse;
@@ -178,13 +176,6 @@ public class DetailJobCustomerFragment extends BaseFragment {
                 }
             }
         }
-//        for (int i = 0; i < detailJobCustomerResponse.getLstJobCity().size(); i++) {
-//            if (i == detailJobCustomerResponse.getLstJobCity().size() - 1) {
-//                s1.append(detailJobCustomerResponse.getLstJobCity().get(i).getName() + "");
-//            } else {
-//                s1.append(detailJobCustomerResponse.getLstJobCity().get(i).getName() + ", ");
-//            }
-//        }
         tvWorkPlace.setText(s1.toString());
         tvQuantityHiring.setText(detailJobCustomerResponse.getQuantity() + "");
         tvCertificate.setText(detailJobCustomerResponse.getEducationLevel().getName());
