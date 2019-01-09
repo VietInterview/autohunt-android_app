@@ -208,11 +208,33 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
             }
         } else {
             if (jobCvGotoWorkDto == null) {
-                DebugLog.showLogCat("id != -1");
-                FragmentUtil.pushFragment(getActivity(), GoToWorkProcessResumeFragment.this, new CreateGoToWorkFragment().newInstance(null, detailProcessResumeResponse), null);
+                if (detailProcessResumeResponse.getJobCvGotoWorkDto().getStartWorkDate() != null) {
+                    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                    Date readDate = null;
+                    try {
+                        readDate = df.parse(DateUtil.convertToMyFormat3(detailProcessResumeResponse.getJobCvGotoWorkDto().getStartWorkDate()));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(readDate.getTime());
+                    calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH));
+                    calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
+                    calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
+                    Calendar today = Calendar.getInstance();
+                    calendar.add(Calendar.DATE, 60);
+                    long lastWarrantyDate = calendar.getTimeInMillis();
+                    long difference = lastWarrantyDate - today.getTimeInMillis();
+                    int days = (int) (difference / (1000 * 60 * 60 * 24));
+                    tvDate.setText(detailProcessResumeResponse.getJobCvGotoWorkDto().getStartWorkDate());
+                    tvWarranty.setText(days + " " + getResources().getString(R.string.dayleft));
+                } else {
+                    if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 8 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 4)) {
+                        FragmentUtil.pushFragment(getActivity(), GoToWorkProcessResumeFragment.this, new CreateGoToWorkFragment().newInstance(null, detailProcessResumeResponse), null);
+                    }
+                }
             } else {
                 if (jobCvGotoWorkDto.getId() == -1) {
-                    DebugLog.showLogCat("id == -1");
                 }
             }
             tvDate.setText("");
