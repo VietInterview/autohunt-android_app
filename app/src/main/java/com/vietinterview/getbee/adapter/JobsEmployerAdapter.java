@@ -27,6 +27,7 @@ import com.vietinterview.getbee.customview.RobotoRegularButton;
 import com.vietinterview.getbee.fragments.BaseFragment;
 import com.vietinterview.getbee.fragments.DetailJobCustomerFragment;
 import com.vietinterview.getbee.fragments.ResumesEmployerFragment;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
@@ -46,6 +47,7 @@ public class JobsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         SHOWING_SECONDARY_CONTENT
     }
 
+    private SwipeLayout preswipes = null;
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
     private ArrayList<JobList> jobLists;
@@ -112,6 +114,42 @@ public class JobsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof MyViewHolder) {
+            ((MyViewHolder) holder).swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
+                @Override
+                public void onStartOpen(SwipeLayout layout) {
+
+                }
+
+                @Override
+                public void onOpen(SwipeLayout layout) {
+
+                }
+
+                @Override
+                public void onStartClose(SwipeLayout layout) {
+
+                }
+
+                @Override
+                public void onClose(SwipeLayout layout) {
+
+                }
+
+                @Override
+                public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
+
+                }
+
+                @Override
+                public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
+                    if (preswipes == null) {
+                        preswipes = layout;
+                    } else {
+                        preswipes.close(true);
+                        preswipes = layout;
+                    }
+                }
+            });
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvcountJobOffer)).setText(jobLists.get(position).getCountOffer() + "");
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvsumJob)).setText("/" + jobLists.get(position).getCountCv() + "");
             ((TextView) ((MyViewHolder) holder).mView.findViewById(R.id.tvCountCV)).setText(this.mTotal == 0 ? mContext.getResources().getString(R.string.no_data) : this.mTotal + " " + mContext.getResources().getString(R.string.job_found));
@@ -153,7 +191,6 @@ public class JobsEmployerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new ResumesEmployerFragment(), null);
                 }
             });
-//            binderHelper.bind((SwipeLayout) ((MyViewHolder) holder).swipeLayout, jobLists.get(position).getId().toString());
             ((RobotoRegularButton) ((MyViewHolder) holder).mView.findViewById(R.id.btnShowDetailJob)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
