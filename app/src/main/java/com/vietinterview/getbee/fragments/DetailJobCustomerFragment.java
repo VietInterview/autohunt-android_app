@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -200,6 +201,12 @@ public class DetailJobCustomerFragment extends BaseFragment {
             tvStatus.setText(getResources().getString(R.string.expired));
         } else if (detailJobCustomerResponse.getStatus() == 0) {
             tvStatus.setText(getResources().getString(R.string.draft));
+        } else if (detailJobCustomerResponse.getStatus() == 2) {
+            tvStatus.setText(getResources().getString(R.string.expired));
+        } else if (detailJobCustomerResponse.getStatus() == 3) {
+            tvStatus.setText(getResources().getString(R.string.closed));
+        } else if (detailJobCustomerResponse.getStatus() == 5) {
+            tvStatus.setText(getResources().getString(R.string.locked));
         }
         btShowmore.setOnClickListener(new View.OnClickListener() {
             @Override

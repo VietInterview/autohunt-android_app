@@ -71,7 +71,7 @@ public class CustomerProfileFragment extends BaseFragment {
     TextView tvCompanyName;
     @BindView(R.id.horizontal_recycler_view)
     RecyclerView horizontal_recycler_view;
-//    @BindView(R.id.vv)
+    //    @BindView(R.id.vv)
 //    VideoView vv;
     @BindView(R.id.tvHumanResource)
     TextView tvHumanResource;
@@ -132,7 +132,11 @@ public class CustomerProfileFragment extends BaseFragment {
         relVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                displayYoutubeVideo.loadUrl(uri.toString());
+                if (uri != null)
+                    displayYoutubeVideo.loadUrl(uri.toString());
+                else {
+                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.no_data));
+                }
             }
         });
 //        vv.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -235,13 +239,13 @@ public class CustomerProfileFragment extends BaseFragment {
                     if (profileCustomerResponse.getVideoLink() != null) {
                         String uriPath = profileCustomerResponse.getVideoLink();
                         uri = Uri.parse(uriPath);
-                        DebugLog.showLogCat(uri.toString());
                         try {
                             String id = extractYoutubeId(uri.toString());
                             ShowImageUtils.showImageCus(getActivity(), "https://img.youtube.com/vi/" + id + "/0.jpg", R.drawable.ic_play_video, imgThumbnail);
-                            DebugLog.showLogCat("https://img.youtube.com/vi/" + id + "/0.jpg");
                         } catch (MalformedURLException e) {
                             e.printStackTrace();
+                            ShowImageUtils.showImageCus(getActivity(), null, R.drawable.ic_not_accept, imgThumbnail);
+
                         }
                     }
                     if (dataSuccess.getCustomerImg() != null) {

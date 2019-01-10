@@ -19,7 +19,7 @@ import java.io.IOException;
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 public class GetVersionCode extends AsyncTask<Void, String, String> {
-    Context mContext;
+    private Context mContext;
 
     public GetVersionCode(Context context) {
         this.mContext = context;
@@ -35,6 +35,7 @@ public class GetVersionCode extends AsyncTask<Void, String, String> {
                     .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
                     .referrer("http://www.google.com")
                     .get();
+            DebugLog.showLogCat(document.toString());
             if (document != null) {
                 Elements element = document.getElementsContainingOwnText("Current Version");
                 for (Element ele : element) {
@@ -62,7 +63,7 @@ public class GetVersionCode extends AsyncTask<Void, String, String> {
                     DebugLog.showLogCat("new update");
                 }
             }
-            DebugLog.showLogCat("Current version " + currentVersion + "playstore version " + onlineVersion);
+            DebugLog.showLogCat("Current: " + currentVersion + " playstore: " + onlineVersion);
         } catch (PackageManager.NameNotFoundException e) {
             DebugLog.showLogCat(e.toString());
         }

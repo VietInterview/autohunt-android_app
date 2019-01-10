@@ -379,7 +379,7 @@ public class StringUtils {
                 valueString = "JPY";
                 break;
             default:
-                valueString = "";
+                valueString = "VND";
                 break;
         }
         return valueString;
