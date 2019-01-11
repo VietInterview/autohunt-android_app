@@ -125,6 +125,10 @@ public class OfferProcessResumeFragment extends BaseFragment {
                         btnReject.setVisibility(View.GONE);
                         llBtn.setVisibility(View.GONE);
                     }
+                } else {
+                    btnNext.setVisibility(View.GONE);
+                    btnReject.setVisibility(View.GONE);
+                    llBtn.setVisibility(View.GONE);
                 }
             } else {
                 btnNext.setVisibility(View.GONE);
@@ -137,13 +141,36 @@ public class OfferProcessResumeFragment extends BaseFragment {
             @Override
             public void onSwitchToThree() {
                 if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 7 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 3)) {
-                    btnNext.setEnabled(true);
-                    listView.setEnabled(true);
-                    btnReject.setEnabled(true);
-                    tvAddOffer.setEnabled(true);
-                    tvAddOffer.setVisibility(View.VISIBLE);
-                    llAdd.setVisibility(View.VISIBLE);
-                    llBtn.setVisibility(View.VISIBLE);
+                    int count = detailProcessResumeResponse.getLstOfferHis().size();
+                    for (int i = 0; i < detailProcessResumeResponse.getLstOfferHis().size(); i++) {
+                        if (detailProcessResumeResponse.getLstOfferHis().get(i).getId() == -1) {
+                            count--;
+                        }
+                    }
+                    if (count > 0) {
+                        btnNext.setEnabled(true);
+                        listView.setEnabled(true);
+                        btnReject.setEnabled(true);
+                        tvAddOffer.setEnabled(true);
+                        tvAddOffer.setVisibility(View.VISIBLE);
+                        llAdd.setVisibility(View.VISIBLE);
+                        llBtn.setVisibility(View.VISIBLE);
+                        if (detailProcessResumeResponse.getLstOfferHis().get(count - 1).getStatus() == 1) {
+                            btnNext.setVisibility(View.VISIBLE);
+                            btnReject.setVisibility(View.VISIBLE);
+                        } else if (detailProcessResumeResponse.getLstOfferHis().get(count - 1).getStatus() == 2) {
+                            btnNext.setVisibility(View.GONE);
+                            btnReject.setVisibility(View.VISIBLE);
+                        } else {
+                            btnNext.setVisibility(View.GONE);
+                            btnReject.setVisibility(View.GONE);
+                            llBtn.setVisibility(View.GONE);
+                        }
+                    } else {
+                        btnNext.setVisibility(View.GONE);
+                        btnReject.setVisibility(View.GONE);
+                        llBtn.setVisibility(View.GONE);
+                    }
                 } else {
                     btnNext.setEnabled(false);
                     listView.setEnabled(true);
@@ -246,7 +273,13 @@ public class OfferProcessResumeFragment extends BaseFragment {
     @OnClick(R.id.btnNext)
     public void onNextClick() {
         if (detailProcessResumeResponse.getLstOfferHis().size() > 0) {
-            if (detailProcessResumeResponse.getLstOfferHis().get(detailProcessResumeResponse.getLstOfferHis().size() - 1).getStatus() == 1) {
+            int count = detailProcessResumeResponse.getLstOfferHis().size();
+            for (int i = 0; i < count; i++) {
+                if (detailProcessResumeResponse.getLstOfferHis().get(i).getId() == -1) {
+                    count--;
+                }
+            }
+            if (detailProcessResumeResponse.getLstOfferHis().get(count - 1).getStatus() == 1) {
                 mNotifyDialog = new Dialog(getActivity());
                 mNotifyDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 mNotifyDialog.setContentView(R.layout.dialog_noti_interview);
@@ -373,15 +406,23 @@ public class OfferProcessResumeFragment extends BaseFragment {
                     spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            rejectName = listReasonName.get(position).getName();
-                            if (listReasonName.get(position).getCode().equalsIgnoreCase("other")) {
-                                isOther = true;
-                                edtReasonOther.setFocusable(true);
-                                edtReasonOther.setFocusableInTouchMode(true); // user touches widget on phone with touch screen
-                                edtReasonOther.setClickable(true);
+                            if (position > 1) {
+                                rejectName = listReasonName.get(position - 1).getName();
+                                if (listReasonName.get(position - 1).getCode().equalsIgnoreCase("other")) {
+                                    isOther = true;
+                                    edtReasonOther.setFocusable(true);
+                                    edtReasonOther.setFocusableInTouchMode(true); // user touches widget on phone with touch screen
+                                    edtReasonOther.setClickable(true);
+                                } else {
+                                    edtReasonOther.setText("");
+                                    edtReasonOther.setFocusable(false);
+                                    edtReasonOther.setFocusableInTouchMode(false); // user touches widget on phone with touch screen
+                                    edtReasonOther.setClickable(false);
+                                }
                             } else {
+                                edtReasonOther.setText("");
                                 edtReasonOther.setFocusable(false);
-                                edtReasonOther.setFocusableInTouchMode(false); // user touches widget on phone with touch screen
+                                edtReasonOther.setFocusableInTouchMode(false);
                                 edtReasonOther.setClickable(false);
                             }
                         }

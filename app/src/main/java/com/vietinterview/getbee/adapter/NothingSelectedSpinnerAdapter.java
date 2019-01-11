@@ -105,7 +105,7 @@ public class NothingSelectedSpinnerAdapter implements SpinnerAdapter, ListAdapte
     @Override
     public int getCount() {
         int count = adapter.getCount();
-        return count > 0 ? count - 1 : count;
+        return count > 0 ? count : count;
     }
 
     @Override

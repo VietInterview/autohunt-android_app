@@ -123,7 +123,6 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                 }
             }
             if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 5 || detailProcessResumeResponse.getCvProcessInfo().getStatus() == 6 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 2)) {
-
                 if (count > 0) {
                     if (detailProcessResumeResponse.getLstInterviewHis().get(count - 1).getStatus() == 1) {
                         btnNext.setVisibility(View.VISIBLE);
@@ -139,6 +138,10 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                         btnNotAccept.setVisibility(View.GONE);
                         llBtn.setVisibility(View.GONE);
                     }
+                } else {
+                    btnNext.setVisibility(View.GONE);
+                    btnNotAccept.setVisibility(View.GONE);
+                    llBtn.setVisibility(View.GONE);
                 }
             } else {
                 btnNext.setVisibility(View.GONE);
@@ -151,13 +154,39 @@ public class InterviewProcessResumeFragment extends BaseFragment {
             @Override
             public void onSwitchToTwo() {
                 if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 5 || detailProcessResumeResponse.getCvProcessInfo().getStatus() == 6 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 2)) {
-                    llBtn.setVisibility(View.VISIBLE);
-                    tvAddRound.setVisibility(View.VISIBLE);
-                    llAdd.setVisibility(View.VISIBLE);
-                    btnNext.setEnabled(true);
-                    listView.setEnabled(true);
-                    btnNotAccept.setEnabled(true);
-                    tvAddRound.setEnabled(true);
+                    int count = detailProcessResumeResponse.getLstInterviewHis().size();
+                    for (int i = 0; i < detailProcessResumeResponse.getLstInterviewHis().size(); i++) {
+                        if (detailProcessResumeResponse.getLstInterviewHis().get(i).getId() == -1) {
+                            count--;
+                        }
+                    }
+                    if (count > 0) {
+                        llBtn.setVisibility(View.VISIBLE);
+                        tvAddRound.setVisibility(View.VISIBLE);
+                        llAdd.setVisibility(View.VISIBLE);
+                        btnNext.setEnabled(true);
+                        listView.setEnabled(true);
+                        btnNotAccept.setEnabled(true);
+                        tvAddRound.setEnabled(true);
+                        if (detailProcessResumeResponse.getLstInterviewHis().get(count - 1).getStatus() == 1) {
+                            btnNext.setVisibility(View.VISIBLE);
+                            btnNotAccept.setVisibility(View.GONE);
+                        } else if (detailProcessResumeResponse.getLstInterviewHis().get(count - 1).getStatus() == 2) {
+                            btnNext.setVisibility(View.GONE);
+                            btnNotAccept.setVisibility(View.VISIBLE);
+                        } else if (detailProcessResumeResponse.getLstInterviewHis().get(count - 1).getStatus() == 3) {
+                            btnNext.setVisibility(View.VISIBLE);
+                            btnNotAccept.setVisibility(View.VISIBLE);
+                        } else {
+                            btnNext.setVisibility(View.GONE);
+                            btnNotAccept.setVisibility(View.GONE);
+                            llBtn.setVisibility(View.GONE);
+                        }
+                    } else {
+                        btnNext.setVisibility(View.GONE);
+                        btnNotAccept.setVisibility(View.GONE);
+                        llBtn.setVisibility(View.GONE);
+                    }
                 } else {
                     llBtn.setVisibility(View.GONE);
                     tvAddRound.setVisibility(View.GONE);
@@ -368,13 +397,21 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                     spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            rejectName = listReasonName.get(position).getName();
-                            if (listReasonName.get(position).getCode().equalsIgnoreCase("other")) {
-                                isOther = true;
-                                edtReasonOther.setFocusable(true);
-                                edtReasonOther.setFocusableInTouchMode(true);
-                                edtReasonOther.setClickable(true);
+                            if (position > 1) {
+                                rejectName = listReasonName.get(position - 1).getName();
+                                if (listReasonName.get(position - 1).getCode().equalsIgnoreCase("other")) {
+                                    isOther = true;
+                                    edtReasonOther.setFocusable(true);
+                                    edtReasonOther.setFocusableInTouchMode(true);
+                                    edtReasonOther.setClickable(true);
+                                } else {
+                                    edtReasonOther.setText("");
+                                    edtReasonOther.setFocusable(false);
+                                    edtReasonOther.setFocusableInTouchMode(false);
+                                    edtReasonOther.setClickable(false);
+                                }
                             } else {
+                                edtReasonOther.setText("");
                                 edtReasonOther.setFocusable(false);
                                 edtReasonOther.setFocusableInTouchMode(false);
                                 edtReasonOther.setClickable(false);

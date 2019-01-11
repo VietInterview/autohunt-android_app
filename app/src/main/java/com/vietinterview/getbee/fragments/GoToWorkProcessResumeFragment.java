@@ -280,15 +280,23 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
                     spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            rejectName = listReasonName.get(position).getName();
-                            if (listReasonName.get(position).getCode().equalsIgnoreCase("other")) {
-                                isOther = true;
-                                edtReasonOther.setFocusable(true);
-                                edtReasonOther.setFocusableInTouchMode(true); // user touches widget on phone with touch screen
-                                edtReasonOther.setClickable(true);
+                            if (position > 1) {
+                                rejectName = listReasonName.get(position - 1).getName();
+                                if (listReasonName.get(position - 1).getCode().equalsIgnoreCase("other")) {
+                                    isOther = true;
+                                    edtReasonOther.setFocusable(true);
+                                    edtReasonOther.setFocusableInTouchMode(true); // user touches widget on phone with touch screen
+                                    edtReasonOther.setClickable(true);
+                                } else {
+                                    edtReasonOther.setText("");
+                                    edtReasonOther.setFocusable(false);
+                                    edtReasonOther.setFocusableInTouchMode(false); // user touches widget on phone with touch screen
+                                    edtReasonOther.setClickable(false);
+                                }
                             } else {
+                                edtReasonOther.setText("");
                                 edtReasonOther.setFocusable(false);
-                                edtReasonOther.setFocusableInTouchMode(false); // user touches widget on phone with touch screen
+                                edtReasonOther.setFocusableInTouchMode(false);
                                 edtReasonOther.setClickable(false);
                             }
                         }
