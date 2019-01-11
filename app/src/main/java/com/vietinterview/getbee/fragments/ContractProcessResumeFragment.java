@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.adapter.NothingSelectedSpinnerAdapter;
 import com.vietinterview.getbee.api.request.GetListRejectReasonRequest;
 import com.vietinterview.getbee.api.request.RejectRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
@@ -145,6 +146,7 @@ public class ContractProcessResumeFragment extends BaseFragment {
                             listReasonName.add(listDataSuccess.get(i));
                         }
                     }
+                    listReasonName.add(new RejectReasonResponse(-1, "Lựa chọn lý do", "-1", 3));
                     ArrayAdapter<RejectReasonResponse> dataAdapter = new ArrayAdapter<RejectReasonResponse>(getActivity(), android.R.layout.simple_spinner_dropdown_item, listReasonName);
                     dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     mRejectDialog = new Dialog(getActivity());
@@ -159,8 +161,7 @@ public class ContractProcessResumeFragment extends BaseFragment {
                     window.setAttributes(wlp);
                     final Spinner spinner1 = (Spinner) mRejectDialog.findViewById(R.id.spinner1);
                     final EditText edtReasonOther = mRejectDialog.findViewById(R.id.edtReasonOther);
-                    spinner1.setAdapter(dataAdapter);
-                    rejectName = ((RejectReasonResponse) spinner1.getSelectedItem()).getName();
+                    spinner1.setAdapter(new NothingSelectedSpinnerAdapter(dataAdapter, R.layout.contact_spinner_row_nothing_selected, getActivity()));
                     spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -192,9 +193,54 @@ public class ContractProcessResumeFragment extends BaseFragment {
                     btnOK.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (isOther) {
-                                if (edtReasonOther.getText().toString().trim().equalsIgnoreCase("")) {
-                                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.input_reason_reject));
+                            if ((RejectReasonResponse) spinner1.getSelectedItem() == null) {
+                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Bạn phải chọn lý do");
+                            } else {
+                                if (isOther) {
+                                    if (edtReasonOther.getText().toString().trim().equalsIgnoreCase("")) {
+                                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.input_reason_reject));
+                                    } else {
+                                        DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.ask_reject), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                showCoverNetworkLoading();
+                                                new RejectRequest(detailProcessResumeResponse.getCvId(), detailProcessResumeResponse.getJobId(), ((RejectReasonResponse) spinner1.getSelectedItem()).getId(), edtReasonOther.getText().toString().trim(), ((RejectReasonResponse) spinner1.getSelectedItem()).getStep()).callRequest(getActivity(), new ApiObjectCallBack<RejectResponse, ErrorResponse>() {
+                                                    @Override
+                                                    public void onSuccess(int status, RejectResponse dataSuccess, List<RejectResponse> listDataSuccess, String message) {
+                                                        if (isAdded()) {
+                                                            if (status == 200) {
+                                                                hideCoverNetworkLoading();
+                                                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.send_reject_success));
+                                                                cardReject.setVisibility(View.VISIBLE);
+                                                                cardContract.setVisibility(View.GONE);
+                                                                tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
+                                                                detailProcessResumeResponse.getCvProcessInfo().setStatus(4);
+                                                                detailProcessResumeResponse.getCvProcessInfo().setRejectStep(5);
+                                                                btnReject.setEnabled(false);
+                                                                llBtn.setVisibility(View.GONE);
+                                                                getEventBaseFragment().reject();
+                                                            }
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                                                        if (isAdded()) {
+                                                            hideCoverNetworkLoading();
+                                                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+                                                        }
+                                                    }
+                                                });
+                                                mRejectDialog.dismiss();
+                                            }
+                                        }, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                            }
+                                        });
+
+                                    }
                                 } else {
                                     DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.ask_reject), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                                         @Override
@@ -206,13 +252,18 @@ public class ContractProcessResumeFragment extends BaseFragment {
                                                     if (isAdded()) {
                                                         if (status == 200) {
                                                             hideCoverNetworkLoading();
-                                                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.send_reject_success));
-                                                            cardReject.setVisibility(View.VISIBLE);
-                                                            cardContract.setVisibility(View.GONE);
-                                                            tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
+                                                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.send_reject_success), new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                                    cardReject.setVisibility(View.VISIBLE);
+                                                                    tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
+                                                                }
+                                                            });
                                                             detailProcessResumeResponse.getCvProcessInfo().setStatus(4);
                                                             detailProcessResumeResponse.getCvProcessInfo().setRejectStep(5);
+                                                            cardReject.setVisibility(View.VISIBLE);
                                                             btnReject.setEnabled(false);
+                                                            cardContract.setVisibility(View.GONE);
                                                             llBtn.setVisibility(View.GONE);
                                                             getEventBaseFragment().reject();
                                                         }
@@ -235,54 +286,7 @@ public class ContractProcessResumeFragment extends BaseFragment {
 
                                         }
                                     });
-
                                 }
-                            } else {
-                                DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.ask_reject), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        showCoverNetworkLoading();
-                                        new RejectRequest(detailProcessResumeResponse.getCvId(), detailProcessResumeResponse.getJobId(), ((RejectReasonResponse) spinner1.getSelectedItem()).getId(), edtReasonOther.getText().toString().trim(), ((RejectReasonResponse) spinner1.getSelectedItem()).getStep()).callRequest(getActivity(), new ApiObjectCallBack<RejectResponse, ErrorResponse>() {
-                                            @Override
-                                            public void onSuccess(int status, RejectResponse dataSuccess, List<RejectResponse> listDataSuccess, String message) {
-                                                if (isAdded()) {
-                                                    if (status == 200) {
-                                                        hideCoverNetworkLoading();
-                                                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.send_reject_success), new DialogInterface.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                                cardReject.setVisibility(View.VISIBLE);
-                                                                tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
-                                                            }
-                                                        });
-                                                        detailProcessResumeResponse.getCvProcessInfo().setStatus(4);
-                                                        detailProcessResumeResponse.getCvProcessInfo().setRejectStep(5);
-                                                        cardReject.setVisibility(View.VISIBLE);
-                                                        btnReject.setEnabled(false);
-                                                        cardContract.setVisibility(View.GONE);
-                                                        llBtn.setVisibility(View.GONE);
-                                                        getEventBaseFragment().reject();
-                                                    }
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
-                                                if (isAdded()) {
-                                                    hideCoverNetworkLoading();
-                                                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
-                                                }
-                                            }
-                                        });
-                                        mRejectDialog.dismiss();
-                                    }
-                                }, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                                    }
-                                });
-
                             }
                         }
                     });

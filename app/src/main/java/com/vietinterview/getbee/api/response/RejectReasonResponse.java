@@ -21,6 +21,13 @@ public class RejectReasonResponse {
     @Expose
     private Integer step;
 
+    public RejectReasonResponse(Integer id, String name, String code, Integer step) {
+        this.id = id;
+        this.name = name;
+        this.code = code;
+        this.step = step;
+    }
+
     public Integer getId() {
         return id;
     }
