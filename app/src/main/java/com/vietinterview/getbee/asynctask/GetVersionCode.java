@@ -35,7 +35,7 @@ public class GetVersionCode extends AsyncTask<Void, String, String> {
                     .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
                     .referrer("http://www.google.com")
                     .get();
-            DebugLog.showLogCat(document.toString());
+//            DebugLog.showLogCat(document.toString());
             if (document != null) {
                 Elements element = document.getElementsContainingOwnText("Current Version");
                 for (Element ele : element) {
