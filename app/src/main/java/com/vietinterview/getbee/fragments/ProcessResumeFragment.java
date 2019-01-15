@@ -91,7 +91,7 @@ public class ProcessResumeFragment extends BaseFragment {
 //                stepView2.setEnabled(false);
             }
         });
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
 
