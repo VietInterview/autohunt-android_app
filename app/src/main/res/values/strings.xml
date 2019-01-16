@@ -242,7 +242,7 @@
     <string name="warning_add_new_offer">Lần offer gần nhất ứng viên đã đồng ý vì vậy bạn không thể thêm mới offer</string>
     <string name="warning_update_offer">Bạn phải cập nhật trạng thái offer trước, trước khi tạo offer mới</string>
     <string name="ask_update_status_contract">Bạn có chắc chắn muốn cập nhật trạng thái ký hợp đồng cho ứng viên này không?</string>
-    <string name="info_offer">Thông tin tuyển dụng</string>
+    <string name="info_offer">Thông tin Offer</string>
     <string name="choose_currency">Chọn đơn vị tiền tệ</string>
     <string name="ask_update_round_offer">Bạn có chắc chắn muốn cập nhật kết quả cho lần offer này?</string>
     <string name="ask_send_offer">Bạn có chắc chắn muốn gửi offer tới ứng viên này không?</string>

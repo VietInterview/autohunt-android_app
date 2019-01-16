@@ -110,7 +110,7 @@ public class CreateGoToWorkFragment extends BaseFragment implements DatePickerDi
                     calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
                     calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
                     Calendar today = Calendar.getInstance();
-                    calendar.add(Calendar.DATE, 60);
+                    calendar.add(Calendar.DATE, jobCvGotoWorkDto.getNumDayWarranty());
                     long lastWarrantyDate = calendar.getTimeInMillis();
                     long difference = lastWarrantyDate - today.getTimeInMillis();
                     int days = (int) (difference / (1000 * 60 * 60 * 24));

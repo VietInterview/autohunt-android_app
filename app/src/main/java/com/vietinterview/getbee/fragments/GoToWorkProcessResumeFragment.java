@@ -198,7 +198,7 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
                 calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
                 calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
                 Calendar today = Calendar.getInstance();
-                calendar.add(Calendar.DATE, 60);
+                calendar.add(Calendar.DATE, detailProcessResumeResponse.getJobCvGotoWorkDto().getNumDayWarranty());
                 long lastWarrantyDate = calendar.getTimeInMillis();
                 long difference = lastWarrantyDate - today.getTimeInMillis();
                 int days = (int) (difference / (1000 * 60 * 60 * 24));
@@ -223,7 +223,7 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
                     calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
                     calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
                     Calendar today = Calendar.getInstance();
-                    calendar.add(Calendar.DATE, 60);
+                    calendar.add(Calendar.DATE, detailProcessResumeResponse.getJobCvGotoWorkDto().getNumDayWarranty());
                     long lastWarrantyDate = calendar.getTimeInMillis();
                     long difference = lastWarrantyDate - today.getTimeInMillis();
                     int days = (int) (difference / (1000 * 60 * 60 * 24));
