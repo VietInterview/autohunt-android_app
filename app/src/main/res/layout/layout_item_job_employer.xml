@@ -60,8 +60,9 @@
             android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="118dp"
+            app:cardBackgroundColor="@color/white"
             card_view:cardCornerRadius="10dp"
-            card_view:cardElevation="2dp"
+            card_view:cardElevation="1dp"
             card_view:cardUseCompatPadding="true">
 
             <LinearLayout

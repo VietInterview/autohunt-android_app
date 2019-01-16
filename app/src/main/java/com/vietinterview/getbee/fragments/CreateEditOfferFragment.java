@@ -313,28 +313,6 @@ public class CreateEditOfferFragment extends BaseFragment implements DatePickerD
                 }
             }
             if (lstInterviewHis.size() > 0) {
-                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                Date readDate = null;
-                Date readDateChoose = null;
-                try {
-                    readDate = df.parse(DateUtil.convertToMyFormat3(lstInterviewHis.get(lstInterviewHis.size() - 1).getWorkTime()));
-                    readDateChoose = df.parse(DateUtil.convertToMyFormat3(edtWorkTime.getText().toString().trim()));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                Calendar last = Calendar.getInstance();
-                last.setTimeInMillis(readDate.getTime());
-                last.set(Calendar.DAY_OF_MONTH, last.get(Calendar.DAY_OF_MONTH));
-                last.set(Calendar.MONTH, last.get(Calendar.MONTH));
-                last.set(Calendar.YEAR, last.get(Calendar.YEAR));
-                Calendar choose = Calendar.getInstance();
-                choose.setTimeInMillis(readDateChoose.getTime());
-                choose.set(Calendar.DAY_OF_MONTH, choose.get(Calendar.DAY_OF_MONTH));
-                choose.set(Calendar.MONTH, choose.get(Calendar.MONTH));
-                choose.set(Calendar.YEAR, choose.get(Calendar.YEAR));
-                long lastWarrantyDate = last.getTimeInMillis();
-                long chooseTime = choose.getTimeInMillis();
-                long difference = chooseTime - lastWarrantyDate;
                 if (lstOfferHi == null || lstOfferHi.getStatus() == 0) {
                     DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.ask_send_offer), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                         @Override
@@ -380,54 +358,49 @@ public class CreateEditOfferFragment extends BaseFragment implements DatePickerD
                         }
                     });
                 } else {
-                    if (difference > 0) {
-                        DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.ask_send_offer), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                int cvId = detailProcessResumeResponse.getCvId();
-                                int mCurrency = currency;
-                                int id = lstOfferHi == null ? -1 : lstOfferHi.getId();
-                                String position = edtPosition.getText().toString().trim();
-                                int jobId = detailProcessResumeResponse.getJobId();
-                                String note = edtNote.getText().toString().trim();
-                                String round = edtRound.getText().toString().trim();
-                                int status = lstOfferHi == null ? 0 : statusOffer;
-                                long salary = lstOfferHi == null ? Long.parseLong(edtSalary.getText().toString().replaceAll(",", "\\.").replaceAll("\\.", "")) : lstOfferHi.getSalary();
-                                String workAddress = edtWorkAddress.getText().toString().trim();
-                                String workTime = edtWorkTime.getText().toString().trim();
-                                showCoverNetworkLoading();
-                                new SendOfferRequest(cvId, id, mCurrency, position, jobId, note, round, status, salary, workAddress, workTime).callRequest(getActivity(), new ApiObjectCallBack<SendOfferResponse, ErrorResponse>() {
-                                    @Override
-                                    public void onSuccess(int status, SendOfferResponse dataSuccess, List<SendOfferResponse> listDataSuccess, String message) {
-                                        if (isAdded()) {
-                                            hideCoverNetworkLoading();
-                                            lstOfferHi = new LstOfferHi(dataSuccess.getCurency(), dataSuccess.getCvId(), dataSuccess.getEmailTemplate(), dataSuccess.getId(), dataSuccess.getJobId(), dataSuccess.getNote(), dataSuccess.getPosition(), dataSuccess.getRound(), dataSuccess.getSalary(), dataSuccess.getStatus(), dataSuccess.getWorkAddress(), dataSuccess.getWorkTime());
-                                            Intent intent = new Intent(getActivity(), CreateEditInterviewFragment.class);
-                                            intent.putExtra("lstOfferHi", lstOfferHi);
-                                            getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
-                                            FragmentUtil.popBackStack(CreateEditOfferFragment.this);
-                                        }
+                    DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.ask_send_offer), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            int cvId = detailProcessResumeResponse.getCvId();
+                            int mCurrency = currency;
+                            int id = lstOfferHi == null ? -1 : lstOfferHi.getId();
+                            String position = edtPosition.getText().toString().trim();
+                            int jobId = detailProcessResumeResponse.getJobId();
+                            String note = edtNote.getText().toString().trim();
+                            String round = edtRound.getText().toString().trim();
+                            int status = lstOfferHi == null ? 0 : statusOffer;
+                            long salary = lstOfferHi == null ? Long.parseLong(edtSalary.getText().toString().replaceAll(",", "\\.").replaceAll("\\.", "")) : lstOfferHi.getSalary();
+                            String workAddress = edtWorkAddress.getText().toString().trim();
+                            String workTime = edtWorkTime.getText().toString().trim();
+                            showCoverNetworkLoading();
+                            new SendOfferRequest(cvId, id, mCurrency, position, jobId, note, round, status, salary, workAddress, workTime).callRequest(getActivity(), new ApiObjectCallBack<SendOfferResponse, ErrorResponse>() {
+                                @Override
+                                public void onSuccess(int status, SendOfferResponse dataSuccess, List<SendOfferResponse> listDataSuccess, String message) {
+                                    if (isAdded()) {
+                                        hideCoverNetworkLoading();
+                                        lstOfferHi = new LstOfferHi(dataSuccess.getCurency(), dataSuccess.getCvId(), dataSuccess.getEmailTemplate(), dataSuccess.getId(), dataSuccess.getJobId(), dataSuccess.getNote(), dataSuccess.getPosition(), dataSuccess.getRound(), dataSuccess.getSalary(), dataSuccess.getStatus(), dataSuccess.getWorkAddress(), dataSuccess.getWorkTime());
+                                        Intent intent = new Intent(getActivity(), CreateEditInterviewFragment.class);
+                                        intent.putExtra("lstOfferHi", lstOfferHi);
+                                        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+                                        FragmentUtil.popBackStack(CreateEditOfferFragment.this);
                                     }
+                                }
 
-                                    @Override
-                                    public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
-                                        if (isAdded()) {
-                                            hideCoverNetworkLoading();
-                                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
-                                        }
+                                @Override
+                                public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                                    if (isAdded()) {
+                                        hideCoverNetworkLoading();
+                                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
                                     }
-                                });
-                            }
-                        }, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+                                }
+                            });
+                        }
+                    }, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                            }
-                        });
-                    } else {
-                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.warning_date_offer));
-
-                    }
+                        }
+                    });
                 }
 
             } else {
@@ -538,53 +511,57 @@ public class CreateEditOfferFragment extends BaseFragment implements DatePickerD
                 });
             }
         } else {
-            int cvId = detailProcessResumeResponse.getCvId();
-            int mCurrency = this.currency;
-            int id = lstOfferHi == null ? -1 : lstOfferHi.getId();
-            String position = edtPosition.getText().toString().trim();
-            int jobId = detailProcessResumeResponse.getJobId();
-            String note = edtNote.getText().toString().trim();
-            String round = edtRound.getText().toString().trim();
-            int status = lstOfferHi == null ? 0 : statusOffer;
-            long salary = Long.parseLong(edtSalary.getText().toString().trim().replaceAll(",", "\\.").replaceAll("\\.", "").equalsIgnoreCase("") ? "0" : edtSalary.getText().toString().trim().replaceAll(",", "\\.").replaceAll("\\.", ""));
-            String workAddress = edtWorkAddress.getText().toString().trim();
-            String workTime = edtWorkTime.getText().toString().trim();
-            new ViewEmailOfferRequest(cvId, id, mCurrency, position, jobId, note, round, status, salary, workAddress, workTime).callRequest(getActivity(), new ApiObjectCallBack<ViewEmailInterviewResponse, ErrorResponse>() {
-                @Override
-                public void onSuccess(int status, ViewEmailInterviewResponse dataSuccess, List<ViewEmailInterviewResponse> listDataSuccess, String message) {
-                    if (isAdded()) {
-                        hideCoverNetworkLoading();
-                        mReasonNotAcceptDialog = new Dialog(getActivity());
-                        mReasonNotAcceptDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                        mReasonNotAcceptDialog.setContentView(R.layout.dialog_see_invite);
-                        mReasonNotAcceptDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        mReasonNotAcceptDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                        Window window = mReasonNotAcceptDialog.getWindow();
-                        WindowManager.LayoutParams wlp = window.getAttributes();
-                        wlp.gravity = Gravity.TOP;
-                        wlp.y = 300;
-                        window.setAttributes(wlp);
-                        Button btnOK = (Button) mReasonNotAcceptDialog.findViewById(R.id.btnOK);
-                        TextView tvEmailContent = mReasonNotAcceptDialog.findViewById(R.id.tvEmailContent);
-                        tvEmailContent.setText(Html.fromHtml(dataSuccess.getEmailTemplate()));
-                        btnOK.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                mReasonNotAcceptDialog.dismiss();
-                            }
-                        });
-                        mReasonNotAcceptDialog.show();
+            if (StringUtils.isEmpty(edtSalary.getText().toString()) && StringUtils.isEmpty(edtWorkTime.getText().toString()) && StringUtils.isEmpty(edtWorkAddress.getText().toString()) && StringUtils.isEmpty(edtPosition.getText().toString())) {
+                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.pleaseinputdata));
+            } else {
+                int cvId = detailProcessResumeResponse.getCvId();
+                int mCurrency = this.currency;
+                int id = lstOfferHi == null ? -1 : lstOfferHi.getId();
+                String position = edtPosition.getText().toString().trim();
+                int jobId = detailProcessResumeResponse.getJobId();
+                String note = edtNote.getText().toString().trim();
+                String round = edtRound.getText().toString().trim();
+                int status = lstOfferHi == null ? 0 : statusOffer;
+                long salary = Long.parseLong(edtSalary.getText().toString().trim().replaceAll(",", "\\.").replaceAll("\\.", "").equalsIgnoreCase("") ? "0" : edtSalary.getText().toString().trim().replaceAll(",", "\\.").replaceAll("\\.", ""));
+                String workAddress = edtWorkAddress.getText().toString().trim();
+                String workTime = edtWorkTime.getText().toString().trim();
+                new ViewEmailOfferRequest(cvId, id, mCurrency, position, jobId, note, round, status, salary, workAddress, workTime).callRequest(getActivity(), new ApiObjectCallBack<ViewEmailInterviewResponse, ErrorResponse>() {
+                    @Override
+                    public void onSuccess(int status, ViewEmailInterviewResponse dataSuccess, List<ViewEmailInterviewResponse> listDataSuccess, String message) {
+                        if (isAdded()) {
+                            hideCoverNetworkLoading();
+                            mReasonNotAcceptDialog = new Dialog(getActivity());
+                            mReasonNotAcceptDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            mReasonNotAcceptDialog.setContentView(R.layout.dialog_see_invite);
+                            mReasonNotAcceptDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                            mReasonNotAcceptDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                            Window window = mReasonNotAcceptDialog.getWindow();
+                            WindowManager.LayoutParams wlp = window.getAttributes();
+                            wlp.gravity = Gravity.TOP;
+                            wlp.y = 300;
+                            window.setAttributes(wlp);
+                            Button btnOK = (Button) mReasonNotAcceptDialog.findViewById(R.id.btnOK);
+                            TextView tvEmailContent = mReasonNotAcceptDialog.findViewById(R.id.tvEmailContent);
+                            tvEmailContent.setText(Html.fromHtml(dataSuccess.getEmailTemplate()));
+                            btnOK.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mReasonNotAcceptDialog.dismiss();
+                                }
+                            });
+                            mReasonNotAcceptDialog.show();
+                        }
                     }
-                }
 
-                @Override
-                public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
-                    if (isAdded()) {
-                        hideCoverNetworkLoading();
-                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+                    @Override
+                    public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                        if (isAdded()) {
+                            hideCoverNetworkLoading();
+                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
 

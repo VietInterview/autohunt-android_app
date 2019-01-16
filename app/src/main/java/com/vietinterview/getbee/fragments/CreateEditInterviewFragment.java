@@ -37,6 +37,7 @@ import com.vietinterview.getbee.utils.DateUtil;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
+import com.vietinterview.getbee.utils.StringUtils;
 import com.vietinterview.getbee.utils.UiUtil;
 
 import java.text.ParseException;
@@ -263,28 +264,6 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
                 }
             }
             if (lstInterviewHis.size() > 0) {
-                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                Date readDate = null;
-                Date readDateChoose = null;
-                try {
-                    readDate = df.parse(DateUtil.convertToMyFormat3(lstInterviewHis.get(lstInterviewHis.size() - 1).getInterviewDate()));
-                    readDateChoose = df.parse(DateUtil.convertToMyFormat3(edtDateInterview.getText().toString().trim()));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                Calendar last = Calendar.getInstance();
-                last.setTimeInMillis(readDate.getTime());
-                last.set(Calendar.DAY_OF_MONTH, last.get(Calendar.DAY_OF_MONTH));
-                last.set(Calendar.MONTH, last.get(Calendar.MONTH));
-                last.set(Calendar.YEAR, last.get(Calendar.YEAR));
-                Calendar choose = Calendar.getInstance();
-                choose.setTimeInMillis(readDateChoose.getTime());
-                choose.set(Calendar.DAY_OF_MONTH, choose.get(Calendar.DAY_OF_MONTH));
-                choose.set(Calendar.MONTH, choose.get(Calendar.MONTH));
-                choose.set(Calendar.YEAR, choose.get(Calendar.YEAR));
-                long lastWarrantyDate = last.getTimeInMillis();
-                long chooseTime = choose.getTimeInMillis();
-                long difference = chooseTime - lastWarrantyDate;
                 if (lstInterviewHi == null || lstInterviewHi.getStatus() == 0) {
                     DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.confirm_invite_interview), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                         @Override
@@ -319,42 +298,38 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
                         }
                     });
                 } else {
-                    if (difference > 0) {
-                        DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.confirm_invite_interview), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                showCoverNetworkLoading();
-                                new SendInterviewRequest(detailProcessResumeResponse.getCvId(), lstInterviewHi == null ? -1 : lstInterviewHi.getId(), edtPlaceInterview.getText().toString().trim(), edtDateInterview.getText().toString().trim(), detailProcessResumeResponse.getJobId(), edtNote.getText().toString().trim(), edtRound.getText().toString().trim(), lstInterviewHi == null ? 0 : statusInterview).callRequest(getActivity(), new ApiObjectCallBack<ViewEmailInterviewResponse, ErrorResponse>() {
-                                    @Override
-                                    public void onSuccess(int status, ViewEmailInterviewResponse dataSuccess, List<ViewEmailInterviewResponse> listDataSuccess, String message) {
-                                        if (isAdded()) {
-                                            hideCoverNetworkLoading();
-                                            lstInterviewHi = new LstInterviewHi(dataSuccess.getCvId(), dataSuccess.getEmailTemplate(), dataSuccess.getId(), dataSuccess.getInterviewAddress(), dataSuccess.getInterviewDate(), dataSuccess.getJobId(), dataSuccess.getNote(), dataSuccess.getRound(), dataSuccess.getStatus());
-                                            Intent intent = new Intent(getActivity(), CreateEditInterviewFragment.class);
-                                            intent.putExtra("lstInterviewHi", lstInterviewHi);
-                                            getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
-                                            FragmentUtil.popBackStack(CreateEditInterviewFragment.this);
-                                        }
+                    DialogUtil.showDialogFull(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.confirm_invite_interview), getResources().getString(R.string.yes), getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            showCoverNetworkLoading();
+                            new SendInterviewRequest(detailProcessResumeResponse.getCvId(), lstInterviewHi == null ? -1 : lstInterviewHi.getId(), edtPlaceInterview.getText().toString().trim(), edtDateInterview.getText().toString().trim(), detailProcessResumeResponse.getJobId(), edtNote.getText().toString().trim(), edtRound.getText().toString().trim(), lstInterviewHi == null ? 0 : statusInterview).callRequest(getActivity(), new ApiObjectCallBack<ViewEmailInterviewResponse, ErrorResponse>() {
+                                @Override
+                                public void onSuccess(int status, ViewEmailInterviewResponse dataSuccess, List<ViewEmailInterviewResponse> listDataSuccess, String message) {
+                                    if (isAdded()) {
+                                        hideCoverNetworkLoading();
+                                        lstInterviewHi = new LstInterviewHi(dataSuccess.getCvId(), dataSuccess.getEmailTemplate(), dataSuccess.getId(), dataSuccess.getInterviewAddress(), dataSuccess.getInterviewDate(), dataSuccess.getJobId(), dataSuccess.getNote(), dataSuccess.getRound(), dataSuccess.getStatus());
+                                        Intent intent = new Intent(getActivity(), CreateEditInterviewFragment.class);
+                                        intent.putExtra("lstInterviewHi", lstInterviewHi);
+                                        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+                                        FragmentUtil.popBackStack(CreateEditInterviewFragment.this);
                                     }
+                                }
 
-                                    @Override
-                                    public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
-                                        if (isAdded()) {
-                                            hideCoverNetworkLoading();
-                                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
-                                        }
+                                @Override
+                                public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                                    if (isAdded()) {
+                                        hideCoverNetworkLoading();
+                                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
                                     }
-                                });
-                            }
-                        }, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+                                }
+                            });
+                        }
+                    }, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                            }
-                        });
-                    } else {
-                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.warning_date_interview));
-                    }
+                        }
+                    });
                 }
 
             } else {
@@ -449,43 +424,57 @@ public class CreateEditInterviewFragment extends BaseFragment implements DatePic
                 });
             }
         } else {
-            showCoverNetworkLoading();
-            new ViewEmailInterviewRequest(detailProcessResumeResponse.getCvId(), -1, edtPlaceInterview.getText().toString().trim(), edtDateInterview.getText().toString().trim(), detailProcessResumeResponse.getJobId(), edtNote.getText().toString().trim(), edtRound.getText().toString().trim(), statusInterview).callRequest(getActivity(), new ApiObjectCallBack<ViewEmailInterviewResponse, ErrorResponse>() {
-                @Override
-                public void onSuccess(int status, ViewEmailInterviewResponse dataSuccess, List<ViewEmailInterviewResponse> listDataSuccess, String message) {
-                    if (isAdded()) {
-                        hideCoverNetworkLoading();
-                        mReasonNotAcceptDialog = new Dialog(getActivity());
-                        mReasonNotAcceptDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                        mReasonNotAcceptDialog.setContentView(R.layout.dialog_see_invite);
-                        mReasonNotAcceptDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        mReasonNotAcceptDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                        Window window = mReasonNotAcceptDialog.getWindow();
-                        WindowManager.LayoutParams wlp = window.getAttributes();
-                        wlp.gravity = Gravity.TOP;
-                        wlp.y = 300;
-                        window.setAttributes(wlp);
-                        TextView tvEmailContent = mReasonNotAcceptDialog.findViewById(R.id.tvEmailContent);
-                        tvEmailContent.setText(Html.fromHtml(dataSuccess.getEmailTemplate()));
-                        Button btnOK = (Button) mReasonNotAcceptDialog.findViewById(R.id.btnOK);
-                        btnOK.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                mReasonNotAcceptDialog.dismiss();
-                            }
-                        });
-                        mReasonNotAcceptDialog.show();
+            if (!StringUtils.isEmpty(edtDateInterview.getText().toString()) && !StringUtils.isEmpty(edtPlaceInterview.getText().toString())) {
+                showCoverNetworkLoading();
+                new ViewEmailInterviewRequest(detailProcessResumeResponse.getCvId(), -1, edtPlaceInterview.getText().toString().trim(), edtDateInterview.getText().toString().trim(), detailProcessResumeResponse.getJobId(), edtNote.getText().toString().trim(), edtRound.getText().toString().trim(), statusInterview).callRequest(getActivity(), new ApiObjectCallBack<ViewEmailInterviewResponse, ErrorResponse>() {
+                    @Override
+                    public void onSuccess(int status, ViewEmailInterviewResponse dataSuccess, List<ViewEmailInterviewResponse> listDataSuccess, String message) {
+                        if (isAdded()) {
+                            hideCoverNetworkLoading();
+                            mReasonNotAcceptDialog = new Dialog(getActivity());
+                            mReasonNotAcceptDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            mReasonNotAcceptDialog.setContentView(R.layout.dialog_see_invite);
+                            mReasonNotAcceptDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                            mReasonNotAcceptDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                            Window window = mReasonNotAcceptDialog.getWindow();
+                            WindowManager.LayoutParams wlp = window.getAttributes();
+                            wlp.gravity = Gravity.TOP;
+                            wlp.y = 300;
+                            window.setAttributes(wlp);
+                            TextView tvEmailContent = mReasonNotAcceptDialog.findViewById(R.id.tvEmailContent);
+                            tvEmailContent.setText(Html.fromHtml(dataSuccess.getEmailTemplate()));
+                            Button btnOK = (Button) mReasonNotAcceptDialog.findViewById(R.id.btnOK);
+                            btnOK.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mReasonNotAcceptDialog.dismiss();
+                                }
+                            });
+                            mReasonNotAcceptDialog.show();
+                        }
                     }
-                }
 
-                @Override
-                public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
-                    if (isAdded()) {
-                        hideCoverNetworkLoading();
-                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+                    @Override
+                    public void onFail(int status, ErrorResponse dataFail, List<ErrorResponse> listDataFail, String message) {
+                        if (isAdded()) {
+                            hideCoverNetworkLoading();
+                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+                        }
                     }
+                });
+            } else {
+                if (edtDateInterview.getText().toString().equalsIgnoreCase("")) {
+                    llDate.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_red_5));
+                } else {
+                    llDate.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_gray));
                 }
-            });
+                if (edtPlaceInterview.getText().toString().equalsIgnoreCase("")) {
+                    edtPlaceInterview.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_red_5));
+                } else {
+                    edtPlaceInterview.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_gray));
+                }
+                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Vui lòng nhập vào các trường bắt buộc");
+            }
         }
     }
 

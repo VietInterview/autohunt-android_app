@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@string/font_fontFamily_medium"
-            android:text="@string/work_time"
+            android:text="Thời gian đi làm"
             android:textColor="#042E51"
             android:textSize="16sp" />
 

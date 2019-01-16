@@ -414,6 +414,7 @@ public class OfferProcessResumeFragment extends BaseFragment {
                                     edtReasonOther.setFocusableInTouchMode(true); // user touches widget on phone with touch screen
                                     edtReasonOther.setClickable(true);
                                 } else {
+                                    isOther = false;
                                     edtReasonOther.setText("");
                                     edtReasonOther.setFocusable(false);
                                     edtReasonOther.setFocusableInTouchMode(false); // user touches widget on phone with touch screen
@@ -461,8 +462,11 @@ public class OfferProcessResumeFragment extends BaseFragment {
                                                                 hideCoverNetworkLoading();
                                                                 DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.send_reject_success));
                                                                 cardReject.setVisibility(View.VISIBLE);
-                                                                tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
-//                                                            int count = detailProcessResumeResponse.getLstOfferHis().size();
+                                                                if (rejectName != null) {
+                                                                    tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName);
+                                                                    if (dataSuccess.getReasonNote() != null && !dataSuccess.getReasonNote().equalsIgnoreCase(""))
+                                                                        tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
+                                                                }//                                                            int count = detailProcessResumeResponse.getLstOfferHis().size();
 //                                                            for (int i = 0; i < detailProcessResumeResponse.getLstOfferHis().size(); i++) {
 //                                                                if (detailProcessResumeResponse.getLstOfferHis().get(i).getId() == -1) {
 //                                                                    count--;
@@ -518,7 +522,11 @@ public class OfferProcessResumeFragment extends BaseFragment {
                                                                 @Override
                                                                 public void onClick(DialogInterface dialogInterface, int i) {
                                                                     cardReject.setVisibility(View.VISIBLE);
-                                                                    tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
+                                                                    if (rejectName != null) {
+                                                                        tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName);
+                                                                        if (dataSuccess.getReasonNote() != null && !dataSuccess.getReasonNote().equalsIgnoreCase(""))
+                                                                            tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
+                                                                    }
                                                                 }
                                                             });
 //                                                        int count = detailProcessResumeResponse.getLstOfferHis().size();

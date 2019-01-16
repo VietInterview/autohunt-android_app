@@ -173,6 +173,7 @@ public class ContractProcessResumeFragment extends BaseFragment {
                                     edtReasonOther.setFocusableInTouchMode(true); // user touches widget on phone with touch screen
                                     edtReasonOther.setClickable(true);
                                 } else {
+                                    isOther = false;
                                     edtReasonOther.setFocusable(false);
                                     edtReasonOther.setFocusableInTouchMode(false); // user touches widget on phone with touch screen
                                     edtReasonOther.setClickable(false);
@@ -220,7 +221,11 @@ public class ContractProcessResumeFragment extends BaseFragment {
                                                                 DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.send_reject_success));
                                                                 cardReject.setVisibility(View.VISIBLE);
                                                                 cardContract.setVisibility(View.GONE);
-                                                                tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
+                                                                if (rejectName != null) {
+                                                                    tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName);
+                                                                    if (dataSuccess.getReasonNote() != null && !dataSuccess.getReasonNote().equalsIgnoreCase(""))
+                                                                        tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
+                                                                }
                                                                 detailProcessResumeResponse.getCvProcessInfo().setStatus(4);
                                                                 detailProcessResumeResponse.getCvProcessInfo().setRejectStep(5);
                                                                 btnReject.setEnabled(false);
@@ -263,7 +268,11 @@ public class ContractProcessResumeFragment extends BaseFragment {
                                                                 @Override
                                                                 public void onClick(DialogInterface dialogInterface, int i) {
                                                                     cardReject.setVisibility(View.VISIBLE);
-                                                                    tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
+                                                                    if (rejectName != null) {
+                                                                        tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName);
+                                                                        if (dataSuccess.getReasonNote() != null && !dataSuccess.getReasonNote().equalsIgnoreCase(""))
+                                                                            tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
+                                                                    }
                                                                 }
                                                             });
                                                             detailProcessResumeResponse.getCvProcessInfo().setStatus(4);

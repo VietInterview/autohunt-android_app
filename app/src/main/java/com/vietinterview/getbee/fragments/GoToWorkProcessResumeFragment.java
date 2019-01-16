@@ -288,6 +288,7 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
                                     edtReasonOther.setFocusableInTouchMode(true); // user touches widget on phone with touch screen
                                     edtReasonOther.setClickable(true);
                                 } else {
+                                    isOther = false;
                                     edtReasonOther.setText("");
                                     edtReasonOther.setFocusable(false);
                                     edtReasonOther.setFocusableInTouchMode(false); // user touches widget on phone with touch screen
@@ -337,7 +338,11 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
                                                                     @Override
                                                                     public void onClick(DialogInterface dialogInterface, int i) {
                                                                         cardReject.setVisibility(View.VISIBLE);
-                                                                        tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
+                                                                        if (rejectName != null) {
+                                                                            tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName);
+                                                                            if (dataSuccess.getReasonNote() != null && !dataSuccess.getReasonNote().equalsIgnoreCase(""))
+                                                                                tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
+                                                                        }
                                                                     }
                                                                 });
                                                                 btnNext.setEnabled(false);
@@ -386,8 +391,11 @@ public class GoToWorkProcessResumeFragment extends BaseFragment {
                                                                 @Override
                                                                 public void onClick(DialogInterface dialogInterface, int i) {
                                                                     cardReject.setVisibility(View.VISIBLE);
-                                                                    tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
-                                                                }
+                                                                    if (rejectName != null) {
+                                                                        tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName);
+                                                                        if (dataSuccess.getReasonNote() != null && !dataSuccess.getReasonNote().equalsIgnoreCase(""))
+                                                                            tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
+                                                                    }                                                                }
                                                             });
                                                             cardReject.setVisibility(View.VISIBLE);
                                                             btnNext.setEnabled(false);
