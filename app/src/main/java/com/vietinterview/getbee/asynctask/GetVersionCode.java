@@ -1,11 +1,16 @@
 package com.vietinterview.getbee.asynctask;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 
 import com.vietinterview.getbee.BuildConfig;
+import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.utils.DebugLog;
+import com.vietinterview.getbee.utils.DialogUtil;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -61,6 +66,14 @@ public class GetVersionCode extends AsyncTask<Void, String, String> {
             if (onlineVersion != null && !onlineVersion.isEmpty()) {
                 if (Float.valueOf(currentVersion) < Float.valueOf(onlineVersion)) {
                     DebugLog.showLogCat("new update");
+                    DialogUtil.showDialog(mContext, mContext.getResources().getString(R.string.noti_title), "Getbee đã có phiên bản mới nhất " + onlineVersion + ". Vui lòng cập nhật để được sử dụng các tính năng ưu việt!", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse("market://details?id=com.vietinterview.getbee"));
+                            mContext.startActivity(intent);
+                        }
+                    });
                 }
             }
             DebugLog.showLogCat("Current: " + currentVersion + " playstore: " + onlineVersion);
