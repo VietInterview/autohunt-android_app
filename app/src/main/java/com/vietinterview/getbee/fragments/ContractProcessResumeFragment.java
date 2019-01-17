@@ -59,6 +59,7 @@ public class ContractProcessResumeFragment extends BaseFragment {
     private Dialog mRejectDialog;
     private boolean isOther = false;
     private String rejectName;
+    private String rejectNote;
 
     public static ContractProcessResumeFragment newInstance(DetailProcessResumeResponse detailProcessResumeResponse) {
         ContractProcessResumeFragment fm = new ContractProcessResumeFragment();
@@ -165,7 +166,7 @@ public class ContractProcessResumeFragment extends BaseFragment {
                     spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if (position > 1) {
+                            if (position >= 1) {
                                 rejectName = listReasonName.get(position - 1).getName();
                                 if (listReasonName.get(position - 1).getCode().equalsIgnoreCase("other")) {
                                     isOther = true;
@@ -222,9 +223,13 @@ public class ContractProcessResumeFragment extends BaseFragment {
                                                                 cardReject.setVisibility(View.VISIBLE);
                                                                 cardContract.setVisibility(View.GONE);
                                                                 if (rejectName != null) {
+                                                                    detailProcessResumeResponse.getCvProcessInfo().setReasonRejectName(rejectName);
+                                                                    detailProcessResumeResponse.getCvProcessInfo().setRejectNote(dataSuccess.getReasonNote());
                                                                     tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName);
-                                                                    if (dataSuccess.getReasonNote() != null && !dataSuccess.getReasonNote().equalsIgnoreCase(""))
+                                                                    if (dataSuccess.getReasonNote() != null && !dataSuccess.getReasonNote().equalsIgnoreCase("")) {
                                                                         tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
+                                                                        rejectNote = dataSuccess.getReasonNote();
+                                                                    }
                                                                 }
                                                                 detailProcessResumeResponse.getCvProcessInfo().setStatus(4);
                                                                 detailProcessResumeResponse.getCvProcessInfo().setRejectStep(5);
@@ -269,9 +274,13 @@ public class ContractProcessResumeFragment extends BaseFragment {
                                                                 public void onClick(DialogInterface dialogInterface, int i) {
                                                                     cardReject.setVisibility(View.VISIBLE);
                                                                     if (rejectName != null) {
+                                                                        detailProcessResumeResponse.getCvProcessInfo().setReasonRejectName(rejectName);
+                                                                        detailProcessResumeResponse.getCvProcessInfo().setRejectNote(dataSuccess.getReasonNote());
                                                                         tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName);
-                                                                        if (dataSuccess.getReasonNote() != null && !dataSuccess.getReasonNote().equalsIgnoreCase(""))
+                                                                        if (dataSuccess.getReasonNote() != null && !dataSuccess.getReasonNote().equalsIgnoreCase("")) {
+                                                                            rejectNote = dataSuccess.getReasonNote();
                                                                             tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
+                                                                        }
                                                                     }
                                                                 }
                                                             });

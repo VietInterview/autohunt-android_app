@@ -64,8 +64,8 @@
     <string name="approve">Đã duyệt</string>
     <string name="seen">Đã xem</string>
     <string name="not_accept">Từ chối</string>
-    <string name="invite_interview">Mời PV</string>
-    <string name="interviewed">Đã PV</string>
+    <string name="invite_interview">Mời phỏng vấn</string>
+    <string name="interviewed">Đã phỏng vấn</string>
     <string name="offered">Offer</string>
     <string name="go_to_work">Đi làm</string>
     <string name="contract">Ký hợp đồng</string>

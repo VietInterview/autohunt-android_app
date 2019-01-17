@@ -220,6 +220,11 @@ public class OfferProcessResumeFragment extends BaseFragment {
             tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName());
             if (detailProcessResumeResponse.getCvProcessInfo().getRejectNote() != null && !detailProcessResumeResponse.getCvProcessInfo().getRejectNote().equalsIgnoreCase(""))
                 tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() + "\n" + getResources().getString(R.string.reject_mess3) + ": " + detailProcessResumeResponse.getCvProcessInfo().getRejectNote());
+        } else if (rejectName != null) {
+            tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName);
+            if (rejectNote != null) {
+                tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + rejectNote);
+            }
         }
     }
 
@@ -372,6 +377,7 @@ public class OfferProcessResumeFragment extends BaseFragment {
     private Dialog mRejectDialog;
     private boolean isOther = false;
     private String rejectName;
+    private String rejectNote;
 
     @OnClick(R.id.btnReject)
     public void onRejectClick() {
@@ -406,7 +412,7 @@ public class OfferProcessResumeFragment extends BaseFragment {
                     spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if (position > 1) {
+                            if (position >= 1) {
                                 rejectName = listReasonName.get(position - 1).getName();
                                 if (listReasonName.get(position - 1).getCode().equalsIgnoreCase("other")) {
                                     isOther = true;
@@ -463,18 +469,14 @@ public class OfferProcessResumeFragment extends BaseFragment {
                                                                 DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.send_reject_success));
                                                                 cardReject.setVisibility(View.VISIBLE);
                                                                 if (rejectName != null) {
+                                                                    detailProcessResumeResponse.getCvProcessInfo().setReasonRejectName(rejectName);
+                                                                    detailProcessResumeResponse.getCvProcessInfo().setRejectNote(dataSuccess.getReasonNote());
                                                                     tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName);
-                                                                    if (dataSuccess.getReasonNote() != null && !dataSuccess.getReasonNote().equalsIgnoreCase(""))
+                                                                    if (dataSuccess.getReasonNote() != null && !dataSuccess.getReasonNote().equalsIgnoreCase("")) {
                                                                         tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
-                                                                }//                                                            int count = detailProcessResumeResponse.getLstOfferHis().size();
-//                                                            for (int i = 0; i < detailProcessResumeResponse.getLstOfferHis().size(); i++) {
-//                                                                if (detailProcessResumeResponse.getLstOfferHis().get(i).getId() == -1) {
-//                                                                    count--;
-//                                                                }
-//                                                            }
-//                                                            if (count > 0) {
-//                                                                updateOfferStatus(count);
-//                                                            }
+                                                                        rejectNote = dataSuccess.getReasonNote();
+                                                                    }
+                                                                }
                                                                 detailProcessResumeResponse.getCvProcessInfo().setStatus(4);
                                                                 detailProcessResumeResponse.getCvProcessInfo().setRejectStep(3);
                                                                 btnNext.setEnabled(false);
@@ -523,9 +525,13 @@ public class OfferProcessResumeFragment extends BaseFragment {
                                                                 public void onClick(DialogInterface dialogInterface, int i) {
                                                                     cardReject.setVisibility(View.VISIBLE);
                                                                     if (rejectName != null) {
+                                                                        detailProcessResumeResponse.getCvProcessInfo().setReasonRejectName(rejectName);
+                                                                        detailProcessResumeResponse.getCvProcessInfo().setRejectNote(dataSuccess.getReasonNote());
                                                                         tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName);
-                                                                        if (dataSuccess.getReasonNote() != null && !dataSuccess.getReasonNote().equalsIgnoreCase(""))
+                                                                        if (dataSuccess.getReasonNote() != null && !dataSuccess.getReasonNote().equalsIgnoreCase("")) {
                                                                             tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
+                                                                            rejectNote = dataSuccess.getReasonNote();
+                                                                        }
                                                                     }
                                                                 }
                                                             });

@@ -242,6 +242,11 @@ public class InterviewProcessResumeFragment extends BaseFragment {
             tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName());
             if (detailProcessResumeResponse.getCvProcessInfo().getRejectNote() != null && !detailProcessResumeResponse.getCvProcessInfo().getRejectNote().equalsIgnoreCase(""))
                 tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + detailProcessResumeResponse.getCvProcessInfo().getReasonRejectName() + "\n" + getResources().getString(R.string.reject_mess3) + ": " + detailProcessResumeResponse.getCvProcessInfo().getRejectNote());
+        } else if (rejectName != null) {
+            tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName);
+            if (rejectNote != null) {
+                tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + rejectNote);
+            }
         }
     }
 
@@ -363,6 +368,7 @@ public class InterviewProcessResumeFragment extends BaseFragment {
 
     boolean isOther = false;
     private String rejectName;
+    private String rejectNote;
 
     @OnClick(R.id.btnNotAccept)
     public void onNotAcceptClick() {
@@ -397,7 +403,7 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                     spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if (position > 1) {
+                            if (position >= 1) {
                                 rejectName = listReasonName.get(position - 1).getName();
                                 if (listReasonName.get(position - 1).getCode().equalsIgnoreCase("other")) {
                                     isOther = true;
@@ -456,9 +462,12 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                                                                     public void onClick(DialogInterface dialogInterface, int i) {
                                                                         cardReject.setVisibility(View.VISIBLE);
                                                                         if (rejectName != null) {
+                                                                            detailProcessResumeResponse.getCvProcessInfo().setReasonRejectName(rejectName);
+                                                                            detailProcessResumeResponse.getCvProcessInfo().setRejectNote(dataSuccess.getReasonNote());
                                                                             tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName);
-                                                                            if (dataSuccess.getReasonNote() != null && !dataSuccess.getReasonNote().equalsIgnoreCase(""))
+                                                                            if (dataSuccess.getReasonNote() != null && !dataSuccess.getReasonNote().equalsIgnoreCase("")) {
                                                                                 tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
+                                                                            }
                                                                         }
 //                                                                        tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
                                                                     }
@@ -511,9 +520,13 @@ public class InterviewProcessResumeFragment extends BaseFragment {
                                                                 public void onClick(DialogInterface dialogInterface, int i) {
                                                                     cardReject.setVisibility(View.VISIBLE);
                                                                     if (rejectName != null) {
+                                                                        detailProcessResumeResponse.getCvProcessInfo().setReasonRejectName(rejectName);
+                                                                        detailProcessResumeResponse.getCvProcessInfo().setRejectNote(dataSuccess.getReasonNote());
                                                                         tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName);
-                                                                        if (dataSuccess.getReasonNote() != null && !dataSuccess.getReasonNote().equalsIgnoreCase(""))
+                                                                        if (dataSuccess.getReasonNote() != null && !dataSuccess.getReasonNote().equalsIgnoreCase("")) {
                                                                             tvReject.setText(getResources().getString(R.string.reject_mess) + "\n" + getResources().getString(R.string.reject_mess2) + ": " + rejectName + "\n" + getResources().getString(R.string.reject_mess3) + ": " + dataSuccess.getReasonNote());
+                                                                            rejectNote = dataSuccess.getReasonNote();
+                                                                        }
                                                                     }
                                                                 }
                                                             });
