@@ -20,6 +20,22 @@ public class RegistRequest extends BaseJsonRequest<ErrorResponse, ErrorResponse>
     private String mName;
     private String mCarrer;
     private String mAddress;
+    private String mContact;
+    private int mBirthday;
+    private int mType;
+    private String mCompanyName;
+
+    public RegistRequest(String mEmail, String mPhone, String mName, String mCarrer, String mAddress, String mContact, int mBirthday, int mType, String mCompanyName) {
+        this.mEmail = mEmail;
+        this.mPhone = mPhone;
+        this.mName = mName;
+        this.mCarrer = mCarrer;
+        this.mAddress = mAddress;
+        this.mContact = mContact;
+        this.mBirthday = mBirthday;
+        this.mType = mType;
+        this.mCompanyName = mCompanyName;
+    }
 
     public RegistRequest(String email, String phone, String name, String carrer, String address) {
         this.mEmail = email;
@@ -65,6 +81,10 @@ public class RegistRequest extends BaseJsonRequest<ErrorResponse, ErrorResponse>
         jsonParams.put("fullName", mName);
         jsonParams.put("phone", mPhone);
         jsonParams.put("os", "ANDROID");
+        jsonParams.put("companyName", mCompanyName);
+        jsonParams.put("type", mType);
+        jsonParams.put("contact", mContact);
+        jsonParams.put("birthday", mBirthday);
         return jsonParams;
     }
 

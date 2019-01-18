@@ -27,7 +27,10 @@ import com.vietinterview.getbee.api.response.customerprofile.ProfileCustomerResp
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.constant.GlobalDefine;
+import com.vietinterview.getbee.customview.RobotoEditText;
+import com.vietinterview.getbee.customview.RobotoMediumEditText;
 import com.vietinterview.getbee.customview.RobotoTextInputEditText;
+import com.vietinterview.getbee.customview.RobotoTextView;
 import com.vietinterview.getbee.model.Carrer;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
@@ -46,17 +49,15 @@ public class CollaboratorProfileFragment extends BaseFragment {
     @BindView(R.id.scrollView)
     NestedScrollView scrollView;
     @BindView(R.id.edtFullName)
-    RobotoTextInputEditText edtFullName;
+    RobotoMediumEditText edtFullName;
     @BindView(R.id.edtPhone)
-    RobotoTextInputEditText edtPhone;
-    @BindView(R.id.edtEmail)
-    RobotoTextInputEditText edtEmail;
-    @BindView(R.id.edtAdd)
-    RobotoTextInputEditText edtAdd;
-    @BindView(R.id.edtCarrer)
-    RobotoTextInputEditText edtCarrer;
-    @BindView(R.id.tvHunt)
-    TextView tvHunt;
+    RobotoEditText edtPhone;
+    @BindView(R.id.tvEmail)
+    RobotoTextView tvEmail;
+    @BindView(R.id.edtAddress)
+    RobotoEditText edtAddress;
+    @BindView(R.id.tvCarrer)
+    RobotoTextView tvCarrer;
     //    private String mCarrerId = "0";
     private String mCarrerName = "";
     MyProfileResponse mMyProfileResponse;
@@ -96,9 +97,9 @@ public class CollaboratorProfileFragment extends BaseFragment {
         else {
             edtFullName.setText(mMyProfileResponse.getFullNameColl());
             edtPhone.setText(mMyProfileResponse.getPhoneColl());
-            edtEmail.setText(mMyProfileResponse.getEmailColl());
-            edtAdd.setText(mMyProfileResponse.getAddressColl());
-            edtCarrer.setText(mMyProfileResponse.getCareerColl());
+            tvEmail.setText(mMyProfileResponse.getEmailColl());
+            edtAddress.setText(mMyProfileResponse.getAddressColl());
+            tvCarrer.setText(mMyProfileResponse.getCareerColl());
             if (mMyProfileResponse.getDesideratedCareer() != null) {
                 if (mMyProfileResponse.getDesideratedCareer().size() > 0) {
                     StringBuilder s0 = new StringBuilder("");
@@ -111,10 +112,10 @@ public class CollaboratorProfileFragment extends BaseFragment {
                     }
                     mCarrerName = s0.toString();
 //                    mCarrerId = String.valueOf(mMyProfileResponse.getDesideratedCareer().get(0).getId());
-                    tvHunt.setText(mCarrerName);
+                    tvCarrer.setText(mCarrerName);
                 }
             } else {
-                tvHunt.setText(mCarrerName);
+                tvCarrer.setText(mCarrerName);
             }
         }
     }
@@ -135,9 +136,9 @@ public class CollaboratorProfileFragment extends BaseFragment {
                     mMyProfileResponse = dataSuccess;
                     edtFullName.setText(mMyProfileResponse.getFullNameColl());
                     edtPhone.setText(mMyProfileResponse.getPhoneColl());
-                    edtEmail.setText(mMyProfileResponse.getEmailColl());
-                    edtAdd.setText(mMyProfileResponse.getAddressColl());
-                    edtCarrer.setText(mMyProfileResponse.getCareerColl());
+                    tvEmail.setText(mMyProfileResponse.getEmailColl());
+                    edtAddress.setText(mMyProfileResponse.getAddressColl());
+                    tvCarrer.setText(mMyProfileResponse.getCareerColl());
                     if (mMyProfileResponse.getDesideratedCareer() != null) {
                         if (mMyProfileResponse.getDesideratedCareer().size() > 0) {
                             StringBuilder s0 = new StringBuilder("");
@@ -149,10 +150,10 @@ public class CollaboratorProfileFragment extends BaseFragment {
                                 }
                             }
                             mCarrerName = s0.toString();
-                            tvHunt.setText(mCarrerName);
+                            tvCarrer.setText(mCarrerName);
                         }
                     } else {
-                        tvHunt.setText(mCarrerName);
+                        tvCarrer.setText(mCarrerName);
                     }
                 }
             }
@@ -180,7 +181,7 @@ public class CollaboratorProfileFragment extends BaseFragment {
                 carrers.add(new Carrer(mMyProfileResponse.getDesideratedCareer().get(i).getId(), mMyProfileResponse.getDesideratedCareer().get(i).getName()));
             }
         }
-        saveMyProfileRequest = new SaveMyProfileRequest(edtFullName.getText().toString().trim(), edtAdd.getText().toString().trim(), edtCarrer.getText().toString().trim(), carrers, edtEmail.getText().toString().trim(), edtPhone.getText().toString().trim());
+        saveMyProfileRequest = new SaveMyProfileRequest(edtFullName.getText().toString().trim(), edtAddress.getText().toString().trim(), mMyProfileResponse.getCareerColl(), carrers, tvEmail.getText().toString().trim(), edtPhone.getText().toString().trim());
         saveMyProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
             @Override
             public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
@@ -194,9 +195,9 @@ public class CollaboratorProfileFragment extends BaseFragment {
                     mMyProfileResponse.setEmailColl(dataSuccess.getEmailColl());
                     edtFullName.setText(mMyProfileResponse.getFullNameColl());
                     edtPhone.setText(mMyProfileResponse.getPhoneColl());
-                    edtEmail.setText(mMyProfileResponse.getEmailColl());
-                    edtAdd.setText(mMyProfileResponse.getAddressColl());
-                    edtCarrer.setText(mMyProfileResponse.getCareerColl());
+                    tvEmail.setText(mMyProfileResponse.getEmailColl());
+                    edtAddress.setText(mMyProfileResponse.getAddressColl());
+                    tvCarrer.setText(mMyProfileResponse.getCareerColl());
                     if (mMyProfileResponse.getDesideratedCareer() != null) {
                         if (mMyProfileResponse.getDesideratedCareer().size() > 0) {
                             StringBuilder s0 = new StringBuilder("");
@@ -209,10 +210,10 @@ public class CollaboratorProfileFragment extends BaseFragment {
                             }
                             mCarrerName = s0.toString();
 //                            mCarrerId = String.valueOf(mMyProfileResponse.getDesideratedCareer().get(0).getId());
-                            tvHunt.setText(mCarrerName);
+                            tvCarrer.setText(mCarrerName);
                         }
                     } else {
-                        tvHunt.setText(mCarrerName);
+                        tvCarrer.setText(mCarrerName);
                     }
                     if (dataSuccess.getFullNameColl() != null) {
                         AccountManager.getUserInfoBean().name = dataSuccess.getFullNameColl();
@@ -286,7 +287,7 @@ public class CollaboratorProfileFragment extends BaseFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.save) {
-            if (StringUtils.isEmpty(tvHunt.getText().toString().trim())) {
+            if (StringUtils.isEmpty(tvCarrer.getText().toString().trim())) {
                 Toast.makeText(getActivity(), getResources().getString(R.string.choose_least_one), Toast.LENGTH_SHORT).show();
             } else
                 saveProfile();
@@ -315,7 +316,7 @@ public class CollaboratorProfileFragment extends BaseFragment {
                     }
                     mMyProfileResponse.setDesideratedCareer(desideratedCareers);
                 }
-                tvHunt.setText(mCarrerName);
+                tvCarrer.setText(mCarrerName);
             }
         }
     }

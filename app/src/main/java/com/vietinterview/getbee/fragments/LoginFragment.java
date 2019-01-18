@@ -73,10 +73,10 @@ public class LoginFragment extends BaseFragment {
     ImageView icRightEmail;
     @BindView(R.id.icRightPass)
     ImageView icRightPass;
-    @BindView(R.id.llPass)
-    LinearLayout llPass;
-    @BindView(R.id.llUserName)
-    LinearLayout llUserName;
+//    @BindView(R.id.llPass)
+//    LinearLayout llPass;
+//    @BindView(R.id.llUserName)
+//    LinearLayout llUserName;
     @BindView(R.id.linePass)
     View linePass;
     @BindView(R.id.lineUserName)
@@ -152,11 +152,11 @@ public class LoginFragment extends BaseFragment {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
-                    llUserName.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackgroundfocus));
+//                    llUserName.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackgroundfocus));
                     lineUserName.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
                     imgUser.setImageDrawable(getResources().getDrawable(R.drawable.ic_user));
                 } else {
-                    llUserName.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackground));
+//                    llUserName.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackground));
                     lineUserName.setBackgroundColor(getResources().getColor(R.color.gray_not_focus));
                     imgUser.setImageDrawable(getResources().getDrawable(R.drawable.ic_user_notfocus));
                 }
@@ -166,13 +166,13 @@ public class LoginFragment extends BaseFragment {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
-                    llPass.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackgroundfocus));
+//                    llPass.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackgroundfocus));
                     linePass.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
                     imgPass.setImageDrawable(getResources().getDrawable(R.drawable.ic_pass));
                     edtPass.setTextColor(Color.BLACK);
                     edtPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 } else {
-                    llPass.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackground));
+//                    llPass.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackground));
                     linePass.setBackgroundColor(getResources().getColor(R.color.gray_not_focus));
                     imgPass.setImageDrawable(getResources().getDrawable(R.drawable.ic_pass_notfocus));
                 }
@@ -215,7 +215,10 @@ public class LoginFragment extends BaseFragment {
     public void ontvGoRegitsClick() {
         FragmentUtil.replaceFragment(getActivity(), new RegitsFragment(), null);
     }
-
+    @OnClick(R.id.tvGoRegitsCus)
+    public void ontvGoRegitsCusClick() {
+        FragmentUtil.replaceFragment(getActivity(), new RegitsCustomerFragment(), null);
+    }
     @OnClick(R.id.tvForgotPass)
     public void onForgotpassClick() {
         mForgotPassdialog = new Dialog(getActivity());
