@@ -25,12 +25,11 @@ public class RegistRequest extends BaseJsonRequest<ErrorResponse, ErrorResponse>
     private int mType;
     private String mCompanyName;
 
-    public RegistRequest(String mEmail, String mPhone, String mName, String mCarrer, String mAddress, String mContact, int mBirthday, int mType, String mCompanyName) {
+    public RegistRequest(String mEmail, String mPhone, String mName, String mCarrer, String mCompanyName, String mContact, int mBirthday, int mType) {
         this.mEmail = mEmail;
         this.mPhone = mPhone;
         this.mName = mName;
         this.mCarrer = mCarrer;
-        this.mAddress = mAddress;
         this.mContact = mContact;
         this.mBirthday = mBirthday;
         this.mType = mType;

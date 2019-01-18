@@ -46,8 +46,8 @@ public class RegitsFragment extends BaseFragment {
     RobotoEditText edtName;
     @BindView(R.id.edtJob)
     RobotoEditText edtJob;
-    @BindView(R.id.edtAdd)
-    RobotoEditText edtAdd;
+    @BindView(R.id.edtCompany)
+    RobotoEditText edtCompany;
     @BindView(R.id.edtEmail)
     EditText edtEmail;
     @BindView(R.id.edtPhone)
@@ -157,13 +157,13 @@ public class RegitsFragment extends BaseFragment {
                 }
             }
         });
-        edtAdd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        edtCompany.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
-                    edtAdd.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackgroundfocus));
+                    edtCompany.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackgroundfocus));
                 } else {
-                    edtAdd.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackground));
+                    edtCompany.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackground));
                 }
             }
         });
@@ -262,7 +262,8 @@ public class RegitsFragment extends BaseFragment {
         } else {
             if (StringUtils.isValidEmail(edtEmail.getText().toString().trim())) {
                 showCoverNetworkLoading();
-                registRequest = new RegistRequest(edtEmail.getText().toString().trim(), edtPhone.getText().toString().trim(), edtName.getText().toString().trim(), edtJob.getText().toString().trim(), edtAdd.getText().toString().trim());
+                registRequest = new RegistRequest(edtEmail.getText().toString().trim(), edtPhone.getText().toString().trim(), edtName.getText().toString().trim(), edtJob.getText().toString().trim(), edtCompany.getText().toString().trim(),"",12081991,7);
+//                registRequest = new RegistRequest(edtEmail.getText().toString().trim(), edtPhone.getText().toString().trim(), edtName.getText().toString().trim(), edtJob.getText().toString().trim(), edtCompany.getText().toString().trim());
                 registRequest.callRequest(getActivity(), new ApiObjectCallBack<ErrorResponse, ErrorResponse>() {
 
                     @Override

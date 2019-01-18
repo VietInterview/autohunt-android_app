@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="fill_parent">
 
@@ -316,12 +317,12 @@
 
 
                     <com.vietinterview.getbee.customview.ClearableRegularEditText
-                        android:id="@+id/edtAdd"
+                        android:id="@+id/edtCompany"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="6"
                         android:background="@null"
-                        android:hint="@string/address"
+                        android:hint="Tên công ty đang làm"
                         android:padding="10dp"
                         android:singleLine="true"
                         android:textColor="@color/black" />

@@ -44,10 +44,10 @@ import butterknife.OnClick;
 public class RegitsCustomerFragment extends BaseFragment {
     @BindView(R.id.edtName)
     RobotoEditText edtName;
-//    @BindView(R.id.edtJob)
+    //    @BindView(R.id.edtJob)
 //    RobotoEditText edtJob;
-//    @BindView(R.id.edtAdd)
-//    RobotoEditText edtAdd;
+    @BindView(R.id.edtContact)
+    RobotoEditText edtContact;
     @BindView(R.id.edtEmail)
     EditText edtEmail;
     @BindView(R.id.edtPhone)
@@ -262,7 +262,7 @@ public class RegitsCustomerFragment extends BaseFragment {
         } else {
             if (StringUtils.isValidEmail(edtEmail.getText().toString().trim())) {
                 showCoverNetworkLoading();
-                registRequest = new RegistRequest(edtEmail.getText().toString().trim(), edtPhone.getText().toString().trim(), edtName.getText().toString().trim(), "", "");
+                registRequest = new RegistRequest(edtEmail.getText().toString().trim(), edtPhone.getText().toString().trim(), edtName.getText().toString().trim(), "", edtName.getText().toString().trim(), edtContact.getText().toString().trim(), 0, 2);
                 registRequest.callRequest(getActivity(), new ApiObjectCallBack<ErrorResponse, ErrorResponse>() {
 
                     @Override
