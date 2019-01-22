@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Gravity;
@@ -22,7 +23,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -88,6 +88,10 @@ public class LoginFragment extends BaseFragment {
     private String edtMailData;
     @BindView(R.id.tvLogin)
     TextView tvLogin;
+    @BindView(R.id.tvGoRegitsCus)
+    TextView tvGoRegitsCus;
+    @BindView(R.id.tvGoRegits)
+    TextView tvGoRegits;
     private int dem = 0;
     ApiConstantTest apiConstant = new ApiConstantTest();
 
@@ -201,6 +205,8 @@ public class LoginFragment extends BaseFragment {
         if (getActivity() instanceof MainActivity) {
             ((MainActivity) getActivity()).drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         }
+        tvGoRegits.setText(Html.fromHtml("<u><font color='black'>Headhunter</font></u>"));
+        tvGoRegitsCus.setText(Html.fromHtml("<u><font color='black'>Doanh nghiệp</font></u>"));
     }
 
     @Override
@@ -213,7 +219,7 @@ public class LoginFragment extends BaseFragment {
 
     @OnClick(R.id.tvGoRegits)
     public void ontvGoRegitsClick() {
-        FragmentUtil.replaceFragment(getActivity(), new RegitsFragment(), null);
+        FragmentUtil.replaceFragment(getActivity(), new RegitsCollFragment(), null);
     }
     @OnClick(R.id.tvGoRegitsCus)
     public void ontvGoRegitsCusClick() {

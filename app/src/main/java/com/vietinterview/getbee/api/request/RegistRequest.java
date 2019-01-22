@@ -83,7 +83,8 @@ public class RegistRequest extends BaseJsonRequest<ErrorResponse, ErrorResponse>
         jsonParams.put("companyName", mCompanyName);
         jsonParams.put("type", mType);
         jsonParams.put("contact", mContact);
-        jsonParams.put("birthday", mBirthday);
+        if (mBirthday != 0)
+            jsonParams.put("birthday", mBirthday);
         return jsonParams;
     }
 

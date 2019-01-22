@@ -290,4 +290,5 @@
     <string name="cer_tit">Bằng cấp</string>
     <string name="month_tit">Tháng</string>
     <string name="manager_jobs">Quản lý công việc</string>
+    <string name="policy">Đồng ý với <u>điều khoản</u> sử dụng của GetBee</string>
 </resources>

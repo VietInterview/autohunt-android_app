@@ -1,11 +1,15 @@
 package com.vietinterview.getbee.fragments;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,9 +18,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.activities.MainActivity;
@@ -24,6 +30,7 @@ import com.vietinterview.getbee.api.request.BaseJsonRequest;
 import com.vietinterview.getbee.api.request.RegistRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.StringUtils;
@@ -31,7 +38,9 @@ import com.vietinterview.getbee.customview.RobotoBoldTextView;
 import com.vietinterview.getbee.customview.RobotoEditText;
 import com.vietinterview.getbee.customview.RobotoTextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -41,7 +50,7 @@ import butterknife.OnClick;
  * Created by nguyennghiahiep on 10/5/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class RegitsFragment extends BaseFragment {
+public class RegitsCollFragment extends BaseFragment implements DatePickerDialog.OnDateSetListener {
     @BindView(R.id.edtName)
     RobotoEditText edtName;
     @BindView(R.id.edtJob)
@@ -60,12 +69,6 @@ public class RegitsFragment extends BaseFragment {
     ImageView icRightEmail;
     @BindView(R.id.icRightPhone)
     ImageView icRightPhone;
-    @BindView(R.id.llName)
-    LinearLayout llName;
-    @BindView(R.id.llEmail)
-    LinearLayout llEmail;
-    @BindView(R.id.llSDT)
-    LinearLayout llSDT;
     @BindView(R.id.lineName)
     View lineName;
     @BindView(R.id.lineEmail)
@@ -78,12 +81,17 @@ public class RegitsFragment extends BaseFragment {
     ImageView imgMail;
     @BindView(R.id.imgSDT)
     ImageView imgSDT;
+    @BindView(R.id.imgPolicy)
+    ImageView imgPolicy;
+    @BindView(R.id.tvPolicy)
+    TextView tvPolicy;
     RegistRequest registRequest;
     private Dialog mNotifydialog;
+    private Calendar calendar;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_regits;
+        return R.layout.fragment_regits_coll;
     }
 
     @Override
@@ -92,6 +100,7 @@ public class RegitsFragment extends BaseFragment {
         icRightEmail.setVisibility(View.GONE);
         icRightName.setVisibility(View.GONE);
         icRightPhone.setVisibility(View.GONE);
+        calendar = Calendar.getInstance();
         edtEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -119,11 +128,9 @@ public class RegitsFragment extends BaseFragment {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
-                    llName.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackgroundfocus));
                     lineName.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
                     imgName.setImageDrawable(getResources().getDrawable(R.drawable.ic_user));
                 } else {
-                    llName.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackground));
                     lineName.setBackgroundColor(getResources().getColor(R.color.gray_not_focus));
                     imgName.setImageDrawable(getResources().getDrawable(R.drawable.ic_user_notfocus));
                 }
@@ -133,11 +140,9 @@ public class RegitsFragment extends BaseFragment {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
-                    llEmail.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackgroundfocus));
                     lineEmail.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
                     imgMail.setImageDrawable(getResources().getDrawable(R.drawable.ic_mail));
                 } else {
-                    llEmail.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackground));
                     lineEmail.setBackgroundColor(getResources().getColor(R.color.gray_not_focus));
                     imgMail.setImageDrawable(getResources().getDrawable(R.drawable.ic_mail_notfocus));
                 }
@@ -147,33 +152,11 @@ public class RegitsFragment extends BaseFragment {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
-                    llSDT.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackgroundfocus));
                     lineSDT.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
                     imgSDT.setImageDrawable(getResources().getDrawable(R.drawable.ic_phone));
                 } else {
-                    llSDT.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackground));
                     lineSDT.setBackgroundColor(getResources().getColor(R.color.gray_not_focus));
                     imgSDT.setImageDrawable(getResources().getDrawable(R.drawable.ic_phone_notfocus));
-                }
-            }
-        });
-        edtCompany.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (b) {
-                    edtCompany.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackgroundfocus));
-                } else {
-                    edtCompany.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackground));
-                }
-            }
-        });
-        edtJob.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (b) {
-                    edtJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackgroundfocus));
-                } else {
-                    edtJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackground));
                 }
             }
         });
@@ -212,6 +195,8 @@ public class RegitsFragment extends BaseFragment {
         if (getActivity() instanceof MainActivity) {
             ((MainActivity) getActivity()).drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         }
+//        tvPolicy.setPaintFlags(tvPolicy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        tvPolicy.setText(Html.fromHtml("Đồng ý với <u><font color='blue'>điều khoản</font></u> sử dụng của GetBee"));
     }
 
     @Override
@@ -227,6 +212,41 @@ public class RegitsFragment extends BaseFragment {
     @OnClick(R.id.tvGoLogin)
     public void ontvGoLoginClick() {
         FragmentUtil.replaceFragment(getActivity(), new LoginFragment(), null);
+    }
+
+    @OnClick({R.id.llBirthday, R.id.tvBirthday})
+    public void onBirthdayClick() {
+        new DatePickerDialog(getActivity(), this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        calendar.set(year, monthOfYear, dayOfMonth);
+        update();
+    }
+
+    @BindView(R.id.tvBirthday)
+    TextView tvBirthday;
+    int date = 0;
+
+    private void update() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdfInt = new SimpleDateFormat("yyyyMMdd");
+        date = Integer.parseInt(sdfInt.format(calendar.getTime()));
+        tvBirthday.setText(sdf.format(calendar.getTime()));
+    }
+
+    private boolean isAgree = false;
+
+    @OnClick(R.id.llPolicy)
+    public void onPolicyClick() {
+        if (isAgree) {
+            isAgree = false;
+            imgPolicy.setImageDrawable(getResources().getDrawable(R.drawable.ic_oval));
+        } else {
+            isAgree = true;
+            imgPolicy.setImageDrawable(getResources().getDrawable(R.drawable.ic_tickok));
+        }
     }
 
     @OnClick(R.id.btnSignup)
@@ -259,11 +279,14 @@ public class RegitsFragment extends BaseFragment {
             edtPhone.setHint(getResources().getString(R.string.input_phone));
             edtPhone.setHintTextColor(Color.RED);
             icRightPhone.setVisibility(View.VISIBLE);
+        } else if (!isAgree) {
+            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Bạn phải đồng ý với điều khoản sử dụng của GetBee");
+        } else if (date == 0) {
+            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Bạn phải nhập ngày tháng năm sinh");
         } else {
             if (StringUtils.isValidEmail(edtEmail.getText().toString().trim())) {
                 showCoverNetworkLoading();
-                registRequest = new RegistRequest(edtEmail.getText().toString().trim(), edtPhone.getText().toString().trim(), edtName.getText().toString().trim(), edtJob.getText().toString().trim(), edtCompany.getText().toString().trim(),"",12081991,7);
-//                registRequest = new RegistRequest(edtEmail.getText().toString().trim(), edtPhone.getText().toString().trim(), edtName.getText().toString().trim(), edtJob.getText().toString().trim(), edtCompany.getText().toString().trim());
+                registRequest = new RegistRequest(edtEmail.getText().toString().trim(), edtPhone.getText().toString().trim(), edtName.getText().toString().trim(), edtJob.getText().toString().trim(), edtCompany.getText().toString().trim(), "", date, 7);
                 registRequest.callRequest(getActivity(), new ApiObjectCallBack<ErrorResponse, ErrorResponse>() {
 
                     @Override
@@ -301,8 +324,12 @@ public class RegitsFragment extends BaseFragment {
                     public void onFail(int failCode, ErrorResponse dataFail, List<ErrorResponse> dataArrayList, String message) {
                         hideCoverNetworkLoading();
                         if (dataFail != null) {
-                            if (dataFail.getErrorKey().equalsIgnoreCase("userexists"))
-                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.email_esxit));
+                            if (dataFail.getErrorKey() != null) {
+                                if (dataFail.getErrorKey().equalsIgnoreCase("userexists"))
+                                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.email_esxit));
+                            } else {
+                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+                            }
                         } else {
                             if (failCode == 201) {
                                 mNotifydialog = new Dialog(getActivity());

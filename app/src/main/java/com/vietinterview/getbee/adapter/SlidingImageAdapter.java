@@ -1,7 +1,6 @@
 package com.vietinterview.getbee.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
@@ -14,11 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
-import com.vietinterview.getbee.activities.MainActivity;
 import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.fragments.BaseFragment;
 import com.vietinterview.getbee.fragments.LoginFragment;
-import com.vietinterview.getbee.fragments.RegitsFragment;
+import com.vietinterview.getbee.fragments.RegitsCollFragment;
 import com.vietinterview.getbee.utils.FragmentUtil;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
 
@@ -72,7 +70,7 @@ public class SlidingImageAdapter extends PagerAdapter {
         btnRegist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentUtil.replaceFragment(baseFragment.getActivity(), new RegitsFragment(), null);
+                FragmentUtil.replaceFragment(baseFragment.getActivity(), new RegitsCollFragment(), null);
                 SharedPrefUtils.putBoolean(AppConstant.FIRST, false);
                 baseFragment.getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             }

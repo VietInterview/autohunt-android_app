@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.activities.MainActivity;
@@ -44,8 +46,6 @@ import butterknife.OnClick;
 public class RegitsCustomerFragment extends BaseFragment {
     @BindView(R.id.edtName)
     RobotoEditText edtName;
-    //    @BindView(R.id.edtJob)
-//    RobotoEditText edtJob;
     @BindView(R.id.edtContact)
     RobotoEditText edtContact;
     @BindView(R.id.edtEmail)
@@ -60,24 +60,26 @@ public class RegitsCustomerFragment extends BaseFragment {
     ImageView icRightEmail;
     @BindView(R.id.icRightPhone)
     ImageView icRightPhone;
-    @BindView(R.id.llName)
-    LinearLayout llName;
-    @BindView(R.id.llEmail)
-    LinearLayout llEmail;
-    @BindView(R.id.llSDT)
-    LinearLayout llSDT;
     @BindView(R.id.lineName)
     View lineName;
     @BindView(R.id.lineEmail)
     View lineEmail;
     @BindView(R.id.lineSDT)
     View lineSDT;
+    @BindView(R.id.lineContact)
+    View lineContact;
     @BindView(R.id.imgName)
     ImageView imgName;
     @BindView(R.id.imgMail)
     ImageView imgMail;
     @BindView(R.id.imgSDT)
     ImageView imgSDT;
+    @BindView(R.id.imgPolicy)
+    ImageView imgPolicy;
+    @BindView(R.id.imgContact)
+    ImageView imgContact;
+    @BindView(R.id.tvPolicy)
+    TextView tvPolicy;
     RegistRequest registRequest;
     private Dialog mNotifydialog;
 
@@ -119,13 +121,23 @@ public class RegitsCustomerFragment extends BaseFragment {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
-                    llName.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackgroundfocus));
                     lineName.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
                     imgName.setImageDrawable(getResources().getDrawable(R.drawable.ic_user));
                 } else {
-                    llName.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackground));
                     lineName.setBackgroundColor(getResources().getColor(R.color.gray_not_focus));
                     imgName.setImageDrawable(getResources().getDrawable(R.drawable.ic_user_notfocus));
+                }
+            }
+        });
+        edtContact.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    lineContact.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
+                    imgContact.setImageDrawable(getResources().getDrawable(R.drawable.ic_contact_focus));
+                } else {
+                    lineContact.setBackgroundColor(getResources().getColor(R.color.gray_not_focus));
+                    imgContact.setImageDrawable(getResources().getDrawable(R.drawable.ic_contact));
                 }
             }
         });
@@ -133,11 +145,9 @@ public class RegitsCustomerFragment extends BaseFragment {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
-                    llEmail.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackgroundfocus));
                     lineEmail.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
                     imgMail.setImageDrawable(getResources().getDrawable(R.drawable.ic_mail));
                 } else {
-                    llEmail.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackground));
                     lineEmail.setBackgroundColor(getResources().getColor(R.color.gray_not_focus));
                     imgMail.setImageDrawable(getResources().getDrawable(R.drawable.ic_mail_notfocus));
                 }
@@ -147,36 +157,14 @@ public class RegitsCustomerFragment extends BaseFragment {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
-                    llSDT.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackgroundfocus));
                     lineSDT.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
                     imgSDT.setImageDrawable(getResources().getDrawable(R.drawable.ic_phone));
                 } else {
-                    llSDT.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackground));
                     lineSDT.setBackgroundColor(getResources().getColor(R.color.gray_not_focus));
                     imgSDT.setImageDrawable(getResources().getDrawable(R.drawable.ic_phone_notfocus));
                 }
             }
         });
-//        edtAdd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View view, boolean b) {
-//                if (b) {
-//                    edtAdd.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackgroundfocus));
-//                } else {
-//                    edtAdd.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackground));
-//                }
-//            }
-//        });
-//        edtJob.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View view, boolean b) {
-//                if (b) {
-//                    edtJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackgroundfocus));
-//                } else {
-//                    edtJob.setBackgroundDrawable(getResources().getDrawable(R.drawable.edittextbackground));
-//                }
-//            }
-//        });
         edtName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -212,6 +200,7 @@ public class RegitsCustomerFragment extends BaseFragment {
         if (getActivity() instanceof MainActivity) {
             ((MainActivity) getActivity()).drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         }
+        tvPolicy.setText(Html.fromHtml("Đồng ý với <u><font color='blue'>điều khoản</font></u> sử dụng của GetBee"));
     }
 
     @Override
@@ -227,6 +216,19 @@ public class RegitsCustomerFragment extends BaseFragment {
     @OnClick(R.id.tvGoLogin)
     public void ontvGoLoginClick() {
         FragmentUtil.replaceFragment(getActivity(), new LoginFragment(), null);
+    }
+
+    private boolean isAgree = false;
+
+    @OnClick(R.id.llPolicy)
+    public void onPolicyClick() {
+        if (isAgree) {
+            isAgree = false;
+            imgPolicy.setImageDrawable(getResources().getDrawable(R.drawable.ic_oval));
+        } else {
+            isAgree = true;
+            imgPolicy.setImageDrawable(getResources().getDrawable(R.drawable.ic_tickok));
+        }
     }
 
     @OnClick(R.id.btnSignup)
@@ -259,6 +261,8 @@ public class RegitsCustomerFragment extends BaseFragment {
             edtPhone.setHint(getResources().getString(R.string.input_phone));
             edtPhone.setHintTextColor(Color.RED);
             icRightPhone.setVisibility(View.VISIBLE);
+        } else if (!isAgree) {
+            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Bạn phải đồng ý với điều khoản sử dụng của GetBee");
         } else {
             if (StringUtils.isValidEmail(edtEmail.getText().toString().trim())) {
                 showCoverNetworkLoading();
@@ -300,8 +304,12 @@ public class RegitsCustomerFragment extends BaseFragment {
                     public void onFail(int failCode, ErrorResponse dataFail, List<ErrorResponse> dataArrayList, String message) {
                         hideCoverNetworkLoading();
                         if (dataFail != null) {
-                            if (dataFail.getErrorKey().equalsIgnoreCase("userexists"))
-                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.email_esxit));
+                            if (dataFail.getErrorKey() != null) {
+                                if (dataFail.getErrorKey().equalsIgnoreCase("userexists"))
+                                    DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.email_esxit));
+                            } else {
+                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+                            }
                         } else {
                             if (failCode == 201) {
                                 mNotifydialog = new Dialog(getActivity());
