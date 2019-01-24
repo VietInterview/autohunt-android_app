@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
@@ -13,7 +14,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.api.request.ResetPasswordRequest;
@@ -27,13 +30,14 @@ import com.vietinterview.getbee.utils.StringUtils;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by hiepnguyennghia on 1/23/19.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class ResetPasswordFragment extends BaseFragment {
+public class ResetPasswordFragment extends DialogFragment {
     @BindView(R.id.edtEmail)
     ClearableRegularEditText edtEmail;
     @BindView(R.id.imgEmail)
@@ -42,22 +46,22 @@ public class ResetPasswordFragment extends BaseFragment {
     ImageView icRightEmail;
     @BindView(R.id.lineEmail)
     View lineEmail;
+    @BindView(R.id.frParent)
+    RelativeLayout frParent;
     ResetPasswordRequest resetPasswordRequest;
     Dialog mNotifyDialog;
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_resetpassword;
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
-    protected void getArgument(Bundle bundle) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_resetpassword, container, false);
+        ButterKnife.bind(this, v);
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-    }
-
-    @Override
-    protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
-        setCustomToolbarVisible(false);
         edtEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -93,11 +97,13 @@ public class ResetPasswordFragment extends BaseFragment {
                 }
             }
         });
+
+        return v;
     }
 
-    @Override
-    protected void initData() {
-
+    @OnClick(R.id.btnClose)
+    public void onClose() {
+        ResetPasswordFragment.this.dismiss();
     }
 
     @OnClick(R.id.btnSendRequest)
@@ -131,12 +137,12 @@ public class ResetPasswordFragment extends BaseFragment {
                                     @Override
                                     public void onClick(View v) {
                                         mNotifyDialog.dismiss();
-                                        FragmentUtil.popBackStack(ResetPasswordFragment.this);
+                                        ResetPasswordFragment.this.dismiss();
                                     }
                                 });
                                 mNotifyDialog.show();
                             } else {
-                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), dataFail.getTitle());
+                                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), dataFail.getTitle().equalsIgnoreCase("email_not_found") ? "Không tìm thấy địa chỉ email này." : message);
                             }
                         }
                     }
@@ -145,23 +151,4 @@ public class ResetPasswordFragment extends BaseFragment {
         }
     }
 
-    @Override
-    protected void initialize() {
-
-    }
-
-    @Override
-    protected void onSaveState(Bundle bundle) {
-
-    }
-
-    @Override
-    protected void onRestoreState(Bundle bundle) {
-
-    }
-
-    @Override
-    protected void onRestore() {
-
-    }
 }

@@ -9,6 +9,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
@@ -221,73 +224,20 @@ public class LoginFragment extends BaseFragment {
     }
     @OnClick(R.id.tvForgotPass)
     public void onForgotpassClick() {
-        FragmentUtil.pushFragment(getActivity(),this,new ResetPasswordFragment(),null);
-//        mForgotPassdialog = new Dialog(getActivity());
-//        mForgotPassdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        mForgotPassdialog.setContentView(R.layout.dialog_forgotpass);
-//        mForgotPassdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//        mForgotPassdialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-//        Window window = mForgotPassdialog.getWindow();
-//        WindowManager.LayoutParams wlp = window.getAttributes();
-//        wlp.gravity = Gravity.TOP;
-//        wlp.y = 300;
-//        window.setAttributes(wlp);
-//        ImageView imgCall = mForgotPassdialog.findViewById(R.id.imgCall);
-//        ImageView imgEmail = mForgotPassdialog.findViewById(R.id.imgEmail);
-//        imgCall.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent mIntent;
-//                String number = ("tel:02466629448");
-//                mIntent = new Intent(Intent.ACTION_CALL);
-//                mIntent.setData(Uri.parse(number));
-//                if (ContextCompat.checkSelfPermission(getActivity(),
-//                        Manifest.permission.CALL_PHONE)
-//                        != PackageManager.PERMISSION_GRANTED) {
-//
-//                    ActivityCompat.requestPermissions(getActivity(),
-//                            new String[]{Manifest.permission.CALL_PHONE},
-//                            MY_PERMISSIONS_REQUEST_CALL_PHONE);
-//                } else {
-//                    try {
-//                        startActivity(mIntent);
-//                    } catch (SecurityException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        });
-//        imgEmail.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-//                emailIntent.setType("text/plain");
-//                emailIntent.setType("message/rfc822");
-//                try {
-//                    startActivity(Intent.createChooser(emailIntent,
-//                            "Send email using..."));
-//                } catch (android.content.ActivityNotFoundException ex) {
-//                    Toast.makeText(getActivity(),
-//                            "No email clients installed.",
-//                            Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-//        Button btnOK = (Button) mForgotPassdialog.findViewById(R.id.btnOK);
-//        btnOK.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mForgotPassdialog.dismiss();
-//            }
-//        });
-//        mForgotPassdialog.show();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+        DialogFragment dialogFragment = new ResetPasswordFragment();
+        dialogFragment.show(ft, "dialog");
     }
 
     public static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_CALL_PHONE: {
                 if (grantResults.length > 0
@@ -309,11 +259,6 @@ public class LoginFragment extends BaseFragment {
             getCUSProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<ProfileCustomerResponse, ErrorResponse>() {
                 @Override
                 public void onSuccess(int status, ProfileCustomerResponse dataSuccess, List<ProfileCustomerResponse> listDataSuccess, String message) {
-//                    if (dataSuccess.getCompanyName() != null) {
-//                        userInfoBean.name = dataSuccess.get();
-//                    } else {
-//                        userInfoBean.name = edtEmail.getText().toString().trim().split("[$&<@%*]")[0];
-//                    }
                     AccountManager.setUserInfoBean(userInfoBean);
                     getEventBaseFragment().setTextGreeting(AccountManager.getUserInfoBean().name);
                 }
