@@ -67,6 +67,7 @@ public class ApiConstantTest {
     public String VIEW_EMAIL_INTERVIEW = "svccustomer/api/cvProcess/viewEmailInterview";
     public String VIEW_EMAIL_OFFER = "svccustomer/api/cvProcess/viewEmailOffer";
     public String UPDATE_OS = "api/updateOs";
+    public String RESET_PASSWORD = "api/account/reset-password/init";
 
     public int getPOST() {
         return POST;
@@ -250,5 +251,9 @@ public class ApiConstantTest {
 
     public String getUPDATE_OS() {
         return getBASE_URL() + UPDATE_OS;
+    }
+
+    public String getRESET_PASSWORD() {
+        return getBASE_URL() + RESET_PASSWORD;
     }
 }

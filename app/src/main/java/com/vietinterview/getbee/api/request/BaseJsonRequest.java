@@ -114,8 +114,8 @@ public abstract class BaseJsonRequest<T, V> {
         };
         StringEntity entity = null;
         try {
-            entity = new StringEntity(putJsonParams().toString(), "UTF-8");
-            DebugLog.jsonFormat("call " + getAbsoluteUrl(), putJsonParams().toString());
+            entity = new StringEntity(getStringParam() != null ? getStringParam() : putJsonParams().toString(), "UTF-8");
+            DebugLog.jsonFormat("call " + getAbsoluteUrl(), getStringParam() != null ? getStringParam() : putJsonParams().toString());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -164,6 +164,8 @@ public abstract class BaseJsonRequest<T, V> {
     public void cancelRequest() {
         client.cancelAllRequests(true);
     }
+
+    protected abstract String getStringParam();
 
     abstract public Class<T> getResponseSuccessClass() throws JSONException;
 

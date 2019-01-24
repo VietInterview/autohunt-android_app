@@ -27,6 +27,11 @@ public class SubmitCVRequest extends BaseJsonRequest<SubmitCVResponse, ErrorResp
     }
 
     @Override
+    protected String getStringParam() {
+        return null;
+    }
+
+    @Override
     public Class<SubmitCVResponse> getResponseSuccessClass() throws JSONException {
         return SubmitCVResponse.class;
     }

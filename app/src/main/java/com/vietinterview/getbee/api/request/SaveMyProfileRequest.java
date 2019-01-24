@@ -37,6 +37,11 @@ public class SaveMyProfileRequest extends BaseJsonRequest<MyProfileResponse, Err
     }
 
     @Override
+    protected String getStringParam() {
+        return null;
+    }
+
+    @Override
     public Class<MyProfileResponse> getResponseSuccessClass() {
         return MyProfileResponse.class;
     }

@@ -22,6 +22,11 @@ public class UpdateOSRequest extends BaseJsonRequest<ErrorLoginResponse, ErrorLo
     }
 
     @Override
+    protected String getStringParam() {
+        return null;
+    }
+
+    @Override
     public Class<ErrorLoginResponse> getResponseSuccessClass() throws JSONException {
         return ErrorLoginResponse.class;
     }

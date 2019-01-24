@@ -43,6 +43,11 @@ public class ViewEmailOfferRequest extends BaseJsonRequest<ViewEmailInterviewRes
     }
 
     @Override
+    protected String getStringParam() {
+        return null;
+    }
+
+    @Override
     public Class<ViewEmailInterviewResponse> getResponseSuccessClass() throws JSONException {
         return ViewEmailInterviewResponse.class;
     }

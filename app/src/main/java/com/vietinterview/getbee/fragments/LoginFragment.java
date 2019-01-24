@@ -73,10 +73,10 @@ public class LoginFragment extends BaseFragment {
     ImageView icRightEmail;
     @BindView(R.id.icRightPass)
     ImageView icRightPass;
-//    @BindView(R.id.llPass)
-//    LinearLayout llPass;
-//    @BindView(R.id.llUserName)
-//    LinearLayout llUserName;
+    @BindView(R.id.tvDevmode)
+    TextView tvDevmode;
+    @BindView(R.id.imgLogo)
+    ImageView imgLogo;
     @BindView(R.id.linePass)
     View linePass;
     @BindView(R.id.lineUserName)
@@ -86,8 +86,6 @@ public class LoginFragment extends BaseFragment {
     @BindView(R.id.imgPass)
     ImageView imgPass;
     private String edtMailData;
-    @BindView(R.id.tvLogin)
-    TextView tvLogin;
     @BindView(R.id.tvGoRegitsCus)
     TextView tvGoRegitsCus;
     @BindView(R.id.tvGoRegits)
@@ -126,13 +124,11 @@ public class LoginFragment extends BaseFragment {
             }
         });
         if (AccountManager.getApiConstantTest().getBASE_URL().equalsIgnoreCase(ApiConstant.REAL_URL)) {
-            tvLogin.setText(getResources().getString(R.string.login));
-            tvLogin.setTextColor(getResources().getColor(R.color.black));
+            tvDevmode.setVisibility(View.GONE);
         } else {
-            tvLogin.setText(tvLogin.getText() + " Dev Mode");
-            tvLogin.setTextColor(getResources().getColor(R.color.red));
+            tvDevmode.setVisibility(View.VISIBLE);
         }
-        tvLogin.setOnClickListener(new View.OnClickListener() {
+        imgLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (dem < 7) {
@@ -140,15 +136,13 @@ public class LoginFragment extends BaseFragment {
                     apiConstant.setBASE_URL(ApiConstant.REAL_URL);
                     apiConstant.setIMG_URL(ApiConstant.IMG_URL_REAL);
                     AccountManager.setApiConstantTest(apiConstant);
-                    tvLogin.setText(getResources().getString(R.string.login));
-                    tvLogin.setTextColor(getResources().getColor(R.color.black));
+                    tvDevmode.setVisibility(View.GONE);
                 } else {
                     dem--;
                     apiConstant.setBASE_URL(ApiConstant.DEV_URL);
                     apiConstant.setIMG_URL(ApiConstant.IMG_URL_DEV);
                     AccountManager.setApiConstantTest(apiConstant);
-                    tvLogin.setText(tvLogin.getText() + " Dev Mode");
-                    tvLogin.setTextColor(getResources().getColor(R.color.red));
+                    tvDevmode.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -227,65 +221,66 @@ public class LoginFragment extends BaseFragment {
     }
     @OnClick(R.id.tvForgotPass)
     public void onForgotpassClick() {
-        mForgotPassdialog = new Dialog(getActivity());
-        mForgotPassdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        mForgotPassdialog.setContentView(R.layout.dialog_forgotpass);
-        mForgotPassdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        mForgotPassdialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        Window window = mForgotPassdialog.getWindow();
-        WindowManager.LayoutParams wlp = window.getAttributes();
-        wlp.gravity = Gravity.TOP;
-        wlp.y = 300;
-        window.setAttributes(wlp);
-        ImageView imgCall = mForgotPassdialog.findViewById(R.id.imgCall);
-        ImageView imgEmail = mForgotPassdialog.findViewById(R.id.imgEmail);
-        imgCall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent mIntent;
-                String number = ("tel:02466629448");
-                mIntent = new Intent(Intent.ACTION_CALL);
-                mIntent.setData(Uri.parse(number));
-                if (ContextCompat.checkSelfPermission(getActivity(),
-                        Manifest.permission.CALL_PHONE)
-                        != PackageManager.PERMISSION_GRANTED) {
-
-                    ActivityCompat.requestPermissions(getActivity(),
-                            new String[]{Manifest.permission.CALL_PHONE},
-                            MY_PERMISSIONS_REQUEST_CALL_PHONE);
-                } else {
-                    try {
-                        startActivity(mIntent);
-                    } catch (SecurityException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-        imgEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-                emailIntent.setType("text/plain");
-                emailIntent.setType("message/rfc822");
-                try {
-                    startActivity(Intent.createChooser(emailIntent,
-                            "Send email using..."));
-                } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(getActivity(),
-                            "No email clients installed.",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        Button btnOK = (Button) mForgotPassdialog.findViewById(R.id.btnOK);
-        btnOK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mForgotPassdialog.dismiss();
-            }
-        });
-        mForgotPassdialog.show();
+        FragmentUtil.pushFragment(getActivity(),this,new ResetPasswordFragment(),null);
+//        mForgotPassdialog = new Dialog(getActivity());
+//        mForgotPassdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        mForgotPassdialog.setContentView(R.layout.dialog_forgotpass);
+//        mForgotPassdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        mForgotPassdialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+//        Window window = mForgotPassdialog.getWindow();
+//        WindowManager.LayoutParams wlp = window.getAttributes();
+//        wlp.gravity = Gravity.TOP;
+//        wlp.y = 300;
+//        window.setAttributes(wlp);
+//        ImageView imgCall = mForgotPassdialog.findViewById(R.id.imgCall);
+//        ImageView imgEmail = mForgotPassdialog.findViewById(R.id.imgEmail);
+//        imgCall.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent mIntent;
+//                String number = ("tel:02466629448");
+//                mIntent = new Intent(Intent.ACTION_CALL);
+//                mIntent.setData(Uri.parse(number));
+//                if (ContextCompat.checkSelfPermission(getActivity(),
+//                        Manifest.permission.CALL_PHONE)
+//                        != PackageManager.PERMISSION_GRANTED) {
+//
+//                    ActivityCompat.requestPermissions(getActivity(),
+//                            new String[]{Manifest.permission.CALL_PHONE},
+//                            MY_PERMISSIONS_REQUEST_CALL_PHONE);
+//                } else {
+//                    try {
+//                        startActivity(mIntent);
+//                    } catch (SecurityException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        });
+//        imgEmail.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+//                emailIntent.setType("text/plain");
+//                emailIntent.setType("message/rfc822");
+//                try {
+//                    startActivity(Intent.createChooser(emailIntent,
+//                            "Send email using..."));
+//                } catch (android.content.ActivityNotFoundException ex) {
+//                    Toast.makeText(getActivity(),
+//                            "No email clients installed.",
+//                            Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//        Button btnOK = (Button) mForgotPassdialog.findViewById(R.id.btnOK);
+//        btnOK.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mForgotPassdialog.dismiss();
+//            }
+//        });
+//        mForgotPassdialog.show();
     }
 
     public static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;

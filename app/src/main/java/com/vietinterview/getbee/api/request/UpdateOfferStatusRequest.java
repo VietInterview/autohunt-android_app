@@ -43,6 +43,11 @@ public class UpdateOfferStatusRequest extends BaseJsonRequest<SendOfferResponse,
     }
 
     @Override
+    protected String getStringParam() {
+        return null;
+    }
+
+    @Override
     public Class<SendOfferResponse> getResponseSuccessClass() throws JSONException {
         return SendOfferResponse.class;
     }

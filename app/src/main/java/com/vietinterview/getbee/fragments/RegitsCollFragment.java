@@ -196,7 +196,7 @@ public class RegitsCollFragment extends BaseFragment implements DatePickerDialog
             ((MainActivity) getActivity()).drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         }
 //        tvPolicy.setPaintFlags(tvPolicy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        tvPolicy.setText(Html.fromHtml("Đồng ý với <u><font color='blue'>điều khoản</font></u> sử dụng của GetBee"));
+        tvPolicy.setText(Html.fromHtml("Đồng ý với <u><font color='#3C84F7'>điều khoản</font></u> sử dụng của GetBee"));
     }
 
     @Override

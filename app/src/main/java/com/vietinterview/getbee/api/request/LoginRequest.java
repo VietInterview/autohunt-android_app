@@ -27,6 +27,11 @@ public class LoginRequest extends BaseJsonRequest<LoginResponse, ErrorLoginRespo
     }
 
     @Override
+    protected String getStringParam() {
+        return null;
+    }
+
+    @Override
     public Class<LoginResponse> getResponseSuccessClass() {
         return LoginResponse.class;
     }

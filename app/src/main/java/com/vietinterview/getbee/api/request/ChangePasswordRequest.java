@@ -28,6 +28,11 @@ public class ChangePasswordRequest extends BaseJsonRequest<Object, ErrorChangePa
     }
 
     @Override
+    protected String getStringParam() {
+        return null;
+    }
+
+    @Override
     public Class<Object> getResponseSuccessClass() throws JSONException {
         return Object.class;
     }

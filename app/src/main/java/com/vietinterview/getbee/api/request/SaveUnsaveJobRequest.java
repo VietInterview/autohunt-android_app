@@ -25,6 +25,11 @@ public class SaveUnsaveJobRequest extends BaseJsonRequest<AddRemoveJobResponse, 
     }
 
     @Override
+    protected String getStringParam() {
+        return null;
+    }
+
+    @Override
     public Class<AddRemoveJobResponse> getResponseSuccessClass() throws JSONException {
         return AddRemoveJobResponse.class;
     }

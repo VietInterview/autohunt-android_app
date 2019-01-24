@@ -32,6 +32,11 @@ public class RejectRequest extends BaseJsonRequest<RejectResponse, ErrorResponse
     }
 
     @Override
+    protected String getStringParam() {
+        return null;
+    }
+
+    @Override
     public Class<RejectResponse> getResponseSuccessClass() throws JSONException {
         return RejectResponse.class;
     }

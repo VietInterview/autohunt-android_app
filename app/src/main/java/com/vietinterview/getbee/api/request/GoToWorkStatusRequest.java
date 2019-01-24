@@ -25,6 +25,11 @@ public class GoToWorkStatusRequest extends BaseJsonRequest<ErrorResponse, ErrorR
 
 
     @Override
+    protected String getStringParam() {
+        return null;
+    }
+
+    @Override
     public Class<ErrorResponse> getResponseSuccessClass() throws JSONException {
         return ErrorResponse.class;
     }

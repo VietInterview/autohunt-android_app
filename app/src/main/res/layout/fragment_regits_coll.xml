@@ -71,7 +71,6 @@
                     android:id="@+id/llName"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
-                    android:layout_marginHorizontal="4dp"
                     android:gravity="center_vertical">
 
                     <ImageView
@@ -91,7 +90,8 @@
                         android:hint="@string/fullname"
                         android:padding="10dp"
                         android:singleLine="true"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
 
                     <ImageView
                         android:id="@+id/icRightName"
@@ -108,15 +108,14 @@
                     android:id="@+id/lineName"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginHorizontal="8dp"
                     android:layout_marginBottom="1dp"
-                    android:background="@color/gray_not_focus" />
+                    android:background="#D2D2E1" />
 
                 <LinearLayout
                     android:id="@+id/llEmail"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
-                    android:layout_marginHorizontal="4dp"
                     android:layout_marginTop="1dp"
                     android:gravity="center_vertical">
 
@@ -137,7 +136,8 @@
                         android:hint="Email"
                         android:padding="10dp"
                         android:singleLine="true"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
 
                     <ImageView
                         android:id="@+id/icRightEmail"
@@ -154,15 +154,14 @@
                     android:id="@+id/lineEmail"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginHorizontal="8dp"
                     android:layout_marginBottom="1dp"
-                    android:background="@color/gray_not_focus" />
+                    android:background="#D2D2E1" />
 
                 <LinearLayout
                     android:id="@+id/llSDT"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
-                    android:layout_marginHorizontal="4dp"
                     android:layout_marginTop="1dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -186,7 +185,8 @@
                         android:inputType="phone"
                         android:padding="10dp"
                         android:singleLine="true"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
 
                     <ImageView
                         android:id="@+id/icRightPhone"
@@ -202,15 +202,14 @@
                     android:id="@+id/lineSDT"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginHorizontal="8dp"
                     android:layout_marginBottom="1dp"
-                    android:background="@color/gray_not_focus" />
+                    android:background="#D2D2E1" />
 
                 <LinearLayout
                     android:id="@+id/llBirthday"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
-                    android:layout_marginHorizontal="4dp"
                     android:layout_marginTop="1dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -233,7 +232,8 @@
                         android:inputType="phone"
                         android:padding="10dp"
                         android:singleLine="true"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
 
                     <ImageView
                         android:id="@+id/icRightBirthday"
@@ -249,15 +249,14 @@
                     android:id="@+id/lineBirthday"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginHorizontal="8dp"
                     android:layout_marginBottom="1dp"
-                    android:background="@color/gray_not_focus" />
+                    android:background="#D2D2E1" />
 
                 <LinearLayout
                     android:id="@+id/llJob"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
-                    android:layout_marginHorizontal="4dp"
                     android:layout_marginTop="1dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -279,7 +278,8 @@
                         android:hint="@string/carrer"
                         android:padding="10dp"
                         android:singleLine="true"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
 
                     <ImageView
                         android:id="@+id/icRightJob"
@@ -296,15 +296,14 @@
                     android:id="@+id/lineJob"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginHorizontal="8dp"
                     android:layout_marginBottom="1dp"
-                    android:background="@color/gray_not_focus" />
+                    android:background="#D2D2E1" />
 
                 <LinearLayout
                     android:id="@+id/llAdd"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
-                    android:layout_marginHorizontal="4dp"
                     android:layout_marginTop="1dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -327,7 +326,8 @@
                         android:hint="Tên công ty đang làm"
                         android:padding="10dp"
                         android:singleLine="true"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
 
                     <ImageView
                         android:id="@+id/icRightAdd"
@@ -343,15 +343,15 @@
                     android:id="@+id/lineAdd"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginHorizontal="8dp"
                     android:layout_marginBottom="1dp"
-                    android:background="@color/gray_not_focus" />
+                    android:background="#D2D2E1" />
 
                 <LinearLayout
                     android:id="@+id/llPolicy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginHorizontal="8dp"
                     android:layout_marginVertical="8dp"
                     android:orientation="horizontal">
 
@@ -381,10 +381,10 @@
                     android:visibility="gone" />
             </LinearLayout>
 
-            <com.vietinterview.getbee.customview.RobotoBoldButton
+            <com.vietinterview.getbee.customview.RobotoRegularButton
                 android:id="@+id/btnSignup"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="44dp"
                 android:layout_gravity="bottom|center"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
@@ -392,7 +392,7 @@
                 android:fontFamily=""
                 android:text="ĐĂNG KÝ"
                 android:textColor="#ffffff"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

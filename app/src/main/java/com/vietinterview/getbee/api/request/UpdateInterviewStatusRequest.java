@@ -37,6 +37,11 @@ public class UpdateInterviewStatusRequest extends BaseJsonRequest<ViewEmailInter
     }
 
     @Override
+    protected String getStringParam() {
+        return null;
+    }
+
+    @Override
     public Class<ViewEmailInterviewResponse> getResponseSuccessClass() throws JSONException {
         return ViewEmailInterviewResponse.class;
     }

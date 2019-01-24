@@ -32,6 +32,11 @@ public class GoToWorkUpdateRequest extends BaseJsonRequest<GoToWorkUpdateRespons
     }
 
     @Override
+    protected String getStringParam() {
+        return null;
+    }
+
+    @Override
     public Class<GoToWorkUpdateResponse> getResponseSuccessClass() throws JSONException {
         return GoToWorkUpdateResponse.class;
     }

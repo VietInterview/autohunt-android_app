@@ -46,6 +46,11 @@ public class RegistRequest extends BaseJsonRequest<ErrorResponse, ErrorResponse>
 
 
     @Override
+    protected String getStringParam() {
+        return null;
+    }
+
+    @Override
     public Class<ErrorResponse> getResponseSuccessClass() throws JSONException {
         return ErrorResponse.class;
     }
