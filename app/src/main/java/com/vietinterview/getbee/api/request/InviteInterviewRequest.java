@@ -75,6 +75,6 @@ public class InviteInterviewRequest extends BaseJsonRequest<ErrorResponse, Error
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getINVITE_INTERVIEW();
+        return AccountManager.getApiConstant().getINVITE_INTERVIEW();
     }
 }

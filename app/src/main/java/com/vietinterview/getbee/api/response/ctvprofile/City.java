@@ -1,10 +1,10 @@
 
-package com.vietinterview.getbee.api.response;
+package com.vietinterview.getbee.api.response.ctvprofile;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CityResponse {
+public class City {
 
     @SerializedName("countryId")
     @Expose
@@ -19,12 +19,7 @@ public class CityResponse {
     @Expose
     private String name;
 
-    public CityResponse(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public CityResponse(Integer countryId, String enName, Integer id, String name) {
+    public City(Integer countryId, String enName, Integer id, String name) {
         this.countryId = countryId;
         this.enName = enName;
         this.id = id;

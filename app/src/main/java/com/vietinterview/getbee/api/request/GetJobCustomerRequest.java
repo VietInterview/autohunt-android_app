@@ -75,6 +75,6 @@ public class GetJobCustomerRequest extends BaseRequest<JobCustomerResponse, Erro
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getGET_JOB_CUSTOMER();
+        return AccountManager.getApiConstant().getGET_JOB_CUSTOMER();
     }
 }

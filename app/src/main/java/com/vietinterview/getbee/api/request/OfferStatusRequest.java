@@ -75,6 +75,6 @@ public class OfferStatusRequest extends BaseJsonRequest<ErrorResponse, ErrorResp
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getOFFER_STATUS();
+        return AccountManager.getApiConstant().getOFFER_STATUS();
     }
 }

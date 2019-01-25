@@ -62,6 +62,6 @@ public class GetListRejectReasonRequest extends BaseRequest<RejectReasonResponse
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getLIST_REJECT_REASON();
+        return AccountManager.getApiConstant().getLIST_REJECT_REASON();
     }
 }

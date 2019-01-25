@@ -1,7 +1,5 @@
 package com.vietinterview.getbee.api.request;
 
-import android.content.Context;
-
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.api.response.ResetPasswordFailResponse;
 
@@ -62,7 +60,7 @@ public class ResetPasswordRequest extends BaseJsonRequest<Object, ResetPasswordF
 
     @Override
     public int getMethod() {
-        return AccountManager.getApiConstantTest().POST;
+        return AccountManager.getApiConstant().POST;
     }
 
     @Override
@@ -72,6 +70,6 @@ public class ResetPasswordRequest extends BaseJsonRequest<Object, ResetPasswordF
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getRESET_PASSWORD();
+        return AccountManager.getApiConstant().getRESET_PASSWORD();
     }
 }

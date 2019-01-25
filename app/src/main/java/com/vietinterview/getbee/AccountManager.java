@@ -3,7 +3,7 @@ package com.vietinterview.getbee;
 import android.provider.Settings;
 import android.text.TextUtils;
 
-import com.vietinterview.getbee.constant.ApiConstantTest;
+import com.vietinterview.getbee.constant.ApiConstant;
 import com.vietinterview.getbee.model.UserInfoBean;
 import com.vietinterview.getbee.utils.SharedPrefUtils;
 import com.google.gson.Gson;
@@ -20,7 +20,7 @@ public class AccountManager {
 
 
     private static UserInfoBean userInfoBean;
-    private static ApiConstantTest apiConstantTest;
+    private static ApiConstant apiConstant;
     private static String accessToken;
 
     private static String UDID;
@@ -33,18 +33,18 @@ public class AccountManager {
         return userInfoBean;
     }
 
-    public static void setApiConstantTest(ApiConstantTest apiConstantTest) {
-        AccountManager.apiConstantTest = apiConstantTest;
-        String json = new Gson().toJson(apiConstantTest);
+    public static void setApiConstant(ApiConstant apiConstant) {
+        AccountManager.apiConstant = apiConstant;
+        String json = new Gson().toJson(apiConstant);
         SharedPrefUtils.putString(KEY_API, json);
     }
 
-    public static ApiConstantTest getApiConstantTest() {
-        if (apiConstantTest == null && SharedPrefUtils.containKey(KEY_API)) {
+    public static ApiConstant getApiConstant() {
+        if (apiConstant == null && SharedPrefUtils.containKey(KEY_API)) {
             final String json = SharedPrefUtils.getString(KEY_API, null);
-            apiConstantTest = new Gson().fromJson(json, ApiConstantTest.class);
+            apiConstant = new Gson().fromJson(json, ApiConstant.class);
         }
-        return apiConstantTest;
+        return apiConstant;
     }
 
     public static void setUserInfoBean(UserInfoBean userInfoBean) {

@@ -64,6 +64,6 @@ public class GetDetailJobRequest extends BaseRequest<DetailJobResponse, ErrorRes
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getGET_DETAIL_JOB();
+        return AccountManager.getApiConstant().getGET_DETAIL_JOB();
     }
 }

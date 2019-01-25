@@ -2,7 +2,6 @@ package com.vietinterview.getbee.api.request;
 
 import com.loopj.android.http.RequestParams;
 import com.vietinterview.getbee.AccountManager;
-import com.vietinterview.getbee.api.response.DeleteCVResponse;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.detailjobcustomer.DetailJobCustomerResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
@@ -67,6 +66,6 @@ public class GetDetailJobCustomerRequest extends BaseRequest<DetailJobCustomerRe
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getGET_DETAIL_JOB_CUSTOMER() + "/" + mId;
+        return AccountManager.getApiConstant().getGET_DETAIL_JOB_CUSTOMER() + "/" + mId;
     }
 }

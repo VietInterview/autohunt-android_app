@@ -93,7 +93,7 @@ public class ViewEmailOfferRequest extends BaseJsonRequest<ViewEmailInterviewRes
 
     @Override
     public int getMethod() {
-        return AccountManager.getApiConstantTest().getPOST();
+        return AccountManager.getApiConstant().getPOST();
     }
 
     @Override
@@ -103,6 +103,6 @@ public class ViewEmailOfferRequest extends BaseJsonRequest<ViewEmailInterviewRes
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getVIEW_EMAIL_OFFER();
+        return AccountManager.getApiConstant().getVIEW_EMAIL_OFFER();
     }
 }

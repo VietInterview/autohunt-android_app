@@ -1,18 +1,13 @@
 package com.vietinterview.getbee.fragments;
 
-import android.Manifest;
 import android.app.Dialog;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.Html;
@@ -27,7 +22,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
@@ -46,7 +40,6 @@ import com.vietinterview.getbee.api.response.login.ErrorLoginResponse;
 import com.vietinterview.getbee.api.response.login.LoginResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.constant.ApiConstant;
-import com.vietinterview.getbee.constant.ApiConstantTest;
 import com.vietinterview.getbee.customview.RobotoEditText;
 import com.vietinterview.getbee.model.UserInfoBean;
 import com.vietinterview.getbee.utils.DialogUtil;
@@ -94,7 +87,7 @@ public class LoginFragment extends BaseFragment {
     @BindView(R.id.tvGoRegits)
     TextView tvGoRegits;
     private int dem = 0;
-    ApiConstantTest apiConstant = new ApiConstantTest();
+    ApiConstant ApiConstantTest = new ApiConstant();
 
     @Override
     protected int getLayoutId() {
@@ -126,7 +119,7 @@ public class LoginFragment extends BaseFragment {
 
             }
         });
-        if (AccountManager.getApiConstantTest().getBASE_URL().equalsIgnoreCase(ApiConstant.REAL_URL)) {
+        if (AccountManager.getApiConstant().getBASE_URL().equalsIgnoreCase(ApiConstantTest.REAL_URL)) {
             tvDevmode.setVisibility(View.GONE);
         } else {
             tvDevmode.setVisibility(View.VISIBLE);
@@ -136,15 +129,15 @@ public class LoginFragment extends BaseFragment {
             public void onClick(View view) {
                 if (dem < 7) {
                     dem++;
-                    apiConstant.setBASE_URL(ApiConstant.REAL_URL);
-                    apiConstant.setIMG_URL(ApiConstant.IMG_URL_REAL);
-                    AccountManager.setApiConstantTest(apiConstant);
+                    ApiConstantTest.setBASE_URL(ApiConstantTest.REAL_URL);
+                    ApiConstantTest.setIMG_URL(ApiConstantTest.IMG_URL_REAL);
+                    AccountManager.setApiConstant(ApiConstantTest);
                     tvDevmode.setVisibility(View.GONE);
                 } else {
                     dem--;
-                    apiConstant.setBASE_URL(ApiConstant.DEV_URL);
-                    apiConstant.setIMG_URL(ApiConstant.IMG_URL_DEV);
-                    AccountManager.setApiConstantTest(apiConstant);
+                    ApiConstantTest.setBASE_URL(ApiConstantTest.DEV_URL);
+                    ApiConstantTest.setIMG_URL(ApiConstantTest.IMG_URL_DEV);
+                    AccountManager.setApiConstant(ApiConstantTest);
                     tvDevmode.setVisibility(View.VISIBLE);
                 }
             }

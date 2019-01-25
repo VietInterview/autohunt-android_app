@@ -2,11 +2,9 @@ package com.vietinterview.getbee.api.request;
 
 import com.google.gson.reflect.TypeToken;
 import com.vietinterview.getbee.AccountManager;
-import com.vietinterview.getbee.api.response.CareerResponse;
 import com.vietinterview.getbee.api.response.ErrorChangePassResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -80,6 +78,6 @@ public class ChangePasswordRequest extends BaseJsonRequest<Object, ErrorChangePa
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getCHANGE_PASSWORD();
+        return AccountManager.getApiConstant().getCHANGE_PASSWORD();
     }
 }

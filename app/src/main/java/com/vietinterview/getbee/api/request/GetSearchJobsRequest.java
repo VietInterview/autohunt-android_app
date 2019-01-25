@@ -76,6 +76,6 @@ public class GetSearchJobsRequest extends BaseRequest<JobsResponse,ErrorResponse
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getGET_SEARCH_JOBS();
+        return AccountManager.getApiConstant().getGET_SEARCH_JOBS();
     }
 }

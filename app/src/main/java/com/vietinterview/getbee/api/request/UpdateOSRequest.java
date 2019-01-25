@@ -63,7 +63,7 @@ public class UpdateOSRequest extends BaseJsonRequest<ErrorLoginResponse, ErrorLo
 
     @Override
     public int getMethod() {
-        return AccountManager.getApiConstantTest().getPOST();
+        return AccountManager.getApiConstant().getPOST();
     }
 
     @Override
@@ -73,6 +73,6 @@ public class UpdateOSRequest extends BaseJsonRequest<ErrorLoginResponse, ErrorLo
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getUPDATE_OS();
+        return AccountManager.getApiConstant().getUPDATE_OS();
     }
 }

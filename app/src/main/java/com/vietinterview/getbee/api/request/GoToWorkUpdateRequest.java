@@ -3,7 +3,6 @@ package com.vietinterview.getbee.api.request;
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.api.response.GoToWorkUpdateResponse;
-import com.vietinterview.getbee.api.response.SendOfferResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -76,7 +75,7 @@ public class GoToWorkUpdateRequest extends BaseJsonRequest<GoToWorkUpdateRespons
 
     @Override
     public int getMethod() {
-        return AccountManager.getApiConstantTest().getPOST();
+        return AccountManager.getApiConstant().getPOST();
     }
 
     @Override
@@ -86,6 +85,6 @@ public class GoToWorkUpdateRequest extends BaseJsonRequest<GoToWorkUpdateRespons
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getGO_TO_WORK_UPDATE();
+        return AccountManager.getApiConstant().getGO_TO_WORK_UPDATE();
     }
 }

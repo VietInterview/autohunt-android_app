@@ -4,7 +4,6 @@ import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.RequestParams;
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.api.response.ErrorResponse;
-import com.vietinterview.getbee.api.response.ctvprofile.MyProfileResponse;
 import com.vietinterview.getbee.api.response.customerprofile.ProfileCustomerResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
 
@@ -62,6 +61,6 @@ public class GetCUSProfileRequest extends BaseRequest<ProfileCustomerResponse, E
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getGET_CUS_PROFILE();
+        return AccountManager.getApiConstant().getGET_CUS_PROFILE();
     }
 }

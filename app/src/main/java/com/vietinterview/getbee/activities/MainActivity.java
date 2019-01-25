@@ -1,6 +1,5 @@
 package com.vietinterview.getbee.activities;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
@@ -11,7 +10,6 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.telephony.TelephonyManager;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.view.Menu;
@@ -34,19 +32,17 @@ import com.vietinterview.getbee.callback.OnSetMenuListener;
 import com.vietinterview.getbee.callback.OnSetTextGreetingListener;
 import com.vietinterview.getbee.callback.OnShowLogoListener;
 import com.vietinterview.getbee.constant.ApiConstant;
-import com.vietinterview.getbee.constant.ApiConstantTest;
 import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.customview.CircularTextView;
 import com.vietinterview.getbee.customview.CustomTypefaceSpan;
-import com.vietinterview.getbee.fragments.CustomerProfileFragment;
+import com.vietinterview.getbee.fragments.CollaboratorProfileFragment;
 import com.vietinterview.getbee.fragments.HomeFragment;
 import com.vietinterview.getbee.fragments.IntroFragment;
 import com.vietinterview.getbee.fragments.JobsEmployerFragment;
 import com.vietinterview.getbee.fragments.LoginFragment;
-import com.vietinterview.getbee.fragments.MyResumeFragment;
 import com.vietinterview.getbee.fragments.MyJobFragment;
-import com.vietinterview.getbee.fragments.CollaboratorProfileFragment;
+import com.vietinterview.getbee.fragments.MyResumeFragment;
 import com.vietinterview.getbee.model.DeviceUuidFactory;
 import com.vietinterview.getbee.utils.DebugLog;
 import com.vietinterview.getbee.utils.DialogUtil;
@@ -84,11 +80,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void initView() {
-        if (AccountManager.getApiConstantTest() == null) {
-            ApiConstantTest apiConstantInit = new ApiConstantTest();
+        if (AccountManager.getApiConstant() == null) {
+            ApiConstant apiConstantInit = new ApiConstant();
             apiConstantInit.setBASE_URL(ApiConstant.REAL_URL);
             apiConstantInit.setIMG_URL(ApiConstant.IMG_URL_REAL);
-            AccountManager.setApiConstantTest(apiConstantInit);
+            AccountManager.setApiConstant(apiConstantInit);
         }
 //        setLanguage(SharedPrefUtils.getString(AppConstant.LANGUAGE, "vi"));
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
@@ -496,7 +492,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         if (AccountManager.getUserInfoBean().getType() == 7)
                             FragmentUtil.replaceFragment(MainActivity.this, new CollaboratorProfileFragment(), null);
                         else if (AccountManager.getUserInfoBean().getType() == 2)
-                            FragmentUtil.replaceFragment(MainActivity.this, new CustomerProfileFragment(), null);
+                            FragmentUtil.replaceFragment(MainActivity.this, new CollaboratorProfileFragment(), null);
                         else
                             FragmentUtil.replaceFragment(MainActivity.this, new CollaboratorProfileFragment(), null);
                         break;

@@ -75,6 +75,6 @@ public class ContractStatusRequest extends BaseJsonRequest<ErrorResponse, ErrorR
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getCONTRACT_STATUS();
+        return AccountManager.getApiConstant().getCONTRACT_STATUS();
     }
 }

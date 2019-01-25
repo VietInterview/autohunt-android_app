@@ -93,7 +93,7 @@ public class SendOfferRequest extends BaseJsonRequest<SendOfferResponse, ErrorRe
 
     @Override
     public int getMethod() {
-        return AccountManager.getApiConstantTest().getPOST();
+        return AccountManager.getApiConstant().getPOST();
     }
 
     @Override
@@ -103,6 +103,6 @@ public class SendOfferRequest extends BaseJsonRequest<SendOfferResponse, ErrorRe
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getSEND_OFFER();
+        return AccountManager.getApiConstant().getSEND_OFFER();
     }
 }

@@ -76,6 +76,6 @@ public class GetSavedSearchJobsRequest extends BaseRequest<JobsResponse, ErrorRe
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getGET_SAVED_SEARCH_JOBS();
+        return AccountManager.getApiConstant().getGET_SAVED_SEARCH_JOBS();
     }
 }

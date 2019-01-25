@@ -84,7 +84,7 @@ public class SendInterviewRequest extends BaseJsonRequest<ViewEmailInterviewResp
 
     @Override
     public int getMethod() {
-        return AccountManager.getApiConstantTest().getPOST();
+        return AccountManager.getApiConstant().getPOST();
     }
 
     @Override
@@ -94,6 +94,6 @@ public class SendInterviewRequest extends BaseJsonRequest<ViewEmailInterviewResp
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getSEND_INTERVIEW();
+        return AccountManager.getApiConstant().getSEND_INTERVIEW();
     }
 }

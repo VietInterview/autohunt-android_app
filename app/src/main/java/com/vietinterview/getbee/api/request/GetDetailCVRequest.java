@@ -64,6 +64,6 @@ public class GetDetailCVRequest extends BaseRequest<DetailCVResponse, ErrorRespo
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getGET_DETAIL_CV() + "/" + mId;
+        return AccountManager.getApiConstant().getGET_DETAIL_CV() + "/" + mId;
     }
 }

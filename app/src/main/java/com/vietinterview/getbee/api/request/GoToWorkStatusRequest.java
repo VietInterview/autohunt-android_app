@@ -75,6 +75,6 @@ public class GoToWorkStatusRequest extends BaseJsonRequest<ErrorResponse, ErrorR
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getGO_TO_WORK_STATUS();
+        return AccountManager.getApiConstant().getGO_TO_WORK_STATUS();
     }
 }

@@ -13,6 +13,7 @@
     <string name="city">Thành phố</string>
     <string name="all_carrer">Tất cả ngành nghề</string>
     <string name="all_city">Tất cả thành phố</string>
+    <string name="all_country">Tất cả đất nước</string>
     <string name="change_password">Thay đổi mật khẩu</string>
     <string name="choice_cv">Chọn hồ sơ của tôi</string>
     <string name="cv_found">hồ sơ được tìm thấy</string>

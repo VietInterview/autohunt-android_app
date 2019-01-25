@@ -34,11 +34,11 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="6dp">
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/imgAva"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/avatar2" />
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"/>
 
                     <ImageView
                         android:id="@+id/imgCamera"
@@ -58,11 +58,11 @@
                     android:background="@null"
                     android:fontFamily="@string/font_fontFamily_medium"
                     android:gravity="center"
-                    android:text="Nguyễn Nghĩa Hiệp"
                     android:textColor="#042E51"
                     android:textSize="18sp" />
 
                 <ImageView
+                    android:id="@+id/imgFullName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/llAva"
@@ -76,7 +76,6 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/edtFullName"
                     android:gravity="center"
-                    android:text="hiep.nguyen@vietinterview.com"
                     android:textColor="#B1B1BA"
                     android:textSize="14sp" />
             </RelativeLayout>
@@ -88,7 +87,7 @@
                 android:orientation="vertical">
 
                 <com.vietinterview.getbee.customview.RobotoMediumTextView
-                    android:id="@+id/tvCode"
+                    android:id="@+id/tvCodeTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
@@ -99,13 +98,13 @@
                     android:textSize="14sp" />
 
                 <com.vietinterview.getbee.customview.RobotoTextView
+                    android:id="@+id/tvCode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvCode"
+                    android:layout_below="@+id/tvCodeTitle"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="123456"
                     android:textColor="#677B8D"
                     android:textSize="14sp" />
 
@@ -135,18 +134,18 @@
 
                 <com.vietinterview.getbee.customview.RobotoEditText
                     android:id="@+id/edtPhone"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvPhone"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
                     android:background="@null"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="123456"
                     android:textColor="#677B8D"
                     android:textSize="14sp" />
 
                 <ImageView
+                    android:id="@+id/imgEditPhone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -179,8 +178,8 @@
                     android:textColor="#042E51"
                     android:textSize="14sp" />
 
-                <com.vietinterview.getbee.customview.RobotoTextView
-                    android:id="@+id/tvBirthDay"
+                <com.vietinterview.getbee.customview.ClearableRegularEditText
+                    android:id="@+id/edtBirthDay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvBirthDayTitle"
@@ -188,11 +187,11 @@
                     android:layout_marginVertical="8dp"
                     android:background="@null"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="12/08/1991"
                     android:textColor="#677B8D"
                     android:textSize="14sp" />
 
                 <ImageView
+                    android:id="@+id/imgEditBirthday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -235,11 +234,11 @@
                     android:layout_marginRight="32dp"
                     android:background="@null"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="Toà báo Nông Thôn Ngày Nay, Ngõ 68, Dương Đình Nghệ, Cầu Giấy"
                     android:textColor="#677B8D"
                     android:textSize="14sp" />
 
                 <ImageView
+                    android:id="@+id/imgEditAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -257,6 +256,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/llCountry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white">
@@ -283,7 +283,6 @@
                     android:background="@null"
                     android:fontFamily="@string/font_fontFamily_medium"
                     android:gravity="right"
-                    android:text="Việt Nam"
                     android:textColor="#677B8D"
                     android:textSize="14sp" />
 
@@ -305,6 +304,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/llCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white">
@@ -331,7 +331,6 @@
                     android:background="@null"
                     android:fontFamily="@string/font_fontFamily_medium"
                     android:gravity="right"
-                    android:text="Hà Nội"
                     android:textColor="#677B8D"
                     android:textSize="14sp" />
 
@@ -368,8 +367,8 @@
                     android:textColor="#042E51"
                     android:textSize="14sp" />
 
-                <com.vietinterview.getbee.customview.RobotoTextView
-                    android:id="@+id/tvCompanyName"
+                <com.vietinterview.getbee.customview.ClearableRegularEditText
+                    android:id="@+id/edtCompanyName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvCompanyNameTitle"
@@ -377,11 +376,11 @@
                     android:layout_marginVertical="8dp"
                     android:background="@null"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="Asia technology and Business."
                     android:textColor="#677B8D"
                     android:textSize="14sp" />
 
                 <ImageView
+                    android:id="@+id/imgEditCompany"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -425,7 +424,6 @@
                     android:layout_marginRight="32dp"
                     android:background="@null"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="Kỹ thuật, Thiết kế, Kinh doanh"
                     android:textColor="#677B8D"
                     android:textSize="14sp" />
 
@@ -436,7 +434,7 @@
                     android:layout_centerInParent="true"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="16dp"
-                    android:src="@drawable/ic_pencil_edit" />
+                    android:src="@drawable/ic_arrow_right" />
 
                 <View
                     android:layout_width="match_parent"
@@ -462,8 +460,8 @@
                     android:textColor="#042E51"
                     android:textSize="14sp" />
 
-                <com.vietinterview.getbee.customview.RobotoTextView
-                    android:id="@+id/tvDateContract"
+                <com.vietinterview.getbee.customview.ClearableRegularEditText
+                    android:id="@+id/edtDateContract"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvDateContractTitle"
@@ -471,9 +469,18 @@
                     android:layout_marginVertical="8dp"
                     android:background="@null"
                     android:fontFamily="@string/font_fontFamily_medium"
-                    android:text="12/08/1991"
                     android:textColor="#677B8D"
                     android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/imgEditContract"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="16dp"
+                    android:src="@drawable/ic_pencil_edit" />
 
                 <View
                     android:layout_width="match_parent"

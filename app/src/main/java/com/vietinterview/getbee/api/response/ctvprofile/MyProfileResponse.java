@@ -13,9 +13,27 @@ public class MyProfileResponse implements Parcelable {
     @SerializedName("addressColl")
     @Expose
     private String addressColl;
+    @SerializedName("birthday")
+    @Expose
+    private Integer birthday;
     @SerializedName("careerColl")
     @Expose
     private String careerColl;
+    @SerializedName("cities")
+    @Expose
+    private List<City> cities = null;
+    @SerializedName("code")
+    @Expose
+    private String code;
+    @SerializedName("companyName")
+    @Expose
+    private String companyName;
+    @SerializedName("contractDate")
+    @Expose
+    private Integer contractDate;
+    @SerializedName("countries")
+    @Expose
+    private List<Country> countries = null;
     @SerializedName("desideratedCareer")
     @Expose
     private List<DesideratedCareer> desideratedCareer = null;
@@ -28,13 +46,28 @@ public class MyProfileResponse implements Parcelable {
     @SerializedName("idColl")
     @Expose
     private Integer idColl;
+    @SerializedName("imageUrl")
+    @Expose
+    private String imageUrl;
     @SerializedName("phoneColl")
     @Expose
     private String phoneColl;
 
     protected MyProfileResponse(Parcel in) {
         addressColl = in.readString();
+        if (in.readByte() == 0) {
+            birthday = null;
+        } else {
+            birthday = in.readInt();
+        }
         careerColl = in.readString();
+        code = in.readString();
+        companyName = in.readString();
+        if (in.readByte() == 0) {
+            contractDate = null;
+        } else {
+            contractDate = in.readInt();
+        }
         emailColl = in.readString();
         fullNameColl = in.readString();
         if (in.readByte() == 0) {
@@ -42,6 +75,7 @@ public class MyProfileResponse implements Parcelable {
         } else {
             idColl = in.readInt();
         }
+        imageUrl = in.readString();
         phoneColl = in.readString();
     }
 
@@ -65,12 +99,60 @@ public class MyProfileResponse implements Parcelable {
         this.addressColl = addressColl;
     }
 
+    public Integer getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Integer birthday) {
+        this.birthday = birthday;
+    }
+
     public String getCareerColl() {
         return careerColl;
     }
 
     public void setCareerColl(String careerColl) {
         this.careerColl = careerColl;
+    }
+
+    public List<City> getCities() {
+        return cities;
+    }
+
+    public void setCities(List<City> cities) {
+        this.cities = cities;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public Integer getContractDate() {
+        return contractDate;
+    }
+
+    public void setContractDate(Integer contractDate) {
+        this.contractDate = contractDate;
+    }
+
+    public List<Country> getCountries() {
+        return countries;
+    }
+
+    public void setCountries(List<Country> countries) {
+        this.countries = countries;
     }
 
     public List<DesideratedCareer> getDesideratedCareer() {
@@ -105,6 +187,14 @@ public class MyProfileResponse implements Parcelable {
         this.idColl = idColl;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public String getPhoneColl() {
         return phoneColl;
     }
@@ -121,7 +211,21 @@ public class MyProfileResponse implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(addressColl);
+        if (birthday == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(birthday);
+        }
         parcel.writeString(careerColl);
+        parcel.writeString(code);
+        parcel.writeString(companyName);
+        if (contractDate == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(contractDate);
+        }
         parcel.writeString(emailColl);
         parcel.writeString(fullNameColl);
         if (idColl == null) {
@@ -130,6 +234,7 @@ public class MyProfileResponse implements Parcelable {
             parcel.writeByte((byte) 1);
             parcel.writeInt(idColl);
         }
+        parcel.writeString(imageUrl);
         parcel.writeString(phoneColl);
     }
 }

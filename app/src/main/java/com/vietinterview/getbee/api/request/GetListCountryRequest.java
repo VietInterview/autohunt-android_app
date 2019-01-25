@@ -1,8 +1,9 @@
 package com.vietinterview.getbee.api.request;
 
+import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.RequestParams;
 import com.vietinterview.getbee.AccountManager;
-import com.vietinterview.getbee.api.response.DeleteCVResponse;
+import com.vietinterview.getbee.api.response.CountryResponse;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.constant.ApiConstant;
 
@@ -11,20 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by hiepnguyennghia on 10/25/18.
+ * Created by hiepnguyennghia on 10/12/18.
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
-public class DeleteCVRequest extends BaseRequest<DeleteCVResponse, ErrorResponse> {
-    private int mId;
-
-    public DeleteCVRequest(int mId) {
-        this.mId = mId;
-    }
-
-
+public class GetListCountryRequest extends BaseRequest<CountryResponse, ErrorResponse> {
     @Override
-    public Class<DeleteCVResponse> getResponseSuccessClass() {
-        return DeleteCVResponse.class;
+    public Class<CountryResponse> getResponseSuccessClass() {
+        return CountryResponse.class;
     }
 
     @Override
@@ -33,20 +27,19 @@ public class DeleteCVRequest extends BaseRequest<DeleteCVResponse, ErrorResponse
     }
 
     @Override
-    public List<DeleteCVResponse> getListResponseSuccessClass() {
-        List<DeleteCVResponse> deleteCVResponses = new ArrayList<>();
-        return deleteCVResponses;
+    public List<CountryResponse> getListResponseSuccessClass() {
+        return new ArrayList<CountryResponse>();
     }
 
     @Override
     public List<ErrorResponse> getListResponseFailClass() {
-        List<ErrorResponse> errorResponses = new ArrayList<>();
-        return errorResponses;
+        return null;
     }
 
     @Override
     public Type getType() {
-        return null;
+        return new TypeToken<List<CountryResponse>>() {
+        }.getType();
     }
 
     @Override
@@ -61,11 +54,11 @@ public class DeleteCVRequest extends BaseRequest<DeleteCVResponse, ErrorResponse
 
     @Override
     public int getMethod() {
-        return ApiConstant.DELETE;
+        return ApiConstant.GET;
     }
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstant().getDELETE_MY_CV() + "/" + mId;
+        return AccountManager.getApiConstant().getGET_LIST_COUNTRY();
     }
 }

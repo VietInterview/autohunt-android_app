@@ -112,13 +112,13 @@ public class DateUtil {
         }
         return converted_date;
     }
-    public synchronized static String convertToMyFormat4(String Date) {
+    public synchronized static String convertToMyFormatyyyyMMdd(String Date) {
         String converted_date = "";
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.US);
             Date date = sdf.parse(Date);
 
-            SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm aa");
+            SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
             converted_date = sdf2.format(date.getTime());
         } catch (Exception e) {
         }

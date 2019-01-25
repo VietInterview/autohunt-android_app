@@ -14,7 +14,6 @@ import com.vietinterview.getbee.utils.TrustManagerManipulator;
 
 import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
-import org.droidparts.annotation.serialize.JSON;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

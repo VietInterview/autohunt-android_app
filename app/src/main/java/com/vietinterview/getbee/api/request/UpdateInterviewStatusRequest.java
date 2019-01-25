@@ -84,7 +84,7 @@ public class UpdateInterviewStatusRequest extends BaseJsonRequest<ViewEmailInter
 
     @Override
     public int getMethod() {
-        return AccountManager.getApiConstantTest().getPOST();
+        return AccountManager.getApiConstant().getPOST();
     }
 
     @Override
@@ -94,6 +94,6 @@ public class UpdateInterviewStatusRequest extends BaseJsonRequest<ViewEmailInter
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getUPDATE_INTERVIEW_STATUS();
+        return AccountManager.getApiConstant().getUPDATE_INTERVIEW_STATUS();
     }
 }

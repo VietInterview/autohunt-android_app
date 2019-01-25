@@ -66,11 +66,11 @@ public class GetDetailProcessResumeRequest extends BaseRequest<DetailProcessResu
 
     @Override
     public int getMethod() {
-        return AccountManager.getApiConstantTest().getGET();
+        return AccountManager.getApiConstant().getGET();
     }
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getDETAIL_PROCESS_RESUME();
+        return AccountManager.getApiConstant().getDETAIL_PROCESS_RESUME();
     }
 }

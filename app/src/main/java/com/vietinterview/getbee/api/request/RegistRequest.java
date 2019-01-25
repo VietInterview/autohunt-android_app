@@ -105,6 +105,6 @@ public class RegistRequest extends BaseJsonRequest<ErrorResponse, ErrorResponse>
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getREGIST();
+        return AccountManager.getApiConstant().getREGIST();
     }
 }

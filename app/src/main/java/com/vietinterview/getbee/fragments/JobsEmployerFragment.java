@@ -1,6 +1,5 @@
 package com.vietinterview.getbee.fragments;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -21,10 +20,8 @@ import android.widget.TextView;
 
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.JobsEmployerAdapter;
-import com.vietinterview.getbee.api.request.GetDetailJobCustomerRequest;
 import com.vietinterview.getbee.api.request.GetJobCustomerRequest;
 import com.vietinterview.getbee.api.response.ErrorResponse;
-import com.vietinterview.getbee.api.response.detailjobcustomer.DetailJobCustomerResponse;
 import com.vietinterview.getbee.api.response.jobcustomer.JobCustomerResponse;
 import com.vietinterview.getbee.api.response.jobcustomer.JobList;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;

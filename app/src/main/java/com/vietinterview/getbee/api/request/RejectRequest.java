@@ -77,7 +77,7 @@ public class RejectRequest extends BaseJsonRequest<RejectResponse, ErrorResponse
 
     @Override
     public int getMethod() {
-        return AccountManager.getApiConstantTest().getPOST();
+        return AccountManager.getApiConstant().getPOST();
     }
 
     @Override
@@ -87,6 +87,6 @@ public class RejectRequest extends BaseJsonRequest<RejectResponse, ErrorResponse
 
     @Override
     protected String getAbsoluteUrl() {
-        return AccountManager.getApiConstantTest().getREJECT();
+        return AccountManager.getApiConstant().getREJECT();
     }
 }

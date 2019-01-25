@@ -21,11 +21,14 @@ import android.widget.TextView;
 import com.vietinterview.getbee.R;
 import com.vietinterview.getbee.adapter.CarrerAdapter;
 import com.vietinterview.getbee.adapter.CityAdapter;
+import com.vietinterview.getbee.adapter.CountryAdapter;
 import com.vietinterview.getbee.api.request.BaseRequest;
 import com.vietinterview.getbee.api.request.GetListCareerRequest;
 import com.vietinterview.getbee.api.request.GetListCityRequest;
+import com.vietinterview.getbee.api.request.GetListCountryRequest;
 import com.vietinterview.getbee.api.response.CareerResponse;
 import com.vietinterview.getbee.api.response.CityResponse;
+import com.vietinterview.getbee.api.response.CountryResponse;
 import com.vietinterview.getbee.api.response.ErrorResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
 import com.vietinterview.getbee.constant.GlobalDefine;
@@ -57,15 +60,19 @@ public class CarrerOrCityFragment extends BaseFragment {
     GetListCityRequest getListCityRequest;
     CarrerAdapter carrerAdapter;
     CityAdapter cityAdapter;
+    CountryAdapter countryAdapter;
     private Menu mMenu;
     private MenuItem mMenuItem;
     boolean mIsCity;
+    boolean mIsCountry;
     String mId;
     String mName;
     List<CareerResponse> careerResponses = new ArrayList<>();
     List<CityResponse> cityResponses = new ArrayList<>();
+    List<CountryResponse> countryResponses = new ArrayList<>();
     List<CareerResponse> careerResponsesFilter;
     List<CityResponse> cityResponsesFilter;
+    List<CountryResponse> countryResponsesFilter;
     boolean mIsSignleChoice;
 
     public static CarrerOrCityFragment newInstance(boolean isCity, String Id, String Name, boolean isSignleChoice) {
@@ -79,9 +86,30 @@ public class CarrerOrCityFragment extends BaseFragment {
         return fm;
     }
 
+    public static CarrerOrCityFragment newInstance(boolean isCity, boolean isCountry, String Id, String Name, boolean isSignleChoice) {
+        CarrerOrCityFragment fm = new CarrerOrCityFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isCity", false);
+        bundle.putBoolean("isCountry", isCountry);
+        bundle.putString(isCity ? "cityId" : "carrerId", Id);
+        bundle.putString(isCity ? "cityName" : "carrerName", Name);
+        bundle.putBoolean("isSignleChoice", isSignleChoice);
+        fm.setArguments(bundle);
+        return fm;
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_carrers_cities;
+    }
+
+    @Override
+    protected void getArgument(Bundle bundle) {
+        mIsCity = bundle.getBoolean("isCity");
+        mIsCountry = bundle.getBoolean("isCountry");
+        mId = bundle.getString(mIsCity ? "cityId" : "carrerId");
+        mName = bundle.getString(mIsCity ? "cityName" : "carrerName");
+        mIsSignleChoice = bundle.getBoolean("isSignleChoice");
     }
 
     @Override
@@ -124,7 +152,17 @@ public class CarrerOrCityFragment extends BaseFragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (mIsCity) {
+                if (mIsCountry) {
+                    if (countryResponses != null) {
+                        countryResponsesFilter = filterCountry(countryResponses, charSequence.toString().trim());
+                        if (cityResponsesFilter.size() == 0) {
+                            listView.setVisibility(View.GONE);
+                        } else {
+                            listView.setVisibility(View.VISIBLE);
+                        }
+                        countryAdapter.setFilter(countryResponsesFilter);
+                    }
+                } else if (mIsCity) {
                     if (cityResponses != null) {
                         cityResponsesFilter = filterCity(cityResponses, charSequence.toString().trim());
                         if (cityResponsesFilter.size() == 0) {
@@ -176,17 +214,23 @@ public class CarrerOrCityFragment extends BaseFragment {
         return cityResponses1;
     }
 
-    @Override
-    protected void getArgument(Bundle bundle) {
-        mIsCity = bundle.getBoolean("isCity");
-        mId = bundle.getString(mIsCity ? "cityId" : "carrerId");
-        mName = bundle.getString(mIsCity ? "cityName" : "carrerName");
-        mIsSignleChoice = bundle.getBoolean("isSignleChoice");
+    private List<CountryResponse> filterCountry(List<CountryResponse> countryResponses, String query) {
+        final List<CountryResponse> countryResponses1 = new ArrayList<>();
+        for (CountryResponse countryResponse : countryResponses) {
+            final String name = countryResponse.getName().toLowerCase();
+            if (name.contains(query.toLowerCase())) {
+                countryResponses1.add(countryResponse);
+            }
+        }
+        return countryResponses1;
     }
 
     @Override
     protected void initData() {
-        if (mIsCity) {
+        if (mIsCountry) {
+            getListCountry();
+            listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        } else if (mIsCity) {
             getListCity();
             listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         } else {
@@ -249,7 +293,13 @@ public class CarrerOrCityFragment extends BaseFragment {
             cityResponse = (CityResponse) listView.getItemAtPosition(checkedItems.keyAt(0));
         return cityResponse;
     }
-
+    private CountryResponse getSelectedItemCountry() {
+        SparseBooleanArray checkedItems = listView.getCheckedItemPositions();
+        CountryResponse countryResponse = null;
+        if (checkedItems.size() > 0)
+            countryResponse = (CountryResponse) listView.getItemAtPosition(checkedItems.keyAt(0));
+        return countryResponse;
+    }
     @Override
     protected void onRestore() {
 
@@ -289,10 +339,18 @@ public class CarrerOrCityFragment extends BaseFragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getActivity(), CarrerOrCityFragment.class);
-                    if (mIsCity) {
+                    if (mIsCountry) {
+                        if (getSelectedItemCountry() != null) {
+                            intent.putExtra("countryId", getSelectedItemCountry().getId());
+                            intent.putExtra("countryName", getSelectedItemCountry().getName());
+                            getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+                            FragmentUtil.popBackStack(CarrerOrCityFragment.this);
+                        }
+                    } else if (mIsCity) {
                         if (getSelectedItemCity() != null) {
                             intent.putExtra("cityId", getSelectedItemCity().getId());
                             intent.putExtra("cityName", getSelectedItemCity().getName());
+                            intent.putExtra("countryId", getSelectedItemCity().getCountryId());
                             getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
                             FragmentUtil.popBackStack(CarrerOrCityFragment.this);
                         }
@@ -346,6 +404,29 @@ public class CarrerOrCityFragment extends BaseFragment {
                 cityResponses.addAll(dataArrayList);
                 cityAdapter = new CityAdapter(getActivity(), cityResponses);
                 listView.setAdapter(cityAdapter);
+            }
+
+            @Override
+            public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
+                hideCoverNetworkLoading();
+                DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), message);
+            }
+        });
+    }
+
+    GetListCountryRequest getListCountryRequest;
+
+    public void getListCountry() {
+        showCoverNetworkLoading();
+        getListCountryRequest = new GetListCountryRequest();
+        getListCountryRequest.callRequest(getActivity(), new ApiObjectCallBack<CountryResponse, ErrorResponse>() {
+            @Override
+            public void onSuccess(int status, CountryResponse data, List<CountryResponse> dataArrayList, String message) {
+                hideCoverNetworkLoading();
+                countryResponses.add(new CountryResponse(0, getResources().getString(R.string.all_country)));
+                countryResponses.addAll(dataArrayList);
+                countryAdapter = new CountryAdapter(getActivity(), countryResponses);
+                listView.setAdapter(countryAdapter);
             }
 
             @Override
