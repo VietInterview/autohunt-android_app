@@ -1,52 +1,53 @@
 package com.vietinterview.getbee.fragments;
 
+import android.annotation.TargetApi;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.widget.NestedScrollView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vietinterview.getbee.AccountManager;
 import com.vietinterview.getbee.R;
+import com.vietinterview.getbee.api.ApiClient;
 import com.vietinterview.getbee.api.request.BaseRequest;
 import com.vietinterview.getbee.api.request.GetCTVProfileRequest;
-import com.vietinterview.getbee.api.request.GetCUSProfileRequest;
 import com.vietinterview.getbee.api.request.SaveMyProfileRequest;
-import com.vietinterview.getbee.api.request.SaveProfileAvaRequest;
 import com.vietinterview.getbee.api.response.CareerResponse;
 import com.vietinterview.getbee.api.response.CityResponse;
 import com.vietinterview.getbee.api.response.CountryResponse;
 import com.vietinterview.getbee.api.response.ErrorResponse;
-import com.vietinterview.getbee.api.response.SaveProfileAvaResponse;
 import com.vietinterview.getbee.api.response.ctvprofile.City;
 import com.vietinterview.getbee.api.response.ctvprofile.Country;
 import com.vietinterview.getbee.api.response.ctvprofile.DesideratedCareer;
 import com.vietinterview.getbee.api.response.ctvprofile.MyProfileResponse;
-import com.vietinterview.getbee.api.response.customerprofile.ProfileCustomerResponse;
 import com.vietinterview.getbee.callback.ApiObjectCallBack;
+import com.vietinterview.getbee.callback.RetrofitAPI;
 import com.vietinterview.getbee.constant.AppConstant;
 import com.vietinterview.getbee.constant.GlobalDefine;
 import com.vietinterview.getbee.customview.RobotoEditText;
 import com.vietinterview.getbee.customview.RobotoMediumEditText;
-import com.vietinterview.getbee.customview.RobotoTextInputEditText;
 import com.vietinterview.getbee.customview.RobotoTextView;
 import com.vietinterview.getbee.model.Carrer;
 import com.vietinterview.getbee.utils.DateUtil;
@@ -59,17 +60,31 @@ import com.vietinterview.getbee.utils.ShowImageUtils;
 import com.vietinterview.getbee.utils.StringUtils;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
 
-public class CollaboratorProfileFragment extends BaseFragment {
+public class CollaboratorProfileFragment extends BaseFragment implements DatePickerDialog.OnDateSetListener {
     @BindView(R.id.scrollView)
     NestedScrollView scrollView;
     @BindView(R.id.edtFullName)
@@ -108,7 +123,17 @@ public class CollaboratorProfileFragment extends BaseFragment {
     ImageView imgFullName;
     @BindView(R.id.imgAva)
     ImageView imgAva;
+    @BindView(R.id.rlCode)
+    RelativeLayout rlCode;
     private String mCarrerName = "";
+    ArrayList<CareerResponse> careerResponses = new ArrayList<>();
+    ArrayList<CityResponse> citiesResponses = new ArrayList<>();
+    ArrayList<CountryResponse> countryResponses = new ArrayList<>();
+    private Bitmap mBitmap;
+    private String mCountryId = "0";
+    private String mCountryName = "";
+    private String mCityId = "0";
+    private String mCityName = "";
     MyProfileResponse mMyProfileResponse;
     SaveMyProfileRequest saveMyProfileRequest;
     GetCTVProfileRequest getMyProfileRequest;
@@ -118,7 +143,10 @@ public class CollaboratorProfileFragment extends BaseFragment {
     private boolean isEditCompany = false;
     private boolean isEditContract = false;
     private boolean isEditFullname = false;
+    private Calendar calendar;
     BottomSheetDialog mBottomDialogNotificationAction;
+
+    protected RetrofitAPI mService;
 
     public static CollaboratorProfileFragment newInstance(MyProfileResponse myProfileResponse) {
         CollaboratorProfileFragment fm = new CollaboratorProfileFragment();
@@ -137,6 +165,7 @@ public class CollaboratorProfileFragment extends BaseFragment {
     protected void initView(View root, LayoutInflater inflater, ViewGroup container) {
         setCustomToolbar(true);
         GlobalDefine.currentFragment = this;
+        calendar = Calendar.getInstance();
         setCustomToolbarVisible(true);
         imgEditPhone.setImageDrawable(isEditPhone ? getResources().getDrawable(R.drawable.ic_saveok) : getResources().getDrawable(R.drawable.ic_pencil_edit));
         imgEditBirthday.setImageDrawable(isEditBirthday ? getResources().getDrawable(R.drawable.ic_saveok) : getResources().getDrawable(R.drawable.ic_pencil_edit));
@@ -157,6 +186,7 @@ public class CollaboratorProfileFragment extends BaseFragment {
             getMyProfile();
         else {
             ShowImageUtils.showImage(getActivity(), mMyProfileResponse.getImageUrl(), R.drawable.ic_ava_null, imgAva);
+            if (mMyProfileResponse.getCode() == null) rlCode.setVisibility(View.GONE);
             edtFullName.setText(mMyProfileResponse.getFullNameColl());
             edtPhone.setText(mMyProfileResponse.getPhoneColl());
             tvEmail.setText(mMyProfileResponse.getEmailColl());
@@ -165,6 +195,8 @@ public class CollaboratorProfileFragment extends BaseFragment {
             tvCode.setText(mMyProfileResponse.getCode());
             edtCompanyName.setText(mMyProfileResponse.getCompanyName());
             edtBirthDay.setText(DateUtil.convertToMyFormatyyyyMMdd(mMyProfileResponse.getBirthday() + ""));
+            birthday = mMyProfileResponse.getBirthday() == null ? 0 : mMyProfileResponse.getBirthday();
+            contractDate = mMyProfileResponse.getContractDate() == null ? 0 : mMyProfileResponse.getContractDate();
             if (mMyProfileResponse.getCities() != null && mMyProfileResponse.getCities().size() > 0) {
                 tvCity.setText(mMyProfileResponse.getCities().get(0).getName());
                 mCityId = mMyProfileResponse.getCities().get(0).getId() + "";
@@ -200,6 +232,7 @@ public class CollaboratorProfileFragment extends BaseFragment {
     private static final int REQUEST_SELECT_IMAGE_IN_ALBUM = 1; // The URI of photo taken with camera
     private Uri mUriPhotoTaken;
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void showDialogNotificationAction() {
         try {
             View sheetView = getActivity().getLayoutInflater().inflate(R.layout.dialog_bottom_notification_action, null);
@@ -232,11 +265,9 @@ public class CollaboratorProfileFragment extends BaseFragment {
             llUpload.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                    intent.setType("image/*");
-                    if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-                        startActivityForResult(intent, REQUEST_SELECT_IMAGE_IN_ALBUM);
-                    }
+                    Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(galleryIntent, REQUEST_SELECT_IMAGE_IN_ALBUM);
                     mBottomDialogNotificationAction.dismiss();
                 }
             });
@@ -276,12 +307,13 @@ public class CollaboratorProfileFragment extends BaseFragment {
     @OnClick(R.id.imgEditBirthday)
     public void onEditBirthdayClick() {
         if (isEditBirthday) {
-            edtBirthDay.clearFocus();
+//            edtBirthDay.clearFocus();
             saveProfile();
             isEditBirthday = false;
             imgEditBirthday.setImageDrawable(getResources().getDrawable(R.drawable.ic_pencil_edit));
         } else {
-            edtBirthDay.requestFocus();
+            new DatePickerDialog(getActivity(), this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+//            edtBirthDay.requestFocus();
             isEditBirthday = true;
             imgEditBirthday.setImageDrawable(getResources().getDrawable(R.drawable.ic_saveok));
         }
@@ -332,12 +364,11 @@ public class CollaboratorProfileFragment extends BaseFragment {
     @OnClick(R.id.imgEditContract)
     public void onEditContractClick() {
         if (isEditContract) {
-            edtDateContract.clearFocus();
             saveProfile();
             isEditContract = false;
             imgEditContract.setImageDrawable(getResources().getDrawable(R.drawable.ic_pencil_edit));
         } else {
-            edtDateContract.requestFocus();
+            new DatePickerDialog(getActivity(), this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
             isEditContract = true;
             imgEditContract.setImageDrawable(getResources().getDrawable(R.drawable.ic_saveok));
         }
@@ -351,6 +382,27 @@ public class CollaboratorProfileFragment extends BaseFragment {
     @OnClick(R.id.llCountry)
     public void onCountryClick() {
         FragmentUtil.pushFragment(getActivity(), this, new CarrerOrCityFragment().newInstance(false, true, mCountryId, mCountryName, true), null);
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        calendar.set(year, monthOfYear, dayOfMonth);
+        update();
+    }
+
+    int birthday = 0;
+    int contractDate = 0;
+
+    private void update() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdfInt = new SimpleDateFormat("yyyyMMdd");
+        if (isEditBirthday) {
+            birthday = Integer.parseInt(sdfInt.format(calendar.getTime()));
+            edtBirthDay.setText(sdf.format(calendar.getTime()));
+        } else if (isEditContract) {
+            contractDate = Integer.parseInt(sdfInt.format(calendar.getTime()));
+            edtDateContract.setText(sdf.format(calendar.getTime()));
+        }
     }
 
     @OnClick(R.id.llCity)
@@ -367,6 +419,7 @@ public class CollaboratorProfileFragment extends BaseFragment {
                 if (isAdded()) {
                     hideCoverNetworkLoading();
                     mMyProfileResponse = dataSuccess;
+                    if (mMyProfileResponse.getCode() == null) rlCode.setVisibility(View.GONE);
                     ShowImageUtils.showImage(getActivity(), mMyProfileResponse.getImageUrl(), R.drawable.ic_ava_null, imgAva);
                     edtBirthDay.setText(DateUtil.convertToMyFormatyyyyMMdd(mMyProfileResponse.getBirthday() + ""));
                     edtFullName.setText(mMyProfileResponse.getFullNameColl());
@@ -375,6 +428,8 @@ public class CollaboratorProfileFragment extends BaseFragment {
                     edtAddress.setText(mMyProfileResponse.getAddressColl());
                     tvCarrer.setText(mMyProfileResponse.getCareerColl());
                     tvCode.setText(mMyProfileResponse.getCode());
+                    birthday = mMyProfileResponse.getBirthday() == null ? 0 : mMyProfileResponse.getBirthday();
+                    contractDate = mMyProfileResponse.getContractDate() == null ? 0 : mMyProfileResponse.getContractDate();
                     if (mMyProfileResponse.getCities() != null && mMyProfileResponse.getCities().size() > 0) {
                         tvCity.setText(mMyProfileResponse.getCities().get(0).getName());
                         mCityId = mMyProfileResponse.getCities().get(0).getId() + "";
@@ -449,7 +504,7 @@ public class CollaboratorProfileFragment extends BaseFragment {
                 inputCountries.add(new Country(mMyProfileResponse.getCountries().get(i).getId(), mMyProfileResponse.getCountries().get(i).getName()));
             }
         }
-        saveMyProfileRequest = new SaveMyProfileRequest(edtFullName.getText().toString().trim(), edtAddress.getText().toString().trim(), mMyProfileResponse.getCareerColl(), carrers, inputCities, inputCountries, 19910812, edtPhone.getText().toString(), edtCompanyName.getText().toString().trim(), mMyProfileResponse.getContractDate() != null ? mMyProfileResponse.getContractDate() : 20180101);
+        saveMyProfileRequest = new SaveMyProfileRequest(edtFullName.getText().toString().trim(), edtAddress.getText().toString().trim(), mMyProfileResponse.getCareerColl(), carrers, inputCities, inputCountries, birthday, edtPhone.getText().toString(), edtCompanyName.getText().toString().trim(), contractDate);
         saveMyProfileRequest.callRequest(getActivity(), new ApiObjectCallBack<MyProfileResponse, ErrorResponse>() {
             @Override
             public void onSuccess(int status, MyProfileResponse dataSuccess, List<MyProfileResponse> listDataSuccess, String message) {
@@ -463,7 +518,6 @@ public class CollaboratorProfileFragment extends BaseFragment {
                     mMyProfileResponse.setEmailColl(dataSuccess.getEmailColl());
                     edtFullName.setText(mMyProfileResponse.getFullNameColl());
                     edtPhone.setText(mMyProfileResponse.getPhoneColl());
-                    tvEmail.setText(mMyProfileResponse.getEmailColl());
                     edtAddress.setText(mMyProfileResponse.getAddressColl());
                     tvCarrer.setText(mMyProfileResponse.getCareerColl());
                     if (mMyProfileResponse.getDesideratedCareer() != null) {
@@ -564,15 +618,6 @@ public class CollaboratorProfileFragment extends BaseFragment {
         return super.onOptionsItemSelected(item);
     }
 
-    ArrayList<CareerResponse> careerResponses = new ArrayList<>();
-    ArrayList<CityResponse> citiesResponses = new ArrayList<>();
-    ArrayList<CountryResponse> countryResponses = new ArrayList<>();
-    private Bitmap mBitmap;
-    private String mCountryId = "0";
-    private String mCountryName = "";
-    private String mCityId = "0";
-    private String mCityName = "";
-
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TAKE_PHOTO) {
@@ -583,55 +628,101 @@ public class CollaboratorProfileFragment extends BaseFragment {
                 } else {
                     imageUri = data.getData();
                 }
-                mBitmap = ImageHelper.loadSizeLimitedBitmapFromUri(imageUri, getActivity().getContentResolver());
-                if (mBitmap != null) {
-                    imgAva.setImageBitmap(mBitmap);
-                    Log.d("RecognizeActivity", "Image: " + imageUri + " resized to " + mBitmap.getWidth() + "x" + mBitmap.getHeight());
-                    new SaveProfileAvaRequest(FileUtils.getPath(getActivity(), imageUri)).callRequest(getActivity(), new ApiObjectCallBack<SaveProfileAvaResponse, SaveProfileAvaResponse>() {
-                        @Override
-                        public void onSuccess(int status, SaveProfileAvaResponse dataSuccess, List<SaveProfileAvaResponse> listDataSuccess, String message) {
-                            if (isAdded()) {
-                                DebugLog.showLogCat(status + "\n" + dataSuccess);
+
+                File mFile = null;
+                try {
+                    mFile = FileUtils.from(getActivity(), imageUri);
+                    if (mFile.exists()) {
+                        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), mFile);
+                        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file", mFile.getName(), requestFile);
+                        long fileSizeInBytes = mFile.length();
+                        long fileSizeInKB = fileSizeInBytes / 1024;
+                        long fileSizeInMB = fileSizeInKB / 1024;
+                        if (fileSizeInMB > 1) {
+                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Kích thước ảnh quá lớn để upload");
+                        } else {
+                            try {
+                                mService = new ApiClient(getActivity()).createService();
+                            } catch (NoSuchAlgorithmException e) {
+                            } catch (KeyManagementException e) {
                             }
+                            showCoverNetworkLoading();
+                            Call<ResponseBody> responseBodyCall = mService.addRecord(multipartBody);
+                            responseBodyCall.enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    hideCoverNetworkLoading();
+                                    if (response.code() == 200) {
+                                        Toast.makeText(getActivity(), "Upload Thành công", Toast.LENGTH_SHORT).show();
+                                        mBitmap = ImageHelper.loadSizeLimitedBitmapFromUri(imageUri, getActivity().getContentResolver());
+                                        if (mBitmap != null) {
+                                            imgAva.setImageBitmap(mBitmap);
+                                        }
+                                    } else {
+                                        Toast.makeText(getActivity(), "Upload không thành công", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    hideCoverNetworkLoading();
+                                    Toast.makeText(getActivity(), "Upload không thành công", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
 
-                        @Override
-                        public void onFail(int status, SaveProfileAvaResponse dataFail, List<SaveProfileAvaResponse> listDataFail, String message) {
-                            if (isAdded()) {
-                                DebugLog.showLogCat(status + "");
-                            }
-                        }
-                    });
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         } else if (requestCode == REQUEST_SELECT_IMAGE_IN_ALBUM) {
-            if (resultCode == RESULT_OK) {
-                Uri imageUri;
-                if (data == null || data.getData() == null) {
-                    imageUri = mUriPhotoTaken;
-                } else {
-                    imageUri = data.getData();
-                }
-                mBitmap = ImageHelper.loadSizeLimitedBitmapFromUri(imageUri, getActivity().getContentResolver());
-                if (mBitmap != null) {
-                    imgAva.setImageBitmap(mBitmap);
-                    new SaveProfileAvaRequest(FileUtils.getPath(getActivity(), imageUri)).callRequest(getActivity(), new ApiObjectCallBack<SaveProfileAvaResponse, SaveProfileAvaResponse>() {
-                        @Override
-                        public void onSuccess(int status, SaveProfileAvaResponse dataSuccess, List<SaveProfileAvaResponse> listDataSuccess, String message) {
-                            if (isAdded()) {
-                                DebugLog.showLogCat(status + "\n" + dataSuccess.getAddress());
+            if (resultCode == RESULT_OK && null != data) {
+                Uri imageUri = data.getData();
+                File mFile = null;
+                try {
+                    mFile = FileUtils.from(getActivity(), imageUri);
+                    if (mFile.exists()) {
+                        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), mFile);
+                        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file", mFile.getName(), requestFile);
+                        long fileSizeInBytes = mFile.length();
+                        long fileSizeInKB = fileSizeInBytes / 1024;
+                        long fileSizeInMB = fileSizeInKB / 1024;
+                        if (fileSizeInMB > 1) {
+                            DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), "Kích thước ảnh quá lớn để upload");
+                        } else {
+                            try {
+                                mService = new ApiClient(getActivity()).createService();
+                            } catch (NoSuchAlgorithmException e) {
+                            } catch (KeyManagementException e) {
                             }
-                        }
+                            showCoverNetworkLoading();
+                            Call<ResponseBody> responseBodyCall = mService.addRecord(multipartBody);
+                            responseBodyCall.enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    hideCoverNetworkLoading();
+                                    hideCoverNetworkLoading();
+                                    if (response.code() == 200) {
+                                        Toast.makeText(getActivity(), "Upload Thành công", Toast.LENGTH_SHORT).show();
+                                        imgAva.setImageURI(imageUri);
+                                    } else {
+                                        Toast.makeText(getActivity(), "Upload không thành công", Toast.LENGTH_SHORT).show();
+                                    }
 
-                        @Override
-                        public void onFail(int status, SaveProfileAvaResponse dataFail, List<SaveProfileAvaResponse> listDataFail, String message) {
-                            if (isAdded()) {
-                                DebugLog.showLogCat(status + "");
-                            }
-                        }
-                    });
-                    Log.d("RecognizeActivity", "Image: " + imageUri + " resized to " + mBitmap.getWidth() + "x" + mBitmap.getHeight());
+                                }
 
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    hideCoverNetworkLoading();
+                                    Toast.makeText(getActivity(), "Upload không thành công", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         } else {

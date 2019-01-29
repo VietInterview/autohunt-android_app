@@ -20,10 +20,10 @@ import java.util.List;
  * Copyright © 2018 Vietinterview. All rights reserved.
  */
 public class SaveProfileAvaRequest extends BaseRequest<SaveProfileAvaResponse, SaveProfileAvaResponse> {
-    private String filePath;
+    private File file;
 
-    public SaveProfileAvaRequest(String filePath) {
-        this.filePath = filePath;
+    public SaveProfileAvaRequest(File file) {
+        this.file = file;
     }
 
     @Override
@@ -62,10 +62,13 @@ public class SaveProfileAvaRequest extends BaseRequest<SaveProfileAvaResponse, S
 //        }
 //        RequestParams params = new RequestParams();
 //        params.put("file", new ByteArrayInputStream(myByteArray), "she-wolf.pbg");
-        File myFile = new File(filePath);
+//        File myFile = new File(filePath);
         RequestParams params = new RequestParams();
         try {
-            params.put("file", myFile);
+            params.put("file", file);
+            if (file.exists()) {
+                DebugLog.showLogCat(file.getAbsolutePath());
+            }
         } catch (FileNotFoundException e) {
             DebugLog.showLogCat(e.toString());
         }

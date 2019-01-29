@@ -18,6 +18,7 @@ import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
@@ -116,14 +117,15 @@ public abstract class BaseRequest<T, V> {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                DebugLog.showLogCat(throwable.toString());
+                DebugLog.showLogCat(statusCode + " " + throwable.toString());
                 if (statusCode == 0)
                     mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.timeout));
                 else
                     mApiObjectCallBack.onFail(statusCode, null, null, mContext.getResources().getString(R.string.error_please_try));
             }
         };
-        DebugLog.showLogCat(getAbsoluteUrl() + "\n" + putParams() + "\nBearer " + getAccessToken());
+        if (putParams() != null)
+            DebugLog.showLogCat(getAbsoluteUrl() + "\n" + putParams() + "\nBearer " + getAccessToken());
         TrustManagerManipulator.allowAllSSL();
 
         KeyStore trustStore = null;

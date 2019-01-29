@@ -394,21 +394,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         case "CTV_CV_SEND":
                             item.setIcon(R.drawable.ic_mycv_menuleft);
                             break;
-                        case "CMS_JOB_AND_CV":
-                            break;
-                        case "CMS_CTV":
-                            break;
-                        case "CMS_JOB":
-                            break;
-                        case "CMS_CUSTOMER":
-                            break;
-                        case "CMS_CV":
+//                        case "CMS_JOB_AND_CV":
+//                            break;
+//                        case "CMS_CTV":
+//                            break;
+//                        case "CMS_JOB":
+//                            break;
+//                        case "CMS_CUSTOMER":
+//                            break;
+//                        case "CMS_CV":
+//                            break;
+                        case "PROFILE":
+                            item.setIcon(R.drawable.ic_user_menuleft);
                             break;
                         case "CUSTOMER_HOME_PAGE":
                             item.setIcon(R.drawable.ic_home);
                             break;
                         default:
-                            item.setIcon(R.drawable.ic_user_menuleft);
+                            item.setIcon(R.drawable.ic_question);
                             break;
                     }
                     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

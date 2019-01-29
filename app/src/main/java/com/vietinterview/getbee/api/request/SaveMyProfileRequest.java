@@ -84,9 +84,11 @@ public class SaveMyProfileRequest extends BaseJsonRequest<MyProfileResponse, Err
         JSONObject jsonParams = new JSONObject();
         jsonParams.put("addressColl", addressColl);
         jsonParams.put("careerColl", careerColl);
-        jsonParams.put("birthday", birthdayColl);
+        if (birthdayColl != 0)
+            jsonParams.put("birthday", birthdayColl);
         jsonParams.put("companyName", companyName);
-        jsonParams.put("contractDate", contractDate);
+        if (contractDate != 0)
+            jsonParams.put("contractDate", contractDate);
         JSONArray desideratedCareer = new JSONArray();
         for (int i = 0; i < carrers.size(); i++) {
             JSONObject jGroup = new JSONObject();
