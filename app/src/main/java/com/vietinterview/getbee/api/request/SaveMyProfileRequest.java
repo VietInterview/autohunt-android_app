@@ -128,7 +128,6 @@ public class SaveMyProfileRequest extends BaseJsonRequest<MyProfileResponse, Err
         }
         jsonParams.put("countries", mCountries);
         jsonParams.put("fullNameColl", fullNameColl);
-        jsonParams.put("idColl", null);
         jsonParams.put("phoneColl", phoneColl);
         return jsonParams;
     }

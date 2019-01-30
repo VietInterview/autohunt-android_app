@@ -145,7 +145,6 @@ public class CollaboratorProfileFragment extends BaseFragment implements DatePic
     private boolean isEditFullname = false;
     private Calendar calendar;
     BottomSheetDialog mBottomDialogNotificationAction;
-
     protected RetrofitAPI mService;
 
     public static CollaboratorProfileFragment newInstance(MyProfileResponse myProfileResponse) {
@@ -294,10 +293,12 @@ public class CollaboratorProfileFragment extends BaseFragment implements DatePic
     public void onEditPhoneClick() {
         if (isEditPhone) {
             edtPhone.clearFocus();
+            edtPhone.setEnabled(false);
             saveProfile();
             isEditPhone = false;
             imgEditPhone.setImageDrawable(getResources().getDrawable(R.drawable.ic_pencil_edit));
         } else {
+            edtPhone.setEnabled(true);
             edtPhone.requestFocus();
             isEditPhone = true;
             imgEditPhone.setImageDrawable(getResources().getDrawable(R.drawable.ic_saveok));
@@ -322,11 +323,13 @@ public class CollaboratorProfileFragment extends BaseFragment implements DatePic
     @OnClick(R.id.imgFullName)
     public void onEditFullnameClick() {
         if (isEditFullname) {
+            edtFullName.setEnabled(false);
             edtFullName.clearFocus();
             saveProfile();
             isEditFullname = false;
             imgFullName.setImageDrawable(getResources().getDrawable(R.drawable.ic_pencil_edit));
         } else {
+            edtFullName.setEnabled(true);
             edtFullName.requestFocus();
             isEditFullname = true;
             imgFullName.setImageDrawable(getResources().getDrawable(R.drawable.ic_saveok));
@@ -337,10 +340,12 @@ public class CollaboratorProfileFragment extends BaseFragment implements DatePic
     public void onEditAddClick() {
         if (isEditAdd) {
             edtAddress.clearFocus();
+            edtAddress.setEnabled(false);
             saveProfile();
             isEditAdd = false;
             imgEditAdd.setImageDrawable(getResources().getDrawable(R.drawable.ic_pencil_edit));
         } else {
+            edtAddress.setEnabled(true);
             edtAddress.requestFocus();
             isEditAdd = true;
             imgEditAdd.setImageDrawable(getResources().getDrawable(R.drawable.ic_saveok));
@@ -350,11 +355,13 @@ public class CollaboratorProfileFragment extends BaseFragment implements DatePic
     @OnClick(R.id.imgEditCompany)
     public void onEditCompanyClick() {
         if (isEditCompany) {
+            edtCompanyName.setEnabled(false);
             edtCompanyName.clearFocus();
             saveProfile();
             isEditCompany = false;
             imgEditCompany.setImageDrawable(getResources().getDrawable(R.drawable.ic_pencil_edit));
         } else {
+            edtCompanyName.setEnabled(true);
             edtCompanyName.requestFocus();
             isEditCompany = true;
             imgEditCompany.setImageDrawable(getResources().getDrawable(R.drawable.ic_saveok));
@@ -763,9 +770,9 @@ public class CollaboratorProfileFragment extends BaseFragment implements DatePic
                     mCityName = data.getStringExtra("cityName");
                     if (mCityName != null) {
                         if (citiesResponses.size() > 0)
-                            citiesResponses.set(0, new CityResponse(data.getIntExtra("cityId", 0), data.getStringExtra("cityName")));
+                            citiesResponses.set(0, new CityResponse(data.getIntExtra("countryId", 0), null, data.getIntExtra("cityId", 0), data.getStringExtra("cityName")));
                         else
-                            citiesResponses.add(new CityResponse(data.getIntExtra("cityId", 0), data.getStringExtra("cityName")));
+                            citiesResponses.add(new CityResponse(data.getIntExtra("countryId", 0), null, data.getIntExtra("cityId", 0), data.getStringExtra("cityName")));
                         List<City> cities = new ArrayList<>();
                         cities.add(new City(data.getIntExtra("countryId", 0), null, data.getIntExtra("cityId", 0), data.getStringExtra("cityName")));
                         mMyProfileResponse.setCities(cities);
