@@ -4,6 +4,8 @@ import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -60,6 +62,7 @@ import com.vietinterview.getbee.utils.ShowImageUtils;
 import com.vietinterview.getbee.utils.StringUtils;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -185,7 +188,6 @@ public class CollaboratorProfileFragment extends BaseFragment implements DatePic
             getMyProfile();
         else {
             ShowImageUtils.showImage(getActivity(), mMyProfileResponse.getImageUrl(), R.drawable.ic_ava_null, imgAva);
-            if (mMyProfileResponse.getCode() == null) rlCode.setVisibility(View.GONE);
             edtFullName.setText(mMyProfileResponse.getFullNameColl());
             edtPhone.setText(mMyProfileResponse.getPhoneColl());
             tvEmail.setText(mMyProfileResponse.getEmailColl());
@@ -426,7 +428,6 @@ public class CollaboratorProfileFragment extends BaseFragment implements DatePic
                 if (isAdded()) {
                     hideCoverNetworkLoading();
                     mMyProfileResponse = dataSuccess;
-                    if (mMyProfileResponse.getCode() == null) rlCode.setVisibility(View.GONE);
                     ShowImageUtils.showImage(getActivity(), mMyProfileResponse.getImageUrl(), R.drawable.ic_ava_null, imgAva);
                     edtBirthDay.setText(DateUtil.convertToMyFormatyyyyMMdd(mMyProfileResponse.getBirthday() + ""));
                     edtFullName.setText(mMyProfileResponse.getFullNameColl());
@@ -625,6 +626,56 @@ public class CollaboratorProfileFragment extends BaseFragment implements DatePic
         return super.onOptionsItemSelected(item);
     }
 
+    public File saveBitmapToFile(File file) {
+        try {
+
+            // BitmapFactory options to downsize the image
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            o.inSampleSize = 6;
+            // factor of downsizing the image
+
+            FileInputStream inputStream = new FileInputStream(file);
+            //Bitmap selectedBitmap = null;
+            BitmapFactory.decodeStream(inputStream, null, o);
+            inputStream.close();
+
+            // The new size we want to scale to
+            final int REQUIRED_SIZE = 75;
+
+            // Find the correct scale value. It should be the power of 2.
+            int scale = 1;
+            while (o.outWidth / scale / 2 >= REQUIRED_SIZE &&
+                    o.outHeight / scale / 2 >= REQUIRED_SIZE) {
+                scale *= 2;
+            }
+
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize = scale;
+            inputStream = new FileInputStream(file);
+
+            Bitmap selectedBitmap = BitmapFactory.decodeStream(inputStream, null, o2);
+            selectedBitmap = RotateBitmap(selectedBitmap, 90);
+            inputStream.close();
+
+            // here i override the original image file
+            file.createNewFile();
+            FileOutputStream outputStream = new FileOutputStream(file);
+
+            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+
+            return file;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static Bitmap RotateBitmap(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+    }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TAKE_PHOTO) {
@@ -639,6 +690,7 @@ public class CollaboratorProfileFragment extends BaseFragment implements DatePic
                 File mFile = null;
                 try {
                     mFile = FileUtils.from(getActivity(), imageUri);
+                    mFile = saveBitmapToFile(mFile);
                     if (mFile.exists()) {
                         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), mFile);
                         MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file", mFile.getName(), requestFile);
@@ -690,6 +742,7 @@ public class CollaboratorProfileFragment extends BaseFragment implements DatePic
                 File mFile = null;
                 try {
                     mFile = FileUtils.from(getActivity(), imageUri);
+                    mFile = saveBitmapToFile(mFile);
                     if (mFile.exists()) {
                         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), mFile);
                         MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file", mFile.getName(), requestFile);
