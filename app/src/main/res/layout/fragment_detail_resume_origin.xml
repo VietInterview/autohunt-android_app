@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Created by Hiep Nguyen Nghia.
+    Copyright © 2018 Vietinterview. All rights reserved.
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="91dp"
+                android:layout_height="91dp"
+                android:src="@drawable/ava" />
+
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@string/font_fontFamily_medium"
+                android:gravity="center"
+                android:text="Nguyễn Nghĩa Hiệp"
+                android:textColor="#042E51"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="8dp">
+
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:fontFamily="@string/font_fontFamily_medium"
+                android:gravity="left"
+                android:text="Nguyễn Nghĩa Hiệp"
+                android:textColor="#042E51"
+                android:textSize="14sp" />
+
+            <com.vietinterview.getbee.customview.RobotoTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:gravity="left"
+                android:text="Nguyễn Nghĩa Hiệp"
+                android:textColor="#677B8D"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:background="#CFDBE5" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="8dp"
+            android:paddingTop="14dp">
+
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:fontFamily="@string/font_fontFamily_medium"
+                android:gravity="left"
+                android:text="Nguyễn Nghĩa Hiệp"
+                android:textColor="#042E51"
+                android:textSize="14sp" />
+
+            <com.vietinterview.getbee.customview.RobotoTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:gravity="left"
+                android:text="Nguyễn Nghĩa Hiệp"
+                android:textColor="#677B8D"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:background="#CFDBE5" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="8dp"
+            android:paddingTop="14dp">
+
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:fontFamily="@string/font_fontFamily_medium"
+                android:gravity="left"
+                android:text="Nguyễn Nghĩa Hiệp"
+                android:textColor="#042E51"
+                android:textSize="14sp" />
+
+            <com.vietinterview.getbee.customview.RobotoTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:gravity="left"
+                android:text="Nguyễn Nghĩa Hiệp"
+                android:textColor="#677B8D"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:background="#CFDBE5" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="8dp"
+            android:paddingTop="14dp">
+
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:fontFamily="@string/font_fontFamily_medium"
+                android:gravity="left"
+                android:text="Nguyễn Nghĩa Hiệp"
+                android:textColor="#042E51"
+                android:textSize="14sp" />
+
+            <com.vietinterview.getbee.customview.RobotoTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:gravity="left"
+                android:text="Nguyễn Nghĩa Hiệp"
+                android:textColor="#677B8D"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:background="#CFDBE5" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="8dp"
+            android:paddingTop="14dp">
+
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:fontFamily="@string/font_fontFamily_medium"
+                android:gravity="left"
+                android:text="Nguyễn Nghĩa Hiệp"
+                android:textColor="#042E51"
+                android:textSize="14sp" />
+
+            <com.vietinterview.getbee.customview.RobotoTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:gravity="left"
+                android:text="Nguyễn Nghĩa Hiệp"
+                android:textColor="#677B8D"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:background="#CFDBE5" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="8dp"
+            android:paddingTop="14dp">
+
+            <com.vietinterview.getbee.customview.RobotoMediumTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:fontFamily="@string/font_fontFamily_medium"
+                android:gravity="left"
+                android:text="Nguyễn Nghĩa Hiệp"
+                android:textColor="#042E51"
+                android:textSize="14sp" />
+
+            <com.vietinterview.getbee.customview.RobotoTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:gravity="left"
+                android:text="Nguyễn Nghĩa Hiệp"
+                android:textColor="#677B8D"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:background="#CFDBE5" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
