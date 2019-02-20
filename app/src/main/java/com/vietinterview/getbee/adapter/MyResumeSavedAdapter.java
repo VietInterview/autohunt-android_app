@@ -135,7 +135,6 @@ public class MyResumeSavedAdapter extends RecyclerView.Adapter<RecyclerView.View
                 @Override
                 public void onClick(View view) {
                     FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailResumeOriginFragment(), null);
-//                    getDetailCV(cvLists.get(position).getId());
                 }
             });
             ((RobotoRegularButton) ((MyViewHolder) holder).mView.findViewById(R.id.btnDeleteCV)).setOnClickListener(new View.OnClickListener() {
@@ -203,32 +202,6 @@ public class MyResumeSavedAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public int getItemCount() {
         return cvLists.size();
-    }
-
-    public void getDetailCV(int id) {
-        baseFragment.showCoverNetworkLoading();
-        getDetailCVRequest = new GetDetailCVRequest(id);
-        getDetailCVRequest.callRequest(baseFragment.getActivity(), new ApiObjectCallBack<DetailCVResponse, ErrorResponse>() {
-            @Override
-            public void onSuccess(int status, DetailCVResponse data, List<DetailCVResponse> dataArrayList, String message) {
-                baseFragment.hideCoverNetworkLoading();
-                if (baseFragment.isAdded()) {
-                    FragmentUtil.pushFragment(baseFragment.getActivity(), baseFragment, new DetailResumeFragment().newInstance(null, data), null);
-                }
-            }
-
-            @Override
-            public void onFail(int failCode, ErrorResponse errorResponse, List<ErrorResponse> dataArrayList, String message) {
-                baseFragment.hideCoverNetworkLoading();
-                if (baseFragment.isAdded()) {
-                    DialogUtil.showDialog(baseFragment.getActivity(), baseFragment.getResources().getString(R.string.noti_title), message, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                        }
-                    });
-                }
-            }
-        });
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

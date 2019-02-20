@@ -205,59 +205,68 @@ public class ProcessResumeFragment extends BaseFragment {
                 if (isAdded()) {
                     hideCoverNetworkLoading();
                     detailProcessResumeResponse = dataSuccess;
-                    if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 3 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 1)) {
-                        mStep = 0;
-                        mStepClick = 0;
-                        SharedPrefUtils.putInt("step", mStep);
-                        stepView2.go(mStep, true);
-                        setupViewPager(mViewPager);
-                        mViewPager.setCurrentItem(mStep);
-                        tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
-                        tvNameStep.setText(switchStepName(mStep));
-                    } else if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 5 || detailProcessResumeResponse.getCvProcessInfo().getStatus() == 6 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 2)) {
-                        mStep = 1;
-                        mStepClick = 1;
-                        SharedPrefUtils.putInt("step", mStep);
-                        stepView2.go(mStep, true);
-                        setupViewPager(mViewPager);
-                        mViewPager.setCurrentItem(mStep);
-                        tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
-                        tvNameStep.setText(switchStepName(mStep));
-                    } else if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 7 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 3)) {
-                        mStep = 2;
-                        mStepClick = 2;
-                        SharedPrefUtils.putInt("step", mStep);
-                        stepView2.go(mStep, true);
-                        setupViewPager(mViewPager);
-                        mViewPager.setCurrentItem(mStep);
-                        tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
-                        tvNameStep.setText(switchStepName(mStep));
-                    } else if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 8 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 4)) {
-                        mStep = 3;
-                        mStepClick = 3;
-                        SharedPrefUtils.putInt("step", mStep);
-                        stepView2.go(mStep, true);
-                        setupViewPager(mViewPager);
-                        mViewPager.setCurrentItem(mStep);
-                        tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
-                        tvNameStep.setText(switchStepName(mStep));
-                    } else if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 9 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 5)) {
-                        mStep = 4;
-                        mStepClick = 4;
-                        SharedPrefUtils.putInt("step", mStep);
-                        stepView2.go(mStep, true);
-                        setupViewPager(mViewPager);
-                        mViewPager.setCurrentItem(mStep);
-                        tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
-                        tvNameStep.setText(switchStepName(mStep));
-                    } else if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() != null) {
-                        mStep = detailProcessResumeResponse.getCvProcessInfo().getRejectStep();
-                        mStepClick = detailProcessResumeResponse.getCvProcessInfo().getRejectStep();
-                        stepView2.go(mStep - 1, true);
-                        setupViewPager(mViewPager);
-                        mViewPager.setCurrentItem(mStep - 1);
-                        tvStep.setText(getResources().getString(R.string.step) + " " + (mStep) + "/5");
-                        tvNameStep.setText(switchStepName(mStep - 1));
+                    if (detailProcessResumeResponse.getCvProcessInfo() != null) {
+                        if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 3 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 1)) {
+                            mStep = 0;
+                            mStepClick = 0;
+                            SharedPrefUtils.putInt("step", mStep);
+                            stepView2.go(mStep, true);
+                            setupViewPager(mViewPager);
+                            mViewPager.setCurrentItem(mStep);
+                            tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
+                            tvNameStep.setText(switchStepName(mStep));
+                        } else if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 5 || detailProcessResumeResponse.getCvProcessInfo().getStatus() == 6 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 2)) {
+                            mStep = 1;
+                            mStepClick = 1;
+                            SharedPrefUtils.putInt("step", mStep);
+                            stepView2.go(mStep, true);
+                            setupViewPager(mViewPager);
+                            mViewPager.setCurrentItem(mStep);
+                            tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
+                            tvNameStep.setText(switchStepName(mStep));
+                        } else if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 7 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 3)) {
+                            mStep = 2;
+                            mStepClick = 2;
+                            SharedPrefUtils.putInt("step", mStep);
+                            stepView2.go(mStep, true);
+                            setupViewPager(mViewPager);
+                            mViewPager.setCurrentItem(mStep);
+                            tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
+                            tvNameStep.setText(switchStepName(mStep));
+                        } else if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 8 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 4)) {
+                            mStep = 3;
+                            mStepClick = 3;
+                            SharedPrefUtils.putInt("step", mStep);
+                            stepView2.go(mStep, true);
+                            setupViewPager(mViewPager);
+                            mViewPager.setCurrentItem(mStep);
+                            tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
+                            tvNameStep.setText(switchStepName(mStep));
+                        } else if (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 9 || (detailProcessResumeResponse.getCvProcessInfo().getStatus() == 4 && detailProcessResumeResponse.getCvProcessInfo().getRejectStep() == 5)) {
+                            mStep = 4;
+                            mStepClick = 4;
+                            SharedPrefUtils.putInt("step", mStep);
+                            stepView2.go(mStep, true);
+                            setupViewPager(mViewPager);
+                            mViewPager.setCurrentItem(mStep);
+                            tvStep.setText(getResources().getString(R.string.step) + " " + (mStep + 1) + "/5");
+                            tvNameStep.setText(switchStepName(mStep));
+                        } else if (detailProcessResumeResponse.getCvProcessInfo().getRejectStep() != null) {
+                            mStep = detailProcessResumeResponse.getCvProcessInfo().getRejectStep();
+                            mStepClick = detailProcessResumeResponse.getCvProcessInfo().getRejectStep();
+                            stepView2.go(mStep - 1, true);
+                            setupViewPager(mViewPager);
+                            mViewPager.setCurrentItem(mStep - 1);
+                            tvStep.setText(getResources().getString(R.string.step) + " " + (mStep) + "/5");
+                            tvNameStep.setText(switchStepName(mStep - 1));
+                        }
+                    } else {
+                        DialogUtil.showDialog(getActivity(), getResources().getString(R.string.noti_title), getResources().getString(R.string.no_data), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                FragmentUtil.popBackStack(ProcessResumeFragment.this);
+                            }
+                        });
                     }
                 }
             }
